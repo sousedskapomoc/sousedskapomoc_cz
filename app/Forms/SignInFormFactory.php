@@ -30,6 +30,7 @@ final class SignInFormFactory
 	public function create(callable $onSuccess): Form
 	{
 		$form = $this->factory->create();
+
 		$form->addText('email', 'Email:')
 			->setRequired('Prosím zadejte svůj email');
 

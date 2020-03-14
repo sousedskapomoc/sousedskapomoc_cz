@@ -6,5 +6,7 @@ namespace SousedskaPomoc\Presenters;
 
 final class CourierPresenter extends BasePresenter
 {
-
+    public function handleToggleActive($active) {
+        $this->template->userActive = $active;
+    }
 }
