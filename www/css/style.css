@@ -21,6 +21,10 @@ a:hover {
     color: #111;
 }
 
+select {
+    overflow: hidden;
+}
+
 small {
     display: block;
     text-align: right;
@@ -60,13 +64,13 @@ li {
 }
 
 .bg-color--light-grey {
-    background-color: rgba(0,0,0,.05);
+    background-color: rgba(0, 0, 0, .05);
 }
 
 .quest {
     margin-bottom: 20px;
-    border-bottom: 1px solid rgba(0,0,0,.1);
-    border-top: 1px solid rgba(0,0,0,.1);
+    border-bottom: 1px solid rgba(0, 0, 0, .1);
+    border-top: 1px solid rgba(0, 0, 0, .1);
 }
 
 .quest p a {
@@ -74,7 +78,7 @@ li {
 }
 
 .header {
-    border-bottom: 1px solid rgba(0,0,0,.1);
+    border-bottom: 1px solid rgba(0, 0, 0, .1);
     margin-bottom: 20px;
     margin-left: 0;
     margin-right: 0;
@@ -83,7 +87,7 @@ li {
 .footer {
     margin-left: 0;
     margin-right: 0;
-    border-top: 1px solid rgba(0,0,0,.1);
+    border-top: 1px solid rgba(0, 0, 0, .1);
     padding: 20px 10px;
 }
 
@@ -97,7 +101,7 @@ li {
     border: 1px solid #ccc;
 }
 
-.navigation.burger-active{
+.navigation.burger-active {
     border-bottom: none;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
@@ -130,7 +134,7 @@ li {
     height: 100%;
 }
 
-.navigation ul li{
+.navigation ul li {
     display: block;
     list-style-type: none;
     padding: 10px 10px;
@@ -155,18 +159,20 @@ li {
     background-color: #333;
     margin: 6px 0;
     transition: 0.4s;
-  }
-  
-.burger-active .bar1 {
--webkit-transform: rotate(-45deg) translate(-4px, 5px);
-transform: rotate(-45deg) translate(-4px, 5px);
 }
 
-.burger-active .bar2 {opacity: 0;}
+.burger-active .bar1 {
+    -webkit-transform: rotate(-45deg) translate(-4px, 5px);
+    transform: rotate(-45deg) translate(-4px, 5px);
+}
+
+.burger-active .bar2 {
+    opacity: 0;
+}
 
 .burger-active .bar3 {
--webkit-transform: rotate(45deg) translate(-8px, -8px);
-transform: rotate(45deg) translate(-8px, -8px);
+    -webkit-transform: rotate(45deg) translate(-8px, -8px);
+    transform: rotate(45deg) translate(-8px, -8px);
 }
 
 .footer p {
@@ -215,7 +221,7 @@ form {
     small {
         font-size: 65%;
     }
-} 
+}
 
 @media screen and (min-width: 576px) {
     .quest {
@@ -231,7 +237,7 @@ form {
 
     h2 {
         font-size: 1.7rem;
-        border-bottom: 1px solid rgba(0,0,0,.1);
+        border-bottom: 1px solid rgba(0, 0, 0, .1);
     }
 
     h3 {
@@ -291,7 +297,7 @@ form {
         transform: scaleX(0);
         transition: all 0.3s ease-in-out;
     }
-    
+
     .navigation ul li a:hover:before {
         visibility: visible;
         transform: scaleX(1);
