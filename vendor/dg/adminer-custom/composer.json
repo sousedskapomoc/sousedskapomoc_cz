@@ -1,5 +1,0 @@
-{
-	"name": "dg/adminer-custom",
-	"description": "Customization for Adminer, the best database management tool written in PHP.",
-	"keywords": ["database", "mysql", "postgresql", "sqlite", "mssql", "oracle", "mongodb", "elasticsearch"]
-}
