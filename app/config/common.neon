@@ -1,0 +1,22 @@
+#
+# WARNING: it is CRITICAL that this file & directory are NOT accessible directly via a web browser!
+# https://nette.org/security-warning
+#
+parameters:
+
+
+application:
+	errorPresenter: Error
+	mapping:
+		*: SousedskaPomoc\*Module\Presenters\*Presenter
+
+
+session:
+	expiration: 14 days
+
+services:
+	- SousedskaPomoc\Model\UserManager
+	- SousedskaPomoc\Forms\FormFactory
+	- SousedskaPomoc\Forms\SignInFormFactory
+	- SousedskaPomoc\Forms\SignUpFormFactory
+	router: SousedskaPomoc\Router\RouterFactory::createRouter
