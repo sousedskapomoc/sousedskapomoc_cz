@@ -1,0 +1,4 @@
+.idea/
+temp/
+temp/cache/
+app/config/local.neon
