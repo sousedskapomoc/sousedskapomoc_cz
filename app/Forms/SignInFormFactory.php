@@ -30,6 +30,7 @@ final class SignInFormFactory
 	public function create(callable $onSuccess): Form
 	{
 		$form = $this->factory->create();
+
 		$form->addText('email', 'Email:')
 			->setRequired('Prosím zadejte svůj email');
 
@@ -43,7 +44,7 @@ final class SignInFormFactory
 		$form->onSuccess[] = function (Form $form, \stdClass $values) use ($onSuccess): void {
 			try {
 				$this->user->setExpiration($values->remember ? '14 days' : '20 minutes');
-				$this->user->login($values->username, $values->password);
+				$this->user->login($values->email, $values->password);
 			} catch (Nette\Security\AuthenticationException $e) {
 				$form->addError('Zadaný e-mail už je obsazený.');
 				return;

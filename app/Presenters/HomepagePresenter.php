@@ -18,7 +18,11 @@ final class HomepagePresenter extends BasePresenter
     /** @var \SousedskaPomoc\Model\UserManager */
     protected $userManager;
 
-
+    public function beforeRender() {
+        if($this->user->isLoggedIn()) {
+            $this->redirect("System:dashboard");
+        }
+    }
 
     public function injectUserManager(UserManager $userManager)
     {
