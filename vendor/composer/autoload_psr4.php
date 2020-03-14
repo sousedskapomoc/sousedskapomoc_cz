@@ -7,4 +7,5 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'PHPStan\\' => array($vendorDir . '/phpstan/phpstan-nette/src'),
+    'Contributte\\FormsBootstrap\\' => array($vendorDir . '/contributte/forms-bootstrap/src'),
 );

@@ -17,12 +17,20 @@ class ComposerStaticInit05afe9c178cb5d652fd50c296164212a
         array (
             'PHPStan\\' => 8,
         ),
+        'C' => 
+        array (
+            'Contributte\\FormsBootstrap\\' => 27,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
         'PHPStan\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpstan/phpstan-nette/src',
+        ),
+        'Contributte\\FormsBootstrap\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/contributte/forms-bootstrap/src',
         ),
     );
 

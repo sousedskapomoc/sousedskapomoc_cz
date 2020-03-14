@@ -4,8 +4,61 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "88849dd36eae05652f3c7732d8545c69",
+    "content-hash": "73ac9e4cde30f4ddb38b39a4106a2dba",
     "packages": [
+        {
+            "name": "contributte/forms-bootstrap",
+            "version": "0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/contributte/forms-bootstrap.git",
+                "reference": "f829d7cdd41fe6586860d9b31c307121c69cf73d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/contributte/forms-bootstrap/zipball/f829d7cdd41fe6586860d9b31c307121c69cf73d",
+                "reference": "f829d7cdd41fe6586860d9b31c307121c69cf73d",
+                "shasum": ""
+            },
+            "require": {
+                "nette/application": "^3.0",
+                "nette/forms": "^3.0",
+                "php": ">=7.2"
+            },
+            "require-dev": {
+                "ninjify/qa": "^v0.10"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Contributte\\FormsBootstrap\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dalibor Korpar",
+                    "email": "dalibor.korpar@gmail.com"
+                }
+            ],
+            "description": "Nette extension for Bootstrap forms",
+            "homepage": "https://github.com/contributte/forms-bootstrap",
+            "keywords": [
+                "Forms",
+                "bootstrap",
+                "library",
+                "nette"
+            ],
+            "time": "2020-01-08T23:39:06+00:00"
+        },
         {
             "name": "dg/adminer-custom",
             "version": "v1.21.0",

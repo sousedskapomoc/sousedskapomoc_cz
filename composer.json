@@ -31,7 +31,8 @@
 		"nette/utils": "^3.0",
 		"latte/latte": "^2.5",
 		"tracy/tracy": "^2.6",
-		"dg/adminer-custom": "^1.8"
+		"dg/adminer-custom": "^1.8",
+		"contributte/forms-bootstrap": "^0.1.0"
 	},
 	"require-dev": {
 		"nette/tester": "^2.0",

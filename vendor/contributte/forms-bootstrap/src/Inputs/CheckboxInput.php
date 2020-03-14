@@ -1,0 +1,97 @@
+<?php declare(strict_types = 1);
+
+namespace Contributte\FormsBootstrap\Inputs;
+
+use Contributte\FormsBootstrap\Traits\StandardValidationTrait;
+use Nette;
+use Nette\Forms\Controls\Checkbox;
+use Nette\Utils\Html;
+
+/**
+ * Class CheckboxInput. Single checkbox.
+ */
+class CheckboxInput extends Checkbox implements IValidationInput
+{
+
+	use StandardValidationTrait {
+		// we only want to use it on a specific child
+		showValidation as protected _rawShowValidation;
+	}
+
+	/**
+	 * Generates a checkbox
+	 */
+	public function getControl(): Html
+	{
+		return self::makeCheckbox(
+			$this->getHtmlName(),
+			$this->getHtmlId(),
+			$this->translate($this->caption),
+			$this->value,
+			false,
+			$this->required,
+			$this->disabled,
+			$this->getRules()
+		);
+	}
+
+	/**
+	 * Makes a Bootstrap checkbox HTML
+	 *
+	 * @param bool|mixed             $value pass false to omit
+	 */
+	public static function makeCheckbox(
+		string $name,
+		string $htmlId,
+		?string $caption = null,
+		bool $checked = false,
+		$value = false,
+		bool $required = false,
+		bool $disabled = false,
+		?Nette\Forms\Rules $rules = null
+	): Html
+	{
+		$label = Html::el('label', ['class' => ['custom-control', 'custom-checkbox']]);
+		$input = Html::el('input', [
+			'type'             => 'checkbox',
+			'class'            => ['custom-control-input'],
+			'name'             => $name,
+			'disabled'         => $disabled,
+			'required'         => $required,
+			'checked'          => $checked,
+			'id'               => $htmlId,
+			'data-nette-rules' => $rules ? Nette\Forms\Helpers::exportRules($rules) : false,
+		]);
+		if ($value !== false) {
+			$input->attrs += [
+				'value' => $value,
+			];
+		}
+
+		$label->addHtml($input);
+		$label->addHtml(
+			Html::el('label', [
+				'class' => ['custom-control-label'],
+				'for'   => $htmlId,
+			])->setText($caption)
+		);
+
+		$line = Html::el('div');
+		$line->addHtml($label);
+
+		return $label;
+	}
+
+	/**
+	 * Modify control in such a way that it explicitly shows its validation state.
+	 * Returns the modified element.
+	 */
+	public function showValidation(Html $control): Html
+	{
+		// add validation classes to the first child, which is <input>
+		$control->getChildren()[0] = $this->_rawShowValidation($control->getChildren()[0]);
+
+		return $control;
+	}
+
+}

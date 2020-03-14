@@ -1,0 +1,34 @@
+{block content}
+<h2>Chci se stát koordinátorem</h2>
+{control registerAsCoordinator}
+<ul id="suggestions"></ul>
+<script>
+    document.addEventListener("DOMContentLoaded", function (event) {
+
+        $("#frm-registerAsCoordinator-town").on('keyup', function () {
+
+            var hereMapsEndpoint = "https://autocomplete.geocoder.ls.hereapi.com/6.2/suggest.json?apiKey=Kl0wK4fx38Pf63EIey6WyrmGEhS2IqaVHkuzx0IQ4-Q&country=CZE&query=";
+            var query = encodeURIComponent(this.value);
+
+            jQuery.getJSON(hereMapsEndpoint + query, function (data) {
+                $("#suggestions").empty();
+                $.each(data.suggestions, function (index) {
+                    $("#suggestions").append(
+                        "<li><a href='#' class='suggestion' data-town='" + data.suggestions[index].label + "'>" + data.suggestions[index].label + "</a></li>"
+                    );
+                });
+            });
+
+
+        });
+
+        $(document).on("click", "a.suggestion", function () {
+            var address = $(this).data("town");
+
+            $("#frm-registerAsCoordinator-town").val(address);
+            $("#suggestions").empty();
+        });
+
+    });
+
+</script>

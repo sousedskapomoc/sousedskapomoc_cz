@@ -1,5 +1,60 @@
 [
     {
+        "name": "contributte/forms-bootstrap",
+        "version": "0.1",
+        "version_normalized": "0.1.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/contributte/forms-bootstrap.git",
+            "reference": "f829d7cdd41fe6586860d9b31c307121c69cf73d"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/contributte/forms-bootstrap/zipball/f829d7cdd41fe6586860d9b31c307121c69cf73d",
+            "reference": "f829d7cdd41fe6586860d9b31c307121c69cf73d",
+            "shasum": ""
+        },
+        "require": {
+            "nette/application": "^3.0",
+            "nette/forms": "^3.0",
+            "php": ">=7.2"
+        },
+        "require-dev": {
+            "ninjify/qa": "^v0.10"
+        },
+        "time": "2020-01-08T23:39:06+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "0.1.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Contributte\\FormsBootstrap\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Dalibor Korpar",
+                "email": "dalibor.korpar@gmail.com"
+            }
+        ],
+        "description": "Nette extension for Bootstrap forms",
+        "homepage": "https://github.com/contributte/forms-bootstrap",
+        "keywords": [
+            "Forms",
+            "bootstrap",
+            "library",
+            "nette"
+        ]
+    },
+    {
         "name": "dg/adminer-custom",
         "version": "v1.21.0",
         "version_normalized": "1.21.0.0",

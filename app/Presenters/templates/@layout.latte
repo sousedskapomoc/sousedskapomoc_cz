@@ -13,7 +13,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <title>{ifset title}{include title|stripHtml} | {/ifset}SousedskaPomoc.cz</title>
-
+    <meta name="description"
+          content="webová stránka sloužící k organizaci dobrovolníků pro doručování zboží lidem, kteří si na nákup nemohou nebo nesmějí dojít."/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -23,18 +24,118 @@
 
     <link rel="stylesheet" href="{$basePath}/css/style.css">
     {block head}{/block}
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-160696817-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag('js', new Date());
+
+        gtag('config', 'UA-160696817-1');
+    </script>
 </head>
 
 <body>
 <div class="container">
+    <div id="banner">
+        <h1 n:block=title><a n:href="Homepage:default">SousedskaPomoc.cz</a> <small>pomoz sousedovi</small></h1>
+    </div>
     <div n:foreach="$flashes as $flash" n:class="alert, 'alert-' . $flash->type">{$flash->message}</div>
+    <div class="row">
+        <p>
+            SousedskaPomoc.cz je webová stránka sloužící k organizaci dobrovolníků pro doručování zboží lidem, kteří si
+            na
+            nákup nemohou nebo nesmějí dojít.
+        </p>
+        <p>
+            Aktuálně jsme ve fázi kdy se <strong>můžete registrovat</strong> a během dnešního / zítřejšího dne dokončíme část pro operátory/dispečery a kurýry kterou následně zveřejníme.
+        </p>
+        <p class="alert alert-danger">
+            Pokud máte možnost objednat si potraviny on-line pomocí rozvozců jako <a href="https://rohlik.cz"
+                                                                                     target="_blank">Rohlík.cz</a>,<a
+                    href="https://kosik.cz" target="_blank">Košík.cz</a> nebo <a href="https://nakup.itesco.cz/"
+                                                                                 target="_blank">iTesco.cz</a> tak to
+            <strong>prosím udělejte</strong> - naším cílem není nahrazovat tyto rozvozce ale nabídnout obdobnou službu
+            na dobrovolnické bázi v lokalitě kam tito rozvozci nedoručují.
+        </p>
+        <p>
 
+        </p>
+        <div class="col-12">
+            <div n:if="$presenter->view == 'default'">
+                <h2>Co mohu udělat pro své sousedy kteří si nemohou dojít nakoupit?</h2>
+                <p>
+                    Vzhledem k nouzovému stavu na území České Republiky a pandemii <a href="http://koronavirus.mzcr.cz/"
+                                                                                      target="_blank">Koronaviru</a>
+                    jsme se
+                    rozhodli vytvořit jednoduchý web který umožní organizovat dobrovolníky kteří chtějí pomoci.
+                </p>
+            </div>
+            <div n:if="$presenter->view == 'default' || $presenter->view == 'registerAsCoordinator'">
+                <p>Jako <strong>kordinátor</strong> bys měl najít:
+                <ul>
+                    <li>
+                        lidi kteří musí zůstat doma nebo si nemohou dojít na nákup
+                    </li>
+                    <li>
+                        lidi kteří mají auto, mají řidičák a chuť pomáhat
+                    </li>
+                    <li>
+                        lidi kteří mají čas, telefon a chuť organizovat proces nákupu a jeho doručení
+                    </li>
+                </ul>
+                </p>
+            </div>
+            <div n:if="$presenter->view == 'default' || $presenter->view == 'registerAsCourier'">
+                <p>Jako <strong>kurýr</strong> bys měl najít:
+                <ul>
+                    <li>
+                        lidi kteří musí zůstat doma nebo si nemohou dojít na nákup
+                    </li>
+                    <li>
+                        lidi kteří mají auto, mají řidičák a chuť pomáhat
+                    </li>
+                    <li>
+                        lidi kteří mají čas, telefon a chuť organizovat proces nákupu a jeho doručení
+                    </li>
+                </ul>
+                </p>
+            </div>
+            <div n:if="$presenter->view == 'default' || $presenter->view == 'registerAsOperator'">
+                <p>Jako <strong>operátor</strong> bys měl najít:
+                <ul>
+                    <li>
+                        Přiřadit objednávky zadané koordinátorem na jednoho z volných kurýrů
+                    </li>
+                    <li>
+                        Dohlédnout na to aby doručení proběhlo (včasné doručení)
+                    </li>
+                    <li>
+                        Pomáhat řešit problémy které vzniknou po cestě
+                    </li>
+                </ul>
+                </p>
+            </div>
+        </div>
+    </div>
     {include content}
 </div>
 
+<div class="row">
+    <div class="col-12">
+        <hr/>
+        <p class="text-center">
+            Veškeré dotazy posílejte na e-mail <a href="mailto:info@sousedskapomoc.cz"
+                                                  target="_blank">info@sousedskapomoc.cz</a>
+        </p>
+    </div>
+</div>
 {block scripts}
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
             crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
             integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
