@@ -5,6 +5,7 @@ namespace SousedskaPomoc\Components;
 use Nette;
 use Nette\Mail\Mailer;
 use Nette\Mail\Message;
+use Latte\Engine;
 
 
 final class Mail
@@ -41,10 +42,11 @@ final class Mail
     public function sendRegistrationMail($to)
     {
         $mail = new Message;
+        $latte = new Engine;
         $mail->setFrom('info@sousedskapomoc.cz')
             ->addTo($to)
             ->setSubject('SousedskaPomoc.cz - Úspěšná registrace')
-            ->setHtmlBody('<h1>Děkujeme, že pomáháš s námi</h1><p>Tvá registrace proběhla úspěšně.</p>');
+            ->setHtmlBody($latte->renderToString(__DIR__.'/registrationMail.latte'));
 
         $this->mailer->send($mail);
     }
