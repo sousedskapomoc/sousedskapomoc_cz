@@ -1,0 +1,21 @@
+{block content}
+<div class="row">
+    <div class="col-12">
+        <h1>Sekce pro přihlášené ({$user->getIdentity()->personName})</h1>
+        <a n:href="Sign:out" class="btn btn-primary">Odhlásit se</a>
+        <p>Role: {$user->getRoles()[0]}</p>
+        <hr/>
+        {if $user->isInRole("courier")}
+            <h2>Kurýr</h2>
+            <a n:href="Courier:dashboard">Přejít do sekce pro kurýry</a>
+        {/if}
+        {if $user->isInRole("operator")}
+            <h2>Operátor</h2>
+            <a n:href="Operator:dashboard">Přejít do sekce pro operátory</a>
+        {/if}
+        {if $user->isInRole("coordinator")}
+            <h2>Koordinátor</h2>
+            <a n:href="Coordinator:dashboard">Přejít do sekce pro koordinátory</a>
+        {/if}
+    </div>
+</div>
