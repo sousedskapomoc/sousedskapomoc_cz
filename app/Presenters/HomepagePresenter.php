@@ -7,10 +7,8 @@ namespace SousedskaPomoc\Presenters;
 
 use Contributte\FormsBootstrap\BootstrapForm;
 use Contributte\FormsBootstrap\Enums\RenderMode;
-use Latte\Engine;
 use Nette\Database\Connection;
-use Nette\Mail\Message;
-use Nette\Mail\Mailer;
+use SousedskaPomoc\Components\Mail;
 use SousedskaPomoc\Model\UserManager;
 
 final class HomepagePresenter extends BasePresenter
@@ -21,23 +19,32 @@ final class HomepagePresenter extends BasePresenter
     /** @var \SousedskaPomoc\Model\UserManager */
     protected $userManager;
 
-    /** @var Mailer */
-    protected $mailer;
+    /** @var \SousedskaPomoc\Components\Mail */
+    protected $mail;
 
-    public function beforeRender() {
-        if($this->user->isLoggedIn()) {
+
+
+    public function beforeRender()
+    {
+        if ($this->user->isLoggedIn()) {
             $this->redirect("System:dashboard");
         }
     }
+
+
 
     public function injectUserManager(UserManager $userManager)
     {
         $this->userManager = $userManager;
     }
 
-    public function injectMailer(Mailer $mailer) {
-        $this->mailer = $mailer;
+
+
+    public function injectMail(Mail $mail)
+    {
+        $this->mail = $mail;
     }
+
 
 
     public function injectConnection(Connection $connection)
@@ -119,16 +126,6 @@ final class HomepagePresenter extends BasePresenter
         return $form;
     }
 
-    public function sendRegistrationMail($to) {
-        $mail = new Message;
-        $mail->setFrom('info@sousedskapomoc.cz')
-            ->addTo($to)
-            ->setSubject('SousedskaPomoc.cz - Úspěšná registrace')
-            ->setHtmlBody('<h1>Děkujeme, že pomáháš s námi</h1><p>Tvá registrace proběhla úspěšně.</p>');
-
-        $this->mailer->send($mail);
-    }
-
 
 
     public function processRegistration(BootstrapForm $form)
@@ -137,7 +134,7 @@ final class HomepagePresenter extends BasePresenter
         if (!$this->userManager->check('personEmail', $values->personEmail)) {
 
             $this->userManager->register($values);
-            $this->sendRegistrationMail($values->personEmail);
+            $this->mail->sendRegistrationMail($values->personEmail);
             $this->flashMessage("Vaše registrace proběhla úspěšně.");
             $this->redirect("RegistrationFinished");
         } else {
