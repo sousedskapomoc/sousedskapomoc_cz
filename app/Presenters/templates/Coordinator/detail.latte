@@ -1,0 +1,44 @@
+{block content}
+<h1>Detail objednávky</h1>
+<div class="col-12">
+    <p><a n:href="Coordinator:dashboard" class="btn btn-primary">Zpět na seznam obj.</a></p>
+</div>
+<div class="col-12">
+    <div class="table-responsive">
+        <table class="table table-bordered table-condensed">
+            <tr>
+                <th>ID obj.</th>
+                <td>{$order->id}</td>
+            </tr>
+            <tr>
+                <th>Stav obj.</th>
+                <td>{$order->status}</td>
+            </tr>
+            <tr>
+                <th>Adresa doručení</th>
+                <td><a href="https://www.google.com/maps/search/{$order->delivery_address}"
+                       target="_blank">{$order->delivery_address}</a></td>
+            </tr>
+            <tr>
+                <th>Položky objednávky</th>
+                <td>{nl2br($order->order_items)|noescape}</td>
+            </tr>
+            <tr>
+                <th>Poznámka k obj.</th>
+                <td>{$order->note}</td>
+            </tr>
+            <tr>
+                <th>Datum vytvoření</th>
+                <td>{$order->createdAt}</td>
+            </tr>
+            <tr>
+                <th>Datum poslední změny</th>
+                <td>{$order->updatedAt}</td>
+            </tr>
+            <tr>
+                <th>Kdo veze</th>
+                <td>{$order->courier_id ?? 'Kurýr nebyl přiřazen'}</td>
+            </tr>
+        </table>
+    </div>
+</div>

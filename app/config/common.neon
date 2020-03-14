@@ -15,6 +15,7 @@ session:
 	expiration: 14 days
 
 services:
+	- SousedskaPomoc\Model\OrderManager
 	- SousedskaPomoc\Model\UserManager
 	- SousedskaPomoc\Forms\FormFactory
 	- SousedskaPomoc\Forms\SignInFormFactory
