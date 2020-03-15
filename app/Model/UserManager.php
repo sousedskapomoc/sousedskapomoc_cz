@@ -131,6 +131,13 @@ final class UserManager implements Nette\Security\IAuthenticator
 
 
 
+    public function fetchTotalCount()
+    {
+        return $this->database->table(self::TABLE_NAME)->count();
+    }
+
+
+
     public function fetchCountBy($rule)
     {
         return $this->database->table(self::TABLE_NAME)->where($rule)->count();

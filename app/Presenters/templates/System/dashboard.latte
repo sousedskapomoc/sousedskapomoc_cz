@@ -3,7 +3,7 @@
 <div class="row">
     <div class="col-12">
         <h1>{_templates.dashboard.title}</h1>
-
+        <div n:if="$user->isInRole('admin')">
         <h2>Aktuální statistiky</h2>
         <table class="table table-bordered table-hover col-6">
             {foreach $statistics as $statisticName => $value}
@@ -13,18 +13,6 @@
                 </tr>
             {/foreach}
         </table>
-
-        {if $user->isInRole("courier")}
-            <h2>{_templates.dashboard.courier}</h2>
-            <a n:href="Courier:dashboard" class="btn btn-primary">{_templates.dashboard.courierSection}</a>
-        {/if}
-        {if $user->isInRole("operator")}
-            <h2>{_templates.dashboard.operator}</h2>
-            <a n:href="Operator:dashboard" class="btn btn-primary">{_templates.dashboard.operatorSection}</a>
-        {/if}
-        {if $user->isInRole("coordinator")}
-            <h2>{_templates.dashboard.coordinator}</h2>
-            <a n:href="Coordinator:dashboard" class="btn btn-primary">{_templates.dashboard.coordinatorSection}</a>
-        {/if}
+        </div>
     </div>
 </div>
