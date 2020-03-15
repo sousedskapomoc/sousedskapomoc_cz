@@ -16,10 +16,13 @@
 
             jQuery.getJSON(hereMapsEndpoint + query, function (data) {
                 $("#suggestions").empty();
+
                 $.each(data.suggestions, function (index) {
-                    $("#suggestions").append(
-                        "<li><a href='#' class='suggestion' data-town='" + data.suggestions[index].label + "'>" + data.suggestions[index].label + "</a></li>"
-                    );
+                    if (data.suggestions[index].matchLevel == "city") {
+                        $("#suggestions").append(
+                            "<li><a href='#' class='suggestion' data-town='" + data.suggestions[index].address.city + "'>" + data.suggestions[index].address.city + "</a></li>"
+                        );
+                    }
                 });
             });
         });
