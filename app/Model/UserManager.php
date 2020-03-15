@@ -108,6 +108,13 @@ final class UserManager implements Nette\Security\IAuthenticator
     {
         return count($this->database->table(SELF::TABLE_NAME)->where([$field => $value]));
     }
+
+
+
+    public function fetchAvailableCouriers()
+    {
+        return $this->database->table(self::TABLE_NAME)->where(['role' => 'courier'])->fetchAll();
+    }
 }
 
 
