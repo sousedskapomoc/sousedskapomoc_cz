@@ -142,7 +142,7 @@ final class HomepagePresenter extends BasePresenter
         if (!$this->userManager->check('personEmail', $values->personEmail)) {
 
             $this->userManager->register($values);
-            $this->mail->sendRegistrationMail($values->personEmail);
+            //$this->mail->sendRegistrationMail($values->personEmail);
             $this->flashMessage($this->translator->translate('messages.registration.success'));
             $this->redirect("RegistrationFinished");
         } else {
