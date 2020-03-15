@@ -1,3 +1,4 @@
+{layout "../appLayout.latte"}
 {block content}
 <h1>Přehled kurýra</h1>
 <hr/>
@@ -6,7 +7,5 @@
 <a n:href="toggleActive! active => true" class="btn btn-success">Jsem připraven k práci</a>
 <a n:href="toggleActive! active => false" class="btn btn-danger">Už nemohu přijímat další objednávky</a>
 <hr />
-<h2>Objednávky které čekají na přiřazení</h2>
-<p>Zatím žádné objednávky k doručení</p>
 <h2>Objednávky které ti byly přiřazeny</h2>
 <p>Momentálně nemáš žádné objednávky k doručení.</p>

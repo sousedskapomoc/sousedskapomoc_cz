@@ -1,3 +1,4 @@
+{layout "../appLayout.latte"}
 {block content}
 <div class="row">
     <div class="col-12">
@@ -5,18 +6,51 @@
             <h1>Operátor / Dispečer</h1>
             <a n:href="System:dashboard">Zpět na hlavní stránku</a>
         </div>
+        <hr/>
         <div>
             <h2>Propagace</h2>
-            <a n:href="Coordinator:printMaterial id => 'shopping'" target="_blank" class="btn btn-success">Vytisknout materiál -
+            <a n:href="Coordinator:printMaterial id => 'shopping'" target="_blank" class="btn btn-success">Vytisknout
+                materiál -
                 Zařídím vám
                 nákup</a>
-            <a n:href="Coordinator:printMaterial id => 'courierWanted'" target="_blank" class="btn btn-success">Vytisknout materiál
+            <a n:href="Coordinator:printMaterial id => 'courierWanted'" target="_blank" class="btn btn-success">Vytisknout
+                materiál
                 - Hledám
                 řidiče</a>
-            <a n:href="Coordinator:printMaterial id => 'operatorWanted'" target="_blank" class="btn btn-success">Vytisknout materiál
+            <a n:href="Coordinator:printMaterial id => 'operatorWanted'" target="_blank" class="btn btn-success">Vytisknout
+                materiál
                 - Hledám
                 operátora</a>
             <hr/>
         </div>
+
     </div>
+</div>
+<div class="row">
+    <h2>Přiřazení objednávek</h2>
+    <table class="table table-responsive">
+        <tr>
+            <th>Objednávky k přiřazení</th>
+            <th>Objednávky které se doručují</th>
+            <th>Objednávky které jsou doručené</th>
+        </tr>
+        <tr>
+            <td>Obj #1. - počet položek 9<br/>Lukáš Huňka<br/>Jindřicha Plachty
+                <hr/>
+                <p>
+                Přiřadit k: <select>
+                    <option>Kája</option>
+                    <option>Michal</option>
+                    <option>Thomas Indy</option>
+                </select>
+                </p>
+                <p class="text-center">
+                    <a n:href="Coordinator:detail id => 1" target="_blank">Detail objednávky</a>
+                </p>
+            </td>
+            <td>
+                ---
+            </td>
+        </tr>
+    </table>
 </div>
