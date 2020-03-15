@@ -1,12 +1,12 @@
 {block content}
-<h1>Přehled kurýra</h1>
+<h1>{_templates.courierDashboard.title}</h1>
 <hr/>
-<h2>Aktuální akce</h2>
-<br />
-<a n:href="toggleActive! active => true" class="btn btn-success">Jsem připraven k práci</a>
-<a n:href="toggleActive! active => false" class="btn btn-danger">Už nemohu přijímat další objednávky</a>
-<hr />
-<h2>Objednávky které čekají na přiřazení</h2>
-<p>Zatím žádné objednávky k doručení</p>
-<h2>Objednávky které ti byly přiřazeny</h2>
-<p>Momentálně nemáš žádné objednávky k doručení.</p>
+<h2>{_templates.courierDashboard.subtitle}</h2>
+<br/>
+<a n:href="toggleActive! active => true" class="btn btn-success">{_templates.courierDashboard.readyToWork}</a>
+<a n:href="toggleActive! active => false" class="btn btn-danger">{_templates.courierDashboard.tooBusy}</a>
+<hr/>
+<h2>{_templates.courierDashboard.waitingOrders}</h2>
+<p>{_templates.courierDashboard.noOrdersYet}</p>
+<h2>{_templates.courierDashboard.yourOrders}</h2>
+<p>{_templates.courierDashboard.noYourOrders}</p>

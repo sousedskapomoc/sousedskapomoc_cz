@@ -1,1 +1,5 @@
-homepage:
+sign:
+    logout: 'Byl/a jste odhlášen/a'
+    signIn: 'Přihlásit se k jinému účtu'
+    signUp: 'Registruj se'
+    loginInstead: 'Již jsi registrován/a? Přihlaš se.'

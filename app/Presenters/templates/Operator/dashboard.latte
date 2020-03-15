@@ -2,20 +2,17 @@
 <div class="row">
     <div class="col-12">
         <div>
-            <h1>Operátor / Dispečer</h1>
-            <a n:href="System:dashboard">Zpět na hlavní stránku</a>
+            <h1>{_templates.operatorDashboard.title}</h1>
+            <a n:href="System:dashboard">{_templates.header.backOnMainPage}</a>
         </div>
         <div>
-            <h2>Propagace</h2>
-            <a n:href="Coordinator:printMaterial id => 'shopping'" target="_blank" class="btn btn-success">Vytisknout materiál -
-                Zařídím vám
-                nákup</a>
-            <a n:href="Coordinator:printMaterial id => 'courierWanted'" target="_blank" class="btn btn-success">Vytisknout materiál
-                - Hledám
-                řidiče</a>
-            <a n:href="Coordinator:printMaterial id => 'operatorWanted'" target="_blank" class="btn btn-success">Vytisknout materiál
-                - Hledám
-                operátora</a>
+            <h2>{_templates.operatorDashboard.promoteTitle}</h2>
+            <a n:href="Coordinator:printMaterial id => 'shopping'" target="_blank"
+                                                                   class="btn btn-success">{_templates.operatorDashboard.materialShopping}</a>
+            <a n:href="Coordinator:printMaterial id => 'courierWanted'" target="_blank"
+                                                                        class="btn btn-success">{_templates.operatorDashboard.materialCourier}</a>
+            <a n:href="Coordinator:printMaterial id => 'operatorWanted'" target="_blank"
+                                                                         class="btn btn-success">{_templates.operatorDashboard.materialCoordinator}</a>
             <hr/>
         </div>
     </div>
