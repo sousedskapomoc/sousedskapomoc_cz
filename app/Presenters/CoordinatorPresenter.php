@@ -39,12 +39,15 @@ final class CoordinatorPresenter extends BasePresenter
     public function createComponentPostOrder()
     {
         $form = new BootstrapForm();
-        $form->addText('delivery_address',
-            'Adresa kam dovezeme nákup')->setRequired('Potřebujeme vědět kam máme nákup odvézt')->setPlaceholder("např. Palackého náměstí 1, Kolín");
+        $form->addText('delivery_address', $this->translator->translate('forms.postOrder.addressLabel'))
+            ->setRequired($this->translator->translate('forms.postOrder.addressRequired'))
+            ->setPlaceholder($this->translator->translate('forms.postOrder.addressPlaceholder'));
         $form->addText('note',
-            'poznámka k nákupu (např. pro koho je určen pro snažší odlišení)')->setPlaceholder("pro paní Novákovou");
-        $form->addTextArea('order_items', 'Položky objednávky (oddělené ENTERem)')->setHtmlAttribute('rows', 10);
-        $form->addSubmit('postOrderFormSubmit', 'Vložit objednávku do systému');
+            $this->translator->translate('forms.postOrder.noteLabel'))
+            ->setPlaceholder($this->translator->translate('forms.postOrder.notePlaceholder'));
+        $form->addTextArea('order_items', $this->translator->translate('forms.postOrder.itemsLabel'))
+            ->setHtmlAttribute('rows', 10);
+        $form->addSubmit('postOrderFormSubmit', $this->translator->translate('forms.postOrder.button'));
         $form->onSuccess[] = [$this, "postOrder"];
 
         return $form;
@@ -60,7 +63,7 @@ final class CoordinatorPresenter extends BasePresenter
         $values->status = "new";
 
         $result = $this->orderManager->create($values);
-        $this->flashMessage("Vaše objednávka byla uložena.");
+        $this->flashMessage($this->translator->translate('messages.order.orderSuccess'));
         $this->redirect("Coordinator:dashboard");
     }
 }
