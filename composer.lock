@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "73ac9e4cde30f4ddb38b39a4106a2dba",
+    "content-hash": "bbd3281b7753ae14daf1693d9801a20e",
     "packages": [
         {
             "name": "contributte/forms-bootstrap",

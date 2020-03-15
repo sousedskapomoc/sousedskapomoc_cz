@@ -8,6 +8,7 @@ namespace SousedskaPomoc\Presenters;
 use Contributte\FormsBootstrap\BootstrapForm;
 use Contributte\FormsBootstrap\Enums\RenderMode;
 use Nette\Database\Connection;
+use SousedskaPomoc\Components\Mail;
 use SousedskaPomoc\Model\UserManager;
 
 final class HomepagePresenter extends BasePresenter
@@ -18,15 +19,30 @@ final class HomepagePresenter extends BasePresenter
     /** @var \SousedskaPomoc\Model\UserManager */
     protected $userManager;
 
-    public function beforeRender() {
-        if($this->user->isLoggedIn()) {
+    /** @var \SousedskaPomoc\Components\Mail */
+    protected $mail;
+
+
+
+    public function beforeRender()
+    {
+        if ($this->user->isLoggedIn()) {
             $this->redirect("System:dashboard");
         }
     }
 
+
+
     public function injectUserManager(UserManager $userManager)
     {
         $this->userManager = $userManager;
+    }
+
+
+
+    public function injectMail(Mail $mail)
+    {
+        $this->mail = $mail;
     }
 
 
@@ -118,12 +134,11 @@ final class HomepagePresenter extends BasePresenter
         if (!$this->userManager->check('personEmail', $values->personEmail)) {
 
             $this->userManager->register($values);
+            $this->mail->sendRegistrationMail($values->personEmail);
             $this->flashMessage("Vaše registrace proběhla úspěšně.");
             $this->redirect("RegistrationFinished");
         } else {
             $form->addError("Zadaný e-mail již existuje");
         }
-
-
     }
 }
