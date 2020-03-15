@@ -1,0 +1,10 @@
+sign:
+    logout: 'Byl/a jste odhlášen/a'
+    signIn: 'Přihlásit se k jinému účtu'
+    signUp: 'Registruj se'
+    loginInstead: 'Již jsi registrován/a? Přihlaš se.'
+order:
+    orderSuccess: 'Vaše objednávka byla uložena.'
+registration:
+    success: 'Vaše registrace proběhla úspěšně.'
+    fail: 'Zadaný e-mail již existuje'

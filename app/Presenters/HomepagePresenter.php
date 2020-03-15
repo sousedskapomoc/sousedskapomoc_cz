@@ -60,15 +60,17 @@ final class HomepagePresenter extends BasePresenter
         $form->renderMode = RenderMode::VERTICAL_MODE;
         $form->addHidden('role', 'coordinator');
 
-        $form->addText('personName', 'Jméno a příjmení')
-            ->setRequired('Potřebujeme vědět vaše jméno');
-        $form->addText('personPhone', 'Telefon')
-            ->setRequired('Potřebujeme vědět váš telefon abychom vám mohli zavolat');
-        $form->addEmail('personEmail', 'E-mail')->setRequired('Potřebujeme znás váš e-mail kvůli registraci.');
+        $form->addText('personName', $this->translator->translate('forms.registerCoordinator.nameLabel'))
+            ->setRequired($this->translator->translate('forms.registerCoordinator.nameRequired'));
+        $form->addText('personPhone', $this->translator->translate('forms.registerCoordinator.phoneLabel'))
+            ->setRequired($this->translator->translate('forms.registerCoordinator.phoneRequired'));
+        $form->addEmail('personEmail', $this->translator->translate('forms.registerCoordinator.mailLabel'))
+            ->setRequired($this->translator->translate('forms.registerCoordinator.mailRequired'));
 
-        $form->addText('town', 'Město kde chci pomáhat')->setRequired('Potřebujeme vědět kde budete pomáhat');
+        $form->addText('town', $this->translator->translate('forms.registerCoordinator.townLabel'))
+            ->setRequired($this->translator->translate('forms.registerCoordinator.townRequired'));
 
-        $form->addSubmit('coordinatorRegFormSubmit', 'Zaregistrovat se');
+        $form->addSubmit('coordinatorRegFormSubmit', $this->translator->translate('forms.registerCoordinator.button'));
         $form->onSuccess[] = [$this, "processRegistration"];
 
         return $form;
@@ -82,15 +84,17 @@ final class HomepagePresenter extends BasePresenter
         $form->renderMode = RenderMode::VERTICAL_MODE;
         $form->addHidden('role', 'operator');
 
-        $form->addText('personName', 'Jméno a příjmení')
-            ->setRequired('Potřebujeme vědět vaše jméno');
-        $form->addText('personPhone', 'Telefon')
-            ->setRequired('Potřebujeme vědět váš telefon abychom vám mohli zavolat');
-        $form->addEmail('personEmail', 'E-mail')->setRequired('Potřebujeme znás váš e-mail kvůli registraci.');
+        $form->addText('personName', $this->translator->translate('forms.registerCoordinator.nameLabel'))
+            ->setRequired($this->translator->translate('forms.registerCoordinator.nameRequired'));
+        $form->addText('personPhone', $this->translator->translate('forms.registerCoordinator.phoneLabel'))
+            ->setRequired($this->translator->translate('forms.registerCoordinator.phoneRequired'));
+        $form->addEmail('personEmail', $this->translator->translate('forms.registerCoordinator.mailLabel'))
+            ->setRequired($this->translator->translate('forms.registerCoordinator.mailRequired'));
 
-        $form->addText('town', 'Město kde chci pomáhat')->setRequired('Potřebujeme vědět kde budete pomáhat');
+        $form->addText('town', $this->translator->translate('forms.registerCoordinator.townLabel'))
+            ->setRequired($this->translator->translate('forms.registerCoordinator.townRequired'));
 
-        $form->addSubmit('coordinatorRegFormSubmit', 'Zaregistrovat se');
+        $form->addSubmit('coordinatorRegFormSubmit', $this->translator->translate('forms.registerCoordinator.button'));
         $form->onSuccess[] = [$this, "processRegistration"];
 
         return $form;
@@ -111,16 +115,20 @@ final class HomepagePresenter extends BasePresenter
         $form->renderMode = RenderMode::VERTICAL_MODE;
         $form->addHidden('role', 'courier');
 
-        $form->addText('personName', 'Jméno a příjmení')
-            ->setRequired('Potřebujeme vědět vaše jméno');
-        $form->addText('personPhone', 'Telefon')
-            ->setRequired('Potřebujeme vědět váš telefon abychom vám mohli zavolat');
-        $form->addEmail('personEmail', 'E-mail')->setRequired('Potřebujeme znás váš e-mail kvůli registraci.');
+        $form->addText('personName', $this->translator->translate('forms.registerCoordinator.nameLabel'))
+            ->setRequired($this->translator->translate('forms.registerCoordinator.nameRequired'));
+        $form->addText('personPhone', $this->translator->translate('forms.registerCoordinator.phoneLabel'))
+            ->setRequired($this->translator->translate('forms.registerCoordinator.phoneRequired'));
+        $form->addEmail('personEmail', $this->translator->translate('forms.registerCoordinator.mailLabel'))
+            ->setRequired($this->translator->translate('forms.registerCoordinator.mailRequired'));
 
-        $form->addText('town', 'Město kde chci pomáhat')->setRequired('Potřebujeme vědět kde budete pomáhat');
-        $form->addSelect('car', 'Auto které mám k dispozici', $cars)->setRequired('Potřebujeme vědět co uvezete');
+        $form->addText('town', $this->translator->translate('forms.registerCoordinator.townLabel'))
+            ->setRequired($this->translator->translate('forms.registerCoordinator.townRequired'));
 
-        $form->addSubmit('coordinatorRegFormSubmit', 'Zaregistrovat se');
+        $form->addSelect('car', $this->translator->translate('forms.registerCoordinator.carLabel'), $cars)
+            ->setRequired($this->translator->translate('forms.registerCoordinator.carRequired'));
+
+        $form->addSubmit('coordinatorRegFormSubmit', $this->translator->translate('forms.registerCoordinator.button'));
         $form->onSuccess[] = [$this, "processRegistration"];
 
         return $form;
@@ -135,10 +143,10 @@ final class HomepagePresenter extends BasePresenter
 
             $this->userManager->register($values);
             $this->mail->sendRegistrationMail($values->personEmail);
-            $this->flashMessage("Vaše registrace proběhla úspěšně.");
+            $this->flashMessage($this->translator->translate('messages.registration.success'));
             $this->redirect("RegistrationFinished");
         } else {
-            $form->addError("Zadaný e-mail již existuje");
+            $form->addError($this->translator->translate('messages.registration.fail'));
         }
     }
 }

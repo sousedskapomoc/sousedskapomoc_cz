@@ -6,93 +6,65 @@
 <div id="content">
 
     <p class="alert alert-info">
-        Veškeré činnosti spojené s provozováním tohoto webu (kurýrní práce, práce operátora, vývoj) jsou prováděny BEZ
-        NÁROKU na odměnu.
+        {_templates.homepage.info|noescape}
     </p>
     <div class="row">
         <div class="col-12 col-md-4">
-            <h2>Koordinátor</h2>
+            <h2>{_templates.coordinator.title}</h2>
             <div class="row bg-color--light-grey quest">
                 <div class="col-12">
-                    <h3>Co potřebuješ</h3>
-                    <ul>
-                        <li>Notebook nebo smartphone</li>
-                        <li>Telefon</li>
-                        <li>Organizační schopnosti</li>
-                    </ul>
-                    
+                    {_templates.coordinator.whatYouNeed|noescape}
+
                     <div class="hide-md">
-                        <h3>Jaký je tvůj ůkol</h3>
-                        <ul>
-                            <li>Oslov je bezpečnou formou (ideálně telefonicky)</li>
-                            <li>Vytvoř nákupní seznam a počkej na pokyny od operátora</li>
-                        </ul>
+                        {_templates.coordinator.whatIsYourGoal|noescape}
                     </div>
                 </div>
             </div>
 
             <div class="hide-md">
                 <p class="text-center">
-                    <a n:href="registerAsCoordinator" class="btn btn-success"><i class="fas fa-user-ninja"></i> Chci být
-                        koordinátor</a>
+                    <a n:href="registerAsCoordinator" class="btn btn-success"><i
+                                class="fas fa-user-ninja"></i> {_templates.coordinator.callToActionButton}</a>
                 </p>
             </div>
-           
+
         </div>
         <div class="col-12 col-md-4">
-            <h2>Operátor</h2>
+            <h2>{_templates.operator.title}</h2>
             <div class="row bg-color--light-grey quest">
                 <div class="col-12">
-                    <h3>Co potřebuješ</h3>
-                    <ul>
-                        <li>Notebook</li>
-                        <li>Smartphone</li>
-                        <li>Telefon</li>
-                        <li>Organizační schopnosti</li>
-                    </ul>
-                    
+                    {_templates.operator.whatYouNeed|noescape}
+
                     <div class="hide-md">
-                        <h3>Jaký je tvůj ůkol</h3>
-                        <ul>
-                            <li>V systému vidíš seznam kurýrů kteří jsou v tvé lokalitě dostupní</li>
-                            <li>Zároveň vidíš kolik kurýrů má momentálně volno</li>
-                            <li>Tvůj úkol je dohodnout se s kurýrem kolik toho uveze a zařídit aby nákup doručil</li>
-                        </ul>
+                        {_templates.operator.whatIsYourGoal|noescape}
                     </div>
                 </div>
             </div>
 
             <div class="hide-md">
                 <p class="text-center">
-                    <a n:href="registerAsOperator" class="btn btn-success"><i class="fas fa-headset"></i> Chci být
-                        operátor</a>
+                    <a n:href="registerAsOperator" class="btn btn-success"><i
+                                class="fas fa-headset"></i> {_templates.operator.callToActionButton}</a>
                 </p>
             </div>
-            
+
         </div>
         <div class="col-12 col-md-4">
-            <h2>Kurýr</h2>
+            <h2>{_templates.courier.title}</h2>
             <div class="row bg-color--light-grey quest">
                 <div class="col-12">
-                    <h3>Co potřebuješ</h3>
-                    <ul>
-                        <li>Telefon</li>
-                        <li>Auto</li>
-                    </ul>
+                    {_templates.courier.whatYouNeed|noescape}
 
                     <div class="hide-md">
-                        <h3>Jaký je tvůj ůkol</h3>
-                        <ul>
-                            <li>Vezmi svoje auto, počkej na objednávku od operátora a vyraž na nákup</li>
-                            <li>Doruč nákup na místo určení a zajisti <strong>bezpečné</strong> předání</li>
-                        </ul>
+                        {_templates.courier.whatIsYourGoal|noescape}
                     </div>
                 </div>
             </div>
 
             <div class="hide-md">
                 <p class="text-center">
-                    <a n:href="registerAsCourier" class="btn btn-success"><i class="fas fa-car"></i> Chci být řidič</a>
+                    <a n:href="registerAsCourier" class="btn btn-success"><i
+                                class="fas fa-car"></i> {_templates.courier.callToActionButton}</a>
                 </p>
             </div>
         </div>
@@ -100,51 +72,34 @@
 
     <div class="row hide-till--md">
         <div class="col-12 col-md-4 flex flex align-content-start flex-column quest">
-            <h3>Jaký je tvůj ůkol</h3>
-            <div class="flex justify-content-center align-content-between flex-1">
-                <ul>
-                    <li>Oslov je bezpečnou formou (ideálně telefonicky)</li>
-                    <li>Vytvoř nákupní seznam a počkej na pokyny od operátora</li>
-                </ul>
-
-                <p class="text-center">
-                    <a n:href="registerAsCoordinator" class="btn btn-success"><i class="fas fa-user-ninja"></i> Chci být
-                        koordinátor</a>
-                </p>
-            </div>
-
-        </div>
-        <div class="col-12 col-md-4 flex flex align-content-start flex-column quest">
-
-
-            <h3>Jaký je tvůj ůkol</h3>
-
-            <div class="flex justify-content-center align-content-between flex-1">
-            <ul>
-                <li>V systému vidíš seznam kurýrů kteří jsou v tvé lokalitě dostupní</li>
-                <li>Zároveň vidíš kolik kurýrů má momentálně volno</li>
-                <li>Tvůj úkol je dohodnout se s kurýrem kolik toho uveze a zařídit aby nákup doručil</li>
-            </ul>
+            {_templates.coordinator.whatIsYourGoal|noescape}
 
             <p class="text-center">
-                <a n:href="registerAsOperator" class="btn btn-success"><i class="fas fa-headset"></i> Chci být
-                    operátor</a>
+                <a n:href="registerAsCoordinator" class="btn btn-success"><i
+                            class="fas fa-user-ninja"></i> {_templates.coordinator.callToActionButton}</a>
             </p>
-            </div>
         </div>
-        <div class="col-12 col-md-4 flex align-content-start flex-column quest">
 
-            <h3>Jaký je tvůj ůkol</h3>
-            
-            <div class="flex justify-content-center align-content-between flex-1">
-            <ul>
-                <li>Vezmi svoje auto, počkej na objednávku od operátora a vyraž na nákup</li>
-                <li>Doruč nákup na místo určení a zajisti <strong>bezpečné</strong> předání</li>
-            </ul>
-            <p class="text-center">
-                <a n:href="registerAsCourier" class="btn btn-success"><i class="fas fa-car"></i> Chci být řidič</a>
-            </p>
-            </div>
-        </div>
     </div>
+    <div class="col-12 col-md-4 flex flex align-content-start flex-column quest">
+
+
+        {_templates.operator.whatIsYourGoal|noescape}
+
+        <p class="text-center">
+            <a n:href="registerAsOperator" class="btn btn-success"><i
+                        class="fas fa-headset"></i> {_templates.operator.callToActionButton}</a>
+        </p>
+    </div>
+</div>
+<div class="col-12 col-md-4 flex align-content-start flex-column quest">
+
+    {_templates.courier.whatIsYourGoal|noescape}
+    <p class="text-center">
+        <a n:href="registerAsCourier" class="btn btn-success"><i
+                    class="fas fa-car"></i> {_templates.courier.callToActionButton}</a>
+    </p>
+</div>
+</div>
+</div>
 </div>

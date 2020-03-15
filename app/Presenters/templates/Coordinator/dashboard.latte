@@ -3,35 +3,32 @@
 <div class="row">
     <div class="col-12">
         <div>
-            <h1>Pečovatel</h1>
-            <a n:href="System:dashboard">Zpět na hlavní stránku</a>
+            <h1>{_templates.coordinatorDashboard.title}</h1>
+            <a n:href="System:dashboard">{_templates.header.backOnMainPage}</a>
         </div>
         <div>
-            <h2>Propagace</h2>
-            <a n:href="printMaterial id => 'shopping'" target="_blank" class="btn btn-success">Vytisknout materiál -
-                Zařídím vám
-                nákup</a>
-            <a n:href="printMaterial id => 'courierWanted'" target="_blank" class="btn btn-success">Vytisknout materiál
-                - Hledám
-                řidiče</a>
-            <a n:href="printMaterial id => 'operatorWanted'" target="_blank" class="btn btn-success">Vytisknout materiál
-                - Hledám
-                operátora</a>
+            <h2>{_templates.coordinatorDashboard.promote}Propagace</h2>
+            <a n:href="printMaterial id => 'shopping'" target="_blank"
+                                                       class="btn btn-success">{_templates.operatorDashboard.materialShopping}</a>
+            <a n:href="printMaterial id => 'courierWanted'" target="_blank"
+                                                            class="btn btn-success">{_templates.operatorDashboard.materialCourier}</a>
+            <a n:href="printMaterial id => 'operatorWanted'" target="_blank"
+                                                             class="btn btn-success">{_templates.operatorDashboard.materialCoordinator}</a>
             <hr/>
         </div>
         <div>
-            <h2>Objednávky</h2>
-            <a n:href="postOrder" class="btn btn-primary">Zadat objednávku</a>
-            <h4>Seznam objednávek</h4>
+            <h2>{_templates.coordinatorDashboard.orders}</h2>
+            <a n:href="postOrder" class="btn btn-primary">{_templates.coordinatorDashboard.makeOrder}</a>
+            <h4>{_templates.coordinatorDashboard.listOrders}</h4>
             {if $orders}
                 <table class="table table-bordered table-hover">
                     <thead>
                     <tr>
-                        <td>ID</td>
-                        <td>Doručovací adresa</td>
-                        <td>Položky obj</td>
-                        <td>Poznámka</td>
-                        <td>Akce</td>
+                        <td>{_templates.coordinatorDashboard.id}</td>
+                        <td>{_templates.coordinatorDashboard.address}</td>
+                        <td>{_templates.coordinatorDashboard.items}</td>
+                        <td>{_templates.coordinatorDashboard.note}</td>
+                        <td>{_templates.coordinatorDashboard.action}</td>
                     </tr>
                     </thead>
                     <tbody>
@@ -42,14 +39,14 @@
                             <td>{$order->order_items}</td>
                             <td>{$order->note}</td>
                             <td>
-                                <a n:href="Detail id => $order->id">Detail</a>
+                                <a n:href="Detail id => $order->id">{_templates.coordinatorDashboard.detail}</a>
                             </td>
                         </tr>
                     {/foreach}
                     </tbody>
                 </table>
             {else}
-                <p>Zatím nebyly zadány žádné objednávky.</p>
+                <p>{_templates.coordinatorDashboard.noOrdersYet}</p>
             {/if}
         </div>
     </div>

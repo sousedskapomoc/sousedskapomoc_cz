@@ -2,7 +2,19 @@
 {block content}
 <div class="row">
     <div class="col-12">
-        <h1>Sekce pro přihlášené</h1>
+        <h1>{_templates.dashboard.title}</h1>
         <hr/>
+        {if $user->isInRole("courier")}
+            <h2>{_templates.dashboard.courirer}</h2>
+            <a n:href="Courier:dashboard" class="btn btn-primary">{_templates.dashboard.courierSection}</a>
+        {/if}
+        {if $user->isInRole("operator")}
+            <h2>{_templates.dashboard.operator}</h2>
+            <a n:href="Operator:dashboard" class="btn btn-primary">{_templates.dashboard.operatorSection}</a>
+        {/if}
+        {if $user->isInRole("coordinator")}
+            <h2>{_templates.dashboard.coordinator}</h2>
+            <a n:href="Coordinator:dashboard" class="btn btn-primary">{_templates.dashboard.coordinatorSection}</a>
+        {/if}
     </div>
 </div>

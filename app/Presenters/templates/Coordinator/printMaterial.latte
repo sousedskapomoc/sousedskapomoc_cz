@@ -5,72 +5,53 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>SousedskaPomoc.cz</title>
+    <title>{_templates.printMaterial.title}</title>
     <meta name="description"
-          content="webová stránka sloužící k organizaci dobrovolníků pro doručování zboží lidem, kteří si na nákup nemohou nebo nesmějí dojít."/>
+          content="{_templates.printMaterial.metaDescription}webová stránka sloužící k organizaci dobrovolníků pro doručování zboží lidem, kteří si na nákup nemohou nebo nesmějí dojít."/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" href="{$basePath}/css/style.css">
 </head>
 
 <body>
-<h1>SousedskaPomoc.cz</h1>
-<h2>Stal jsem se součástí komunitního projektu SousedskaPomoc.cz a jsem připrav vám pomoci</h2>
+<h1>{_templates.printMaterial.title}</h1>
+<h2>{_templates.printMaterial.subtitle}</h2>
 {if $id == "shopping"}
-    <h2>Potřebujete nakoupit ale nemůžete opustit byt?</h2>
-    <h2>Pokud chcete něco zařídit stačí zavolat!</h2>
-    <h3>Jméno a příjmení: {$user->getIdentity()->data['personName']}</h3>
-    <h3>Telefon: {$user->getIdentity()->data['personPhone']}</h3>
-    <h3>Město: {$user->getIdentity()->data['town']}</h3>
+    <h2>{_templates.printMaterial.question}</h2>
+    <h2>{_templates.printMaterial.callToAction}</h2>
+    <h3>{_templates.printMaterial.contact} {$user->getIdentity()->data['personName']}</h3>
+    <h3>{_templates.printMaterial.phone} {$user->getIdentity()->data['personPhone']}</h3>
+    <h3>{_templates.printMaterial.town} {$user->getIdentity()->data['town']}</h3>
 {/if}
 {if $id == "courierWanted"}
-    <h2>Potřebujeme kurýra/dobrovolníka</h2>
+    <h2>{_templates.printMaterial.needHelpCourier}</h2>
     <div class="font-size: 16px">
-        <h3>Jaký je tvůj ůkol</h3>
-        <ul>
-            <li>Vezmi svoje auto, počkej na objednávku od operátora a vyraž na nákup</li>
-            <li>Doruč nákup na místo určení a zajisti bezpečné předán</li>
-        </ul>
+        <h3>{_templates.printMaterial.courierTask|noescape}</h3>
+        {_templates.printMaterial.courierTaskList|noescape}
 
 
-        <h3>Co potřebuješ</h3>
-        <ul>
-            <li>Telefon</li>
-            <li>Auto</li>
-        </ul>
-        <h2>Pokud se chceš přidat stačí zavolat!</h2>
-        <h3>Jméno a příjmení: {$user->getIdentity()->data['personName']}</h3>
-        <h3>Telefon: {$user->getIdentity()->data['personPhone']}</h3>
-        <h3>Město: {$user->getIdentity()->data['town']}</h3>
+        <h3>{_templates.printMaterial.courierNeed|noescape}</h3>
+        {_templates.printMaterial.courierNeedList|noescape}
+
+        <h2>{_templates.printMaterial.courierWannaJoin}</h2>
+        <h3>{_templates.printMaterial.contact} {$user->getIdentity()->data['personName']}</h3>
+        <h3>{_templates.printMaterial.phone} {$user->getIdentity()->data['personPhone']}</h3>
+        <h3>{_templates.printMaterial.town} {$user->getIdentity()->data['town']}</h3>
     </div>
 {/if}
 {if $id == "operatorWanted"}
-    <h2>Potřebujeme operátora</h2>
+    <h2>{_templates.printMaterial.operatorWanted}</h2>
     <div class="font-size: 16px">
-        <p>Jako <strong>operátor</strong> bys měl najít:
-        </p>
-        <ul>
-            <li>
-                Přiřadit objednávky zadané koordinátorem na jednoho z volných kurýrů
-            </li>
-            <li>
-                Dohlédnout na to aby doručení proběhlo (včasné doručení)
-            </li>
-            <li>
-                Pomáhat řešit problémy které vzniknou po cestě
-            </li>
-        </ul>
-        <h3>Co potřebuješ</h3>
-        <ul>
-            <li>Notebook</li>
-            <li>Smartphone</li>
-            <li>Telefon</li>
-            <li>Organizační schopnosti</li>
-        </ul>
-        <h2>Pokud se chceš přidat stačí zavolat!</h2>
-        <h3>Jméno a příjmení: {$user->getIdentity()->data['personName']}</h3>
-        <h3>Telefon: {$user->getIdentity()->data['personPhone']}</h3>
-        <h3>Město: {$user->getIdentity()->data['town']}</h3>
+        <p>{_templates.printMaterial.operatorTask|noescape}</p>
+        {_templates.printMaterial.operatorTaskList|noescape}
+
+        <h3>{_templates.printMaterial.operatorNeed}</h3>
+        {_templates.printMaterial.operatorNeedList|noescape}
+
+        <h2>{_templates.printMaterial.operatorWannaJoin}</h2>
+        <h3>{_templates.printMaterial.contact} {$user->getIdentity()->data['personName']}</h3>
+        <h3>{_templates.printMaterial.phone} {$user->getIdentity()->data['personPhone']}</h3>
+        <h3>{_templates.printMaterial.town} {$user->getIdentity()->data['town']}</h3>
 
     </div>
 {/if}
