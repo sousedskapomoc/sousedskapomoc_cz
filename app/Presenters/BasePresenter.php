@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace SousedskaPomoc\Presenters;
 
 use Nette;
+use SousedskaPomoc\Model\OrderManager;
 use SousedskaPomoc\Model\UserManager;
 
 
@@ -22,6 +23,16 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
     /** @var UserManager */
     protected $userManager;
 
+    /** @var OrderManager */
+    protected $orderManager;
+
+
+
+    public function injectOrderManager(OrderManager $orderManager)
+    {
+        $this->orderManager = $orderManager;
+    }
+
 
 
     public function injectUserManager(UserManager $userManager)
@@ -36,6 +47,10 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
         if ($this->user->isLoggedIn()) {
             $this->template->availableCouriers = $this->userManager->fetchAvailableCouriers();
         }
+
+        $this->template->addFilter('getTranslation', function ($string) {
+            return $this->translator->trans($string);
+        });
 
         $this->template->addFilter('fetchUser', function ($courierId) {
             return $this->userManager->fetchCourierName($courierId);

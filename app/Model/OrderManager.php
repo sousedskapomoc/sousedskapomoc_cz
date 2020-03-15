@@ -104,4 +104,11 @@ final class OrderManager
             'status' => $orderStatus,
         ]);
     }
+
+
+
+    public function fetchCount()
+    {
+        return $this->database->table('posted_orders')->count();
+    }
 }

@@ -128,6 +128,23 @@ final class UserManager implements Nette\Security\IAuthenticator
 
         return $data->personName ?? 'Nepřiřazen';
     }
+
+
+
+    public function fetchCountBy($rule)
+    {
+        return $this->database->table(self::TABLE_NAME)->where($rule)->count();
+    }
+
+
+
+    public function fetchUniqueTownsCount()
+    {
+        $sql = "SELECT COUNT(DISTINCT(town)) AS uniqueTownsCount FROM volunteers";
+        $data = $this->database->query($sql)->fetch();
+
+        return $data['uniqueTownsCount'];
+    }
 }
 
 
