@@ -12,9 +12,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>{ifset title}{include title|stripHtml} | {/ifset}{_templates.header.subtitle}</title>
+    <title>{ifset title}{include title|stripHtml} | {/ifset}pomozme si mezi sebou</title>
     <meta name="description"
-          content="{_templates.header.metaDescription}"/>
+          content="webová stránka sloužící k organizaci dobrovolníků pro doručování zboží lidem, kteří si na nákup nemohou nebo nesmějí dojít."/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -23,6 +23,7 @@
     <script src="https://kit.fontawesome.com/d75163e556.js" crossorigin="anonymous"></script>
 
     <link rel="stylesheet" href="{$basePath}/css/style.css">
+    <link rel="stylesheet" href="https://use.typekit.net/qby0sol.css">
     {block head}{/block}
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-160696817-1"></script>
@@ -48,12 +49,11 @@
 </head>
 
 <body>
-<div class="row header">
+<div class="row header no-margin-sides">
     <div class="container">
         <div id="banner" class="flex justify-content-between align-items-center">
-            <h1><a n:href="Homepage:default"><span
-                            class="hide-till--xs" n:block=title>{_templates.header.title}</span><span
-                            class="hide-xs">SP.cz</span><small>{_templates.header.subtitle}</small></a></h1>
+            <h1><a n:href="Homepage:default" class="logo"><img src="{$basePath}/images/SP_logo.svg"
+                                                               alt="Sousedská pomoc"/></a></h1>
             <div class="navigation">
                 <div class="burger-area">
                     <div class="burger">
@@ -63,12 +63,12 @@
                     </div>
                 </div>
                 <ul>
-                    <li n:if="$user->isLoggedIn()"><a n:href="System:dashboard">{_templates.homepage.dashboard}</a></li>
-                    <li n:if="!$user->isLoggedIn()"><a n:href="Sign:in">{_templates.homepage.login}</a></li>
-                    <li n:if="!$user->isLoggedIn()">
-                        <a n:href="Homepage:registerAsCoordinator">{_templates.homepage.register}</a></li>
+                    <li n:if="$user->isLoggedIn()"><a n:href="System:dashboard">Přehled</a></li>
+                    <li n:if="!$user->isLoggedIn()"><a n:href="Sign:in">Přihlášení</a></li>
+                    <li n:if="!$user->isLoggedIn()"><a class="btn btn-green" n:href="Homepage:registerAsCoordinator">Registrace</a>
+                    </li>
                     <li n:if="$user->isLoggedIn()"><a n:href="Sign:out">{$user->getIdentity()->personName}
-                            ({$user->getIdentity()->personEmail}) {_templates.homepage.logout}</a></li>
+                            ({$user->getIdentity()->personEmail}) Odhlášení</a></li>
                 </ul>
             </div>
         </div>
@@ -78,41 +78,37 @@
 <div class="container">
     <div n:foreach="$flashes as $flash" n:class="alert, 'alert-' . $flash->type">{$flash->message}</div>
     <div class="row">
-        <div class="col-12">
+        <div class="col-12 text-center">
+            <h2>
+                SousedskaPomoc.cz vznikla, abychom za pomoci dobrovolníků zajistili doručování potravin a léků lidem
+                nejvíc ohroženým koronavirovou infekcí.
+            </h2>
             <p>
-                {_templates.header.about|noescape}
+                Jedná se především o staré a nemocné lidi, kteří by v následujících dnech vůbec neměli vycházet z domu.
             </p>
-            <p>
-                {_templates.header.progress|noescape}
-            </p>
-            <p class="alert alert-danger">
-                {_templates.header.recommendation|noescape}
-            </p>
-        </div>
-        <div class="col-12">
-            <div n:if="$presenter->view == 'default'">
-                <h2>{_templates.homepage.howToHelp|noescape}</h2>
-                <p>{_templates.homepage.howToHelp|noescape}</p>
-            </div>
-            <div n:if="$presenter->view == 'default' || $presenter->view == 'registerAsCoordinator'">
-                <p>{_templates.coordinator.steps|noescape}</p>
-            </div>
-            <div n:if="$presenter->view == 'default' || $presenter->view == 'registerAsCourier'">
-                <p>{_templates.courier.steps|noescape}</p>
-            </div>
-            <div n:if="$presenter->view == 'default' || $presenter->view == 'registerAsOperator'">
-                <p>{_templates.operator.steps|noescape}</p>
-            </div>
         </div>
     </div>
+
     {include content}
 </div>
 
-<div class="row footer">
-    <div class="col-12">
-        <p class="text-center">
-            {_templates.footer.disclaimer|noescape}
-        </p>
+<div class="container">
+    <div class="row footer">
+        <div class="col-12 text-center">
+            <p class="bigger-font">Moc děkujeme všem, kteří se zapojí. Má to smysl!</p>
+            <p class="text-center">
+                Veškeré dotazy posílejte na e-mail <a href="mailto:info@sousedskapomoc.cz"
+                                                      target="_blank">info@sousedskapomoc.cz</a>
+            </p>
+            <p class="smaller-font">
+                <a
+                        href="https://www.facebook.com/Sousedskapomoccz-110011043956318" target="_blank">Facebook</a>, 
+                <a
+                        href="https://instagram.com/sousedskapomoc.cz" target="_blank">Instagram</a>,
+                <a
+                        href="https://twitter.com/hunaczech" target="_blank">Twitter</a>
+            </p>
+        </div>
     </div>
 </div>
 
