@@ -32,6 +32,7 @@ services:
 	router: SousedskaPomoc\Router\RouterFactory::createRouter
 
 translation:
+	debugger: true
 	default: cs
 	fallback: [cs_CZ, cs]
 

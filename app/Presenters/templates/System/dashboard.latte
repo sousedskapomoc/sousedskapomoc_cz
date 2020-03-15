@@ -3,18 +3,16 @@
 <div class="row">
     <div class="col-12">
         <h1>{_templates.dashboard.title}</h1>
-        <hr/>
-        {if $user->isInRole("courier")}
-            <h2>{_templates.dashboard.courirer}</h2>
-            <a n:href="Courier:dashboard" class="btn btn-primary">{_templates.dashboard.courierSection}</a>
-        {/if}
-        {if $user->isInRole("operator")}
-            <h2>{_templates.dashboard.operator}</h2>
-            <a n:href="Operator:dashboard" class="btn btn-primary">{_templates.dashboard.operatorSection}</a>
-        {/if}
-        {if $user->isInRole("coordinator")}
-            <h2>{_templates.dashboard.coordinator}</h2>
-            <a n:href="Coordinator:dashboard" class="btn btn-primary">{_templates.dashboard.coordinatorSection}</a>
-        {/if}
+        <div n:if="$user->isInRole('admin')">
+        <h2>Aktuální statistiky</h2>
+        <table class="table table-bordered table-hover col-6">
+            {foreach $statistics as $statisticName => $value}
+                <tr>
+                    <th class="table-dark">{$statisticName|getTranslation}</th>
+                    <td class="table-primary">{$value}</td>
+                </tr>
+            {/foreach}
+        </table>
+        </div>
     </div>
 </div>

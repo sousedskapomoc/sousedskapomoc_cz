@@ -1,37 +1,21 @@
 {layout "../appLayout.latte"}
 {block content}
-<div class="row">
-    <div class="col-12">
-        <div>
-            <h1>{_templates.operatorDashboard.title}</h1>
-            <a n:href="System:dashboard">{_templates.header.backOnMainPage}</a>
-        </div>
-        <div>
-            <h2>{_templates.operatorDashboard.promoteTitle}</h2>
-            <a n:href="Coordinator:printMaterial id => 'shopping'" target="_blank"
-                                                                   class="btn btn-success">{_templates.operatorDashboard.materialShopping}</a>
-            <a n:href="Coordinator:printMaterial id => 'courierWanted'" target="_blank"
-                                                                        class="btn btn-success">{_templates.operatorDashboard.materialCourier}</a>
-            <a n:href="Coordinator:printMaterial id => 'operatorWanted'" target="_blank"
-                                                                         class="btn btn-success">{_templates.operatorDashboard.materialCoordinator}</a>
-            <hr/>
+    <div class="row">
+        <div class="col-12">
             <div>
-                <h2>Propagace</h2>
-                <a n:href="Coordinator:printMaterial id => 'shopping'" target="_blank" class="btn btn-success">Vytisknout
-                    materiál -
-                    Zařídím vám
-                    nákup</a>
-                <a n:href="Coordinator:printMaterial id => 'courierWanted'" target="_blank" class="btn btn-success">Vytisknout
-                    materiál
-                    - Hledám
-                    řidiče</a>
-                <a n:href="Coordinator:printMaterial id => 'operatorWanted'" target="_blank" class="btn btn-success">Vytisknout
-                    materiál
-                    - Hledám
-                    operátora</a>
+                <h1>{_templates.operatorDashboard.title}</h1>
+                <a n:href="System:dashboard">{_templates.header.backOnMainPage}</a>
+            </div>
+            <div>
+                <h2>{_templates.operatorDashboard.promoteTitle}</h2>
+                <a n:href="Coordinator:printMaterial id => 'shopping'" target="_blank"
+                                                                       class="btn btn-success">{_templates.operatorDashboard.materialShopping}</a>
+                <a n:href="Coordinator:printMaterial id => 'courierWanted'" target="_blank"
+                                                                            class="btn btn-success">{_templates.operatorDashboard.materialCourier}</a>
+                <a n:href="Coordinator:printMaterial id => 'operatorWanted'" target="_blank"
+                                                                             class="btn btn-success">{_templates.operatorDashboard.materialCoordinator}</a>
                 <hr/>
             </div>
-
         </div>
     </div>
     <div class="row">
@@ -81,10 +65,13 @@
     </div>
 {/block}
 {block order}
-    <strong>{$order->delivery_address}</strong><br/>
+    <strong><a href="https://www.google.com/maps/search/{$order->delivery_address}"
+               target="_blank">{$order->delivery_address}</a></strong><br/>
     Pro: {$order->note ?? null}<br/>
-    Pečovatel: {$order->id_volunteers ?? null}<br/>
-    Stav: {$order->status|humanFriendlyStatus}<br />
+    Telefon: {$order->delivery_phone ?? 'neuveden'}<br/>
+    Pečovatel: {$order->id_volunteers|fetchUser}<br/>
+    Stav: {$order->status|humanFriendlyStatus}<br/>
+    Kurýr: {$order->courier_id|fetchUser}<br/>
     <a n:href="Coordinator:detail id => 1" target="_blank">Obj {$order->id}. - počet
         položek {count(explode("\n",$order->order_items))}
     </a>
@@ -108,7 +95,10 @@
     </form>
 {/block}
 {block orderManagement}
-    <button type="submit" class="btn btn-sm btn-danger">Kurýr vyzvedává</button>
-    <button type="submit" class="btn btn-sm btn-warning">Kurýr doručuje</button>
-    <button type="submit" class="btn btn-sm btn-success">Kurýr doručil</button>
+    <a n:href="updateOrderStatus! orderId => $order->id, orderStatus => 'picking'" class="btn btn-sm btn-danger">Kurýr
+        vyzvedává</a>
+    <a n:href="updateOrderStatus! orderId => $order->id, orderStatus => 'delivering'" class="btn btn-sm btn-warning">Kurýr
+        doručuje</a>
+    <a n:href="updateOrderStatus! orderId => $order->id, orderStatus => 'delivered'" class="btn btn-sm btn-success">Kurýr
+        doručil</a>
 {/block}

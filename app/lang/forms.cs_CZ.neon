@@ -2,6 +2,8 @@ postOrder:
     addressLabel: 'Adresa kam dovezeme nákup'
     addressRequired: 'Potřebujeme vědět kam máme nákup odvézt'
     addressPlaceholder: 'např. Palackého náměstí 1, Kolín'
+    phonePlaceholder: 'Telefon na toho komu doručujeme'
+    phoneLabel: 'např. 607 049 258'
     noteLabel: 'poznámka k nákupu (např. pro koho je určen pro snažší odlišení)'
     notePlaceholder: 'pro paní Novákovou'
     itemsLabel: 'Položky objednávky (oddělené ENTERem)'
