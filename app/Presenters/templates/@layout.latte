@@ -12,9 +12,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>{ifset title}{include title|stripHtml} | {/ifset}pomozme si mezi sebou</title>
+    <title>{ifset title}{include title|stripHtml} | {/ifset}{_templates.header.subtitle}</title>
     <meta name="description"
-          content="webová stránka sloužící k organizaci dobrovolníků pro doručování zboží lidem, kteří si na nákup nemohou nebo nesmějí dojít."/>
+          content="{_templates.header.metaDescription}"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -51,8 +51,9 @@
 <div class="row header">
     <div class="container">
         <div id="banner" class="flex justify-content-between align-items-center">
-            <h1><a n:href="Homepage:default"><span class="hide-till--xs" n:block=title>SousedskaPomoc.cz</span><span
-                            class="hide-xs">SP.cz</span><small>pomozme si mezi sebou</small></a></h1>
+            <h1><a n:href="Homepage:default"><span
+                            class="hide-till--xs" n:block=title>{_templates.header.title}</span><span
+                            class="hide-xs">SP.cz</span><small>{_templates.header.subtitle}</small></a></h1>
             <div class="navigation">
                 <div class="burger-area">
                     <div class="burger">
@@ -62,11 +63,12 @@
                     </div>
                 </div>
                 <ul>
-                    <li n:if="$user->isLoggedIn()"><a n:href="System:dashboard">Přehled</a></li>
-                    <li n:if="!$user->isLoggedIn()"><a n:href="Sign:in">Přihlášení</a></li>
-                    <li n:if="!$user->isLoggedIn()"><a n:href="Homepage:registerAsCoordinator">Registrace</a></li>
+                    <li n:if="$user->isLoggedIn()"><a n:href="System:dashboard">{_templates.homepage.dashboard}</a></li>
+                    <li n:if="!$user->isLoggedIn()"><a n:href="Sign:in">{_templates.homepage.login}</a></li>
+                    <li n:if="!$user->isLoggedIn()">
+                        <a n:href="Homepage:registerAsCoordinator">{_templates.homepage.register}</a></li>
                     <li n:if="$user->isLoggedIn()"><a n:href="Sign:out">{$user->getIdentity()->personName}
-                            ({$user->getIdentity()->personEmail}) Odhlášení</a></li>
+                            ({$user->getIdentity()->personEmail}) {_templates.homepage.logout}</a></li>
                 </ul>
             </div>
         </div>
@@ -78,81 +80,28 @@
     <div class="row">
         <div class="col-12">
             <p>
-                SousedskaPomoc.cz je webová stránka sloužící k organizaci dobrovolníků pro doručování zboží lidem, kteří
-                si
-                na
-                nákup nemohou nebo nesmějí dojít.
+                {_templates.header.about|noescape}
             </p>
             <p>
-                Aktuálně jsme ve fázi kdy se <strong>můžete registrovat</strong> a během dnešního / zítřejšího dne
-                dokončíme část pro operátory/dispečery a kurýry kterou následně zveřejníme.
+                {_templates.header.progress|noescape}
             </p>
             <p class="alert alert-danger">
-                Pokud máte možnost objednat si potraviny on-line pomocí rozvozců jako <a href="https://rohlik.cz"
-                                                                                         target="_blank">Rohlík.cz</a>,
-                <a
-                        href="https://kosik.cz" target="_blank">Košík.cz</a> nebo <a href="https://nakup.itesco.cz/"
-                                                                                     target="_blank">iTesco.cz</a> tak
-                to
-                <strong>prosím udělejte</strong> - naším cílem není nahrazovat tyto rozvozce ale nabídnout obdobnou
-                službu
-                na dobrovolnické bázi v lokalitě kam tito rozvozci nedoručují.
+                {_templates.header.recommendation|noescape}
             </p>
         </div>
         <div class="col-12">
             <div n:if="$presenter->view == 'default'">
-                <h2>Co mohu udělat pro své sousedy kteří si nemohou dojít nakoupit?</h2>
-                <p>
-                    Vzhledem k nouzovému stavu na území České Republiky a pandemii <a href="http://koronavirus.mzcr.cz/"
-                                                                                      target="_blank">Koronaviru</a>
-                    jsme se
-                    rozhodli vytvořit jednoduchý web který umožní organizovat dobrovolníky kteří chtějí pomoci.
-                </p>
+                <h2>{_templates.homepage.howToHelp|noescape}</h2>
+                <p>{_templates.homepage.howToHelp|noescape}</p>
             </div>
             <div n:if="$presenter->view == 'default' || $presenter->view == 'registerAsCoordinator'">
-                <p>Jako <strong>kordinátor</strong> bys měl najít:
-                <ul>
-                    <li>
-                        lidi kteří musí zůstat doma nebo si nemohou dojít na nákup
-                    </li>
-                    <li>
-                        lidi kteří mají auto, mají řidičák a chuť pomáhat
-                    </li>
-                    <li>
-                        lidi kteří mají čas, telefon a chuť organizovat proces nákupu a jeho doručení
-                    </li>
-                </ul>
-                </p>
+                <p>{_templates.coordinator.steps|noescape}</p>
             </div>
             <div n:if="$presenter->view == 'default' || $presenter->view == 'registerAsCourier'">
-                <p>Jako <strong>kurýr</strong> bys měl najít:
-                <ul>
-                    <li>
-                        lidi kteří musí zůstat doma nebo si nemohou dojít na nákup
-                    </li>
-                    <li>
-                        lidi kteří mají auto, mají řidičák a chuť pomáhat
-                    </li>
-                    <li>
-                        lidi kteří mají čas, telefon a chuť organizovat proces nákupu a jeho doručení
-                    </li>
-                </ul>
-                </p>
+                <p>{_templates.courier.steps|noescape}</p>
             </div>
             <div n:if="$presenter->view == 'default' || $presenter->view == 'registerAsOperator'">
-                <p>Jako <strong>operátor</strong> bys měl najít:
-                <ul>
-                    <li>
-                        Přiřadit objednávky zadané koordinátorem na jednoho z volných kurýrů
-                    </li>
-                    <li>
-                        Dohlédnout na to aby doručení proběhlo (včasné doručení)
-                    </li>
-                    <li>
-                        Pomáhat řešit problémy které vzniknou po cestě
-                    </li>
-                </ul>
-                </p>
+                <p>{_templates.operator.steps|noescape}</p>
             </div>
         </div>
     </div>
@@ -162,9 +111,7 @@
 <div class="row footer">
     <div class="col-12">
         <p class="text-center">
-            Veškeré dotazy posílejte na e-mail <a href="mailto:info@sousedskapomoc.cz"
-                                                  target="_blank">info@sousedskapomoc.cz</a>, vytvořil <a
-                    href="https://twitter.com/hunaczech">Lukáš Huňka</a>
+            {_templates.footer.disclaimer|noescape}
         </p>
     </div>
 </div>

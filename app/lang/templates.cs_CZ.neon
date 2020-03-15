@@ -1,0 +1,35 @@
+header:
+    subtitle: 'pomozme si mezi sebou'
+    metaDescription: 'webová stránka sloužící k organizaci dobrovolníků pro doručování zboží lidem, kteří si na nákup nemohou nebo nesmějí dojít.'
+    title: 'SousedskaPomoc.cz'
+    about: 'SousedskaPomoc.cz je webová stránka sloužící k organizaci dobrovolníků pro doručování zboží lidem, kteří si na nákup nemohou nebo nesmějí dojít.'
+    progress: 'Aktuálně jsme ve fázi kdy se <strong>můžete registrovat</strong> a během dnešního / zítřejšího dne dokončíme část pro operátory/dispečery a kurýry kterou následně zveřejníme.'
+    recommendation: 'Pokud máte možnost objednat si potraviny on-line pomocí rozvozců jako <a href="https://rohlik.cz" target="_blank">Rohlík.cz</a>, <a href="https://kosik.cz" target="_blank">Košík.cz</a> nebo <a href="https://nakup.itesco.cz/" target="_blank">iTesco.cz</a> tak to <strong>prosím udělejte</strong> - naším cílem není nahrazovat tyto rozvozce ale nabídnout obdobnou službu na dobrovolnické bázi v lokalitě kam tito rozvozci nedoručují.'
+footer:
+    disclaimer: 'Veškeré dotazy posílejte na e-mail <a href="mailto:info@sousedskapomoc.cz" target="_blank">info@sousedskapomoc.cz</a>, vytvořil <a href="https://twitter.com/hunaczech">Lukáš Huňka</a>'
+homepage:
+    login: 'Přihlášení'
+    register: 'Registrace'
+    dashboard: 'Dashboard'
+    logout: 'Odhlášení'
+    howToHelp: 'Co mohu udělat pro své sousedy kteří si nemohou dojít nakoupit?'
+    howToHelpDescription: 'Vzhledem k nouzovému stavu na území České Republiky a pandemii <a href="http://koronavirus.mzcr.cz/" target="_blank">Koronaviru</a> jsme se rozhodli vytvořit jednoduchý web který umožní organizovat dobrovolníky kteří chtějí pomoci.'
+    info: 'Veškeré činnosti spojené s provozováním tohoto webu (kurýrní práce, práce operátora, vývoj) jsou prováděny BEZ NÁROKU na odměnu.'
+coordinator:
+    title: 'Koordinátor'
+    steps: 'Jako <strong>kordinátor</strong> bys měl najít: <ul> <li> lidi kteří musí zůstat doma nebo si nemohou dojít na nákup </li> <li> lidi kteří mají auto, mají řidičák a chuť pomáhat </li> <li> lidi kteří mají čas, telefon a chuť organizovat proces nákupu a jeho doručení </li> </ul>'
+    whatYouNeed: '<h3>Co potřebuješ</h3><ul><li>Notebook nebo smartphone</li><li>Telefon</li><li>Organizační schopnosti</li></ul>'
+    whatIsYourGoal: '<h3>Jaký je tvůj ůkol</h3><ul><li>Oslov je bezpečnou formou (ideálně telefonicky)</li><li>Vytvoř nákupní seznam a počkej na pokyny od operátora</li></ul>'
+    callToActionButton: 'Chci být koordinátor'
+operator:
+    title: 'Operátor'
+    steps: 'Jako <strong>kurýr</strong> bys měl najít: <ul> <li> lidi kteří musí zůstat doma nebo si nemohou dojít na nákup </li> <li> lidi kteří mají auto, mají řidičák a chuť pomáhat </li> <li> lidi kteří mají čas, telefon a chuť organizovat proces nákupu a jeho doručení </li> </ul>'
+    whatYouNeed: '<h3>Co potřebuješ</h3><ul><li>Notebook</li><li>Smartphone</li><li>Telefon</li><li>Organizační schopnosti</li></ul>'
+    whatIsYourGoal: '<h3>Jaký je tvůj ůkol</h3><ul><li>V systému vidíš seznam kurýrů kteří jsou v tvé lokalitě dostupní</li><li>Zároveň vidíš kolik kurýrů má momentálně volno</li><li>Tvůj úkol je dohodnout se s kurýrem kolik toho uveze a zařídit aby nákup doručil</li></ul>'
+    callToActionButton: 'Chci být operátor'
+courier:
+    title: 'Kurýr'
+    steps: 'Jako <strong>operátor</strong> bys měl najít:<ul> <li> Přiřadit objednávky zadané koordinátorem na jednoho z volných kurýrů </li> <li> Dohlédnout na to aby doručení proběhlo (včasné doručení) </li> <li> Pomáhat řešit problémy které vzniknou po cestě </li> </ul>'
+    whatYouNeed: '<h3>Co potřebuješ</h3><ul><li>Telefon</li><li>Auto</li></ul>'
+    whatIsYourGoal: '<h3>Jaký je tvůj ůkol</h3><ul><li>Vezmi svoje auto, počkej na objednávku od operátora a vyraž na nákup</li><li>Doruč nákup na místo určení a zajisti <strong>bezpečné</strong> předání</li></ul>'
+    callToActionButton: 'Chci být řidič'
