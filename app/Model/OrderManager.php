@@ -73,7 +73,7 @@ final class OrderManager
         return $this->database->table('posted_orders')->whereOr([
             'status' => [
                 'assigned',
-                'pickedUp',
+                'picking',
                 'delivering',
             ],
         ])->fetchAll();
@@ -93,6 +93,15 @@ final class OrderManager
         $this->database->table('posted_orders')->wherePrimary($order_id)->update([
             'courier_id' => $courier_id,
             'status' => 'assigned',
+        ]);
+    }
+
+
+
+    public function updateStatus($orderId, $orderStatus)
+    {
+        $this->database->table('posted_orders')->wherePrimary($orderId)->update([
+            'status' => $orderStatus,
         ]);
     }
 }

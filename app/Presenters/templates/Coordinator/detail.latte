@@ -38,7 +38,7 @@
             </tr>
             <tr>
                 <th>{_templates.orderDetail.whoDelivers}</th>
-                <td>{$order->courier_id ?? {_templates.orderDetail.noCourier}}</td>
+                <td>{$order->courier_id|fetchUser}</td>
             </tr>
         </table>
     </div>

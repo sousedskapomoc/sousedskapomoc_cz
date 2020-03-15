@@ -26,11 +26,17 @@ final class CoordinatorPresenter extends BasePresenter
         $this->template->id = $id;
     }
 
-    public function renderDashboard() {
+
+
+    public function renderDashboard()
+    {
         $this->template->orders = $this->orderManager->findAllForUser($this->user->getId());
     }
 
-    public function renderDetail($id) {
+
+
+    public function renderDetail($id)
+    {
         $this->template->order = $this->orderManager->find($id);
     }
 
@@ -42,6 +48,8 @@ final class CoordinatorPresenter extends BasePresenter
         $form->addText('delivery_address', $this->translator->translate('forms.postOrder.addressLabel'))
             ->setRequired($this->translator->translate('forms.postOrder.addressRequired'))
             ->setPlaceholder($this->translator->translate('forms.postOrder.addressPlaceholder'));
+        $form->addText('delivery_phone', $this->translator->translate('forms.postOrder.phoneLabel'))
+            ->setPlaceholder($this->translator->translate('forms.postOrder.phonePlaceholder'));
         $form->addText('note',
             $this->translator->translate('forms.postOrder.noteLabel'))
             ->setPlaceholder($this->translator->translate('forms.postOrder.notePlaceholder'));

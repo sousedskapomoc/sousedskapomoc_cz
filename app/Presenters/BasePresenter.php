@@ -37,11 +37,18 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
             $this->template->availableCouriers = $this->userManager->fetchAvailableCouriers();
         }
 
+        $this->template->addFilter('fetchUser', function ($courierId) {
+            return $this->userManager->fetchCourierName($courierId);
+        });
+
         $this->template->addFilter('humanFriendlyStatus', function ($status) {
 
             $statusList = [
                 'new' => 'Nová',
                 'assigned' => 'Přiřazená',
+                'picking' => 'Kurýr vyzvedává',
+                'delivering' => 'Kurýr doručuje',
+                'delivered' => 'Kurýr doručil',
             ];
 
             return $statusList[$status] ?? $status;

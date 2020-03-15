@@ -115,6 +115,19 @@ final class UserManager implements Nette\Security\IAuthenticator
     {
         return $this->database->table(self::TABLE_NAME)->where(['role' => 'courier'])->fetchAll();
     }
+
+
+
+    public function fetchCourierName($courierId)
+    {
+        $data = $this->database
+            ->table(self::TABLE_NAME)
+            ->select('personName')
+            ->wherePrimary($courierId)
+            ->fetch();
+
+        return $data->personName ?? 'Nepřiřazen';
+    }
 }
 
 
