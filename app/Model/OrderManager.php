@@ -58,4 +58,41 @@ final class OrderManager
     {
         return $this->database->table('posted_orders')->wherePrimary($id)->fetch();
     }
+
+
+
+    public function findAllNew()
+    {
+        return $this->database->table('posted_orders')->where(['status' => 'new'])->fetchAll();
+    }
+
+
+
+    public function findAllLive()
+    {
+        return $this->database->table('posted_orders')->whereOr([
+            'status' => [
+                'assigned',
+                'pickedUp',
+                'delivering',
+            ],
+        ])->fetchAll();
+    }
+
+
+
+    public function findAllDelivered()
+    {
+        return $this->database->table('posted_orders')->where(['status' => 'delivered'])->fetchAll();
+    }
+
+
+
+    public function assignOrder($courier_id, $order_id)
+    {
+        $this->database->table('posted_orders')->wherePrimary($order_id)->update([
+            'courier_id' => $courier_id,
+            'status' => 'assigned',
+        ]);
+    }
 }

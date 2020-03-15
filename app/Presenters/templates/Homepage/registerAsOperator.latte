@@ -18,9 +18,11 @@
             jQuery.getJSON(hereMapsEndpoint + query, function (data) {
                 $("#suggestions").empty();
                 $.each(data.suggestions, function (index) {
-                    $("#suggestions").append(
-                        "<li><a href='#' class='suggestion' data-town='" + data.suggestions[index].label + "'>" + data.suggestions[index].label + "</a></li>"
-                    );
+                    if (data.suggestions[index].matchLevel == "district") {
+                        $("#suggestions").append(
+                            "<li><a href='#' class='suggestion' data-town='" + data.suggestions[index].address.district + "'>" + data.suggestions[index].address.district + "</a></li>"
+                        );
+                    }
                 });
             });
         });

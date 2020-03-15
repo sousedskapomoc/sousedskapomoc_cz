@@ -1,3 +1,4 @@
+{layout "../appLayout.latte"}
 {block content}
 <div class="row">
     <div class="col-12">
@@ -14,6 +15,100 @@
             <a n:href="Coordinator:printMaterial id => 'operatorWanted'" target="_blank"
                                                                          class="btn btn-success">{_templates.operatorDashboard.materialCoordinator}</a>
             <hr/>
+            <div>
+                <h2>Propagace</h2>
+                <a n:href="Coordinator:printMaterial id => 'shopping'" target="_blank" class="btn btn-success">Vytisknout
+                    materiál -
+                    Zařídím vám
+                    nákup</a>
+                <a n:href="Coordinator:printMaterial id => 'courierWanted'" target="_blank" class="btn btn-success">Vytisknout
+                    materiál
+                    - Hledám
+                    řidiče</a>
+                <a n:href="Coordinator:printMaterial id => 'operatorWanted'" target="_blank" class="btn btn-success">Vytisknout
+                    materiál
+                    - Hledám
+                    operátora</a>
+                <hr/>
+            </div>
+
         </div>
     </div>
-</div>
+    <div class="row">
+        <div class="col-12">
+            <h2>Přiřazení objednávek</h2>
+            <table class="table table-striped table-hover">
+                <thead class="thead-dark">
+                <tr>
+                    <th>Objednávky k přiřazení</th>
+                    <th>Objednávky které se doručují</th>
+                    <th>Objednávky které jsou doručené</th>
+                </tr>
+                </thead>
+                <tr>
+                    <td>
+                        <table class="table">
+                            <tr n:foreach="$newOrders as $order">
+                                <td>
+                                    {include #order, order => $order}
+                                    {include #orderAssign, order => $order}
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td>
+                        <table class="table">
+                            <tr n:foreach="$liveOrders as $order">
+                                <td>
+                                    {include #order, order => $order}
+                                    {include #orderManagement, order => $order}
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td>
+                        <table class="table">
+                            <tr n:foreach="$deliveredOrders as $order">
+                                <td>
+                                    {include #order, order => $order}
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+{/block}
+{block order}
+    <strong>{$order->delivery_address}</strong><br/>
+    Pro: {$order->note ?? null}<br/>
+    Pečovatel: {$order->id_volunteers ?? null}<br/>
+    Stav: {$order->status|humanFriendlyStatus}<br />
+    <a n:href="Coordinator:detail id => 1" target="_blank">Obj {$order->id}. - počet
+        položek {count(explode("\n",$order->order_items))}
+    </a>
+    <hr/>
+{/block}
+{block orderAssign}
+    <form action="?do=assignCourier" method="POST">
+        <div class="form-row">
+            <div class="form-group">
+                <input type="hidden" name="order_id" value="{$order->id}"/>
+                <select name="courier_id" class="form-control">
+                    {foreach $availableCouriers as $courier}
+                        <option value="{$courier->id}">{$courier->personName}</option>
+                    {/foreach}
+                </select>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-sm btn-primary">Přiradit</button>
+            </div>
+        </div>
+    </form>
+{/block}
+{block orderManagement}
+    <button type="submit" class="btn btn-sm btn-danger">Kurýr vyzvedává</button>
+    <button type="submit" class="btn btn-sm btn-warning">Kurýr doručuje</button>
+    <button type="submit" class="btn btn-sm btn-success">Kurýr doručil</button>
+{/block}
