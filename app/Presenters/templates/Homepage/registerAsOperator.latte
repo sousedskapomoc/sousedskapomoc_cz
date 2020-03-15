@@ -12,7 +12,7 @@
 
         $("#frm-registerAsOperator-town").on('keyup', function () {
 
-            var hereMapsEndpoint = "https://autocomplete.geocoder.ls.hereapi.com/6.2/suggest.json?apiKey=Kl0wK4fx38Pf63EIey6WyrmGEhS2IqaVHkuzx0IQ4-Q&country=CZE&query=";
+            var hereMapsEndpoint = "https://autocomplete.geocoder.ls.hereapi.com/6.2/suggest.json?apiKey=Kl0wK4fx38Pf63EIey6WyrmGEhS2IqaVHkuzx0IQ4-Q&country=CZE&resultType=postalCode&query=";
             var query = encodeURIComponent(this.value);
 
             jQuery.getJSON(hereMapsEndpoint + query, function (data) {

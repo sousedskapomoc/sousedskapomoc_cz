@@ -13,7 +13,7 @@ registerCoordinator:
     phoneRequire: 'Potřebujeme vědět váš telefon abychom vám mohli zavolat'
     mailLabel: 'E-mail'
     mailRequired: 'Potřebujeme znás váš e-mail kvůli registraci.'
-    townLabel: 'Město kde chci pomáhat'
+    townLabel: 'PSČ kde chci pomáhat'
     townRequired: 'Potřebujeme vědět kde budete pomáhat'
     button: 'Zaregistrovat se'
     carLabel: 'Auto které mám k dispozici'
