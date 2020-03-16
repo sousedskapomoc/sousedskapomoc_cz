@@ -109,6 +109,8 @@ final class HomepagePresenter extends BasePresenter
             2 => 'vetší osobní automobil (Škoda Octavia, VW Passat)',
             3 => 'malý nákladní automobil (VW Caddy, Fiat Doblo)',
             4 => 'vetší nákladní automobil (Fiat Ducato, Mercedes Sprinter)',
+            5 => 'jízdní kolo',
+            6 => 'pěšky',
         ];
 
         $form = new BootstrapForm;
