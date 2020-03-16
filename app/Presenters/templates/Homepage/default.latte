@@ -4,8 +4,7 @@
 <div class="row">
     <div class="col-12">
         <div class="notif">
-            <p>V Praze už služba funguje na čísle 800 160 166. <b>My ji chceme za pomoci dobrovolníků nabídnout také v
-                    regionech.</b></p>
+            <p>{_templates.homepage.notif|noescape}</p>
         </div>
         <!-- <div n:if="$presenter->view == 'default'">
              <h2>Co mohu udělat pro své sousedy kteří si nemohou dojít nakoupit?</h2>
@@ -25,27 +24,25 @@
             <div class="row how-it-works">
                 <div class="col-12">
                     <h3 class="text-center">
-                        Jak to funguje?
+                        {_templates.homepage.howItWork|noescape}
                     </h3>
 
                     <div class="box-w-list--wrapper">
                         <ul>
                             <li>
                                 <span class="num">1.</span>
-                                <h4>Registrace</h4>
-                                <p>Registrujte se na vybranou pozici.</p>
+                                <h4>{_templates.homepage.register}</h4>
+                                <p>{_templates.homepage.registerOnPosition}</p>
                             </li>
                             <li>
                                 <span class="num num-2">2.</span>
-                                <h4>Propojení s dobrovolníky</h4>
-                                <p>Získáte přístup do naší aplikace, která vás propojí s dalšími dobrovolníky z vašeho
-                                    města.</p>
+                                <h4>{_templates.homepage.connectToVolunteers}</h4>
+                                <p>{_templates.homepage.getAccess}</p>
                             </li>
                             <li>
                                 <span class="num num-3">3.</span>
-                                <h4>Koordinace</h4>
-                                <p>Přímo v aplikaci společně budete koordinovat vše potřebné – od zadání nákupu až po
-                                    jeho doručení.</p>
+                                <h4>{_templates.homepage.coordination}</h4>
+                                <p>{_templates.homepage.coordinationDescription}</p>
                             </li>
                         </ul>
                     </div>
@@ -58,25 +55,25 @@
     <div class="row padding-100 ">
         <div class="col-12 text-center">
             <h3 class="text-center">
-                Jak se mohu zapojit?
+                {_templates.homepage.howCanIJoin}
             </h3>
 
             <div class="box-w-list--wrapper">
                 <ul class="flex">
                     <li>
                         <span><img src="{$basePath}/images/001-car.svg"/></span>
-                        <h4>Kurýr</h4>
-                        <p>s autem, který nakupuje a doručuje potřebným</p>
+                        <h4>{_templates.courier.title}</h4>
+                        <p>{_templates.courier.subtitle}</p>
                     </li>
                     <li>
                         <span><img src="{$basePath}/images/002-kind.svg"/></span>
-                        <h4>Dispečer</h4>
-                        <p>přiřazuje objednávky kurýrům a dohlíží na včasné doručení</p>
+                        <h4>{_templates.coordinator.title}</h4>
+                        <p>{_templates.coordinator.subtitle}</p>
                     </li>
                     <li>
                         <span><img src="{$basePath}/images/003-call-center-agent.svg"/></span>
-                        <h4>Pečovatel</h4>
-                        <p>přiřazuje objednávky kurýrům a dohlíží na včasné doručení</p>
+                        <h4>{_templates.operator.title}</h4>
+                        <p>{_templates.operator.subtitle}</p>
                     </li>
                 </ul>
             </div>
@@ -90,94 +87,83 @@
         <div class="col-12">
             <div class="row content-w-pic">
                 <div class="col-md-4 ">
-                    <img alt="pečovatel" src="{$basePath}/images/pecovatel.png"/>
+                    <img alt="{_templates.operator.title}" src="{$basePath}/images/pecovatel.png"/>
                 </div>
                 <div class="col-md-8 content-w-pic-wrapper flex">
 
                     <div class="content-w-pic--text">
-                        <h4>Pečovatel</h4>
+                        <h4>{_templates.operator.title}</h4>
                         <div class="content-w-pic--text-wrap--list flex">
                             <div class="content-w-pic--text-list">
-                                <h5>Co musí mít:</h5>
+                                <h5>{_templates.operator.whatNeedTitle}</h5>
                                 <ul>
-                                    <li>Počítač</li>
-                                    <li>Telefon</li>
-                                    <li>Trpělivost</li>
+                                    {_templates.operator.whatNeedList|noescape}
                                 </ul>
                             </div>
                             <div class="content-w-pic--text-list">
-                                <h5>Jak pomáhá:</h5>
+                                <h5>{_templates.operator.howHelp}</h5>
                                 <ul>
-                                    <li>Vyhledává lidi, kteří potřebují pomoci s nákupem.</li>
-                                    <li>Vytváří s nimi nákupní seznamy.</li>
-                                    <li>Zadává nákupní seznamy do systému.</li>
+                                    {_templates.operator.howHelpList|noescape}
                                 </ul>
                             </div>
                         </div>
                         <a n:href="registerAsCoordinator" class="btn btn-purple"><i class="fas fa-user-ninja"
-                                                                                    aria-hidden="true"></i> Chci být
-                            pečovatel</a>
+                                                                                    aria-hidden="true"></i> {_templates.operator.callToActionButton|noescape}
+                        </a>
                     </div>
                 </div>
             </div>
             <div class="row content-w-pic">
                 <div class="col-md-8 content-w-pic-wrapper flex small-order-2">
                     <div class="content-w-pic--text">
-                        <h4>Dispečer</h4>
+                        <h4>{_templates.coordinator.title}</h4>
                         <div class="content-w-pic--text-wrap--list flex">
                             <div class="content-w-pic--text-list">
-                                <h5>Co musí mít:</h5>
+                                <h5>{_templates.coordinator.whatNeedTitle}</h5>
                                 <ul>
-                                    <li>Počítač</li>
-                                    <li>Telefon</li>
-                                    <li>Organizační schopnosti</li>
+                                    {_templates.coordinator.whatNeedList|noescape}
                                 </ul>
                             </div>
                             <div class="content-w-pic--text-list">
-                                <h5>Jak pomáhá:</h5>
+                                <h5>{_templates.coordinator.howHelpTitle}</h5>
                                 <ul>
-                                    <li>Spravuje nákupní seznamy v systému.</li>
-                                    <li>Sleduje pohyb a dostupnost kurýrů v dané lokalitě.</li>
-                                    <li>Přiděluje nákupy kurýrům a dohlíží na jejich doručení.</li>
+                                    {_templates.coordinator.howHelpList|noescape}
                                 </ul>
                             </div>
                         </div>
                         <a n:href="registerAsOperator" class="btn btn-purple"><i class="fas fa-headset"
-                                                                                 aria-hidden="true"></i> Chci být
-                            dispečer</a>
+                                                                                 aria-hidden="true"></i> {_templates.coordinator.callToActionButton}
+                        </a>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <img alt="Dispečer" src="{$basePath}/images/dispecer.png"/>
+                    <img alt="{_templates.coordinator.title}" src="{$basePath}/images/dispecer.png"/>
                 </div>
             </div>
             <div class="row content-w-pic">
                 <div class=" col-md-4">
-                    <img alt="Kurýr" src="{$basePath}/images/kuryr.png"/>
+                    <img alt="{_templates.courier.title}" src="{$basePath}/images/kuryr.png"/>
                 </div>
                 <div class="col-md-8 content-w-pic-wrapper flex">
                     <div class="content-w-pic--text">
-                        <h4>Kurýr</h4>
+                        <h4>{_templates.courier.title}</h4>
                         <div class="content-w-pic--text-wrap--list flex">
                             <div class="content-w-pic--text-list">
-                                <h5>Co musí mít:</h5>
+                                <h5>{_templates.courier.whatNeedTitle}</h5>
                                 <ul>
-                                    <li>Auto nebo kolo</li>
-                                    <li>Telefon</li>
+                                    {_templates.courier.whatNeedList|noescape}
                                 </ul>
                             </div>
                             <div class="content-w-pic--text-list">
-                                <h5>Jak pomáhá:</h5>
+                                <h5>{_templates.courier.howHelpTitle}</h5>
                                 <ul>
-                                    <li>Nakupuje podle nákupních seznamů.</li>
-                                    <li>Rozváží nákupy těm, kteří je potřebují.</li>
-                                    <li>Doručuje je tak, aby minimalizoval riziko nákazy.</li>
+                                    {_templates.courier.howHelpList|noescape}
                                 </ul>
                             </div>
                         </div>
                         <a n:href="registerAsCourier" class="btn btn-purple"><i class="fas fa-car"
-                                                                                aria-hidden="true"></i> Chci být
-                            kurýr</a>
+                                                                                aria-hidden="true"></i> {_templates.courier.callToActionButton}
+                        </a>
                     </div>
                 </div>
             </div>

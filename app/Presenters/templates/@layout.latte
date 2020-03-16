@@ -1,5 +1,6 @@
 {import 'components/form.latte'}
 
+
 <!DOCTYPE html>
 <html lang="cs">
 <head>
@@ -7,13 +8,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>SousedskaPomoc.cz - {ifset title}{include title|stripHtml} | {/ifset}pomozme si mezi sebou</title>
+    <title>{_templates.header.title}</title>
     <meta name="description"
-          content="SousedskaPomoc.cz vznikla, abychom za pomoci dobrovolníků zajistili doručování potravin a léků lidem nejvíc ohroženým koronavirovou infekcí."/>
+          content="{_templates.header.metaDescription}">
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <meta name="keywords" content="sousedská pomoc, dobrovolníci, senioři, pomoc seniorům"/>
+    <meta name="keywords" content="sousedská pomoc, dobrovolníci, senioři, pomoc seniorům">
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -21,9 +22,8 @@
     <!-- Place your kit's code here -->
     <script src="https://kit.fontawesome.com/d75163e556.js" crossorigin="anonymous"></script>
 
-    <link rel="stylesheet" href="{$basePath}/css/style.css">
+    <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="https://use.typekit.net/qby0sol.css">
-    {block head}{/block}
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-160696817-1"></script>
     <script>
@@ -39,9 +39,9 @@
     </script>
     <!--[if IE]>
     <style>
-            .quest div {
-                    min-height: 250px;
-                
+        .quest div {
+            min-height: 250px;
+
         }
     </style>
     <![endif]-->
@@ -51,8 +51,8 @@
 <div class="row header no-margin-sides">
     <div class="container">
         <div id="banner" class="flex justify-content-between align-items-center">
-            <h1><a n:href="Homepage:default" class="logo"><img src="{$basePath}/images/SP_logo.svg"
-                                                               alt="Sousedská pomoc"/></a></h1>
+            <h1><a class="logo" href="/"><img src="/images/SP_logo.svg"
+                                              alt="{_templates.header.imgAlt}"></a></h1>
             <div class="navigation">
                 <div class="burger-area">
                     <div class="burger">
@@ -62,12 +62,10 @@
                     </div>
                 </div>
                 <ul>
-                    <li n:if="$user->isLoggedIn()"><a n:href="System:dashboard">Přehled</a></li>
-                    <li n:if="!$user->isLoggedIn()"><a n:href="Sign:in">Přihlášení</a></li>
-                    <li n:if="!$user->isLoggedIn()"><a class="btn btn-green" n:href="Homepage:registerAsCoordinator">Registrace</a>
+                    <li><a href="/sign/in">{_templates.header.login}</a></li>
+                    <li><a class="btn btn-green"
+                           href="/homepage/register-as-coordinator">{_templates.header.registration}</a>
                     </li>
-                    <li n:if="$user->isLoggedIn()"><a n:href="Sign:out">{$user->getIdentity()->personName}
-                            ({$user->getIdentity()->personEmail}) Odhlášení</a></li>
                 </ul>
             </div>
         </div>
@@ -79,11 +77,10 @@
     <div class="row">
         <div class="col-12 text-center">
             <h2>
-                SousedskaPomoc.cz vznikla, abychom za pomoci dobrovolníků zajistili doručování potravin a léků lidem
-                nejvíc ohroženým koronavirovou infekcí.
+                {_templates.header.mainTitle|noescape}
             </h2>
             <p>
-                Jedná se především o staré a nemocné lidi, kteří by v následujících dnech vůbec neměli vycházet z domu.
+                {_templates.header.mainSubtitle|noescape}
             </p>
         </div>
     </div>
@@ -94,10 +91,9 @@
 <div class="container">
     <div class="row footer">
         <div class="col-12 text-center">
-            <p class="bigger-font">Moc děkujeme všem, kteří se zapojí. Má to smysl!</p>
+            <p class="bigger-font">{_templates.footer.thankYou|noescape}</p>
             <p class="text-center">
-                Veškeré dotazy posílejte na e-mail <a href="mailto:info@sousedskapomoc.cz"
-                                                      target="_blank">info@sousedskapomoc.cz</a>
+                {_templates.footer.questions|noescape}
             </p>
             <p class="smaller-font">
                 <a
