@@ -8,7 +8,7 @@ use SousedskaPomoc\Model\OrderManager;
 
 final class OperatorPresenter extends BasePresenter
 {
-    /** @var \SousedskaPomoc\Model\OrderManager */
+    /** @var OrderManager */
     protected $orderManager;
 
 

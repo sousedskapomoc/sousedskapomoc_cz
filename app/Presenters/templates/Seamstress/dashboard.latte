@@ -2,12 +2,12 @@
 {block content}
 <h1>{_templates.seamstress.title}</h1>
 <hr/>
-<h2>{_templates.seamstress.subtitle}</h2>
-<br/>
-<a n:href="toggleActive! active => true" class="btn btn-success">{_templates.seamstress.readyToWork}</a>
-<a n:href="toggleActive! active => false" class="btn btn-danger">{_templates.seamstress.tooBusy}</a>
+<h2>{_templates.seamstress.subtitle} - {$userOnline|logic}</h2>
+
+<a n:href="toggleActive! active => true" class="btn btn-success" n:if="!$userOnline">{_templates.seamstress.readyToWork}</a>
+<a n:href="toggleActive! active => false" class="btn btn-danger" n:if="$userOnline">{_templates.seamstress.tooBusy}</a>
 <hr/>
-<div>
+<div n:if="$userOnline">
     <h2>{_templates.seamstress.orders}</h2>
     <a n:href="postOrder" class="btn btn-primary">{_templates.seamstress.makeOrder}</a>
     <h4>{_templates.coordinatorDashboard.listOrders}</h4>

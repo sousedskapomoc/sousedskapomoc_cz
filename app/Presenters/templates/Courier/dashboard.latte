@@ -2,10 +2,10 @@
 {block content}
 <h1>{_templates.courierDashboard.title}</h1>
 <hr/>
-<h2>{_templates.courierDashboard.subtitle}</h2>
-<br/>
-<a n:href="toggleActive! active => true" class="btn btn-success">{_templates.courierDashboard.readyToWork}</a>
-<a n:href="toggleActive! active => false" class="btn btn-danger">{_templates.courierDashboard.tooBusy}</a>
+<h2>{_templates.courierDashboard.subtitle} - {$userOnline|logic}</h2>
+
+<a n:href="toggleActive! active => true" class="btn btn-success" n:if="!$userOnline">{_templates.courierDashboard.readyToWork}</a>
+<a n:href="toggleActive! active => false" class="btn btn-danger" n:if="$userOnline">{_templates.courierDashboard.tooBusy}</a>
 <hr/>
 <h2>{_templates.courierDashboard.waitingOrders}</h2>
 <p>{_templates.courierDashboard.noOrdersYet}</p>
