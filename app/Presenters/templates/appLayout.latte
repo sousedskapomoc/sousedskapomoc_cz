@@ -58,6 +58,8 @@
                 <a n:href="Operator:dashboard" class="nav-link">{_templates.operator.title}</a></li>
             <li n:if="$user->isInRole('coordinator')" class="nav-item">
                 <a n:href="Coordinator:dashboard" class="nav-link">{_templates.coordinator.title}</a></li>
+            <li n:if="$user->isInRole('seamstress')" class="nav-item">
+                <a n:href="Seamstress:dashboard" class="nav-link">{_templates.seamstress.title}</a></li>
             <li n:if="$user->isLoggedIn()" class="nav-item">
                 <a n:href="System:dashboard" class="nav-link">{_templates.header.overview}</a>
             </li>
