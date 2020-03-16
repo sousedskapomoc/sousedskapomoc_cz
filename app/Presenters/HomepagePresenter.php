@@ -105,12 +105,12 @@ final class HomepagePresenter extends BasePresenter
     public function createComponentRegisterAsCourier()
     {
         $cars = [
-            1 => 'malý osobní automobil (Škoda Citigo, VW eUP, Toyota Aygo)',
-            2 => 'vetší osobní automobil (Škoda Octavia, VW Passat)',
-            3 => 'malý nákladní automobil (VW Caddy, Fiat Doblo)',
-            4 => 'vetší nákladní automobil (Fiat Ducato, Mercedes Sprinter)',
-            5 => 'jízdní kolo',
-            6 => 'pěšky',
+            1 => $this->translator->translate('forms.cars.small'),
+            2 => $this->translator->translate('forms.cars.big'),
+            3 => $this->translator->translate('forms.cars.smallTruck'),
+            4 => $this->translator->translate('forms.cars.bigTruck'),
+            5 => $this->translator->translate('forms.cars.bike'),
+            6 => $this->translator->translate('forms.cars.walk'),
         ];
 
         $form = new BootstrapForm;

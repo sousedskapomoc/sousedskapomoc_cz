@@ -7,9 +7,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>{ifset title}{include title|stripHtml} | {/ifset}pomozme si mezi sebou</title>
+    <title>{ifset title}{include title|stripHtml} | {/ifset}{_templates.header.subtitle}</title>
     <meta name="description"
-          content="webová stránka sloužící k organizaci dobrovolníků pro doručování zboží lidem, kteří si na nákup nemohou nebo nesmějí dojít."/>
+          content="{_templates.header.metaDescription}"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -44,7 +44,7 @@
 
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">SousedskaPomoc.cz</a>
+    <a class="navbar-brand" href="#">{_templates.header.title}</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -52,17 +52,18 @@
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
             <li n:if="$user->isInRole('courier')" class="nav-item">
-                <a n:href="Courier:dashboard" class="nav-link">Kurýr <i class="far fa-circle"></i></a></li>
+                <a n:href="Courier:dashboard" class="nav-link">{_templates.courier.title} <i class="far fa-circle"></i></a>
+            </li>
             <li n:if="$user->isInRole('operator')" class="nav-item">
-                <a n:href="Operator:dashboard" class="nav-link">Dispečer</a></li>
+                <a n:href="Operator:dashboard" class="nav-link">{_templates.operator.title}</a></li>
             <li n:if="$user->isInRole('coordinator')" class="nav-item">
-                <a n:href="Coordinator:dashboard" class="nav-link">Pečovatel</a></li>
+                <a n:href="Coordinator:dashboard" class="nav-link">{_templates.coordinator.title}</a></li>
             <li n:if="$user->isLoggedIn()" class="nav-item">
-                <a n:href="System:dashboard" class="nav-link">Přehled</a>
+                <a n:href="System:dashboard" class="nav-link">{_templates.header.overview}</a>
             </li>
             <li n:if="$user->isLoggedIn()" class="nav-item">
                 <a n:href="Sign:out" class="nav-link">
-                    Odhlásit se</a>
+                    {_templates.header.logout}</a>
             </li>
         </ul>
     </div>
@@ -77,9 +78,13 @@
 <div class="row footer">
     <div class="col-12">
         <p class="text-center">
+<<<<<<< HEAD
             Veškeré dotazy posílejte na e-mail <a href="mailto:info@sousedskapomoc.cz"
                                                   target="_blank">info@sousedskapomoc.cz</a>, vytvořil <a
                     href="https://twitter.com/hunaczech">Lukáš Huňka</a>
+=======
+            {_templates.footer.disclaimer|noescape}
+>>>>>>> Translation update
         </p>
     </div>
 </div>

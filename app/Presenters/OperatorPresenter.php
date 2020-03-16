@@ -27,16 +27,21 @@ final class OperatorPresenter extends BasePresenter
         $this->template->deliveredOrders = $this->orderManager->findAllDelivered();
     }
 
-    public function handleUpdateOrderStatus($orderId,$orderStatus) {
+
+
+    public function handleUpdateOrderStatus($orderId, $orderStatus)
+    {
         $this->orderManager->updateStatus($orderId, $orderStatus);
-        $this->flashMessage("Stav objednávky byl změněn");
+        $this->flashMessage($this->translator->translate('messages.order.statusChanged'));
         $this->redirect('this');
     }
+
+
 
     public function handleAssignCourier()
     {
         $this->orderManager->assignOrder($_POST['courier_id'], $_POST['order_id']);
-        $this->flashMessage("Objednávka byla přiřazena kurýrovi");
+        $this->flashMessage($this->translator->translate('messages.order.givenToCourier'));
         $this->redirect('this');
     }
 }

@@ -5,6 +5,8 @@ sign:
     loginInstead: 'Již jsi registrován/a? Přihlaš se.'
 order:
     orderSuccess: 'Vaše objednávka byla uložena.'
+    givenToCourier: 'Objednávka byla přiřazena kurýrovi'
+    statusChanged: 'Stav objednávky byl změněn'
 registration:
     success: 'Vaše registrace proběhla úspěšně.'
     fail: 'Zadaný e-mail již existuje'
