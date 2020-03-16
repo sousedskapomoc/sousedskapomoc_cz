@@ -15,6 +15,7 @@ final class RouterFactory
 	public static function createRouter(): RouteList
 	{
         $router = new RouteList;
+        $router->addRoute('/change-password', 'Homepage:changePassword');
         $router->addRoute('[<locale=cs cs|en>/]<presenter>/<action>', 'Homepage:default');
 
         return $router;

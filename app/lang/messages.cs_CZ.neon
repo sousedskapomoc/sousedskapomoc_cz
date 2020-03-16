@@ -10,6 +10,8 @@ order:
 registration:
     success: 'Vaše registrace proběhla úspěšně.'
     fail: 'Zadaný e-mail již existuje'
+update:
+    fail: 'Zadany účet neexistuje'
 couriersCount: 'Počet kurýrů'
 operatorsCount: 'Počet dispečerů'
 coordinatorsCount: 'Počet pečovatelů'

@@ -27,3 +27,7 @@ cars:
     bigTruck: 'vetší nákladní automobil (Fiat Ducato, Mercedes Sprinter)'
     bike: 'jízdní kolo'
     walk: 'pěšky'
+changePassword:
+    newPasswordLabel: 'Nové heslo'
+    newPasswordRequired: 'Please fill out your new password'
+    title: 'Nastavte si heslo'

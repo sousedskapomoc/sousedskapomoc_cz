@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace SousedskaPomoc\Presenters;
 
 
+use Nette\Application\UI\Form;
+use Nette\Security\AuthenticationException;
+use Nette\Security\Passwords;
 use Contributte\FormsBootstrap\BootstrapForm;
 use Contributte\FormsBootstrap\Enums\RenderMode;
 use Nette\Database\Connection;
@@ -21,6 +24,10 @@ final class HomepagePresenter extends BasePresenter
 
     /** @var \SousedskaPomoc\Components\Mail */
     protected $mail;
+
+    protected $emailCode;
+
+    protected $passwords;
 
 
 
@@ -43,6 +50,13 @@ final class HomepagePresenter extends BasePresenter
     public function injectMail(Mail $mail)
     {
         $this->mail = $mail;
+    }
+
+
+
+    public function injectPassword(Passwords $passwords)
+    {
+        $this->passwords = $passwords;
     }
 
 
@@ -102,6 +116,53 @@ final class HomepagePresenter extends BasePresenter
 
 
 
+    public function createComponentChangePasswordForm()
+    {
+        $form = new BootstrapForm;
+
+        $user = $this->userManager->getUserByEmailCode($this->emailCode);
+        $form->addHidden('personEmail');
+        $form->addHidden('id');
+
+        if (isset($user['id']) && isset($user['personEmail'])) {
+            $form->setDefaults(['personEmail' => $user['personEmail'], 'id' => $user['id']]);
+        }
+
+        $form->addPassword("newPass", "Nové heslo")
+            ->addRule(Form::MIN_LENGTH, 'Heslo musi byt alespon %d dlouhe', 6)
+            ->setRequired('Prosím zvolte si heslo.');
+
+        $form->addPassword("newPassAgain", "Zopakujte nové heslo")
+            ->setRequired('Passwords must be the same')
+            ->addRule(Form::MIN_LENGTH, 'Heslo musi byt alespon %d dlouhe', 6)
+            ->addRule(FORM::EQUAL, "Hesla se neshodují.", $form["newPass"]);
+
+        $form->addSubmit('submit', 'Nastavit heslo');
+        $form->onSuccess[] = [$this, 'onSuccess'];
+
+        return $form;
+    }
+
+
+
+    public function onSuccess(Form $form, $values)
+    {
+        if (!$this->userManager->check('personEmail', $values->personEmail)) {
+            $form->addError('Zadaný účet neexistuje.');
+        }
+
+        try {
+            $pass = $this->passwords->hash($values->newPass);
+            $this->userManager->setPass($values->id, $pass);
+            $this->presenter->flashMessage("Heslo bylo úspěšně změněno.");
+            $this->presenter->redirect("Sign:in");
+        } catch (AuthenticationException $e) {
+            $form->addError($e->getMessage());
+        }
+    }
+
+
+
     public function createComponentRegisterAsCourier()
     {
         $cars = [
@@ -151,4 +212,18 @@ final class HomepagePresenter extends BasePresenter
             $form->addError($this->translator->translate('messages.registration.fail'));
         }
     }
+
+
+
+    public function actionChangePassword()
+    {
+        $this->emailCode = $this->presenter->getParameter('hash');
+        try {
+            $this->userManager->getUserByEmailCode($this->emailCode);
+        } catch (\Exception $err) {
+            $this->flashMessage("Email code is not valid.", BasePresenter::FLASH_TYPE_ERROR);
+            $this->redirect("Page:homepage");
+        }
+    }
+
 }
