@@ -144,25 +144,35 @@ final class UserManager implements Nette\Security\IAuthenticator
 	}
 
 
-	public function fetchAvailableCouriers()
-	{
-		return $this->database->table(self::TABLE_NAME)->where(['role' => 'courier'])->fetchAll();
-	}
+
+    public function fetchAvailableCouriers()
+    {
+        return $this->database->table(self::TABLE_NAME)->where(['role' => 'courier'])->fetchAll();
+    }
 
 
-	public function fetchAllUsers()
-	{
-		return $this->database->table(self::TABLE_NAME)->where(['emailCode' => null])->fetchAll();
-	}
+
+    public function fetchAllUsers()
+    {
+        return $this->database->table(self::TABLE_NAME)->where(['emailCode' => null])->fetchAll();
+    }
 
 
-	public function fetchCourierName($courierId)
-	{
-		$data = $this->database
-			->table(self::TABLE_NAME)
-			->select('personName')
-			->wherePrimary($courierId)
-			->fetch();
+
+    public function fetchAllUsersWithNoPass()
+    {
+        return $this->database->table(self::TABLE_NAME)->where(['password' => null])->fetchAll();
+    }
+
+
+
+    public function fetchCourierName($courierId)
+    {
+        $data = $this->database
+            ->table(self::TABLE_NAME)
+            ->select('personName')
+            ->wherePrimary($courierId)
+            ->fetch();
 
 		return $data->personName ?? 'Nepřiřazen';
 	}
