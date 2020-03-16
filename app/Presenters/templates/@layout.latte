@@ -1,8 +1,3 @@
-{**
- * @param string   $basePath web base path
- * @param array    $flashes  flash messages
- *}
-
 {import 'components/form.latte'}
 
 <!DOCTYPE html>
@@ -67,12 +62,13 @@
                     </div>
                 </div>
                 <ul>
-                    <li n:if="$user->isLoggedIn()"><a n:href="System:dashboard">{_templates.homepage.dashboard}</a></li>
-                    <li n:if="!$user->isLoggedIn()"><a n:href="Sign:in">{_templates.homepage.login}</a></li>
-                    <li n:if="!$user->isLoggedIn()">
-                        <a n:href="Homepage:registerAsCoordinator">{_templates.homepage.register}</a></li>
+                    <li n:if="$user->isLoggedIn()"><a n:href="System:dashboard">{_templates.header.overview}</a></li>
+                    <li n:if="!$user->isLoggedIn()"><a n:href="Sign:in">{_templates.header.login}</a></li>
+                    <li n:if="!$user->isLoggedIn()"><a
+                                class="btn btn-green" n:href="Homepage:registerAsCoordinator">{_templates.header.registration}</a>
+                    </li>
                     <li n:if="$user->isLoggedIn()"><a n:href="Sign:out">{$user->getIdentity()->personName}
-                            ({$user->getIdentity()->personEmail}) {_templates.homepage.logout}</a></li>
+                            ({$user->getIdentity()->personEmail}) {_templates.header.logout}</a></li>
                 </ul>
             </div>
         </div>
@@ -109,6 +105,7 @@
             </div>
         </div>
     </div>
+
     {include content}
 </div>
 
