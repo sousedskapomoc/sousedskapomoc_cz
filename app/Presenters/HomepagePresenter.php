@@ -105,10 +105,12 @@ final class HomepagePresenter extends BasePresenter
     public function createComponentRegisterAsCourier()
     {
         $cars = [
-            1 => 'malý osobní automobil (Škoda Citigo, VW eUP, Toyota Aygo)',
-            2 => 'vetší osobní automobil (Škoda Octavia, VW Passat)',
-            3 => 'malý nákladní automobil (VW Caddy, Fiat Doblo)',
-            4 => 'vetší nákladní automobil (Fiat Ducato, Mercedes Sprinter)',
+            1 => $this->translator->translate('forms.cars.small'),
+            2 => $this->translator->translate('forms.cars.big'),
+            3 => $this->translator->translate('forms.cars.smallTruck'),
+            4 => $this->translator->translate('forms.cars.bigTruck'),
+            5 => $this->translator->translate('forms.cars.bike'),
+            6 => $this->translator->translate('forms.cars.walk'),
         ];
 
         $form = new BootstrapForm;
@@ -142,7 +144,7 @@ final class HomepagePresenter extends BasePresenter
         if (!$this->userManager->check('personEmail', $values->personEmail)) {
 
             $this->userManager->register($values);
-            $this->mail->sendRegistrationMail($values->personEmail);
+
             $this->flashMessage($this->translator->translate('messages.registration.success'));
             $this->redirect("RegistrationFinished");
         } else {
