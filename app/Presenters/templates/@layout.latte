@@ -1,5 +1,6 @@
 {import 'components/form.latte'}
 
+
 <!DOCTYPE html>
 <html lang="cs">
 <head>
@@ -7,13 +8,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>{ifset title}{include title|stripHtml} | {/ifset}{_templates.header.subtitle}</title>
+    <title>{_templates.header.title}</title>
     <meta name="description"
-          content="{_templates.header.metaDescription}"/>
+          content="{_templates.header.metaDescription}">
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <meta name="keywords" content="{_templates.header.keyWords}"/>
+    <meta name="keywords" content="sousedská pomoc, dobrovolníci, senioři, pomoc seniorům">
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -21,8 +22,8 @@
     <!-- Place your kit's code here -->
     <script src="https://kit.fontawesome.com/d75163e556.js" crossorigin="anonymous"></script>
 
-    <link rel="stylesheet" href="{$basePath}/css/style.css">
-    {block head}{/block}
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://use.typekit.net/qby0sol.css">
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-160696817-1"></script>
     <script>
@@ -38,21 +39,20 @@
     </script>
     <!--[if IE]>
     <style>
-            .quest div {
-                    min-height: 250px;
-                
+        .quest div {
+            min-height: 250px;
+
         }
     </style>
     <![endif]-->
 </head>
 
 <body>
-<div class="row header">
+<div class="row header no-margin-sides">
     <div class="container">
         <div id="banner" class="flex justify-content-between align-items-center">
-            <h1><a n:href="Homepage:default"><span
-                            class="hide-till--xs" n:block=title>{_templates.header.title}</span><span
-                            class="hide-xs">SP.cz</span><small>{_templates.header.subtitle}</small></a></h1>
+            <h1><a class="logo" href="/"><img src="/images/SP_logo.svg"
+                                              alt="{_templates.header.imgAlt}"></a></h1>
             <div class="navigation">
                 <div class="burger-area">
                     <div class="burger">
@@ -62,13 +62,10 @@
                     </div>
                 </div>
                 <ul>
-                    <li n:if="$user->isLoggedIn()"><a n:href="System:dashboard">{_templates.header.overview}</a></li>
-                    <li n:if="!$user->isLoggedIn()"><a n:href="Sign:in">{_templates.header.login}</a></li>
-                    <li n:if="!$user->isLoggedIn()"><a
-                                class="btn btn-green" n:href="Homepage:registerAsCoordinator">{_templates.header.registration}</a>
+                    <li><a href="/sign/in">{_templates.header.login}</a></li>
+                    <li><a class="btn btn-green"
+                           href="/homepage/register-as-coordinator">{_templates.header.registration}</a>
                     </li>
-                    <li n:if="$user->isLoggedIn()"><a n:href="Sign:out">{$user->getIdentity()->personName}
-                            ({$user->getIdentity()->personEmail}) {_templates.header.logout}</a></li>
                 </ul>
             </div>
         </div>
@@ -76,44 +73,36 @@
 </div>
 
 <div class="container">
-    <div n:foreach="$flashes as $flash" n:class="alert, 'alert-' . $flash->type">{$flash->message}</div>
     <div class="row">
-        <div class="col-12">
+        <div class="col-12 text-center">
+            <h2>
+                {_templates.header.mainTitle|noescape}
+            </h2>
             <p>
-                {_templates.header.about|noescape}
+                {_templates.header.mainSubtitle|noescape}
             </p>
-            <p>
-                {_templates.header.progress|noescape}
-            </p>
-            <p class="alert alert-danger">
-                {_templates.header.recommendation|noescape}
-            </p>
-        </div>
-        <div class="col-12">
-            <div n:if="$presenter->view == 'default'">
-                <h2>{_templates.homepage.howToHelp|noescape}</h2>
-                <p>{_templates.homepage.howToHelp|noescape}</p>
-            </div>
-            <div n:if="$presenter->view == 'default' || $presenter->view == 'registerAsCoordinator'">
-                <p>{_templates.coordinator.steps|noescape}</p>
-            </div>
-            <div n:if="$presenter->view == 'default' || $presenter->view == 'registerAsCourier'">
-                <p>{_templates.courier.steps|noescape}</p>
-            </div>
-            <div n:if="$presenter->view == 'default' || $presenter->view == 'registerAsOperator'">
-                <p>{_templates.operator.steps|noescape}</p>
-            </div>
         </div>
     </div>
 
     {include content}
 </div>
 
-<div class="row footer">
-    <div class="col-12">
-        <p class="text-center">
-            {_templates.footer.disclaimer|noescape}
-        </p>
+<div class="container">
+    <div class="row footer">
+        <div class="col-12 text-center">
+            <p class="bigger-font">{_templates.footer.thankYou|noescape}</p>
+            <p class="text-center">
+                {_templates.footer.questions|noescape}
+            </p>
+            <p class="smaller-font">
+                <a
+                        href="https://www.facebook.com/Sousedskapomoccz-110011043956318" target="_blank">Facebook</a>,
+                <a
+                        href="https://instagram.com/sousedskapomoc.cz" target="_blank">Instagram</a>,
+                <a
+                        href="https://twitter.com/sousedskapomoc" target="_blank">Twitter</a>
+            </p>
+        </div>
     </div>
 </div>
 
