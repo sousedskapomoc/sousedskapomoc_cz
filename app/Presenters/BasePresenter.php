@@ -59,11 +59,11 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
         $this->template->addFilter('humanFriendlyStatus', function ($status) {
 
             $statusList = [
-                'new' => 'Nová',
-                'assigned' => 'Přiřazená',
-                'picking' => 'Kurýr vyzvedává',
-                'delivering' => 'Kurýr doručuje',
-                'delivered' => 'Kurýr doručil',
+                'new' => $this->translator->translate('templates.order.statusNew'),
+                'assigned' => $this->translator->translate('templates.order.statusAssigned'),
+                'picking' => $this->translator->translate('templates.order.statusPicking'),
+                'delivering' => $this->translator->translate('templates.order.statusDelivering'),
+                'delivered' => $this->translator->translate('templates.order.statusDelivered'),
             ];
 
             return $statusList[$status] ?? $status;

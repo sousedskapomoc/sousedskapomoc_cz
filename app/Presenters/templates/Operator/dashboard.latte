@@ -20,13 +20,11 @@
     </div>
     <div class="row">
         <div class="col-12">
-            <h2>Přiřazení objednávek</h2>
+            <h2>{_templates.order.title}</h2>
             <table class="table table-striped table-hover">
                 <thead class="thead-dark">
                 <tr>
-                    <th>Objednávky k přiřazení</th>
-                    <th>Objednávky které se doručují</th>
-                    <th>Objednávky které jsou doručené</th>
+                    {_templates.order.header|noescape}
                 </tr>
                 </thead>
                 <tr>
@@ -95,10 +93,10 @@
     </form>
 {/block}
 {block orderManagement}
-    <a n:href="updateOrderStatus! orderId => $order->id, orderStatus => 'picking'" class="btn btn-sm btn-danger">Kurýr
-        vyzvedává</a>
-    <a n:href="updateOrderStatus! orderId => $order->id, orderStatus => 'delivering'" class="btn btn-sm btn-warning">Kurýr
-        doručuje</a>
-    <a n:href="updateOrderStatus! orderId => $order->id, orderStatus => 'delivered'" class="btn btn-sm btn-success">Kurýr
-        doručil</a>
+    <a n:href="updateOrderStatus! orderId => $order->id, orderStatus => 'picking'"
+            class="btn btn-sm btn-danger">{_templates.order.picking}</a>
+    <a n:href="updateOrderStatus! orderId => $order->id, orderStatus => 'delivering'"
+            class="btn btn-sm btn-warning">{_templates.order.delivering}</a>
+    <a n:href="updateOrderStatus! orderId => $order->id, orderStatus => 'delivered'"
+            class="btn btn-sm btn-success">{_templates.order.delivered}</a>
 {/block}
