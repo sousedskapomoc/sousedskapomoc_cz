@@ -14,59 +14,65 @@ use SousedskaPomoc\Model\UserManager;
  */
 abstract class BasePresenter extends Nette\Application\UI\Presenter
 {
-    /** @persistent */
-    public $locale;
+	/** @persistent */
+	public $locale;
 
-    /** @var \Kdyby\Translation\Translator @inject */
-    public $translator;
+	/** @var \Kdyby\Translation\Translator @inject */
+	public $translator;
 
-    /** @var UserManager */
-    protected $userManager;
+	/** @var UserManager */
+	protected $userManager;
 
-    /** @var OrderManager */
-    protected $orderManager;
-
-
-
-    public function injectOrderManager(OrderManager $orderManager)
-    {
-        $this->orderManager = $orderManager;
-    }
+	/** @var OrderManager */
+	protected $orderManager;
 
 
-
-    public function injectUserManager(UserManager $userManager)
-    {
-        $this->userManager = $userManager;
-    }
-
+	public function injectOrderManager(OrderManager $orderManager)
+	{
+		$this->orderManager = $orderManager;
+	}
 
 
-    public function beforeRender()
-    {
-        if ($this->user->isLoggedIn()) {
-            $this->template->availableCouriers = $this->userManager->fetchAvailableCouriers();
-        }
+	public function injectUserManager(UserManager $userManager)
+	{
+		$this->userManager = $userManager;
+	}
 
-        $this->template->addFilter('getTranslation', function ($string) {
-            return $this->translator->trans($string);
-        });
 
-        $this->template->addFilter('fetchUser', function ($courierId) {
-            return $this->userManager->fetchCourierName($courierId);
-        });
+	public function beforeRender()
+	{
+		if ($this->user->isLoggedIn()) {
+			$this->template->availableCouriers = $this->userManager->fetchAvailableCouriers();
+		}
 
-        $this->template->addFilter('humanFriendlyStatus', function ($status) {
+		$this->template->addFilter('getTranslation', function ($string) {
+			return $this->translator->trans($string);
+		});
 
-            $statusList = [
-                'new' => $this->translator->translate('templates.order.statusNew'),
-                'assigned' => $this->translator->translate('templates.order.statusAssigned'),
-                'picking' => $this->translator->translate('templates.order.statusPicking'),
-                'delivering' => $this->translator->translate('templates.order.statusDelivering'),
-                'delivered' => $this->translator->translate('templates.order.statusDelivered'),
-            ];
+		$this->template->addFilter('fetchUser', function ($courierId) {
+			return $this->userManager->fetchCourierName($courierId);
+		});
 
-            return $statusList[$status] ?? $status;
-        });
-    }
+		$this->template->addFilter('logic', function ($state) {
+			$states = [
+				0 => 'Vypnuto',
+				1 => 'Zapnuto'
+			];
+
+			return $states[$state] ?? $state[0];
+		});
+
+		$this->template->addFilter('humanFriendlyStatus', function ($status) {
+
+			$statusList = [
+				'new' => $this->translator->translate('templates.order.statusNew'),
+				'assigned' => $this->translator->translate('templates.order.statusAssigned'),
+				'picking' => $this->translator->translate('templates.order.statusPicking'),
+				'delivering' => $this->translator->translate('templates.order.statusDelivering'),
+				'delivered' => $this->translator->translate('templates.order.statusDelivered'),
+			];
+
+			return $statusList[$status] ?? $status;
+		});
+	}
 }

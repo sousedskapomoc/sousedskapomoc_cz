@@ -36,7 +36,7 @@ homepage:
     coordinationDescription: 'Přímo v aplikaci společně budete koordinovat vše potřebné – od zadání nákupu až po jeho doručení.'
     howCanIJoin: 'Jak se mohu zapojit?'
 coordinator:
-    title: 'Dispečer'
+    title: 'Pečovatel'
     whatNeedTitle: 'Co musí mít:'
     whatNeedList: '<li>Počítač</li><li>Telefon</li><li>Organizační schopnosti</li>'
     howHelpTitle: 'Jak pomáhá:'
@@ -48,7 +48,7 @@ coordinator:
     whatIsYourGoal: '<h3>Jaký je tvůj ůkol</h3><ul><li>Oslov je bezpečnou formou (ideálně telefonicky)</li><li>Vytvoř nákupní seznam a počkej na pokyny od operátora</li></ul>'
     callToActionButton: 'Chci být dispečer'
 operator:
-    title: 'Pečovatel'
+    title: 'Dispečer'
     subtitle: 'přiřazuje objednávky kurýrům a dohlíží na včasné doručení'
     wannaJoin: 'Chci se stát operátorem'
     steps: 'Jako <strong>kurýr</strong> bys měl najít: <ul> <li> lidi kteří musí zůstat doma nebo si nemohou dojít na nákup </li> <li> lidi kteří mají auto, mají řidičák a chuť pomáhat </li> <li> lidi kteří mají čas, telefon a chuť organizovat proces nákupu a jeho doručení </li> </ul>'
@@ -82,15 +82,15 @@ operatorDashboard:
     materialCoordinator: 'Vytisknout materiál - Hledám operátora'
 courierDashboard:
     title: 'Přehled kurýra'
-    subtitle: 'Aktuální akce'
-    readyToWork: 'Jsem připraven k práci'
-    tooBusy: 'Už nemohu přijímat další objednávky'
+    subtitle: 'Příjem objednávek'
+    readyToWork: 'ZAPNOUT - Jsem připraven k práci'
+    tooBusy: 'VYPNOUT - Už nemohu přijímat další objednávky'
     waitingOrders: 'Objednávky které čekají na přiřazení'
     noOrdersYet: 'Zatím žádné objednávky k doručení'
     yourOrders: 'Objednávky které ti byly přiřazeny'
     noYourOrders: 'Momentálně nemáš žádné objednávky k doručení.'
 coordinatorDashboard:
-    title: 'Dispečer'
+    title: 'Pečovatel / koordinátor'
     orders: 'Objednávky'
     makeOrder: 'Zadat objednávku'
     listOrders: 'Seznam objednávek'
