@@ -29,7 +29,7 @@ homepage:
     getAccess: 'Získáte přístup do naší aplikace, která vás propojí s dalšími dobrovolníky z vašeho města.'
     coordination: 'Koordinace'
     coordinationDescription: 'Přímo v aplikaci společně budete koordinovat vše potřebné – od zadání nákupu až po jeho doručení.'
-    howJanIJoin: 'Jak se mohu zapojit?'
+    howCanIJoin: 'Jak se mohu zapojit?'
 coordinator:
     title: 'Dispečer'
     whatNeedTitle: 'Co musí mít:'

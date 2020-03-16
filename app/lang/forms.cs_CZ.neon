@@ -12,7 +12,7 @@ registerCoordinator:
     nameLabel: 'Jméno a příjmení'
     nameRequired: 'Potřebujeme vědět vaše jméno'
     phoneLabel: 'Telefon'
-    phoneRequire: 'Potřebujeme vědět váš telefon abychom vám mohli zavolat'
+    phoneRequired: 'Potřebujeme vědět váš telefon abychom vám mohli zavolat'
     mailLabel: 'E-mail'
     mailRequired: 'Potřebujeme znás váš e-mail kvůli registraci.'
     townLabel: 'Město kde chci pomáhat'
