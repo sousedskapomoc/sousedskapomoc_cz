@@ -159,6 +159,7 @@ order:
 seamstress:
     wannaJoin: 'Chci se stát švadlenou'
     title: 'Švadlena'
+    subtitleHome: 'šije roušky a připravuje je kodběru'
     subtitle: 'Aktuální akce'
     itemsLabel: 'Počet roušek'
     button: 'Poslat žádost o vyzvednutí'
@@ -169,3 +170,7 @@ seamstress:
     noOrdersYet: 'Zatím žádné dodávky'
     readyToWork: 'Jsem připraven/a šít roušky'
     tooBusy: 'Již nebudu šít roušky'
+    whatNeedTitle: 'Co musí mít:'
+    whatNeedList: '<li>Šikovné ruce</li><li>Šicí stroj, látky, gumičky</li><li>Telefon</li>'
+    howHelpTitle: 'Jak pomáhá:'
+    howHelpList: '<li>Šije látkové roušky.</li><li>Shromažďuje je a připravuje kurýrům kodběru.</li>'

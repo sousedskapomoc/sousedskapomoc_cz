@@ -75,6 +75,11 @@
                         <h4>{_templates.operator.title}</h4>
                         <p>{_templates.operator.subtitle}</p>
                     </li>
+                    <li>
+                        <span><img src="{$basePath}/images/004-cut.svg"/></span>
+                        <h4>{_templates.seamstress.title}</h4>
+                        <p>{_templates.seamstress.subtitleHome}</p>
+                    </li>
                 </ul>
             </div>
             {*
@@ -165,6 +170,33 @@
                                                                                 aria-hidden="true"></i> {_templates.courier.callToActionButton}
                         </a>
                     </div>
+                </div>
+            </div>
+            <div class="row content-w-pic">
+                <div class="col-md-8 content-w-pic-wrapper flex small-order-2">
+                    <div class="content-w-pic--text">
+                        <h4>{_templates.seamstress.title}</h4>
+                        <div class="content-w-pic--text-wrap--list flex">
+                            <div class="content-w-pic--text-list">
+                                <h5>{_templates.seamstress.whatNeedTitle}</h5>
+                                <ul>
+                                    {_templates.seamstress.whatNeedList|noescape}
+                                </ul>
+                            </div>
+                            <div class="content-w-pic--text-list">
+                                <h5>{_templates.seamstress.howHelpTitle}</h5>
+                                <ul>
+                                    {_templates.seamstress.howHelpList|noescape}
+                                </ul>
+                            </div>
+                        </div>
+                        <a n:href="registerAsSeamstress" class="btn btn-purple"><i class="fas fa-cut"
+                                                                                   aria-hidden="true"></i> {_templates.seamstress.wannaJoin}
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <img alt="{_templates.coordinator.title}" src="{$basePath}/images/svadlena.jpg"/>
                 </div>
             </div>
         </div>

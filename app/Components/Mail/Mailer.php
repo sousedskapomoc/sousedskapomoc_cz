@@ -29,7 +29,7 @@ final class Mail
     public function sendMail($to, $title, $body)
     {
         $mail = new Message;
-        $mail->setFrom('info@sousedskapomoc.cz')
+        $mail->setFrom('robot@sousedskapomoc.cz')
             ->addTo($to)
             ->setSubject($title)
             ->setHtmlBody($body);
@@ -39,14 +39,55 @@ final class Mail
 
 
 
-    public function sendRegistrationMail($to)
+    public function sendCourierMail($to, $link)
     {
         $mail = new Message;
         $latte = new Engine;
-        $mail->setFrom('info@sousedskapomoc.cz')
+        $mail->setFrom('robot@sousedskapomoc.cz')
             ->addTo($to)
             ->setSubject('SousedskaPomoc.cz - Úspěšná registrace')
-            ->setHtmlBody($latte->renderToString(__DIR__.'/registrationMail.latte'));
+            ->setHtmlBody($latte->renderToString(__DIR__.'/courierMail.latte', ['url' => $link]));
+
+        $this->mailer->send($mail);
+    }
+
+
+
+    public function sendSeamstressMail($to, $link)
+    {
+        $mail = new Message;
+        $latte = new Engine;
+        $mail->setFrom('robot@sousedskapomoc.cz')
+            ->addTo($to)
+            ->setSubject('SousedskaPomoc.cz - Úspěšná registrace')
+            ->setHtmlBody($latte->renderToString(__DIR__.'/seamstressMail.latte', ['url' => $link]));
+        $this->mailer->send($mail);
+    }
+
+
+
+    public function sendOperatorMail($to, $link)
+    {
+        $mail = new Message;
+        $latte = new Engine;
+        $mail->setFrom('robot@sousedskapomoc.cz')
+            ->addTo($to)
+            ->setSubject('SousedskaPomoc.cz - Úspěšná registrace')
+            ->setHtmlBody($latte->renderToString(__DIR__.'/operatorMail.latte', ['url' => $link]));
+
+        $this->mailer->send($mail);
+    }
+
+
+
+    public function sendCoordinatorMail($to, $link)
+    {
+        $mail = new Message;
+        $latte = new Engine;
+        $mail->setFrom('robot@sousedskapomoc.cz')
+            ->addTo($to)
+            ->setSubject('SousedskaPomoc.cz - Úspěšná registrace')
+            ->setHtmlBody($latte->renderToString(__DIR__.'/coordinatorMail.latte', ['url' => $link]));
 
         $this->mailer->send($mail);
     }

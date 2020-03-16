@@ -29,6 +29,10 @@ final class HomepagePresenter extends BasePresenter
 
     protected $passwords;
 
+    protected $personEmail;
+
+    protected $id;
+
 
 
     public function beforeRender()
@@ -85,7 +89,7 @@ final class HomepagePresenter extends BasePresenter
             ->setRequired($this->translator->translate('forms.registerCoordinator.townRequired'));
 
         $form->addSubmit('coordinatorRegFormSubmit', $this->translator->translate('forms.registerCoordinator.button'));
-        $form->onSuccess[] = [$this, "processRegistration"];
+        $form->onSuccess[] = [$this, "processRegistrationCoordinator"];
 
         return $form;
     }
@@ -109,7 +113,7 @@ final class HomepagePresenter extends BasePresenter
             ->setRequired($this->translator->translate('forms.registerCoordinator.townRequired'));
 
         $form->addSubmit('coordinatorRegFormSubmit', $this->translator->translate('forms.registerCoordinator.button'));
-        $form->onSuccess[] = [$this, "processRegistration"];
+        $form->onSuccess[] = [$this, "processRegistrationSeamstress"];
 
         return $form;
     }
@@ -133,7 +137,7 @@ final class HomepagePresenter extends BasePresenter
             ->setRequired($this->translator->translate('forms.registerCoordinator.townRequired'));
 
         $form->addSubmit('coordinatorRegFormSubmit', $this->translator->translate('forms.registerCoordinator.button'));
-        $form->onSuccess[] = [$this, "processRegistration"];
+        $form->onSuccess[] = [$this, "processRegistrationOperator"];
 
         return $form;
     }
@@ -216,9 +220,89 @@ final class HomepagePresenter extends BasePresenter
             ->setRequired($this->translator->translate('forms.registerCoordinator.carRequired'));
 
         $form->addSubmit('coordinatorRegFormSubmit', $this->translator->translate('forms.registerCoordinator.button'));
-        $form->onSuccess[] = [$this, "processRegistration"];
+        $form->onSuccess[] = [$this, "processRegistrationCourier"];
 
         return $form;
+    }
+
+
+
+    public function processRegistrationSeamstress(BootstrapForm $form)
+    {
+        $values = $form->getValues();
+        if (!$this->userManager->check('personEmail', $values->personEmail)) {
+
+            $user = $this->userManager->register($values);
+            $hash = md5($user['personEmail']);
+            $link = $this->link('//Homepage:changePassword', $hash);
+            $this->userManager->setUserCode($user['id'], $hash);
+            $this->mail->sendSeamstressMail($values->personEmail, $link);
+
+            $this->flashMessage($this->translator->translate('messages.registration.success'));
+            $this->redirect("RegistrationFinished");
+        } else {
+            $form->addError($this->translator->translate('messages.registration.fail'));
+        }
+    }
+
+
+
+    public function processRegistrationCourier(BootstrapForm $form)
+    {
+        $values = $form->getValues();
+        if (!$this->userManager->check('personEmail', $values->personEmail)) {
+
+            $user = $this->userManager->register($values);
+            $hash = md5($user['personEmail']);
+            $link = $this->link('//Homepage:changePassword', $hash);
+            $this->userManager->setUserCode($user['id'], $hash);
+            $this->mail->sendCourierMail($values->personEmail, $link);
+
+            $this->flashMessage($this->translator->translate('messages.registration.success'));
+            $this->redirect("RegistrationFinished");
+        } else {
+            $form->addError($this->translator->translate('messages.registration.fail'));
+        }
+    }
+
+
+
+    public function processRegistrationOperator(BootstrapForm $form)
+    {
+        $values = $form->getValues();
+        if (!$this->userManager->check('personEmail', $values->personEmail)) {
+
+            $user = $this->userManager->register($values);
+            $hash = md5($user['personEmail']);
+            $link = $this->link('//Homepage:changePassword', $hash);
+            $this->userManager->setUserCode($user['id'], $hash);
+            $this->mail->sendOperatorMail($values->personEmail, $link);
+
+            $this->flashMessage($this->translator->translate('messages.registration.success'));
+            $this->redirect("RegistrationFinished");
+        } else {
+            $form->addError($this->translator->translate('messages.registration.fail'));
+        }
+    }
+
+
+
+    public function processRegistrationCoordinator(BootstrapForm $form)
+    {
+        $values = $form->getValues();
+        if (!$this->userManager->check('personEmail', $values->personEmail)) {
+
+            $user = $this->userManager->register($values);
+            $hash = md5($user['personEmail']);
+            $link = $this->link('//Homepage:changePassword', $hash);
+            $this->userManager->setUserCode($user['id'], $hash);
+            $this->mail->sendCoordinatorMail($values->personEmail, $link);
+
+            $this->flashMessage($this->translator->translate('messages.registration.success'));
+            $this->redirect("RegistrationFinished");
+        } else {
+            $form->addError($this->translator->translate('messages.registration.fail'));
+        }
     }
 
 
@@ -240,12 +324,14 @@ final class HomepagePresenter extends BasePresenter
 
 
 
-    public function actionChangePassword()
+    public function actionChangePassword($hash = null)
     {
         $this->emailCode = $this->presenter->getParameter('hash');
         try {
-            $this->userManager->getUserByEmailCode($this->emailCode);
+            $user = $this->userManager->getUserByEmailCode($this->emailCode);
         } catch (\Exception $err) {
+            dump($err->getMessage());
+            die();
             $this->flashMessage("Email code is not valid.", BasePresenter::FLASH_TYPE_ERROR);
             $this->redirect("Page:homepage");
         }

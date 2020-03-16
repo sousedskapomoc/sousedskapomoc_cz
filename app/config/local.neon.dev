@@ -4,3 +4,11 @@ database:
 	password:   root
 	options:
 		lazy: yes
+
+mail:
+	smtp: true  # use SmtpMailer instead of SendmailMailer
+	host: 'smtp.seznam.cz'
+	port: 465
+	username: ''
+	password: ''
+	secure: ssl # possible values are ssl, tls or null
