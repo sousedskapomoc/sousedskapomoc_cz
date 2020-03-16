@@ -104,6 +104,50 @@ final class UserManager implements Nette\Security\IAuthenticator
 
 
 
+    public function update(Nette\Utils\ArrayHash $values)
+    {
+        return $this->database->table(self::TABLE_NAME)
+            ->where('id', $values['id']) // must be called before update()
+            ->update($values);
+    }
+
+
+
+    public function setPass($id, $password)
+    {
+        return $this->database->table(self::TABLE_NAME)
+            ->where('id', $id) // must be called before update()
+            ->update(['password' => $password]);
+    }
+
+
+
+    public function getUserByEmailCode($emailCode)
+    {
+        return $this->database->table(self::TABLE_NAME)
+            ->where('emailCode', $emailCode)
+            ->fetch();
+    }
+
+
+
+    public function getUserByEmail($email)
+    {
+        return $this->database->table(self::TABLE_NAME)
+            ->where('personEmail', $email);
+    }
+
+
+
+    public function setUserCode($userId, $emailCode)
+    {
+        return $this->database->table(self::TABLE_NAME)
+            ->where('id', $userId)
+            ->update(['emailCode' => $emailCode]);
+    }
+
+
+
     public function check(string $field, $value)
     {
         return count($this->database->table(SELF::TABLE_NAME)->where([$field => $value]));
@@ -114,6 +158,13 @@ final class UserManager implements Nette\Security\IAuthenticator
     public function fetchAvailableCouriers()
     {
         return $this->database->table(self::TABLE_NAME)->where(['role' => 'courier'])->fetchAll();
+    }
+
+
+
+    public function fetchAllUsers()
+    {
+        return $this->database->table(self::TABLE_NAME)->where(['emailCode' => null])->fetchAll();
     }
 
 
