@@ -18,5 +18,5 @@ registerCoordinator:
     townLabel: 'Město kde chci pomáhat'
     townRequired: 'Potřebujeme vědět kde budete pomáhat'
     button: 'Zaregistrovat se'
-    carLabel: 'Auto které mám k dispozici'
+    carLabel: 'Na/v čem budu doručovat'
     carRequired: 'Potřebujeme vědět co uvezete'
