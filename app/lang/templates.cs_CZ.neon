@@ -159,7 +159,7 @@ order:
 seamstress:
     wannaJoin: 'Chci se stát švadlenou'
     title: 'Švadlena'
-    subtitleHome: 'šije roušky a připravuje je kodběru'
+    subtitleHome: 'šije roušky a připravuje je k odběru'
     subtitle: 'Aktuální akce'
     itemsLabel: 'Počet roušek'
     button: 'Poslat žádost o vyzvednutí'
