@@ -10,14 +10,6 @@ application:
 	mapping:
 		*: SousedskaPomoc\*Module\Presenters\*Presenter
 
-mail:
-	smtp: true  # use SmtpMailer instead of SendmailMailer
-	host: ''
-	port: 465
-	username: ''
-	password: ''
-	secure: ssl # possible values are ssl, tls or null
-
 
 session:
 	expiration: 14 days

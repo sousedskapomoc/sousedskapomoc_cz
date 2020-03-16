@@ -4,15 +4,6 @@
         <div class="notif">
             <p>{_templates.homepage.notif|noescape}</p>
         </div>
-        <!-- <div n:if="$presenter->view == 'default'">
-             <h2>Co mohu udělat pro své sousedy kteří si nemohou dojít nakoupit?</h2>
-             <p>
-                 Vzhledem k nouzovému stavu na území České Republiky a pandemii <a href="http://koronavirus.mzcr.cz/"
-                                                                                   target="_blank">Koronaviru</a>
-                 jsme se
-                 rozhodli vytvořit jednoduchý web který umožní organizovat dobrovolníky kteří chtějí pomoci.
-             </p>
-         </div>-->
     </div>
 </div>
 </div>
@@ -72,6 +63,11 @@
                         <span><img src="{$basePath}/images/003-call-center-agent.svg"/></span>
                         <h4>{_templates.operator.title}</h4>
                         <p>{_templates.operator.subtitle}</p>
+                    </li>
+                    <li>
+                        <span><img src="{$basePath}/images/004-cut.svg"/></span>
+                        <h4>{_templates.seamstress.title}</h4>
+                        <p>{_templates.seamstress.subtitleHome}</p>
                     </li>
                 </ul>
             </div>
@@ -163,6 +159,33 @@
                                                                                 aria-hidden="true"></i> {_templates.courier.callToActionButton}
                         </a>
                     </div>
+                </div>
+            </div>
+            <div class="row content-w-pic">
+                <div class="col-md-8 content-w-pic-wrapper flex small-order-2">
+                    <div class="content-w-pic--text">
+                        <h4>{_templates.seamstress.title}</h4>
+                        <div class="content-w-pic--text-wrap--list flex">
+                            <div class="content-w-pic--text-list">
+                                <h5>{_templates.seamstress.whatNeedTitle}</h5>
+                                <ul>
+                                    {_templates.seamstress.whatNeedList|noescape}
+                                </ul>
+                            </div>
+                            <div class="content-w-pic--text-list">
+                                <h5>{_templates.seamstress.howHelpTitle}</h5>
+                                <ul>
+                                    {_templates.seamstress.howHelpList|noescape}
+                                </ul>
+                            </div>
+                        </div>
+                        <a n:href="registerAsSeamstress" class="btn btn-purple"><i class="fas fa-cut"
+                                                                                   aria-hidden="true"></i> {_templates.seamstress.wannaJoin}
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <img alt="{_templates.coordinator.title}" src="{$basePath}/images/svadlena.jpg"/>
                 </div>
             </div>
         </div>
