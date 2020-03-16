@@ -92,6 +92,30 @@ final class HomepagePresenter extends BasePresenter
 
 
 
+    public function createComponentRegisterAsSeamstress()
+    {
+        $form = new BootstrapForm;
+        $form->renderMode = RenderMode::VERTICAL_MODE;
+        $form->addHidden('role', 'seamstress');
+
+        $form->addText('personName', $this->translator->translate('forms.registerCoordinator.nameLabel'))
+            ->setRequired($this->translator->translate('forms.registerCoordinator.nameRequired'));
+        $form->addText('personPhone', $this->translator->translate('forms.registerCoordinator.phoneLabel'))
+            ->setRequired($this->translator->translate('forms.registerCoordinator.phoneRequired'));
+        $form->addEmail('personEmail', $this->translator->translate('forms.registerCoordinator.mailLabel'))
+            ->setRequired($this->translator->translate('forms.registerCoordinator.mailRequired'));
+
+        $form->addText('town', $this->translator->translate('forms.registerCoordinator.townLabel'))
+            ->setRequired($this->translator->translate('forms.registerCoordinator.townRequired'));
+
+        $form->addSubmit('coordinatorRegFormSubmit', $this->translator->translate('forms.registerCoordinator.button'));
+        $form->onSuccess[] = [$this, "processRegistration"];
+
+        return $form;
+    }
+
+
+
     public function createComponentRegisterAsOperator()
     {
         $form = new BootstrapForm;
@@ -204,6 +228,7 @@ final class HomepagePresenter extends BasePresenter
         $values = $form->getValues();
         if (!$this->userManager->check('personEmail', $values->personEmail)) {
 
+//            $values = [$values, 'emailCode' => md5($values['personEmail'])];
             $this->userManager->register($values);
 
             $this->flashMessage($this->translator->translate('messages.registration.success'));

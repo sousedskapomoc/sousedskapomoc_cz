@@ -46,9 +46,10 @@ final class SignInFormFactory
 				$this->user->setExpiration($values->remember ? '14 days' : '20 minutes');
 				$this->user->login($values->email, $values->password);
 			} catch (Nette\Security\AuthenticationException $e) {
-				$form->addError('Zadaný e-mail už je obsazený.');
-				return;
-			}
+                $form->addError('Špatné přihlašovací údaje.');
+
+                return;
+            }
 			$onSuccess();
 		};
 

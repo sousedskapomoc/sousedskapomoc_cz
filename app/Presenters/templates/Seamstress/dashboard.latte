@@ -1,0 +1,34 @@
+{layout "../appLayout.latte"}
+{block content}
+<h1>{_templates.seamstress.title}</h1>
+<hr/>
+<h2>{_templates.seamstress.subtitle}</h2>
+<br/>
+<a n:href="toggleActive! active => true" class="btn btn-success">{_templates.seamstress.readyToWork}</a>
+<a n:href="toggleActive! active => false" class="btn btn-danger">{_templates.seamstress.tooBusy}</a>
+<hr/>
+<div>
+    <h2>{_templates.seamstress.orders}</h2>
+    <a n:href="postOrder" class="btn btn-primary">{_templates.seamstress.makeOrder}</a>
+    <h4>{_templates.coordinatorDashboard.listOrders}</h4>
+    {if $orders}
+        <table class="table table-bordered table-hover">
+            <thead>
+            <tr>
+                <td>{_templates.seamstress.address}</td>
+                <td>{_templates.seamstress.items}</td>
+            </tr>
+            </thead>
+            <tbody>
+            {foreach $orders as $order}
+                <tr>
+                    <td>{$order->delivery_address}</td>
+                    <td>{$order->order_items}</td>
+                </tr>
+            {/foreach}
+            </tbody>
+        </table>
+    {else}
+        <p>{_templates.seamstress.noOrdersYet}</p>
+    {/if}
+</div>
