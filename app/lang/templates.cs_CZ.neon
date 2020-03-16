@@ -42,7 +42,7 @@ coordinator:
     howHelpTitle: 'Jak pomáhá:'
     howHelpList: '<li>Spravuje nákupní seznamy v systému.</li><li>Sleduje pohyb a dostupnost kurýrů v dané lokalitě.</li><li>Přiděluje nákupy kurýrům a dohlíží na jejich doručení.</li>'
     subtitle: 'přiřazuje objednávky kurýrům a dohlíží na včasné doručení'
-    wannaJoin: 'Chci se stát koordinátorem'
+    wannaJoin: 'Chci se stát dispečerem'
     steps: 'Jako <strong>kordinátor</strong> bys měl najít: <ul> <li> lidi kteří musí zůstat doma nebo si nemohou dojít na nákup </li> <li> lidi kteří mají auto, mají řidičák a chuť pomáhat </li> <li> lidi kteří mají čas, telefon a chuť organizovat proces nákupu a jeho doručení </li> </ul>'
     whatYouNeed: '<h3>Co potřebuješ</h3><ul><li>Notebook nebo smartphone</li><li>Telefon</li><li>Organizační schopnosti</li></ul>'
     whatIsYourGoal: '<h3>Jaký je tvůj ůkol</h3><ul><li>Oslov je bezpečnou formou (ideálně telefonicky)</li><li>Vytvoř nákupní seznam a počkej na pokyny od operátora</li></ul>'
@@ -50,7 +50,7 @@ coordinator:
 operator:
     title: 'Pečovatel'
     subtitle: 'přiřazuje objednávky kurýrům a dohlíží na včasné doručení'
-    wannaJoin: 'Chci se stát operátorem'
+    wannaJoin: 'Chci se stát pečovatelem'
     steps: 'Jako <strong>kurýr</strong> bys měl najít: <ul> <li> lidi kteří musí zůstat doma nebo si nemohou dojít na nákup </li> <li> lidi kteří mají auto, mají řidičák a chuť pomáhat </li> <li> lidi kteří mají čas, telefon a chuť organizovat proces nákupu a jeho doručení </li> </ul>'
     whatYouNeed: '<h3>Co potřebuješ</h3><ul><li>Notebook</li><li>Smartphone</li><li>Telefon</li><li>Organizační schopnosti</li></ul>'
     whatNeedTitle: 'Co musí mít:'
