@@ -22,6 +22,7 @@ final class SystemPresenter extends BasePresenter
 			'couriersCount' => $this->userManager->fetchCountBy(['role' => 'courier']),
 			'operatorsCount' => $this->userManager->fetchCountBy(['role' => 'operator']),
 			'coordinatorsCount' => $this->userManager->fetchCountBy(['role' => 'coordinator']),
+			'seamstressCount' => $this->userManager->fetchCountBy(['role' => 'seamstress']),
 			'usersWithoutAccess' => $this->userManager->fetchCountBy(['password' => null]),
 			'uniqueTowns' => $this->userManager->fetchUniqueTownsCount(),
 			'ordersCount' => $this->orderManager->fetchCount(),
