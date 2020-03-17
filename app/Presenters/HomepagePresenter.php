@@ -362,6 +362,8 @@ final class HomepagePresenter extends BasePresenter
         }
 
         try {
+//			dump($this->userManager->getUserByEmail($values->personEmail));
+//			die();
             $hash = $this->userManager->getUserByEmail($values->personEmail)->emailCode;
             $link = $this->link('//Homepage:changePassword', $hash);
             $this->mail->sendLostPasswordMail($values->personEmail, $link);

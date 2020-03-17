@@ -3,7 +3,7 @@
 <h1>{_templates.courierDashboard.title}</h1>
 <hr/>
 <h2>{_templates.courierDashboard.subtitle} - {$userOnline|logic}</h2>
-
+<h2>pro město {$user->getIdentity()->data['town']}</h2>
 <a n:href="toggleActive! active => true"
         class="btn btn-success" n:if="!$userOnline">{_templates.courierDashboard.readyToWork}</a>
 <a n:href="toggleActive! active => false"

@@ -219,6 +219,13 @@ final class UserManager implements Nette\Security\IAuthenticator
 	{
 		return $this->database->table(self::TABLE_NAME)->wherePrimary($userId)->update(['active' => $active]);
 	}
+
+	public function fetchAvailableCouriersInTown($town)
+	{
+		$sql = "SELECT * FROM volunteers WHERE role LIKE '%courier%' AND town LIKE '%$town%'";
+
+		return $this->database->query($sql)->fetchAll();
+	}
 }
 
 
