@@ -338,4 +338,38 @@ final class HomepagePresenter extends BasePresenter
         }
     }
 
+
+
+    public function createComponentLostPasswordForm()
+    {
+        $form = new BootstrapForm;
+
+        $form->addEmail('personEmail', $this->translator->translate('forms.registerCoordinator.mailLabel'))
+            ->setRequired($this->translator->translate('forms.registerCoordinator.mailRequired'));
+
+        $form->addSubmit('submit', 'Zaslat nove heslo');
+        $form->onSuccess[] = [$this, 'onOk'];
+
+        return $form;
+    }
+
+
+
+    public function onOk(Form $form, $values)
+    {
+        if (!$this->userManager->check('personEmail', $values->personEmail)) {
+            $form->addError('Zadaný účet neexistuje.');
+        }
+
+        try {
+            $hash = $this->userManager->getUserByEmail($values->personEmail)->emailCode;
+            $link = $this->link('//Homepage:changePassword', $hash);
+            $this->mail->sendLostPasswordMail($values->personEmail, $link);
+            $this->presenter->flashMessage("E-mail s odkazem byl úspěšně odeslán.");
+            $this->presenter->redirect("Sign:in");
+        } catch (AuthenticationException $e) {
+            $form->addError($e->getMessage());
+        }
+    }
+
 }
