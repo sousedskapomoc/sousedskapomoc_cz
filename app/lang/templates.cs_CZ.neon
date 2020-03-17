@@ -89,6 +89,13 @@ courierDashboard:
     noOrdersYet: 'Zatím žádné objednávky k doručení'
     yourOrders: 'Objednávky které ti byly přiřazeny'
     noYourOrders: 'Momentálně nemáš žádné objednávky k doručení.'
+    reload: 'Obnovit'
+    edit: 'Přidat poznámku'
+    status: 'Oznámit stav'
+    picking: 'Vyzvedávám'
+    delivering: 'Doručuji'
+    delivered: 'Předáno'
+    finished: 'Doručeno'
 coordinatorDashboard:
     title: 'Pečovatel / koordinátor'
     orders: 'Objednávky'
@@ -176,7 +183,7 @@ seamstress:
     howHelpList: '<li>Šije látkové roušky.</li><li>Shromažďuje je a připravuje kurýrům kodběru.</li>'
 profile:
     title: 'Můj profil'
-    success: 'Profil byl úspěšně upraven'
+    success: 'Profil byl úspěšně upraven. Změna pozic se projeví po opětovném přihlášení.'
     fail: 'Tento e-mail je již použit jiným uživatelem'
     edit: 'Upravit profil'
     button: 'Uložit'

@@ -49,6 +49,13 @@ final class OrderManager
 
 
 
+    public function findAllForCourier($userId)
+    {
+        return $this->database->table('posted_orders')->where('courier_id', $userId)->fetchAll();
+    }
+
+
+
     /**
      * @param $id
      *
@@ -64,6 +71,20 @@ final class OrderManager
     public function findAllNew()
     {
         return $this->database->table('posted_orders')->where(['status' => 'new'])->fetchAll();
+    }
+
+
+
+    public function changeStatus($orderId, $status)
+    {
+        return $this->database->table('posted_orders')->wherePrimary($orderId)->update(['status' => $status]);
+    }
+
+
+
+    public function updateNote($orderId, $note)
+    {
+        return $this->database->table('posted_orders')->wherePrimary($orderId)->update(['courier_note' => $note]);
     }
 
 

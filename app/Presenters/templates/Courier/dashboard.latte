@@ -4,10 +4,54 @@
 <hr/>
 <h2>{_templates.courierDashboard.subtitle} - {$userOnline|logic}</h2>
 
-<a n:href="toggleActive! active => true" class="btn btn-success" n:if="!$userOnline">{_templates.courierDashboard.readyToWork}</a>
-<a n:href="toggleActive! active => false" class="btn btn-danger" n:if="$userOnline">{_templates.courierDashboard.tooBusy}</a>
+<a n:href="toggleActive! active => true"
+        class="btn btn-success" n:if="!$userOnline">{_templates.courierDashboard.readyToWork}</a>
+<a n:href="toggleActive! active => false"
+        class="btn btn-danger" n:if="$userOnline">{_templates.courierDashboard.tooBusy}</a>
 <hr/>
-<h2>{_templates.courierDashboard.waitingOrders}</h2>
-<p>{_templates.courierDashboard.noOrdersYet}</p>
 <h2>{_templates.courierDashboard.yourOrders}</h2>
-<p>{_templates.courierDashboard.noYourOrders}</p>
+<a n:href="this" class="btn btn-success">{_templates.courierDashboard.reload}</a>
+{if $orders}
+    <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            <td>{_templates.coordinatorDashboard.id}</td>
+            <td>{_templates.coordinatorDashboard.address}</td>
+            <td>{_templates.coordinatorDashboard.items}</td>
+            <td>{_templates.courierDashboard.status}</td>
+            <td>{_templates.coordinatorDashboard.note}</td>
+            <td>{_templates.coordinatorDashboard.action}</td>
+        </tr>
+        </thead>
+        <tbody>
+        {foreach $orders as $order}
+            <tr>
+                <td>{$order->id} - {$order->status|humanFriendlyStatus}</td>
+                <td>{$order->delivery_address}</td>
+                <td>{$order->order_items}</td>
+                <td>
+                    {if $order->status == 'assigned'}
+                        <a class="btn btn-sm btn-danger" n:href="changeStatus! id => $order->id, status=>'picking'">{_templates.courierDashboard.picking}</a>
+                    {elseif $order->status == 'picking'}
+                        <a class="btn btn-sm btn-warning" n:href="changeStatus! id => $order->id, status=>'delivering'">{_templates.courierDashboard.delivering}</a>
+                    {elseif $order->status == 'delivering'}
+                        <a class="btn btn-sm btn-success" n:href="changeStatus! id => $order->id, status=>'delivered'">{_templates.courierDashboard.delivered}</a>
+                    {/if}
+
+                </td>
+                <td>{$order->note}</td>
+                <td>
+                    <a n:href="Edit id => $order->id">{_templates.courierDashboard.edit}</a>,
+                    <a n:href="Detail id => $order->id">{_templates.coordinatorDashboard.detail}</a>
+                </td>
+            </tr>
+        {/foreach}
+        </tbody>
+    </table>
+{else}
+    <p>{_templates.courierDashboard.noYourOrders}</p>
+
+{/if}
+{*<h2>{_templates.courierDashboard.waitingOrders}</h2>*}
+{*<p>{_templates.courierDashboard.noOrdersYet}</p>*}
+{*<p>{_templates.coordinatorDashboard.noOrdersYet}</p>*}

@@ -1,0 +1,9 @@
+{layout "../appLayout.latte"}
+{block content}
+<h1>{_templates.orderDetail.title}</h1>
+<div class="col-12">
+    <p><a n:href="Courier:dashboard" class="btn btn-primary">{_templates.orderDetail.back}</a></p>
+</div>
+<div class="col-12">
+    {control editOrder}
+</div>
