@@ -8,6 +8,8 @@ postOrder:
     notePlaceholder: 'pro paní Novákovou'
     itemsLabel: 'Položky objednávky (oddělené ENTERem)'
     button: 'Vložit objednávku do systému'
+    courierNote: 'Poznámka kurýra'
+    buttonCourierNote: 'Přidat poznámku'
 registerCoordinator:
     nameLabel: 'Jméno a příjmení'
     nameRequired: 'Potřebujeme vědět vaše jméno'
