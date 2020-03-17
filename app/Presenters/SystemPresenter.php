@@ -6,9 +6,22 @@ namespace SousedskaPomoc\Presenters;
 
 use Contributte\FormsBootstrap\BootstrapForm;
 use Contributte\FormsBootstrap\Enums\RenderMode;
+use Nette\Security\Passwords;
 
 final class SystemPresenter extends BasePresenter
 {
+    /** @var \Nette\Security\Passwords */
+    protected $passwords;
+
+
+
+    public function injectPasswords(Passwords $passwords)
+    {
+        $this->passwords = $passwords;
+    }
+
+
+
     public function beforeRender()
     {
         parent::beforeRender();
@@ -81,6 +94,7 @@ final class SystemPresenter extends BasePresenter
         $form->addHidden('id');
         $form->addText('personName', $this->translator->translate('forms.registerCoordinator.nameLabel'))
             ->setRequired($this->translator->translate('forms.registerCoordinator.nameRequired'));
+        $form->addPassword("password", "Nové heslo");
         $form->addText('personPhone', $this->translator->translate('forms.registerCoordinator.phoneLabel'))
             ->setRequired($this->translator->translate('forms.registerCoordinator.phoneRequired'));
         $form->addEmail('personEmail', $this->translator->translate('forms.registerCoordinator.mailLabel'))
@@ -135,6 +149,11 @@ final class SystemPresenter extends BasePresenter
             }
         }
         $values->role = $finalRoles;
+        if ($values->password == null) {
+            unset($values->password);
+        } else {
+            $values->password = $this->passwords->hash($values->password);
+        }
         $usr = $this->userManager->getUserById($values->id);
         if ($usr->id != $values->id) {
             $form->addError($this->translator->translate('templates.profile.fail'));

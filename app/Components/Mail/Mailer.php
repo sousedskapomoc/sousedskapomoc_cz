@@ -91,4 +91,18 @@ final class Mail
 
         $this->mailer->send($mail);
     }
+
+
+
+    public function sendLostPasswordMail($to, $link)
+    {
+        $mail = new Message;
+        $latte = new Engine;
+        $mail->setFrom('robot@sousedskapomoc.cz')
+            ->addTo($to)
+            ->setSubject('SousedskaPomoc.cz - Zapomenuté heslo')
+            ->setHtmlBody($latte->renderToString(__DIR__.'/lostPassword.latte', ['url' => $link]));
+
+        $this->mailer->send($mail);
+    }
 }

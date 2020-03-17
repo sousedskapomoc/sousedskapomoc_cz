@@ -36,3 +36,5 @@ changePassword:
     newPasswordLabel: 'Nové heslo'
     newPasswordRequired: 'Please fill out your new password'
     title: 'Nastavte si heslo'
+sign:
+    lostPassword: 'Zapomenuté heslo'
