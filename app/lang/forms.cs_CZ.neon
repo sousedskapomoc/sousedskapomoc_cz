@@ -26,6 +26,7 @@ cars:
     smallTruck: 'malý nákladní automobil (VW Caddy, Fiat Doblo)'
     bigTruck: 'vetší nákladní automobil (Fiat Ducato, Mercedes Sprinter)'
     bike: 'jízdní kolo'
+    motorcycle: 'motocykl'
     walk: 'pěšky'
 changePassword:
     newPasswordLabel: 'Nové heslo'

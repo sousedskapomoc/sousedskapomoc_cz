@@ -199,7 +199,8 @@ final class HomepagePresenter extends BasePresenter
             3 => $this->translator->translate('forms.cars.smallTruck'),
             4 => $this->translator->translate('forms.cars.bigTruck'),
             5 => $this->translator->translate('forms.cars.bike'),
-            6 => $this->translator->translate('forms.cars.walk'),
+            6 => $this->translator->translate('forms.cars.motorcycle'),
+            7 => $this->translator->translate('forms.cars.walk'),
         ];
 
         $form = new BootstrapForm;
