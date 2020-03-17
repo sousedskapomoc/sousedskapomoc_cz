@@ -124,7 +124,7 @@ orderDetail:
     makeOrder: 'Vytvořit objednávku'
 printMaterial:
     title: 'SousedskaPomoc.cz'
-    subtitle: 'Stal jsem se součástí komunitního projektu SousedskaPomoc.cz a jsem připrav vám pomoci'
+    subtitle: 'Stal jsem se součástí komunitního projektu SousedskaPomoc.cz a jsem připraven vám pomoci'
     question: 'Potřebujete nakoupit ale nemůžete opustit byt?'
     callToAction: 'Pokud chcete něco zařídit stačí zavolat!'
     contact: 'Jméno a příjmení:'
