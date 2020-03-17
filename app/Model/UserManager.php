@@ -127,7 +127,8 @@ final class UserManager implements Nette\Security\IAuthenticator
     public function getUserByEmail($email)
     {
         return $this->database->table(self::TABLE_NAME)
-            ->where('personEmail', $email);
+            ->where('personEmail', $email)
+            ->fetch();
     }
 
 
