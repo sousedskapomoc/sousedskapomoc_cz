@@ -155,9 +155,11 @@ final class UserManager implements Nette\Security\IAuthenticator
 	}
 
 
-	public function fetchAvailableCouriers()
-	{
-		$sql = "SELECT * FROM volunteers WHERE role LIKE '%courier%'";
+
+    public function fetchAvailableCouriers()
+    {
+        return $this->database->table(self::TABLE_NAME)->where(['role' => 'courier'])->fetchAll();
+    }
 
 
 
