@@ -8,7 +8,17 @@
             <table>
                 <tr>
                     <td>Role</td>
-                    <td>{$userDetails->role}</td>
+                    <td>
+                        {if $userDetails->role == 'courier'}
+                            {_templates.courier.title}
+                        {elseif $userDetails->role == 'coordinator'}
+                            {_templates.coordinator.title}
+                        {elseif $userDetails->role == 'seamstress'}
+                            {_templates.seamstress.title}
+                        {elseif $usersDetails->role == 'operator'}
+                            {_templates.operator.title}
+                        {/if}
+                    </td>
                 </tr>
                 <tr>
                     <td>Jméno</td>
