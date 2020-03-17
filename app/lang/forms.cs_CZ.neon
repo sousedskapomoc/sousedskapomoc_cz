@@ -10,6 +10,7 @@ postOrder:
     button: 'Vložit objednávku do systému'
     courierNote: 'Poznámka kurýra'
     buttonCourierNote: 'Přidat poznámku'
+    addressPick: 'Adresa vyzvednutí'
 registerCoordinator:
     nameLabel: 'Jméno a příjmení'
     nameRequired: 'Potřebujeme vědět vaše jméno'
