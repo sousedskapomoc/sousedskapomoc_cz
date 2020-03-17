@@ -21,11 +21,6 @@
 	</div>
 	<div class="row">
 		<div class="col-12">
-			{if empty($newOrders)}
-				<h2>V tuto chvíli nejsou va vašem městě žádné objednávky.</h2>
-			{/if}
-		</div>
-		<div class="col-12" n:if="$newOrders">
 			<h2>{_templates.order.title}</h2>
 			<table class="table table-striped table-hover">
 				<thead class="thead-dark">
@@ -76,7 +71,7 @@
 	Pečovatel: {$order->id_volunteers|fetchUser}<br/>
 	Stav: {$order->status|humanFriendlyStatus}<br/>
 	Kurýr: {$order->courier_id|fetchUser}<br/>
-	<a n:href="Coordinator:detail id => 1" target="_blank">Obj {$order->id}. - počet
+	<a n:href="Coordinator:detail id => $order->id" target="_blank">Obj {$order->id}. - počet
 		položek {count(explode("\n",$order->order_items))}
 	</a>
 	<hr/>
