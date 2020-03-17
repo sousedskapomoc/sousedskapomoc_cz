@@ -127,8 +127,7 @@ final class UserManager implements Nette\Security\IAuthenticator
     public function getUserByEmail($email)
     {
         return $this->database->table(self::TABLE_NAME)
-            ->where('personEmail', $email)
-            ->fetch();
+            ->where('personEmail', $email);
     }
 
 
@@ -156,11 +155,9 @@ final class UserManager implements Nette\Security\IAuthenticator
 	}
 
 
-
-    public function fetchAvailableCouriers()
-    {
-        return $this->database->table(self::TABLE_NAME)->where(['role' => 'courier'])->fetchAll();
-    }
+	public function fetchAvailableCouriers()
+	{
+		$sql = "SELECT * FROM volunteers WHERE role LIKE '%courier%'";
 
 
 
@@ -218,6 +215,13 @@ final class UserManager implements Nette\Security\IAuthenticator
 	public function setOnline($userId, $active)
 	{
 		return $this->database->table(self::TABLE_NAME)->wherePrimary($userId)->update(['active' => $active]);
+	}
+
+	public function fetchAvailableCouriersInTown($town)
+	{
+		$sql = "SELECT * FROM volunteers WHERE role LIKE '%courier%' AND town LIKE '%$town%'";
+
+		return $this->database->query($sql)->fetchAll();
 	}
 }
 
