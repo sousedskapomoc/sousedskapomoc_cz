@@ -9,13 +9,16 @@
                 <tr>
                     <td>Role</td>
                     <td>
-                        {if $userDetails->role == 'courier'}
+                        {if $user->isInRole('courier')}
                             {_templates.courier.title}
-                        {elseif $userDetails->role == 'coordinator'}
+                        {/if}
+                        {if $user->isInRole('coordinator')}
                             {_templates.coordinator.title}
-                        {elseif $userDetails->role == 'seamstress'}
+                        {/if}
+                        {if $user->isInRole('seamstress')}
                             {_templates.seamstress.title}
-                        {elseif $usersDetails->role == 'operator'}
+                        {/if}
+                        {if $user->isInRole('operator')}
                             {_templates.operator.title}
                         {/if}
                     </td>

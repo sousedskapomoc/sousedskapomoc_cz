@@ -52,7 +52,31 @@ final class SystemPresenter extends BasePresenter
 
         $form = new BootstrapForm;
         $form->renderMode = RenderMode::VERTICAL_MODE;
-        $form->addHidden('role', 'courier');
+
+        $roles = [
+            0 => $this->translator->translate('templates.courier.title'),
+            1 => $this->translator->translate('templates.operator.title'),
+            2 => $this->translator->translate('templates.seamstress.title'),
+            3 => $this->translator->translate('templates.coordinator.title'),
+        ];
+
+        $rolesDefault = [];
+        if ($this->user->isInRole('courier')) {
+            array_push($rolesDefault, 0);
+        }
+        if ($this->user->isInRole('operator')) {
+            array_push($rolesDefault, 1);
+        }
+        if ($this->user->isInRole('seamstress')) {
+            array_push($rolesDefault, 2);
+        }
+        if ($this->user->isInRole('coordinator')) {
+            array_push($rolesDefault, 3);
+        }
+
+        $form->addCheckboxList('role', $this->translator->translate('forms.registerCoordinator.role'),
+            $roles)
+            ->setDefaultValue($rolesDefault);
 
         $form->addHidden('id');
         $form->addText('personName', $this->translator->translate('forms.registerCoordinator.nameLabel'))
@@ -92,6 +116,25 @@ final class SystemPresenter extends BasePresenter
     public function processUpdate(BootstrapForm $form)
     {
         $values = $form->getValues();
+        $finalRoles = '';
+        foreach ($values->role as $key => $role) {
+            if ($role == 0) {
+                $finalRoles = $finalRoles.'courier';
+            }
+            if ($role == 1) {
+                $finalRoles = $finalRoles.'operator';
+            }
+            if ($role == 2) {
+                $finalRoles = $finalRoles.'seamstress';
+            }
+            if ($role == 3) {
+                $finalRoles = $finalRoles.'coordinator';
+            }
+            if ($key != array_key_last($values->role)) {
+                $finalRoles = $finalRoles.';';
+            }
+        }
+        $values->role = $finalRoles;
         $usr = $this->userManager->getUserById($values->id);
         if ($usr->id != $values->id) {
             $form->addError($this->translator->translate('templates.profile.fail'));

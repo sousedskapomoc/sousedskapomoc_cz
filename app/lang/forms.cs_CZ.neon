@@ -13,6 +13,7 @@ postOrder:
     addressPick: 'Adresa vyzvednutí'
 registerCoordinator:
     nameLabel: 'Jméno a příjmení'
+    role: 'Pozice'
     nameRequired: 'Potřebujeme vědět vaše jméno'
     phoneLabel: 'Telefon'
     phoneRequired: 'Potřebujeme vědět váš telefon abychom vám mohli zavolat'
