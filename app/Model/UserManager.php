@@ -118,24 +118,35 @@ final class UserManager implements Nette\Security\IAuthenticator
 	public function getUserByEmailCode($emailCode)
 	{
 		return $this->database->table(self::TABLE_NAME)
-			->where('emailCode', $emailCode)
-			->fetch();
-	}
+            ->where('emailCode', $emailCode)
+            ->fetch();
+    }
 
 
-	public function getUserByEmail($email)
-	{
-		return $this->database->table(self::TABLE_NAME)
-			->where('personEmail', $email);
-	}
+
+    public function getUserByEmail($email)
+    {
+        return $this->database->table(self::TABLE_NAME)
+            ->where('personEmail', $email);
+    }
 
 
-	public function setUserCode($userId, $emailCode)
-	{
-		return $this->database->table(self::TABLE_NAME)
-			->where('id', $userId)
-			->update(['emailCode' => $emailCode]);
-	}
+
+    public function getUserById($id)
+    {
+        return $this->database->table(self::TABLE_NAME)
+            ->where('id', $id)
+            ->fetch();
+    }
+
+
+
+    public function setUserCode($userId, $emailCode)
+    {
+        return $this->database->table(self::TABLE_NAME)
+            ->where('id', $userId)
+            ->update(['emailCode' => $emailCode]);
+    }
 
 
 	public function check(string $field, $value)
