@@ -53,6 +53,8 @@ final class CoordinatorPresenter extends BasePresenter
         $form->addText('note',
             $this->translator->translate('forms.postOrder.noteLabel'))
             ->setPlaceholder($this->translator->translate('forms.postOrder.notePlaceholder'));
+        $form->addHidden('courier_note')
+            ->setDefaultValue('');
         $form->addTextArea('order_items', $this->translator->translate('forms.postOrder.itemsLabel'))
             ->setHtmlAttribute('rows', 10);
         $form->addSubmit('postOrderFormSubmit', $this->translator->translate('forms.postOrder.button'));
