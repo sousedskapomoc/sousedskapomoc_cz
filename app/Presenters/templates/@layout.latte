@@ -64,9 +64,6 @@
 				</div>
 				<ul>
 					<li><a href="/sign/in">{_templates.header.login}</a></li>
-					<li><a class="btn btn-green"
-						   href="/homepage/register-as-coordinator">{_templates.header.registration}</a>
-					</li>
 				</ul>
 			</div>
 		</div>
@@ -75,18 +72,6 @@
 
 <div class="container">
 	<div n:foreach="$flashes as $flash" n:class="alert, 'alert-' . $flash->type">{$flash->message}</div>
-
-	<div class="row">
-		<div class="col-12 text-center">
-			<h2>
-				{_templates.header.mainTitle|noescape}
-			</h2>
-			<p>
-				{_templates.header.mainSubtitle|noescape}
-			</p>
-		</div>
-	</div>
-
 	{include content}
 </div>
 
