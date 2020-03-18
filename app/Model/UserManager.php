@@ -224,6 +224,12 @@ final class UserManager implements Nette\Security\IAuthenticator
 	{
 		return $this->database->table(self::TABLE_NAME)->wherePrimary($userId)->update(['town' => $selectedTown]);
 	}
+
+	public function getTownForUser($userId)
+	{
+		$data = $this->database->table(self::TABLE_NAME)->wherePrimary($userId)->fetch();
+		return $data->town ?? null;
+	}
 }
 
 
