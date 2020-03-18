@@ -4,123 +4,123 @@
 <!DOCTYPE html>
 <html lang="cs">
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>{_templates.header.title}</title>
-    <meta name="description"
-          content="{_templates.header.metaDescription}">
+	<title>{_templates.header.title}</title>
+	<meta name="description"
+		  content="{_templates.header.metaDescription}">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <meta property="og:image" content="/images/meta-img.png">
+	<meta property="og:image" content="/images/meta-img.png">
 
-    <meta name="keywords" content="sousedská pomoc, dobrovolníci, senioři, pomoc seniorům">
+	<meta name="keywords" content="sousedská pomoc, dobrovolníci, senioři, pomoc seniorům">
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+		  integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
-    <!-- Place your kit's code here -->
-    <script src="https://kit.fontawesome.com/d75163e556.js" crossorigin="anonymous"></script>
+	<!-- Place your kit's code here -->
+	<script src="https://kit.fontawesome.com/d75163e556.js" crossorigin="anonymous"></script>
 
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="https://use.typekit.net/qby0sol.css">
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-160696817-1"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="https://use.typekit.net/qby0sol.css">
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-160696817-1"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
 
-        function gtag() {
-            dataLayer.push(arguments);
-        }
+		function gtag() {
+			dataLayer.push(arguments);
+		}
 
-        gtag('js', new Date());
+		gtag('js', new Date());
 
-        gtag('config', 'UA-160696817-1');
-    </script>
-    <!--[if IE]>
-    <style>
-        .quest div {
-            min-height: 250px;
-
-        }
-    </style>
-    <![endif]-->
+		gtag('config', 'UA-160696817-1');
+	</script>
+	<!--[if IE]>
+	<style>
+		.quest div {
+			min-height: 250px;
+		}
+	</style>
+	<![endif]-->
 </head>
 
 <body>
 <div class="row header no-margin-sides">
-    <div class="container">
-        <div id="banner" class="flex justify-content-between align-items-center">
-            <h1><a class="logo" href="/"><img src="/images/SP_logo.svg"
-                                              alt="{_templates.header.imgAlt}"></a></h1>
-            <div class="navigation">
-                <div class="burger-area">
-                    <div class="burger">
-                        <div class="bar1"></div>
-                        <div class="bar2"></div>
-                        <div class="bar3"></div>
-                    </div>
-                </div>
-                <ul>
-                    <li><a href="/sign/in">{_templates.header.login}</a></li>
-                    <li><a class="btn btn-green"
-                           href="/homepage/register-as-coordinator">{_templates.header.registration}</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
+	<div class="container">
+		<div id="banner" class="flex justify-content-between align-items-center">
+			<h1><a class="logo" href="/"><img src="/images/SP_logo.svg"
+											  alt="{_templates.header.imgAlt}"></a></h1>
+			<div class="navigation">
+				<div class="burger-area">
+					<div class="burger">
+						<div class="bar1"></div>
+						<div class="bar2"></div>
+						<div class="bar3"></div>
+					</div>
+				</div>
+				<ul>
+					<li><a href="/sign/in">{_templates.header.login}</a></li>
+					<li><a class="btn btn-green"
+						   href="/homepage/register-as-coordinator">{_templates.header.registration}</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
 </div>
 
 <div class="container">
-    <div n:foreach="$flashes as $flash" n:class="alert, 'alert-' . $flash->type">{$flash->message}</div>
-    <div class="row">
-        <div class="col-12 text-center">
-            <h2>
-                {_templates.header.mainTitle|noescape}
-            </h2>
-            <p>
-                {_templates.header.mainSubtitle|noescape}
-            </p>
-        </div>
-    </div>
+	<div n:foreach="$flashes as $flash" n:class="alert, 'alert-' . $flash->type">{$flash->message}</div>
 
-    {include content}
+	<div class="row">
+		<div class="col-12 text-center">
+			<h2>
+				{_templates.header.mainTitle|noescape}
+			</h2>
+			<p>
+				{_templates.header.mainSubtitle|noescape}
+			</p>
+		</div>
+	</div>
+
+	{include content}
 </div>
 
 <div class="container">
-    <div class="row footer">
-        <div class="col-12 text-center">
-            <p class="bigger-font">{_templates.footer.thankYou|noescape}</p>
-            <p class="text-center">
-                {_templates.footer.questions|noescape}
-            </p>
-            <p class="smaller-font">
-                <a
-                        href="https://www.facebook.com/Sousedskapomoccz-110011043956318" target="_blank">Facebook</a>,
-                <a
-                        href="https://instagram.com/sousedskapomoc.cz" target="_blank">Instagram</a>,
-                <a
-                        href="https://twitter.com/sousedskapomoc" target="_blank">Twitter</a>
-            </p>
-        </div>
-    </div>
+	<div class="row footer">
+		<div class="col-12 text-center">
+			<p class="bigger-font">{_templates.footer.thankYou|noescape}</p>
+			<p class="text-center">
+				{_templates.footer.questions|noescape}
+			</p>
+			<p class="smaller-font">
+				<a
+						href="https://www.facebook.com/Sousedskapomoccz-110011043956318" target="_blank">Facebook</a>,
+				<a
+						href="https://instagram.com/sousedskapomoc.cz" target="_blank">Instagram</a>,
+				<a
+						href="https://twitter.com/sousedskapomoc" target="_blank">Twitter</a>
+			</p>
+		</div>
+	</div>
 </div>
 
 {block scripts}
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
-            crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-            crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-            crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+			crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+			integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+			crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+			integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+			crossorigin="anonymous"></script>
 
-    <script src="https://nette.github.io/resources/js/3/netteForms.min.js"></script>
-    <script src="{$basePath}/js/main.js"></script>
+	<script src="https://nette.github.io/resources/js/3/netteForms.min.js"></script>
+	<script src="{$basePath}/js/main.js"></script>
 {/block}
 </body>
 </html>

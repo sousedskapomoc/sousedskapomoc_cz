@@ -118,36 +118,33 @@ final class UserManager implements Nette\Security\IAuthenticator
 	public function getUserByEmailCode($emailCode)
 	{
 		return $this->database->table(self::TABLE_NAME)
-            ->where('emailCode', $emailCode)
-            ->fetch();
-    }
+			->where('emailCode', $emailCode)
+			->fetch();
+	}
 
 
-
-    public function getUserByEmail($email)
-    {
-        return $this->database->table(self::TABLE_NAME)
-            ->where('personEmail', $email)
-            ->fetch();
-    }
-
+	public function getUserByEmail($email)
+	{
+		return $this->database->table(self::TABLE_NAME)
+			->where('personEmail', $email)
+			->fetch();
+	}
 
 
-    public function getUserById($id)
-    {
-        return $this->database->table(self::TABLE_NAME)
-            ->where('id', $id)
-            ->fetch();
-    }
+	public function getUserById($id)
+	{
+		return $this->database->table(self::TABLE_NAME)
+			->where('id', $id)
+			->fetch();
+	}
 
 
-
-    public function setUserCode($userId, $emailCode)
-    {
-        return $this->database->table(self::TABLE_NAME)
-            ->where('id', $userId)
-            ->update(['emailCode' => $emailCode]);
-    }
+	public function setUserCode($userId, $emailCode)
+	{
+		return $this->database->table(self::TABLE_NAME)
+			->where('id', $userId)
+			->update(['emailCode' => $emailCode]);
+	}
 
 
 	public function check(string $field, $value)
@@ -156,35 +153,31 @@ final class UserManager implements Nette\Security\IAuthenticator
 	}
 
 
-
-    public function fetchAvailableCouriers()
-    {
-        return $this->database->table(self::TABLE_NAME)->where(['role' => 'courier'])->fetchAll();
-    }
-
+	public function fetchAvailableCouriers()
+	{
+		return $this->database->table(self::TABLE_NAME)->where(['role' => 'courier'])->fetchAll();
+	}
 
 
-    public function fetchAllUsers()
-    {
-        return $this->database->table(self::TABLE_NAME)->where(['emailCode' => null])->fetchAll();
-    }
+	public function fetchAllUsers()
+	{
+		return $this->database->table(self::TABLE_NAME)->where(['emailCode' => null])->fetchAll();
+	}
 
 
-
-    public function fetchAllUsersWithNoPass()
-    {
-        return $this->database->table(self::TABLE_NAME)->where(['password' => null])->fetchAll();
-    }
-
+	public function fetchAllUsersWithNoPass()
+	{
+		return $this->database->table(self::TABLE_NAME)->where(['password' => null])->fetchAll();
+	}
 
 
-    public function fetchCourierName($courierId)
-    {
-        $data = $this->database
-            ->table(self::TABLE_NAME)
-            ->select('personName')
-            ->wherePrimary($courierId)
-            ->fetch();
+	public function fetchCourierName($courierId)
+	{
+		$data = $this->database
+			->table(self::TABLE_NAME)
+			->select('personName')
+			->wherePrimary($courierId)
+			->fetch();
 
 		return $data->personName ?? 'Nepřiřazen';
 	}
@@ -225,6 +218,17 @@ final class UserManager implements Nette\Security\IAuthenticator
 		$sql = "SELECT * FROM volunteers WHERE role LIKE '%courier%' AND town LIKE '%$town%'";
 
 		return $this->database->query($sql)->fetchAll();
+	}
+
+	public function updateTown($selectedTown, $userId)
+	{
+		return $this->database->table(self::TABLE_NAME)->wherePrimary($userId)->update(['town' => $selectedTown]);
+	}
+
+	public function getTownForUser($userId)
+	{
+		$data = $this->database->table(self::TABLE_NAME)->wherePrimary($userId)->fetch();
+		return $data->town ?? null;
 	}
 }
 

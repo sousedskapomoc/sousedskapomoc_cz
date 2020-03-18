@@ -42,7 +42,12 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 	public function beforeRender()
 	{
 		if ($this->user->isLoggedIn()) {
-			$town = $this->user->getIdentity()->data['town'];
+			$town = $this->userManager->getTownForUser($this->user->getId());
+			$this->template->town = $town;
+
+			if (($town == null || $town == "") && $this->presenter->view != "enterTown") {
+				$this->redirect("System:enterTown");
+			}
 			$this->template->availableCouriers = $this->userManager->fetchAvailableCouriersInTown($town);
 		}
 
