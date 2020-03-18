@@ -20,7 +20,7 @@
                 $.each(data.suggestions, function (index) {
                     if (data.suggestions[index].matchLevel == "district") {
                         $("#suggestions").append(
-                            "<li><a href='#' class='suggestion' data-town='" + data.suggestions[index].address.district + "'>" + data.suggestions[index].address.district + "</a></li>"
+                            "<li><a href='#' class='suggestion' data-town='" + data.suggestions[index].address.town + "'>" + data.suggestions[index].address.town + "</a></li>"
                         );
                     }
                 });

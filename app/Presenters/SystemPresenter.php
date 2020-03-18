@@ -6,6 +6,7 @@ namespace SousedskaPomoc\Presenters;
 
 use Contributte\FormsBootstrap\BootstrapForm;
 use Contributte\FormsBootstrap\Enums\RenderMode;
+use Nette\Forms\Form;
 use Nette\Security\Passwords;
 
 final class SystemPresenter extends BasePresenter
@@ -47,6 +48,20 @@ final class SystemPresenter extends BasePresenter
         ];
     }
 
+    public function createComponentRegisterAddress() {
+    	$form = new BootstrapForm();
+    	$form->addText("town","Město ve kterém působím");
+    	$form->addHidden("selectedTown")->setRequired("Prosím vyberte z našeptávače město ve kterém působíte.");
+		$form->addSubmit("addressSubmit","Uložit adresu");
+		$form->onSuccess[] = [$this, "updateAddress"];
+    	return $form;
+	}
+
+	public function updateAddress(BootstrapForm $form) {
+    	$values = $form->getValues();
+    	$this->userManager->updateTown($values->selectedTown, $this->user->getId());
+    	$this->flashMessage("Adresa byla nastavena - děkujeme!");
+	}
 
 
     public function createComponentEditForm()

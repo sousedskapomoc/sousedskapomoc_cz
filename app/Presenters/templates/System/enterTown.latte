@@ -1,0 +1,44 @@
+{layout "../appLayout.latte"}
+{block content}
+	<h1 n:block=title>Zadání adresy kde působím</h1>
+	<div class="row justify-content-center">
+		<div class="col-md-8 col-lg-6">
+			{control registerAddress}
+			<ul id="suggestions"></ul>
+		</div>
+	</div>
+
+
+	<script>
+		document.addEventListener("DOMContentLoaded", function (event) {
+
+			$("#frm-registerAddress-town").on('keyup', function () {
+
+				var hereMapsEndpoint = "https://autocomplete.geocoder.ls.hereapi.com/6.2/suggest.json?apiKey=Kl0wK4fx38Pf63EIey6WyrmGEhS2IqaVHkuzx0IQ4-Q&country=CZE&query=";
+				var query = encodeURIComponent(this.value);
+
+				jQuery.getJSON(hereMapsEndpoint + query, function (data) {
+					$("#suggestions").empty();
+					$.each(data.suggestions, function (index) {
+
+						if (data.suggestions[index].matchLevel == "district") {
+							$("#suggestions").append(
+									"<li><a href='#' class='suggestion' data-town-label='" + data.suggestions[index].address.district + " " + data.suggestions[index].address.postalCode + "' data-town='" + data.suggestions[index].address.city + "'>" + data.suggestions[index].address.district + " " + data.suggestions[index].address.postalCode + "</a></li>"
+							);
+						}
+					});
+				});
+			});
+
+			$(document).on("click", "a.suggestion", function () {
+				var address = $(this).data("town");
+				var addressLabel = $(this).data("town-label");
+
+				$("#frm-registerAddress-town").val(addressLabel);
+				$("#frm-registerAddress input:hidden[name=selectedTown]").val(address);
+				$("#suggestions").empty();
+			});
+		});
+	</script>
+
+{/block}

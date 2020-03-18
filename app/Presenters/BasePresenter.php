@@ -42,7 +42,8 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 	public function beforeRender()
 	{
 		if ($this->user->isLoggedIn()) {
-			$town = $this->user->getIdentity()->data['town'];
+			$town = $this->user->getIdentity()->data['town'] ?? null;
+			$this->template->town = $town;
 			$this->template->availableCouriers = $this->userManager->fetchAvailableCouriersInTown($town);
 		}
 
