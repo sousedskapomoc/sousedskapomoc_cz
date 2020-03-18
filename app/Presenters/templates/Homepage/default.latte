@@ -80,34 +80,10 @@
 	<div class="row">
 		<div class="col-12">
 			<div class="row content-w-pic">
-				<div class="col-md-4 ">
-					<img alt="{_templates.operator.title}" src="{$basePath}/images/pecovatel.png"/>
+				<div class="col-md-4">
+					<img alt="{_templates.coordinator.title}" src="{$basePath}/images/dispecer.png"/>
 				</div>
 				<div class="col-md-8 content-w-pic-wrapper flex">
-					<div class="content-w-pic--text">
-						<h4>{_templates.operator.title}</h4>
-						<div class="content-w-pic--text-wrap--list flex">
-							<div class="content-w-pic--text-list">
-								<h5>{_templates.operator.whatNeedTitle}</h5>
-								<ul>
-									{_templates.operator.whatNeedList|noescape}
-								</ul>
-							</div>
-							<div class="content-w-pic--text-list">
-								<h5>{_templates.operator.howHelp}</h5>
-								<ul>
-									{_templates.operator.howHelpList|noescape}
-								</ul>
-							</div>
-						</div>
-						<a n:href="registerAsOperator" class="btn btn-purple"><i class="fas fa-user-ninja"
-																				 aria-hidden="true"></i> {_templates.operator.callToActionButton|noescape}
-						</a>
-					</div>
-				</div>
-			</div>
-			<div class="row content-w-pic">
-				<div class="col-md-8 content-w-pic-wrapper flex small-order-2">
 					<div class="content-w-pic--text">
 						<h4>{_templates.coordinator.title}</h4>
 						<div class="content-w-pic--text-wrap--list flex">
@@ -129,10 +105,36 @@
 						</a>
 					</div>
 				</div>
-				<div class="col-md-4">
-					<img alt="{_templates.coordinator.title}" src="{$basePath}/images/dispecer.png"/>
+			</div>
+
+			<div class="row content-w-pic">
+				<div class="col-md-8 content-w-pic-wrapper flex small-order-2">
+					<div class="content-w-pic--text">
+						<h4>{_templates.operator.title}</h4>
+						<div class="content-w-pic--text-wrap--list flex">
+							<div class="content-w-pic--text-list">
+								<h5>{_templates.operator.whatNeedTitle}</h5>
+								<ul>
+									{_templates.operator.whatNeedList|noescape}
+								</ul>
+							</div>
+							<div class="content-w-pic--text-list">
+								<h5>{_templates.operator.howHelp}</h5>
+								<ul>
+									{_templates.operator.howHelpList|noescape}
+								</ul>
+							</div>
+						</div>
+						<a n:href="registerAsOperator" class="btn btn-purple"><i class="fas fa-user-ninja"
+																				 aria-hidden="true"></i> {_templates.operator.callToActionButton|noescape}
+						</a>
+					</div>
+				</div>
+				<div class="col-md-4 ">
+					<img alt="{_templates.operator.title}" src="{$basePath}/images/pecovatel.png"/>
 				</div>
 			</div>
+
 			<div class="row content-w-pic">
 				<div class=" col-md-4">
 					<img alt="{_templates.courier.title}" src="{$basePath}/images/kuryr.png"/>
@@ -184,153 +186,8 @@
 					</div>
 				</div>
 				<div class="col-md-4">
-					<img alt="{_templates.coordinator.title}" src="{$basePath}/images/svadlena.jpg"/>
+					<img alt="{_templates.seamstress.title}" src="{$basePath}/images/svadlena.jpg"/>
 				</div>
 			</div>
 		</div>
 	</div>
-
-	<!--
-	<p class="alert alert-info">
-		Veškeré činnosti spojené s provozováním tohoto webu (kurýrní práce, práce operátora, vývoj) jsou prováděny BEZ
-		NÁROKU na odměnu.
-	</p>
-	<div class="row">
-		<div class="col-12 col-md-4">
-			<h2>Koordinátor</h2>
-			<div class="row bg-color--light-grey quest">
-				<div class="col-12">
-					<h3>Co potřebuješ</h3>
-					<ul>
-						<li>Notebook nebo smartphone</li>
-						<li>Telefon</li>
-						<li>Organizační schopnosti</li>
-					</ul>
-
-					<div class="hide-md">
-						<h3>Jaký je tvůj ůkol</h3>
-						<ul>
-							<li>Oslov je bezpečnou formou (ideálně telefonicky)</li>
-							<li>Vytvoř nákupní seznam a počkej na pokyny od operátora</li>
-						</ul>
-					</div>
-				</div>
-			</div>
-
-			<div class="hide-md">
-				<p class="text-center">
-					<a n:href="registerAsCoordinator" class="btn btn-success"><i class="fas fa-user-ninja"></i> Chci být
-						koordinátor</a>
-				</p>
-			</div>
-
-		</div>
-		<div class="col-12 col-md-4">
-			<h2>Operátor</h2>
-			<div class="row bg-color--light-grey quest">
-				<div class="col-12">
-					<h3>Co potřebuješ</h3>
-					<ul>
-						<li>Notebook</li>
-						<li>Smartphone</li>
-						<li>Telefon</li>
-						<li>Organizační schopnosti</li>
-					</ul>
-
-					<div class="hide-md">
-						<h3>Jaký je tvůj ůkol</h3>
-						<ul>
-							<li>V systému vidíš seznam kurýrů kteří jsou v tvé lokalitě dostupní</li>
-							<li>Zároveň vidíš kolik kurýrů má momentálně volno</li>
-							<li>Tvůj úkol je dohodnout se s kurýrem kolik toho uveze a zařídit aby nákup doručil</li>
-						</ul>
-					</div>
-				</div>
-			</div>
-
-			<div class="hide-md">
-				<p class="text-center">
-					<a n:href="registerAsOperator" class="btn btn-success"><i class="fas fa-headset"></i> Chci být
-						operátor</a>
-				</p>
-			</div>
-
-		</div>
-		<div class="col-12 col-md-4">
-			<h2>Kurýr</h2>
-			<div class="row bg-color--light-grey quest">
-				<div class="col-12">
-					<h3>Co potřebuješ</h3>
-					<ul>
-						<li>Telefon</li>
-						<li>Auto</li>
-					</ul>
-
-					<div class="hide-md">
-						<h3>Jaký je tvůj ůkol</h3>
-						<ul>
-							<li>Vezmi svoje auto, počkej na objednávku od operátora a vyraž na nákup</li>
-							<li>Doruč nákup na místo určení a zajisti <strong>bezpečné</strong> předání</li>
-						</ul>
-					</div>
-				</div>
-			</div>
-
-			<div class="hide-md">
-				<p class="text-center">
-					<a n:href="registerAsCourier" class="btn btn-success"><i class="fas fa-car"></i> Chci být řidič</a>
-				</p>
-			</div>
-		</div>
-	</div>
-
-	<div class="row hide-till--md">
-		<div class="col-12 col-md-4 flex flex align-content-start flex-column quest">
-			<h3>Jaký je tvůj ůkol</h3>
-			<div class="flex justify-content-center align-content-between flex-1">
-				<ul>
-					<li>Oslov je bezpečnou formou (ideálně telefonicky)</li>
-					<li>Vytvoř nákupní seznam a počkej na pokyny od operátora</li>
-				</ul>
-
-				<p class="text-center">
-					<a n:href="registerAsCoordinator" class="btn btn-success"><i class="fas fa-user-ninja"></i> Chci být
-						koordinátor</a>
-				</p>
-			</div>
-
-		</div>
-		<div class="col-12 col-md-4 flex flex align-content-start flex-column quest">
-
-
-			<h3>Jaký je tvůj ůkol</h3>
-
-			<div class="flex justify-content-center align-content-between flex-1">
-			<ul>
-				<li>V systému vidíš seznam kurýrů kteří jsou v tvé lokalitě dostupní</li>
-				<li>Zároveň vidíš kolik kurýrů má momentálně volno</li>
-				<li>Tvůj úkol je dohodnout se s kurýrem kolik toho uveze a zařídit aby nákup doručil</li>
-			</ul>
-
-			<p class="text-center">
-				<a n:href="registerAsOperator" class="btn btn-success"><i class="fas fa-headset"></i> Chci být
-					operátor</a>
-			</p>
-			</div>
-		</div>
-		<div class="col-12 col-md-4 flex align-content-start flex-column quest">
-
-			<h3>Jaký je tvůj ůkol</h3>
-
-			<div class="flex justify-content-center align-content-between flex-1">
-			<ul>
-				<li>Vezmi svoje auto, počkej na objednávku od operátora a vyraž na nákup</li>
-				<li>Doruč nákup na místo určení a zajisti <strong>bezpečné</strong> předání</li>
-			</ul>
-			<p class="text-center">
-				<a n:href="registerAsCourier" class="btn btn-success"><i class="fas fa-car"></i> Chci být řidič</a>
-			</p>
-			</div>
-		</div>
-	</div>
-</div>-->
