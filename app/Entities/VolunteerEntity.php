@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Nettrine\ORM\Entity\Attributes\Id;
 use SousedskaPomoc\Entities\RoleEntity;
 use SousedskaPomoc\Entities\AddressEntity;
+use SousedskaPomoc\Entities\TransportEntity;
 
 
 /**
@@ -60,6 +61,8 @@ class VolunteerEntity
      */
     protected $address;
 
-    //@TODO - add transport, add address
-
+    /**
+     * @ORM\ManyToOne(targetEntity="TransportEntity", inversedBy="volunteers")
+     */
+    protected $transport;
 }
