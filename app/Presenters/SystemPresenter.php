@@ -61,6 +61,7 @@ final class SystemPresenter extends BasePresenter
     	$values = $form->getValues();
     	$this->userManager->updateTown($values->selectedTown, $this->user->getId());
     	$this->flashMessage("Adresa byla nastavena - děkujeme!");
+    	$this->redirect("System:profile");
 	}
 
 
