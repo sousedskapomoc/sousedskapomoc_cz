@@ -7,6 +7,7 @@ use Apolo\Entities\Traits\Timestampable;
 use Doctrine\ORM\Mapping as ORM;
 use Nettrine\ORM\Entity\Attributes\Id;
 use SousedskaPomoc\Entities\RoleEntity;
+use SousedskaPomoc\Entities\AddressEntity;
 
 
 /**
@@ -53,6 +54,11 @@ class VolunteerEntity
      * @ORM\ManyToMany(targetEntity="RoleEntity", inversedBy="users")
      */
     protected $roles;
+
+    /**
+     * @ORM\OneToMany(targetEntity="AddressEntity", mappedBy="volunteers")
+     */
+    protected $address;
 
     //@TODO - add transport, add address
 
