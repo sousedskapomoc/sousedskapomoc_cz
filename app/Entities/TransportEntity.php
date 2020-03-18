@@ -3,18 +3,21 @@
 
 namespace SousedskaPomoc\Entities;
 
+use Apolo\Entities\Traits\Timestampable;
 use Doctrine\ORM\Mapping as ORM;
 use Nettrine\ORM\Entity\Attributes\Id;
 use SousedskaPomoc\Entities\VolunteerEntity;
 
 
 /**
- * Class RoleEntity
+ * Class TransportEntity
  * @ORM\Entity
  */
 class TransportEntity
 {
     use Id;
+
+    use Timestampable;
 
     /**
      * @ORM\Column(type="string")
