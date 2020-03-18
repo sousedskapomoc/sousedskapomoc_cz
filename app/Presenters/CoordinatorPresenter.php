@@ -45,24 +45,27 @@ final class CoordinatorPresenter extends BasePresenter
 	}
 
 
-	public function createComponentPostOrder()
-	{
-		$form = new BootstrapForm();
-		$form->addText('delivery_address', $this->translator->translate('forms.postOrder.addressLabel'))
-			->setRequired($this->translator->translate('forms.postOrder.addressRequired'))
-			->setPlaceholder($this->translator->translate('forms.postOrder.addressPlaceholder'));
-		$form->addText('delivery_phone', $this->translator->translate('forms.postOrder.phoneLabel'))
-			->setPlaceholder($this->translator->translate('forms.postOrder.phonePlaceholder'));
-		$form->addText('note',
-			$this->translator->translate('forms.postOrder.noteLabel'))
-			->setPlaceholder($this->translator->translate('forms.postOrder.notePlaceholder'));
-		$form->addTextArea('order_items', $this->translator->translate('forms.postOrder.itemsLabel'))
-			->setHtmlAttribute('rows', 10);
-		$form->addSubmit('postOrderFormSubmit', $this->translator->translate('forms.postOrder.button'));
-		$form->onSuccess[] = [$this, "postOrder"];
 
-		return $form;
-	}
+    public function createComponentPostOrder()
+    {
+        $form = new BootstrapForm();
+        $form->addText('delivery_address', $this->translator->translate('forms.postOrder.addressLabel'))
+            ->setRequired($this->translator->translate('forms.postOrder.addressRequired'))
+            ->setPlaceholder($this->translator->translate('forms.postOrder.addressPlaceholder'));
+        $form->addText('delivery_phone', $this->translator->translate('forms.postOrder.phoneLabel'))
+            ->setPlaceholder($this->translator->translate('forms.postOrder.phonePlaceholder'));
+        $form->addText('note',
+            $this->translator->translate('forms.postOrder.noteLabel'))
+            ->setPlaceholder($this->translator->translate('forms.postOrder.notePlaceholder'));
+        $form->addHidden('courier_note')
+            ->setDefaultValue('');
+        $form->addTextArea('order_items', $this->translator->translate('forms.postOrder.itemsLabel'))
+            ->setHtmlAttribute('rows', 10);
+        $form->addSubmit('postOrderFormSubmit', $this->translator->translate('forms.postOrder.button'));
+        $form->onSuccess[] = [$this, "postOrder"];
+
+        return $form;
+    }
 
 
 	public function postOrder(BootstrapForm $form)
