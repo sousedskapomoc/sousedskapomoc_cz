@@ -3,7 +3,7 @@
 
 namespace SousedskaPomoc\Entities;
 
-use Apolo\Entities\Traits\Timestampable;
+use SousedskaPomoc\Entities\Traits\Timestampable;
 use Doctrine\ORM\Mapping as ORM;
 use Nettrine\ORM\Entity\Attributes\Id;
 use SousedskaPomoc\Entities\VolunteerEntity;
@@ -16,7 +16,7 @@ class RoleEntity
 {
     use Id;
 
-    use Timestampable;
+//    use Timestampable;
 
     /**
      * @ORM\Column(type="string")
@@ -27,4 +27,44 @@ class RoleEntity
      * @ORM\ManyToMany(targetEntity="VolunteerEntity", mappedBy="roles")
      */
     protected $users;
+
+
+
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+
+
+    /**
+     * @param mixed $name
+     */
+    public function setName($name) : void
+    {
+        $this->name = $name;
+    }
+
+
+
+    /**
+     * @return mixed
+     */
+    public function getUsers()
+    {
+        return $this->users;
+    }
+
+
+
+    /**
+     * @param mixed $users
+     */
+    public function setUsers($users) : void
+    {
+        $this->users = $users;
+    }
 }

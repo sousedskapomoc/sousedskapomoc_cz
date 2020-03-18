@@ -1,6 +1,6 @@
 <?php
 
-namespace Apolo\Entities\Traits;
+namespace SousedskaPomoc\Entities\Traits;
 
 use Doctrine\ORM\Mapping as ORM;
 
