@@ -163,19 +163,16 @@ final class OrderManager
 		];
 
 		$data = $this->database->table("volunteers")->insert($volunteerPlaceholder);
-		\Tracy\Debugger::dump($data);
-		exit;
+
 		$output = [
 			'id_volunteers' => 9,
 			'status' => 'new',
 			'delivery_address' => $demand->deliveryAddress ?? 'neznámá adresa',
 			'delivery_phone' => $demand->deliveryPhone,
-			'note' => "Poptávka pro: " . $demand->deliveryPerson,
+			'note' => "[Z WEBU] Poptávka pro: " . $demand->deliveryPerson,
 			'order_items' => $demand->orderItems,
 		];
 
 		$this->database->table("posted_orders")->insert($output);
-
-		exit;
 	}
 }
