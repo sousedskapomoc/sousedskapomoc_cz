@@ -5,23 +5,28 @@ namespace SousedskaPomoc\Entities;
 
 use Doctrine\ORM\Mapping as ORM;
 use Nettrine\ORM\Entity\Attributes\Id;
-use SousedskaPomoc\Entities\VolunteerEntity;
+
 
 /**
  * Class RoleEntity
  * @ORM\Entity
  */
-class RoleEntity
+class TransportEntity
 {
     use Id;
 
     /**
      * @ORM\Column(type="string")
      */
-    protected $name;
+    protected $type;
 
     /**
-     * @ORM\ManyToMany(targetEntity="VolunteerEntity", mappedBy="roles")
+     * @ORM\Column(type="boolean")
      */
-    protected $users;
+    protected $active;
+
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    protected $sorting;
 }
