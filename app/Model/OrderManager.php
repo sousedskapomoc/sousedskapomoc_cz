@@ -152,4 +152,27 @@ final class OrderManager
 		$sql = "SELECT * FROM dispatch_orders_by_town WHERE town LIKE '%$userData[town]%' AND status = 'delivered'";
 		return $this->database->query("$sql")->fetchAll();
 	}
+
+	public function saveDemand($demand)
+	{
+		$volunteerPlaceholder = [
+			'personName' => 'poptávka z webu',
+			'personPhone' => 0,
+			'personEmail' => 'info@sousedskapomoc.cz',
+			'town' => $demand->address
+		];
+
+		$data = $this->database->table("volunteers")->insert($volunteerPlaceholder);
+
+		$output = [
+			'id_volunteers' => 9,
+			'status' => 'new',
+			'delivery_address' => $demand->deliveryAddress ?? 'neznámá adresa',
+			'delivery_phone' => $demand->deliveryPhone,
+			'note' => "[Z WEBU] Poptávka pro: " . $demand->deliveryPerson,
+			'order_items' => $demand->orderItems,
+		];
+
+		$this->database->table("posted_orders")->insert($output);
+	}
 }
