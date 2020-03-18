@@ -171,7 +171,7 @@ final class OrderManager
 		$data = $this->database->table("volunteers")->insert($volunteerPlaceholder);
 
 		$output = [
-			'id_volunteers' => 9,
+			'id_volunteers' => $data->id,
 			'status' => 'new',
 			'delivery_address' => $demand->deliveryAddress ?? 'neznámá adresa',
 			'delivery_phone' => $demand->deliveryPhone,
