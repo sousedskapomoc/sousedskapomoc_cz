@@ -25,3 +25,14 @@ translation:
 
 extensions:
 	translation: Kdyby\Translation\DI\TranslationExtension
+	nettrine.dbal: Nettrine\DBAL\DI\DbalExtension
+	nettrine.orm: Nettrine\ORM\DI\OrmExtension
+	nettrine.cache: Nettrine\Cache\DI\CacheExtension
+	console: Contributte\Console\DI\ConsoleExtension(%consoleMode%)
+	nettrine.orm.console: Nettrine\ORM\DI\OrmConsoleExtension(%consoleMode%)
+	nettrine.annotations: Nettrine\Annotations\DI\AnnotationsExtension
+	nettrine.orm.annotations: Nettrine\ORM\DI\OrmAnnotationsExtension
+
+nettrine.orm.annotations:
+    paths:
+        - App/Entities
