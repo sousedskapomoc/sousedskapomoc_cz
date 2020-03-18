@@ -27,10 +27,10 @@
     "nette/utils": "^3.0",
     "latte/latte": "^2.5",
     "tracy/tracy": "^2.6",
-    "contributte/console": "^0.7.1",
+    "contributte/console": "^0.8.0",
     "contributte/console-extra": "^0.5.1",
-    "nettrine/orm": "^0.4.0",
-    "nettrine/dbal": "^0.5.0",
+    "nettrine/orm": "^0.5.0",
+    "nettrine/dbal": "^0.6.2",
     "squizlabs/php_codesniffer": "^3.5",
     "sendgrid/sendgrid": "^7.4",
     "ext-simplexml": "*",
@@ -41,7 +41,9 @@
     "aws/aws-sdk-php": "^3.133",
     "aspera/xlsx-reader": "^0.7.7",
     "gamee/nette-rabbitmq": "^4.1",
-    "kdyby/translation": "^3.0"
+    "kdyby/translation": "^3.0",
+    "nettrine/cache": "^0.1.0",
+    "nettrine/annotations": "^0.6.0"
   },
   "require-dev": {
     "nette/tester": "^2.0"

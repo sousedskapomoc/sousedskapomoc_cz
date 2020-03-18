@@ -5,6 +5,17 @@ database:
 	options:
 		lazy: yes
 
+nettrine.dbal:
+    debug:
+        panel: true
+    connection:
+        host: 127.0.0.1
+        port: 8080
+        driver: pdo_mysql
+        dbname:
+        user:
+        password:
+
 mail:
 	smtp: true  # use SmtpMailer instead of SendmailMailer
 	host: 'smtp.seznam.cz'
