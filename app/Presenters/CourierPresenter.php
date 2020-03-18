@@ -16,6 +16,8 @@ final class CourierPresenter extends BasePresenter
 
 	public function beforeRender()
 	{
+		parent::beforeRender();
+
 		if (!$this->user->isLoggedIn()) {
 			$this->redirect('Homepage:default');
 		}
