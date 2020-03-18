@@ -3,6 +3,7 @@
 
 namespace SousedskaPomoc\Entities;
 
+use Apolo\Entities\Traits\Timestampable;
 use Doctrine\ORM\Mapping as ORM;
 use Nettrine\ORM\Entity\Attributes\Id;
 use SousedskaPomoc\Entities\VolunteerEntity;
@@ -14,6 +15,8 @@ use SousedskaPomoc\Entities\VolunteerEntity;
 class RoleEntity
 {
     use Id;
+
+    use Timestampable;
 
     /**
      * @ORM\Column(type="string")

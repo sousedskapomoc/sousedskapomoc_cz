@@ -3,17 +3,21 @@
 
 namespace SousedskaPomoc\Entities;
 
+use Apolo\Entities\Traits\Timestampable;
 use Doctrine\ORM\Mapping as ORM;
 use Nettrine\ORM\Entity\Attributes\Id;
 use SousedskaPomoc\Entities\VolunteerEntity;
+use SousedskaPomoc\Entities\DemandEntity;
 
 /**
- * Class RoleEntity
+ * Class AddressEntity
  * @ORM\Entity
  */
 class AddressEntity
 {
     use Id;
+
+    use Timestampable;
 
     /**
      * @ORM\Column(type="bigint")
@@ -50,4 +54,9 @@ class AddressEntity
      * @ORM\ManyToOne(targetEntity="VolunteerEntity", inversedBy="address")
      */
     protected $volunteers;
+
+    /**
+     * @ORM\OneToMany(targetEntity="DemandEntity", mappedBy="deliveryAddress")
+     */
+    protected $demandOrders;
 }
