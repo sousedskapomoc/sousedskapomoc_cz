@@ -52,12 +52,13 @@ final class CourierPresenter extends BasePresenter
 	}
 
 
-	public function renderDashboard()
-	{
-		$user = $this->userManager->isOnline($this->user->getId());
-		$this->template->userOnline = $user->active;
-		$this->template->orders = $this->orderManager->findAllLive($this->user->getId());
-	}
+
+    public function renderDashboard()
+    {
+        $user = $this->userManager->isOnline($this->user->getId());
+        $this->template->userOnline = $user->active;
+        $this->template->orders = $this->orderManager->findAllLiveByCourierByTown($this->user->getIdentity()->data);
+    }
 
 
 	public function renderDetail($id)
