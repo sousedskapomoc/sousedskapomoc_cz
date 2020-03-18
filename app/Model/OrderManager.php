@@ -122,6 +122,8 @@ final class OrderManager
 
 	public function findAllNewInTown($userData)
 	{
+		$town = $userData->town ?? null;
+
 		$sql = "SELECT
 				posted_orders.*,
 				volunteers.town AS limitMesto
@@ -131,7 +133,7 @@ final class OrderManager
 				WHERE
 				posted_orders.id_volunteers = volunteers.id
 				AND
-				volunteers.town LIKE '%Praha%'
+				volunteers.town LIKE '%$town%'
 				AND
 				posted_orders.status = 'new'
 				";
