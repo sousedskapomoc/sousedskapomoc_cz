@@ -164,7 +164,7 @@ final class HomepagePresenter extends BasePresenter
         $form->addText('personName', 'Jméno a přijmení');
         $form->addText('personPhone', 'Telefon');
         $form->addText('personEmail', 'E-mail');
-        $form->addSubmit('demandFormSubmit', 'Uložit poptávku');
+        $form->addSubmit('demandFormSubmit', 'Zaregistrovat');
         $form->onSuccess[] = [$this, "addSuper"];
         return $form;
     }
