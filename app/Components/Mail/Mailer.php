@@ -105,4 +105,16 @@ final class Mail
 
         $this->mailer->send($mail);
     }
+
+    public function sendSuperuserMail($to, $link)
+    {
+        $mail = new Message;
+        $latte = new Engine;
+        $mail->setFrom('robot@sousedskapomoc.cz')
+            ->addTo($to)
+            ->setSubject('SousedskaPomoc.cz - Úspěšná registrace')
+            ->setHtmlBody($latte->renderToString(__DIR__.'/superuserMail.latte', ['url' => $link]));
+
+        $this->mailer->send($mail);
+    }
 }

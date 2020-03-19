@@ -155,6 +155,41 @@ final class HomepagePresenter extends BasePresenter
 		$this->redirect('Homepage:default');
 	}
 
+    public function createComponentAddGovernmentCoordinator()
+    {
+        $form = new BootstrapForm;
+        $form->addText('address', 'Město ve kterém jste');
+        $form->addHidden('role')
+            ->setDefaultValue('superuser');
+        $form->addText('personName', 'Jméno a přijmení');
+        $form->addText('personPhone', 'Telefon');
+        $form->addText('personEmail', 'E-mail');
+        $form->addSubmit('demandFormSubmit', 'Zaregistrovat');
+        $form->onSuccess[] = [$this, "addSuper"];
+        return $form;
+    }
+
+    public function addSuper(BootstrapForm $form)
+    {
+        $values = $form->getValues();
+        $values->town = $values->address;
+        unset($values->address);
+
+        if (!$this->userManager->check('personEmail', $values->personEmail)) {
+
+            $user = $this->userManager->register($values);
+            $hash = md5($user['personEmail']);
+            $link = $this->link('//Homepage:changePassword', $hash);
+            $this->userManager->setUserCode($user['id'], $hash);
+            $this->mail->sendSuperuserMail($values->personEmail, $link);
+
+            $this->flashMessage("Kontakt uložen. Budeme Vás kontaktovat pro ověření totožnosti.");
+            $this->redirect("RegistrationFinished");
+        } else {
+            $form->addError($this->translator->translate('messages.registration.fail'));
+        }
+    }
+
 	public function createComponentChangePasswordForm()
 	{
 		$form = new BootstrapForm;
