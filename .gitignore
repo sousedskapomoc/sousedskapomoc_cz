@@ -3,3 +3,4 @@ vendor/
 temp/
 temp/cache/
 app/config/local.neon
+composer.lock
