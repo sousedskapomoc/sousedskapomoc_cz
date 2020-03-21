@@ -1,0 +1,24 @@
+{layout "../appLayout.latte"}
+{block content}
+	{include "headquartersMenu.latte"}
+
+	{ifset $towns}
+		<table class="table table-condensed table-hover table-bordered">
+			<thead>
+			<tr>
+				<th>Počet registrovaných</th>
+				<th>Město</th>
+			</tr>
+			</thead>
+			<tbody>
+
+			{foreach $towns as $townList}
+				<tr>
+					<td>{$townList->countUsers}</td>
+					<td>{$townList->town}</td>
+				</tr>
+			{/foreach}
+			</tbody>
+		</table>
+	{/ifset}
+{/block}

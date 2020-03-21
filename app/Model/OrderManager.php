@@ -91,11 +91,11 @@ final class OrderManager
 		])->fetchAll();
 	}
 
-    public function findAllLiveByCourierByTown($userData)
-    {
-        $sql = "SELECT * FROM dispatch_orders_by_town WHERE town LIKE '%$userData[town]%' AND status IN ('assigned','picking','delivering') AND courier_id = '$userData[id]'";
-        return $this->database->query($sql)->fetchAll();
-    }
+	public function findAllLiveByCourierByTown($userData)
+	{
+		$sql = "SELECT * FROM dispatch_orders_by_town WHERE town LIKE '%$userData[town]%' AND status IN ('assigned','picking','delivering') AND courier_id = '$userData[id]'";
+		return $this->database->query($sql)->fetchAll();
+	}
 
 
 	public function findAllDelivered()
@@ -172,7 +172,7 @@ final class OrderManager
 
 		$output = [
 			'id_volunteers' => $data->id,
-			'status' => 'new',
+			'status' => 'waiting',
 			'delivery_address' => $demand->deliveryAddress ?? 'neznámá adresa',
 			'delivery_phone' => $demand->deliveryPhone,
 			'note' => "[Z WEBU] Poptávka pro: " . $demand->deliveryPerson,
@@ -180,5 +180,16 @@ final class OrderManager
 		];
 
 		$this->database->table("posted_orders")->insert($output);
+	}
+
+	public function fetchAllWebDemands()
+	{
+		$sql = "SELECT * FROM posted_orders WHERE note LIKE '[Z WEBU]%'";
+		return $this->database->query($sql)->fetchAll();
+	}
+
+	public function findAll()
+	{
+		return $this->database->table('posted_orders')->fetchAll();
 	}
 }

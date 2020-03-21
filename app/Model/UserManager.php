@@ -230,6 +230,29 @@ final class UserManager implements Nette\Security\IAuthenticator
 		$data = $this->database->table(self::TABLE_NAME)->wherePrimary($userId)->fetch();
 		return $data->town ?? null;
 	}
+
+	public function getTowns()
+	{
+		$sql = "SELECT COUNT(id) AS countUsers, town FROM volunteers WHERE town IS NOT NULL GROUP BY town ORDER BY countUsers DESC";
+		return $this->database->query($sql)->fetchAll();
+	}
+
+	public function fetchAllUsersInRole($role = null)
+	{
+		$sql = "SELECT * FROM volunteers WHERE role LIKE '%{$role}%'";
+		return $this->database->query($sql)->fetchAll();
+	}
+
+	public function fetchPhoneNumber($courierId)
+	{
+		$data = $this->database
+			->table(self::TABLE_NAME)
+			->select('personPhone')
+			->wherePrimary($courierId)
+			->fetch();
+
+		return $data->personPhone ?? 'Nezadán';
+	}
 }
 
 
