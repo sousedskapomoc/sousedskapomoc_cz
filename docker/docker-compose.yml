@@ -23,7 +23,7 @@ services:
   web:
     build: .
     ports:
-      - 80:80
+      - ${PORT}:80
     volumes:
       - ../:/var/www/sousedskapomoc.cz
       - ./nginx_conf/sousedskapomoc.cz.conf:/etc/nginx/conf.d/sousedskapomoc.cz.conf
