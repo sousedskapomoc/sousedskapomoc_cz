@@ -28,6 +28,7 @@
                         <td>{_templates.coordinatorDashboard.address}</td>
                         <td>{_templates.coordinatorDashboard.items}</td>
                         <td>{_templates.coordinatorDashboard.note}</td>
+						<td>Status</td>
                         <td>{_templates.coordinatorDashboard.action}</td>
                     </tr>
                     </thead>
@@ -38,6 +39,7 @@
                             <td>{$order->delivery_address}</td>
                             <td>{$order->order_items}</td>
                             <td>{$order->note}</td>
+							<td>{$order->status|humanFriendlyStatus}</td>
                             <td>
                                 <a n:href="Detail id => $order->id">{_templates.coordinatorDashboard.detail}</a>
                             </td>
