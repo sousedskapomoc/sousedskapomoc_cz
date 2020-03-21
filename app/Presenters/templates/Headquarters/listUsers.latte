@@ -1,0 +1,11 @@
+{layout "../appLayout.latte"}
+{block content}
+{include "headquartersMenu.latte"}
+<div class="row">
+	<div class="col-md-12">
+		<h1>Seznam uživatelů <small n:ifset="$role">v roli {$role}</small></h1>
+	</div>
+	<div class="col-md-12">
+		{control usersDataGrid}
+	</div>
+</div>

@@ -189,3 +189,5 @@ profile:
     fail: 'Tento e-mail je již použit jiným uživatelem'
     edit: 'Upravit profil'
     button: 'Uložit'
+headquarters:
+	title: 'Velín'
