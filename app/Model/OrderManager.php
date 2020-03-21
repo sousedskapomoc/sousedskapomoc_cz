@@ -104,11 +104,12 @@ final class OrderManager
 	}
 
 
-	public function assignOrder($courier_id, $order_id)
+	public function assignOrder($courier_id, $order_id, $operator_id)
 	{
 		$this->database->table('posted_orders')->wherePrimary($order_id)->update([
 			'courier_id' => $courier_id,
 			'status' => 'assigned',
+			'operator_id' => $operator_id
 		]);
 	}
 
