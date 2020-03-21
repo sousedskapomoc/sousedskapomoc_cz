@@ -30,11 +30,11 @@
             </tr>
             <tr>
                 <th>{_templates.orderDetail.created}</th>
-                <td>{$order->createdAt}</td>
+                <td>{date("d.n.Y H:i",$order->createdAt->getTimestamp())}</td>
             </tr>
             <tr>
-                <th>{_templates.orderDetail.lastUpdate}</th>
-                <td>{$order->updatedAt}</td>
+                <th>{_templates.orderDetail.lastUpdate)}</th>
+                <td>{date("d.n.Y H:i",$order->updatedAt->getTimestamp())}</td>
             </tr>
             <tr>
                 <th>{_templates.orderDetail.whoDelivers}</th>
