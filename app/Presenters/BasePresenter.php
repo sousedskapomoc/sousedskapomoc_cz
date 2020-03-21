@@ -59,6 +59,10 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 			return $this->userManager->fetchCourierName($courierId);
 		});
 
+		$this->template->addFilter('fetchPhone', function ($courierId) {
+			return $this->userManager->fetchPhoneNumber($courierId);
+		});
+
 		$this->template->addFilter('logic', function ($state) {
 			$states = [
 				0 => 'Vypnuto',

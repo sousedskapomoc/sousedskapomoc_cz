@@ -26,6 +26,7 @@ class HeadquartersPresenter extends BasePresenter
 		$grid->addColumnText('personEmail', 'E-mail')->setFilterText();
 		$grid->addColumnText('personPhone', 'Telefon')->setFilterText();
 		$grid->addColumnText('town', 'Město')->setFilterText();
+		$grid->addColumnNumber('active', 'Online')->setFilterText();
 		$grid->setDefaultPerPage(100);
 
 		return $grid;
@@ -42,8 +43,8 @@ class HeadquartersPresenter extends BasePresenter
 		$grid->addColumnText('order_items', 'Položky obj.')->setFilterText();
 		$grid->addFilterSelect('status', 'Stav obj', []);
 		$grid->addColumnDateTime('createdAt', 'Datum přidání')->setFilterDateRange();
-		$grid->addAction('approve', 'Schválit');
-		$grid->addAction('detail', 'Detail');
+		$grid->addAction('approve', 'Schválit')->setClass("btn btn-success btn-sm");
+		$grid->addAction('detail', 'Detail')->setClass("btn btn-primary btn-sm");
 
 		return $grid;
 	}
@@ -59,8 +60,7 @@ class HeadquartersPresenter extends BasePresenter
 		$grid->addColumnText('order_items', 'Položky obj.')->setFilterText();
 		$grid->addFilterSelect('status', 'Stav obj', []);
 		$grid->addColumnDateTime('createdAt', 'Datum přidání')->setFilterDateRange();
-		$grid->addAction('approve', 'Schválit');
-		$grid->addAction('detail', 'Detail');
+		$grid->addAction('detail', 'Detail')->setClass("btn btn-primary btn-sm");
 
 		return $grid;
 	}

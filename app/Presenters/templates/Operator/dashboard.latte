@@ -70,7 +70,7 @@
 	Telefon: {$order->delivery_phone ?? 'neuveden'}<br/>
 	Pečovatel: {$order->id_volunteers|fetchUser}<br/>
 	Stav: {$order->status|humanFriendlyStatus}<br/>
-	Kurýr: {$order->courier_id|fetchUser}<br/>
+	Kurýr: {$order->courier_id|fetchUser} ({$order->courier_id|fetchPhone})<br/>
 	<a n:href="Coordinator:detail id => $order->id" target="_blank">Obj {$order->id}. - počet
 		položek {count(explode("\n",$order->order_items))}
 	</a>
@@ -83,7 +83,7 @@
 				<input type="hidden" name="order_id" value="{$order->id}"/>
 				<select name="courier_id" class="form-control">
 					{foreach $availableCouriers as $courier}
-						<option value="{$courier->id}">{$courier->personName}</option>
+						<option value="{$courier->id}">{$courier->personName} ({$courier->personPhone})</option>
 					{/foreach}
 				</select>
 			</div>

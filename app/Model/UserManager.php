@@ -242,6 +242,17 @@ final class UserManager implements Nette\Security\IAuthenticator
 		$sql = "SELECT * FROM volunteers WHERE role LIKE '%{$role}%'";
 		return $this->database->query($sql)->fetchAll();
 	}
+
+	public function fetchPhoneNumber($courierId)
+	{
+		$data = $this->database
+			->table(self::TABLE_NAME)
+			->select('personPhone')
+			->wherePrimary($courierId)
+			->fetch();
+
+		return $data->personPhone ?? 'Nezadán';
+	}
 }
 
 
