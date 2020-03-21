@@ -215,7 +215,7 @@ final class UserManager implements Nette\Security\IAuthenticator
 
 	public function fetchAvailableCouriersInTown($town)
 	{
-		$sql = "SELECT * FROM volunteers WHERE role LIKE '%courier%' AND town LIKE '%$town%'";
+		$sql = "SELECT * FROM volunteers WHERE role LIKE '%courier%' AND town LIKE '%$town%' AND active = 1";
 
 		return $this->database->query($sql)->fetchAll();
 	}

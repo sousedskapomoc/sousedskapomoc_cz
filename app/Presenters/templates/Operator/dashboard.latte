@@ -4,7 +4,8 @@
 		<div class="col-12">
 			<div>
 				<h1>{_templates.operatorDashboard.title}</h1>
-				<h2>pro město {$user->getIdentity()->data['town']}</h2>
+				<h2>pro město {$user->getIdentity()->data['town']} <small><a n:href="System:enterTown">změnit
+							lokalitu</a></small></h2>
 				<a n:href="System:dashboard">{_templates.header.backOnMainPage}</a>
 			</div>
 			<div>
@@ -45,6 +46,9 @@
 								<td>
 									{include #order, order => $order}
 									{include #orderManagement, order => $order}
+									{if $user->isInRole('admin')}
+										<a n:href="unassignOrder! orderId => $order->id">Vrátit do stavu nová</a>
+									{/if}
 								</td>
 							</tr>
 						</table>
@@ -54,6 +58,9 @@
 							<tr n:foreach="$deliveredOrders as $order">
 								<td>
 									{include #order, order => $order}
+									{if $user->isInRole('admin')}
+										<a n:href="unassignOrder! orderId => $order->id">Vrátit do stavu nová</a>
+									{/if}
 								</td>
 							</tr>
 						</table>
@@ -62,19 +69,28 @@
 			</table>
 		</div>
 	</div>
+	<script>
+		window.setInterval('refresh()', 20000); 	// Call a function every 10000 milliseconds (OR 10 seconds).
+
+		// Refresh or reload page.
+		function refresh() {
+			window.location.reload();
+		}
+	</script>
 {/block}
 {block order}
-	<strong><a href="https://www.google.com/maps/search/{$order->delivery_address}"
-			   target="_blank">{$order->delivery_address}</a></strong><br/>
-	Pro: {$order->note ?? null}<br/>
-	Telefon: {$order->delivery_phone ?? 'neuveden'}<br/>
-	Pečovatel: {$order->id_volunteers|fetchUser}<br/>
-	Stav: {$order->status|humanFriendlyStatus}<br/>
-	Kurýr: {$order->courier_id|fetchUser} ({$order->courier_id|fetchPhone})<br/>
-	Operátor: {$order->operator_id|fetchUser} ({$order->operator_id|fetchPhone})<br/>
-	<a n:href="Coordinator:detail id => $order->id" target="_blank">Obj {$order->id}. - počet
-		položek {count(explode("\n",$order->order_items))}
-	</a>
+	<h6><a n:href="Coordinator:detail id => $order->id" target="_blank">Pro: {$order->note ?? null}</a></h6>
+	<strong>Stav:</strong> {$order->status|humanFriendlyStatus}<br/>
+	<hr/>
+	<strong>Adresa doručení:</strong> <a href="https://www.google.com/maps/search/{$order->delivery_address}"
+								target="_blank">{$order->delivery_address}</a><br/>
+	<strong>Telefon:</strong> {$order->delivery_phone ?? 'neuveden'}<br/>
+
+
+	<hr/>
+	<span n:if="$order->id_volunteers"><strong>Pečovatel:</strong> {$order->id_volunteers|fetchUser} ({$order->courier_id|fetchPhone})<br/></span>
+	<span n:if="$order->courier_id"><strong>Kurýr:</strong> {$order->courier_id|fetchUser} ({$order->courier_id|fetchPhone})<br/></span>
+	<span n:if="$order->operator_id"><strong>Operátor:</strong> {$order->operator_id|fetchUser} ({$order->operator_id|fetchPhone})<br/></span>
 	<hr/>
 {/block}
 {block orderAssign}
@@ -84,7 +100,9 @@
 				<input type="hidden" name="order_id" value="{$order->id}"/>
 				<select name="courier_id" class="form-control">
 					{foreach $availableCouriers as $courier}
-						<option value="{$courier->id}">{$courier->personName} ({$courier->personPhone})</option>
+						<option value="{$courier->id}">{$courier->personName} ({$courier->personPhone})
+							({$courier->car|fetchCar})
+						</option>
 					{/foreach}
 				</select>
 			</div>
@@ -95,10 +113,18 @@
 	</form>
 {/block}
 {block orderManagement}
-	<a n:href="updateOrderStatus! orderId => $order->id, orderStatus => 'picking'"
-			class="btn btn-sm btn-danger">{_templates.order.picking}</a>
-	<a n:href="updateOrderStatus! orderId => $order->id, orderStatus => 'delivering'"
-			class="btn btn-sm btn-warning">{_templates.order.delivering}</a>
-	<a n:href="updateOrderStatus! orderId => $order->id, orderStatus => 'delivered'"
-			class="btn btn-sm btn-success">{_templates.order.delivered}</a>
+	<form action="{link updateOrderStatus! orderId => $order->id}" method="post" onchange="this.submit();"
+		  class="form form-vertical">
+		<div class="form-group">
+			<label for="orderStatus"><strong>Nastavit stav:</strong></label>
+			<select name="orderStatus" class="form-control">
+				<option value="picking"
+						{if $order->status == 'picking'}selected="selected"{/if}>{_templates.order.picking}</option>
+				<option value="delivering"
+						{if $order->status == 'delivering'}selected="selected"{/if}>{_templates.order.delivering}</option>
+				<option value="delivered"
+						{if $order->status == 'delivered'}selected="selected"{/if}>{_templates.order.delivered}</option>
+			</select>
+		</div>
+	</form>
 {/block}

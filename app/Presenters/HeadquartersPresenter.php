@@ -52,14 +52,16 @@ class HeadquartersPresenter extends BasePresenter
 	public function createComponentOrdersDataGrid()
 	{
 		$grid = new DataGrid();
-		$grid->setDataSource($this->orderManager->findAll());
+		$grid->setDataSource($this->orderManager->findAllOrdersData());
 		$grid->addColumnNumber('id', 'ID');
 		$grid->addColumnText('id_volunteers', 'Zadavatel');
+		$grid->addColumnText('town', 'Město')->setFilterText();
 		$grid->addColumnText('delivery_address', 'Adresa')->setFilterText();
 		$grid->addColumnText('delivery_phone', 'Telefon')->setFilterText();
 		$grid->addColumnText('order_items', 'Položky obj.')->setFilterText();
-		$grid->addFilterSelect('status', 'Stav obj', []);
-		$grid->addColumnDateTime('createdAt', 'Datum přidání')->setFilterDateRange();
+
+		$grid->addColumnDateTime('createdAt', 'Datum přidání');
+		$grid->addColumnText('status', 'Status')->setFilterText();
 		$grid->addAction('detail', 'Detail')->setClass("btn btn-primary btn-sm");
 
 		return $grid;
