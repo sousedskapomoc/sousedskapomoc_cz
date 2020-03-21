@@ -21,6 +21,6 @@ services:
   composer:
     image: composer:1.9
     command: >
-      sh -c "composer install && mkdir -p ./temp/cache/ && chmod -R 777 ./temp/ && chmod -R 777 ./log/"
+      sh -c "composer install && mkdir -p ./temp/cache/ && chmod -R 777 ./temp/ && chmod -R 777 ./log/ && if [ -f ./app/config/local.neon.dev ]; then mv ./app/config/local.neon.dev ./app/config/local.neon; fi"
     volumes:
      - .:/app
