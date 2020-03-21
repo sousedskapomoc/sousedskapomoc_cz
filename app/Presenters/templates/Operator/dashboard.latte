@@ -4,7 +4,8 @@
 		<div class="col-12">
 			<div>
 				<h1>{_templates.operatorDashboard.title}</h1>
-				<h2>pro město {$user->getIdentity()->data['town']}</h2>
+				<h2>pro město {$user->getIdentity()->data['town']} <small><a n:href="System:enterTown">změnit
+							lokalitu</a></small></h2>
 				<a n:href="System:dashboard">{_templates.header.backOnMainPage}</a>
 			</div>
 			<div>
@@ -68,19 +69,28 @@
 			</table>
 		</div>
 	</div>
+	<script>
+		window.setInterval('refresh()', 20000); 	// Call a function every 10000 milliseconds (OR 10 seconds).
+
+		// Refresh or reload page.
+		function refresh() {
+			window.location.reload();
+		}
+	</script>
 {/block}
 {block order}
-	<strong>Adresa: <a href="https://www.google.com/maps/search/{$order->delivery_address}"
-					   target="_blank">{$order->delivery_address}</a></strong><br/>
-	<a n:href="Coordinator:detail id => $order->id" target="_blank">Detail obj. s ID {$order->id}</a><br/>
-	Stav: {$order->status|humanFriendlyStatus}<br/>
+	<h6><a n:href="Coordinator:detail id => $order->id" target="_blank">Pro: {$order->note ?? null}</a></h6>
+	<strong>Stav:</strong> {$order->status|humanFriendlyStatus}<br/>
 	<hr/>
-	Pro: {$order->note ?? null}<br/>
-	Telefon: {$order->delivery_phone ?? 'neuveden'}<br/>
+	<strong>Adresa doručení:</strong> <a href="https://www.google.com/maps/search/{$order->delivery_address}"
+								target="_blank">{$order->delivery_address}</a><br/>
+	<strong>Telefon:</strong> {$order->delivery_phone ?? 'neuveden'}<br/>
+
+
 	<hr/>
-	<span n:if="$order->id_volunteers">Pečovatel: {$order->id_volunteers|fetchUser} ({$order->courier_id|fetchPhone})<br/></span>
-	<span n:if="$order->courier_id">Kurýr: {$order->courier_id|fetchUser} ({$order->courier_id|fetchPhone})<br/></span>
-	<span n:if="$order->operator_id">Operátor: {$order->operator_id|fetchUser} ({$order->operator_id|fetchPhone})<br/></span>
+	<span n:if="$order->id_volunteers"><strong>Pečovatel:</strong> {$order->id_volunteers|fetchUser} ({$order->courier_id|fetchPhone})<br/></span>
+	<span n:if="$order->courier_id"><strong>Kurýr:</strong> {$order->courier_id|fetchUser} ({$order->courier_id|fetchPhone})<br/></span>
+	<span n:if="$order->operator_id"><strong>Operátor:</strong> {$order->operator_id|fetchUser} ({$order->operator_id|fetchPhone})<br/></span>
 	<hr/>
 {/block}
 {block orderAssign}

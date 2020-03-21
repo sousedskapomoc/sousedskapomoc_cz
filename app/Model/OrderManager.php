@@ -211,4 +211,10 @@ final class OrderManager
 		$sql = "UPDATE posted_orders SET courier_id = null WHERE id = $orderId";
 		return $this->database->query($sql);
 	}
+
+	public function findAllOrdersData()
+	{
+		$sql = "SELECT posted_orders.*, volunteers.town FROM posted_orders, volunteers WHERE posted_orders.id_volunteers = volunteers.id";
+		return $this->database->query($sql)->fetchAll();
+	}
 }
