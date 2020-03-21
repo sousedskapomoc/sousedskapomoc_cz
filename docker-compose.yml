@@ -1,0 +1,26 @@
+version: "3.7"
+
+services:
+
+  web:
+    build: .
+    ports:
+      - 80:80
+    volumes:
+     - .:/var/www/sousedskapomoc.cz
+    depends_on:
+     - php
+
+  php:
+    image: php:7.2-fpm
+    volumes:
+     - .:/var/www/sousedskapomoc.cz
+    depends_on:
+    - composer
+
+  composer:
+    image: composer:1.9
+    command: >
+      sh -c "composer install && mkdir -p ./temp/cache/ && chmod -R 777 ./temp/ && chmod -R 777 ./log/"
+    volumes:
+     - .:/app
