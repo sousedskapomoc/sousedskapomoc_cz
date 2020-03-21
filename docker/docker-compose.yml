@@ -7,15 +7,15 @@ services:
     command: >
       sh -c "composer install && mkdir -p ./temp/cache/ && chmod -R 777 ./temp/ && chmod -R 777 ./log/ && if [ -f ./app/config/local.neon.dev ]; then mv ./app/config/local.neon.dev ./app/config/local.neon; fi"
     volumes:
-     - ../:/app
+      - ../:/app
 
   #PHP Service
   php:
     image: php:7.2-fpm
     volumes:
-     - ../:/var/www/sousedskapomoc.cz
+      - ../:/var/www/sousedskapomoc.cz
     depends_on:
-    - composer
+      - composer
 
   #Nginx Service
   web:
@@ -23,7 +23,7 @@ services:
     ports:
       - 80:80
     volumes:
-     - ../:/var/www/sousedskapomoc.cz
-     - ./nginx_conf/sousedskapomoc.cz.conf:/etc/nginx/conf.d/sousedskapomoc.cz.conf
+      - ../:/var/www/sousedskapomoc.cz
+      - ./nginx_conf/sousedskapomoc.cz.conf:/etc/nginx/conf.d/sousedskapomoc.cz.conf
     depends_on:
-     - php
+      - php
