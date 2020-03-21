@@ -61,6 +61,11 @@ class AddressEntity
      */
     protected $demandOrders;
 
+    /**
+     * @ORM\OneToMany(targetEntity="StockEntity", mappedBy="stockAddress")
+     */
+    protected $stocks;
+
 
 
     /**
