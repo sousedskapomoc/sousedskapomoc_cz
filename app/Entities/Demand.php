@@ -6,22 +6,22 @@ namespace SousedskaPomoc\Entities;
 use SousedskaPomoc\Entities\Traits\Timestampable;
 use Doctrine\ORM\Mapping as ORM;
 use Nettrine\ORM\Entity\Attributes\Id;
-use SousedskaPomoc\Entities\VolunteerEntity;
-use SousedskaPomoc\Entities\AddressEntity;
+use SousedskaPomoc\Entities\Volunteer;
+use SousedskaPomoc\Entities\Address;
 
 
 /**
  * Class DemandEntity
  * @ORM\Entity
  */
-class DemandEntity
+class Demand
 {
     use Id;
 
 //    use Timestampable;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AddressEntity", inversedBy="demandOrders")
+     * @ORM\ManyToOne(targetEntity="Address", inversedBy="demandOrders")
      */
     protected $deliveryAddress;
 

@@ -6,16 +6,16 @@ namespace SousedskaPomoc\Entities;
 use SousedskaPomoc\Entities\Traits\Timestampable;
 use Doctrine\ORM\Mapping as ORM;
 use Nettrine\ORM\Entity\Attributes\Id;
-use SousedskaPomoc\Entities\RoleEntity;
-use SousedskaPomoc\Entities\AddressEntity;
-use SousedskaPomoc\Entities\TransportEntity;
+use SousedskaPomoc\Entities\Role;
+use SousedskaPomoc\Entities\Address;
+use SousedskaPomoc\Entities\Transport;
 
 
 /**
- * Class VolunteerEntity
- * @ORM\Entity
+ * Class Volunteer
+ * @ORM\Entity(repositoryClass="SousedskaPomoc\Repository\VolunteerRepository")
  */
-class VolunteerEntity
+class Volunteer
 {
     use Id;
 
@@ -52,27 +52,27 @@ class VolunteerEntity
     protected $password;
 
     /**
-     * @ORM\ManyToMany(targetEntity="RoleEntity", inversedBy="users")
+     * @ORM\ManyToMany(targetEntity="Role", inversedBy="users")
      */
     protected $roles;
 
     /**
-     * @ORM\OneToMany(targetEntity="AddressEntity", mappedBy="volunteers")
+     * @ORM\OneToMany(targetEntity="Address", mappedBy="volunteers")
      */
     protected $address;
 
     /**
-     * @ORM\ManyToOne(targetEntity="TransportEntity", inversedBy="volunteers")
+     * @ORM\ManyToOne(targetEntity="Transport", inversedBy="volunteers")
      */
     protected $transport;
 
     /**
-     * @ORM\OneToMany(targetEntity="OrderEntity", mappedBy="author")
+     * @ORM\OneToMany(targetEntity="Orders", mappedBy="author")
      */
     protected $createdOrders;
 
     /**
-     * @ORM\OneToMany(targetEntity="OrderEntity", mappedBy="courier")
+     * @ORM\OneToMany(targetEntity="Orders", mappedBy="courier")
      */
     protected $deliveredOrders;
 
@@ -294,5 +294,9 @@ class VolunteerEntity
     public function setDeliveredOrders($deliveredOrders) : void
     {
         $this->deliveredOrders = $deliveredOrders;
+    }
+
+    public function setId($id) {
+        $this->id = $id;
     }
 }

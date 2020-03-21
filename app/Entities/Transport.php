@@ -6,14 +6,14 @@ namespace SousedskaPomoc\Entities;
 use SousedskaPomoc\Entities\Traits\Timestampable;
 use Doctrine\ORM\Mapping as ORM;
 use Nettrine\ORM\Entity\Attributes\Id;
-use SousedskaPomoc\Entities\VolunteerEntity;
+use SousedskaPomoc\Entities\Volunteer;
 
 
 /**
- * Class TransportEntity
+ * Class Transport
  * @ORM\Entity
  */
-class TransportEntity
+class Transport
 {
     use Id;
 
@@ -35,7 +35,7 @@ class TransportEntity
     protected $sorting;
 
     /**
-     * @ORM\OneToMany(targetEntity="VolunteerEntity", mappedBy="transport")
+     * @ORM\OneToMany(targetEntity="Volunteer", mappedBy="transport")
      */
     protected $volunteers;
 

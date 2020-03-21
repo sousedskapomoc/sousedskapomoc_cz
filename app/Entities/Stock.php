@@ -5,19 +5,19 @@ namespace SousedskaPomoc\Entities;
 
 use Doctrine\ORM\Mapping as ORM;
 use Nettrine\ORM\Entity\Attributes\Id;
-use SousedskaPomoc\Entities\AddressEntity;
+use SousedskaPomoc\Entities\Address;
 
 
 /**
- * Class StockEntity
+ * Class Stock
  * @ORM\Entity
  */
-class StockEntity
+class Stock
 {
     use Id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AddressEntity", inversedBy="stocks")
+     * @ORM\ManyToOne(targetEntity="Address", inversedBy="stocks")
      */
     protected $stockAddress;
 
