@@ -4,14 +4,13 @@ services:
   #Composer Service
   composer:
     image: composer:1.10
-    command: >
-      sh -c "composer install && mkdir -p ./temp/cache/ && chmod -R 777 ./temp/ && chmod -R 777 ./log/ && cp ./app/config/local.neon.dev ./app/config/local.neon"
+    command: ["composer", "install"]
     volumes:
      - ../:/app
 
   #PHP Service
   php:
-    image: php:7.2-fpm
+    build: .
     volumes:
      - ../:/var/www/sousedskapomoc.cz
     depends_on:
@@ -19,7 +18,14 @@ services:
 
   #Nginx Service
   web:
-    build: .
+    image: nginx:latest
+    command: >
+      sh -c "if [ -f /etc/nginx/conf.d/default.conf ]; then rm /etc/nginx/conf.d/default.conf; fi&&
+             mkdir -p /var/www/sousedskapomoc.cz/temp/cache/ &&
+             chmod -R 777 /var/www/sousedskapomoc.cz/temp/ &&
+             chmod -R 777 /var/www/sousedskapomoc.cz/log/ &&
+             if [ -f ./app/config/local.neon.dev ]; then cp /var/www/sousedskapomoc.cz/app/config/local.neon.dev /var/www/sousedskapomoc.cz/app/config/local.neon; fi &&
+             nginx -g 'daemon off;'"
     ports:
       - 80:80
     volumes:

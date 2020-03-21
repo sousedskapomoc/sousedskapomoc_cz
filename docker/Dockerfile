@@ -1,7 +1,5 @@
-FROM nginx:latest
+FROM php:7.2-fpm
 MAINTAINER Astronaut apelttom@gmail.com
 
-RUN apt-get -y update && apt-get -y upgrade
-
-# remove default config so we can replace it with ours
-RUN rm /etc/nginx/conf.d/default.conf
+# PHP extensions
+RUN docker-php-ext-install pdo pdo_mysql
