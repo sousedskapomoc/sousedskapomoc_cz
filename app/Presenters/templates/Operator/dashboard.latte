@@ -71,6 +71,7 @@
 	Pečovatel: {$order->id_volunteers|fetchUser}<br/>
 	Stav: {$order->status|humanFriendlyStatus}<br/>
 	Kurýr: {$order->courier_id|fetchUser} ({$order->courier_id|fetchPhone})<br/>
+	Operátor: {$order->operator_id|fetchUser} ({$order->operator_id|fetchPhone})<br/>
 	<a n:href="Coordinator:detail id => $order->id" target="_blank">Obj {$order->id}. - počet
 		položek {count(explode("\n",$order->order_items))}
 	</a>

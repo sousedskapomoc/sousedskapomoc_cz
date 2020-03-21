@@ -44,7 +44,12 @@ final class OperatorPresenter extends BasePresenter
 
 	public function handleAssignCourier()
 	{
-		$this->orderManager->assignOrder($_POST['courier_id'], $_POST['order_id']);
+		$this->orderManager->assignOrder(
+			$_POST['courier_id'],
+			$_POST['order_id'],
+			$this->user->getId()
+		);
+
 		$this->flashMessage($this->translator->translate('messages.order.givenToCourier'));
 		$this->redirect('this');
 	}
