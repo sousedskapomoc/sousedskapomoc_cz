@@ -5,7 +5,7 @@ namespace SousedskaPomoc\Repository;
 use Doctrine\ORM\EntityRepository as DoctrineEntityRepository;
 
 
-class VolunteeerRepository extends DoctrineEntityRepository
+class VolunteerRepository extends DoctrineEntityRepository
 {
 
     public function getById($id)
@@ -15,9 +15,9 @@ class VolunteeerRepository extends DoctrineEntityRepository
 
 
 
-    public function getByName($name)
+    public function getByEmail($email)
     {
-        return $this->findOneBy(['name' => $name]);
+        return $this->findOneBy(['personEmail' => $email]);
     }
 
 
@@ -30,18 +30,5 @@ class VolunteeerRepository extends DoctrineEntityRepository
     public function getAll()
     {
         return $this->findBy([]);
-    }
-
-
-
-    public function getAllAsArray()
-    {
-        $roles = $this->findBy([]);
-        $arrayRoles = [];
-        foreach ($roles as $r) {
-            $arrayRoles[$r->getId()] = $r->getName();
-        }
-
-        return $arrayRoles;
     }
 }

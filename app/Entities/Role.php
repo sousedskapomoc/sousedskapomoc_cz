@@ -6,13 +6,13 @@ namespace SousedskaPomoc\Entities;
 use SousedskaPomoc\Entities\Traits\Timestampable;
 use Doctrine\ORM\Mapping as ORM;
 use Nettrine\ORM\Entity\Attributes\Id;
-use SousedskaPomoc\Entities\VolunteerEntity;
+use SousedskaPomoc\Entities\Volunteer;
 
 /**
- * Class RoleEntity
- * @ORM\Entity
+ * Class Role
+ * @ORM\Entity(repositoryClass="SousedskaPomoc\Repository\RoleRepository")
  */
-class RoleEntity
+class Role
 {
     use Id;
 
@@ -24,7 +24,7 @@ class RoleEntity
     protected $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity="VolunteerEntity", mappedBy="roles")
+     * @ORM\ManyToMany(targetEntity="Volunteer", mappedBy="roles")
      */
     protected $users;
 

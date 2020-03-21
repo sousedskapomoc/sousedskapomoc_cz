@@ -6,8 +6,8 @@ namespace SousedskaPomoc\Entities;
 use Doctrine\ORM\Mapping as ORM;
 use Nettrine\ORM\Entity\Attributes\Id;
 use SousedskaPomoc\Entities\Traits\Timestampable;
-use SousedskaPomoc\Entities\VolunteerEntity;
-use SousedskaPomoc\Entities\DemandEntity;
+use SousedskaPomoc\Entities\Volunteer;
+use SousedskaPomoc\Entities\Demand;
 
 /**
  * Class AddressEntity
@@ -15,7 +15,7 @@ use SousedskaPomoc\Entities\DemandEntity;
  *
  * @ORM\HasLifecycleCallbacks()
  */
-class AddressEntity
+class Address
 {
     use Id;
 
@@ -52,17 +52,17 @@ class AddressEntity
     protected $postalCode;
 
     /**
-     * @ORM\ManyToOne(targetEntity="VolunteerEntity", inversedBy="address")
+     * @ORM\ManyToOne(targetEntity="Volunteer", inversedBy="address")
      */
     protected $volunteers;
 
     /**
-     * @ORM\OneToMany(targetEntity="DemandEntity", mappedBy="deliveryAddress")
+     * @ORM\OneToMany(targetEntity="Demand", mappedBy="deliveryAddress")
      */
     protected $demandOrders;
 
     /**
-     * @ORM\OneToMany(targetEntity="StockEntity", mappedBy="stockAddress")
+     * @ORM\OneToMany(targetEntity="Stock", mappedBy="stockAddress")
      */
     protected $stocks;
 

@@ -17,6 +17,17 @@ services:
 	- SousedskaPomoc\Forms\SignUpFormFactory
 	- SousedskaPomoc\Components\Mail
 	router: SousedskaPomoc\Router\RouterFactory::createRouter
+	#Repository
+	roleRepository:
+		class: SousedskaPomoc\Repository\RoleRepository
+		factory: @Doctrine\ORM\EntityManagerInterface::getRepository('SousedskaPomoc\Entities\Role')
+	volunteerRepository:
+		class: SousedskaPomoc\Repository\VolunteerRepository
+		factory: @Doctrine\ORM\EntityManagerInterface::getRepository('SousedskaPomoc\Entities\Volunteer')
+	orderRepository:
+		class: SousedskaPomoc\Repository\OrderRepository
+		factory: @Doctrine\ORM\EntityManagerInterface::getRepository('SousedskaPomoc\Entities\Orders')
+
 
 translation:
 	debugger: true

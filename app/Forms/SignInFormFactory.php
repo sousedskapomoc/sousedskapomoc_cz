@@ -7,6 +7,7 @@ namespace SousedskaPomoc\Forms;
 use Nette;
 use Nette\Application\UI\Form;
 use Nette\Security\User;
+use SousedskaPomoc\Repository\VolunteerRepository;
 
 
 final class SignInFormFactory
@@ -19,11 +20,15 @@ final class SignInFormFactory
 	/** @var User */
 	private $user;
 
+	/** @var VolunteerRepository */
+	private $volunteerRepository;
 
-	public function __construct(FormFactory $factory, User $user)
+
+	public function __construct(FormFactory $factory, User $user, VolunteerRepository $volunteerRepository)
 	{
 		$this->factory = $factory;
 		$this->user = $user;
+		$this->volunteerRepository = $volunteerRepository;
 	}
 
 
@@ -43,6 +48,10 @@ final class SignInFormFactory
 
 		$form->onSuccess[] = function (Form $form, \stdClass $values) use ($onSuccess): void {
 			try {
+//                $volunteer = $this->volunteerRepository->getByEmail($values->email);
+//			    if (!$volunteer) {
+//			        throw new Nette\Security\AuthenticationException;
+//                }
 				$this->user->setExpiration($values->remember ? '14 days' : '20 minutes');
 				$this->user->login($values->email, $values->password);
 			} catch (Nette\Security\AuthenticationException $e) {

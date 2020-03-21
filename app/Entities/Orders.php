@@ -11,24 +11,23 @@ use SousedskaPomoc\Entities\Address;
 
 
 /**
- * Class Order
+ * Class Orders
  * @ORM\Entity(repositoryClass="SousedskaPomoc\Repository\OrderRepository")
  * @ORM\HasLifecycleCallbacks()
  */
-class Order
+class Orders
 {
     use Id;
 
 //    use Timestampable;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Address", inversedBy="demandOrders")
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $pickupAddress;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $deliveryAddress;
 
