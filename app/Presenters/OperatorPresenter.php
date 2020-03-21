@@ -36,11 +36,19 @@ final class OperatorPresenter extends BasePresenter
 
 	public function handleUpdateOrderStatus($orderId, $orderStatus)
 	{
+		$orderStatus = $_POST['orderStatus'] ?? $orderStatus;
 		$this->orderManager->updateStatus($orderId, $orderStatus);
 		$this->flashMessage($this->translator->translate('messages.order.statusChanged'));
 		$this->redirect('this');
 	}
 
+	public function handleUnassignOrder($orderId)
+	{
+		$this->orderManager->removeCourier($orderId);
+		$this->orderManager->removeOperator($orderId);
+		$this->orderManager->updateStatus($orderId, 'new');
+		$this->redirect('this');
+	}
 
 	public function handleAssignCourier()
 	{

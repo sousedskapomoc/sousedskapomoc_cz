@@ -114,11 +114,13 @@ final class OrderManager
 	}
 
 
-	public function updateStatus($orderId, $orderStatus)
+	public function updateStatus($orderId, $orderStatus = null)
 	{
-		$this->database->table('posted_orders')->wherePrimary($orderId)->update([
-			'status' => $orderStatus,
-		]);
+		if ($orderStatus != null) {
+			$this->database->table('posted_orders')->wherePrimary($orderId)->update([
+				'status' => $orderStatus,
+			]);
+		}
 	}
 
 
@@ -150,13 +152,17 @@ final class OrderManager
 
 	public function findAllLiveInTown($userData)
 	{
-		$sql = "SELECT * FROM dispatch_orders_by_town WHERE town LIKE '%$userData[town]%' AND status IN ('assigned','picking','delivering')";
+		$operatorId = $userData['id'] ?? null;
+
+		$sql = "SELECT * FROM dispatch_orders_by_town WHERE town LIKE '%$userData[town]%' AND operator_id = $operatorId AND status IN ('assigned','picking','delivering')";
 		return $this->database->query($sql)->fetchAll();
 	}
 
 	public function findAllDeliveredInTown($userData)
 	{
-		$sql = "SELECT * FROM dispatch_orders_by_town WHERE town LIKE '%$userData[town]%' AND status = 'delivered'";
+		$operatorId = $userData['id'] ?? null;
+
+		$sql = "SELECT * FROM dispatch_orders_by_town WHERE town LIKE '%$userData[town]%' AND operator_id = $operatorId AND status = 'delivered'";
 		return $this->database->query("$sql")->fetchAll();
 	}
 
@@ -192,5 +198,17 @@ final class OrderManager
 	public function findAll()
 	{
 		return $this->database->table('posted_orders')->fetchAll();
+	}
+
+	public function removeOperator($orderId)
+	{
+		$sql = "UPDATE posted_orders SET operator_id = null WHERE id = $orderId";
+		return $this->database->query($sql);
+	}
+
+	public function removeCourier($orderId)
+	{
+		$sql = "UPDATE posted_orders SET courier_id = null WHERE id = $orderId";
+		return $this->database->query($sql);
 	}
 }

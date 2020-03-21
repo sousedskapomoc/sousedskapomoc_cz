@@ -83,7 +83,7 @@
 		Momentálně je omezena možnost výběru na jedno město - velice rychle přidáme i možnost zadat více měst a obcí.
 	</p>
 </div>
-<div class="container">
+<div class="container-fluid">
 	<div class="row" n:ifset="$flashes">
 		<div class="col-md-12">
 			<div n:foreach="$flashes as $flash" n:class="alert, 'alert-' . $flash->type">{$flash->message}</div>

@@ -155,40 +155,40 @@ final class HomepagePresenter extends BasePresenter
 		$this->redirect('Homepage:default');
 	}
 
-    public function createComponentAddGovernmentCoordinator()
-    {
-        $form = new BootstrapForm;
-        $form->addText('address', 'Město ve kterém jste');
-        $form->addHidden('role')
-            ->setDefaultValue('superuser');
-        $form->addText('personName', 'Jméno a přijmení');
-        $form->addText('personPhone', 'Telefon');
-        $form->addText('personEmail', 'E-mail');
-        $form->addSubmit('demandFormSubmit', 'Zaregistrovat');
-        $form->onSuccess[] = [$this, "addSuper"];
-        return $form;
-    }
+	public function createComponentAddGovernmentCoordinator()
+	{
+		$form = new BootstrapForm;
+		$form->addText('address', 'Město ve kterém jste');
+		$form->addHidden('role')
+			->setDefaultValue('superuser');
+		$form->addText('personName', 'Jméno a přijmení');
+		$form->addText('personPhone', 'Telefon');
+		$form->addText('personEmail', 'E-mail');
+		$form->addSubmit('demandFormSubmit', 'Zaregistrovat');
+		$form->onSuccess[] = [$this, "addSuper"];
+		return $form;
+	}
 
-    public function addSuper(BootstrapForm $form)
-    {
-        $values = $form->getValues();
-        $values->town = $values->address;
-        unset($values->address);
+	public function addSuper(BootstrapForm $form)
+	{
+		$values = $form->getValues();
+		$values->town = $values->address;
+		unset($values->address);
 
-        if (!$this->userManager->check('personEmail', $values->personEmail)) {
+		if (!$this->userManager->check('personEmail', $values->personEmail)) {
 
-            $user = $this->userManager->register($values);
-            $hash = md5($user['personEmail']);
-            $link = $this->link('//Homepage:changePassword', $hash);
-            $this->userManager->setUserCode($user['id'], $hash);
-            $this->mail->sendSuperuserMail($values->personEmail, $link);
+			$user = $this->userManager->register($values);
+			$hash = md5($user['personEmail']);
+			$link = $this->link('//Homepage:changePassword', $hash);
+			$this->userManager->setUserCode($user['id'], $hash);
+			$this->mail->sendSuperuserMail($values->personEmail, $link);
 
-            $this->flashMessage("Kontakt uložen. Budeme Vás kontaktovat pro ověření totožnosti.");
-            $this->redirect("RegistrationFinished");
-        } else {
-            $form->addError($this->translator->translate('messages.registration.fail'));
-        }
-    }
+			$this->flashMessage("Kontakt uložen. Budeme Vás kontaktovat pro ověření totožnosti.");
+			$this->redirect("RegistrationFinished");
+		} else {
+			$form->addError($this->translator->translate('messages.registration.fail'));
+		}
+	}
 
 	public function createComponentChangePasswordForm()
 	{
@@ -351,8 +351,6 @@ final class HomepagePresenter extends BasePresenter
 	{
 		$values = $form->getValues();
 		if (!$this->userManager->check('personEmail', $values->personEmail)) {
-
-//            $values = [$values, 'emailCode' => md5($values['personEmail'])];
 			$this->userManager->register($values);
 
 			$this->flashMessage($this->translator->translate('messages.registration.success'));
@@ -369,8 +367,6 @@ final class HomepagePresenter extends BasePresenter
 		try {
 			$user = $this->userManager->getUserByEmailCode($this->emailCode);
 		} catch (\Exception $err) {
-			dump($err->getMessage());
-			die();
 			$this->flashMessage("Email code is not valid.", BasePresenter::FLASH_TYPE_ERROR);
 			$this->redirect("Page:homepage");
 		}

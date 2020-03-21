@@ -63,6 +63,20 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 			return $this->userManager->fetchPhoneNumber($courierId);
 		});
 
+		$this->template->addFilter('fetchCar', function ($courierId) {
+			$car = [
+			1 => 'Malé auto',
+			2 => 'Velké auto',
+			3 => 'Malá dodávka',
+			4 => 'Velká dodávka',
+			5 => 'Kolo',
+			6 => 'Motorka',
+			7 => 'Chůze'
+			];
+
+			return $car[$courierId] ?? 'neuveden';
+		});
+
 		$this->template->addFilter('logic', function ($state) {
 			$states = [
 				0 => 'Vypnuto',

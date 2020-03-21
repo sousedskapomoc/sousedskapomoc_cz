@@ -115,6 +115,7 @@ orderDetail:
     title: 'Detail objednávky'
     noCourier: 'Kurýr nebyl přiřazen'
     whoDelivers: 'Kdo veze'
+    whoAssigned: 'Kdo přiřadil'
     lastUpdate: 'Datum poslední změny'
     created: 'Datum vytvoření'
     note: 'Poznámka k obj.'

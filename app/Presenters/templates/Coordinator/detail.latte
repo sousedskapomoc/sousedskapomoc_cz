@@ -38,8 +38,12 @@
             </tr>
             <tr>
                 <th>{_templates.orderDetail.whoDelivers}</th>
-                <td>{$order->courier_id|fetchUser}</td>
+                <td>{$order->courier_id|fetchUser} - {$order->operator_id|fetchPhone}</td>
             </tr>
+			<tr>
+				<th>{_templates.orderDetail.whoAssigned}</th>
+				<td>{$order->operator_id|fetchUser} - {$order->operator_id|fetchPhone}</td>
+			</tr>
         </table>
     </div>
 </div>
