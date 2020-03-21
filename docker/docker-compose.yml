@@ -1,6 +1,22 @@
 version: "3.7"
 
 services:
+  #Composer Service
+  composer:
+    image: composer:1.10
+    command: >
+      sh -c "composer install && mkdir -p ./temp/cache/ && chmod -R 777 ./temp/ && chmod -R 777 ./log/ && if [ -f ./app/config/local.neon.dev ]; then mv ./app/config/local.neon.dev ./app/config/local.neon; fi"
+    volumes:
+     - ../:/app
+
+  #PHP Service
+  php:
+    image: php:7.2-fpm
+    volumes:
+     - ../:/var/www/sousedskapomoc.cz
+    depends_on:
+    - composer
+
   #Nginx Service
   web:
     build: .
@@ -11,19 +27,3 @@ services:
      - ./nginx_conf/sousedskapomoc.cz.conf:/etc/nginx/conf.d/sousedskapomoc.cz.conf
     depends_on:
      - php
-
-  #PHP Service
-  php:
-    image: php:7.2-fpm
-    volumes:
-     - ../:/var/www/sousedskapomoc.cz
-    depends_on:
-    - composer
-
-  #Composer Service
-  composer: 
-    image: composer:1.10
-    command: >
-      sh -c "composer install && mkdir -p ./temp/cache/ && chmod -R 777 ./temp/ && chmod -R 777 ./log/ && if [ -f ./app/config/local.neon.dev ]; then mv ./app/config/local.neon.dev ./app/config/local.neon; fi"
-    volumes:
-     - ../:/app
