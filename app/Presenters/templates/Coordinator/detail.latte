@@ -13,7 +13,7 @@
             </tr>
             <tr>
                 <th>{_templates.orderDetail.status}</th>
-                <td>{$order->status}</td>
+                <td>{$order->status|humanFriendlyStatus}</td>
             </tr>
             <tr>
                 <th>{_templates.orderDetail.address}</th>
