@@ -2,15 +2,19 @@
 
 declare(strict_types=1);
 
-require __DIR__.'/../vendor/autoload.php';
+use SousedskaPomoc\Components\Mail;
+use SousedskaPomoc\Model\UserManager;
 
+require __DIR__.'/../vendor/autoload.php';
 
 $container = SousedskaPomoc\Bootstrap::boot()
     ->createContainer();
 
 [, $name, $email, $password] = $_SERVER['argv'];
 
+/** @var UserManager $manager */
 $manager = $container->getByType(SousedskaPomoc\Model\UserManager::class);
+/** @var Mail $mail */
 $mail = $container->getByType(SousedskaPomoc\Components\Mail::class);
 
 try {

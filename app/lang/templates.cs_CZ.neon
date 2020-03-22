@@ -124,10 +124,10 @@ orderDetail:
     status: 'Stav obj.'
     id: 'ID obj.'
     back: 'Zpět na seznam obj.'
-    makeOrder: 'Vytvořit objednávku'
+    makeOrder: 'Mám hotové roušky k vyzvednutí'
 printMaterial:
     title: 'SousedskaPomoc.cz'
-    subtitle: 'Stal jsem se součástí komunitního projektu SousedskaPomoc.cz a jsem připraven vám pomoci'
+    subtitle: 'Stal/a jsem se součástí komunitního projektu SousedskaPomoc.cz a jsem připraven/a vám pomoci'
     question: 'Potřebujete nakoupit ale nemůžete opustit byt?'
     callToAction: 'Pokud chcete něco zařídit stačí zavolat!'
     contact: 'Jméno a příjmení:'
