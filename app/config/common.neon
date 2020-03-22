@@ -15,8 +15,10 @@ services:
 	- SousedskaPomoc\Forms\FormFactory
 	- SousedskaPomoc\Forms\SignInFormFactory
 	- SousedskaPomoc\Forms\SignUpFormFactory
-	- SousedskaPomoc\Components\Mail
 	router: SousedskaPomoc\Router\RouterFactory::createRouter
+	#Components
+	- SousedskaPomoc\Components\IEditVolunteerFormInterface
+	- SousedskaPomoc\Components\Mail
 	#Repository
 	roleRepository:
 		class: SousedskaPomoc\Repository\RoleRepository
