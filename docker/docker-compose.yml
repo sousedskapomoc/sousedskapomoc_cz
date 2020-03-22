@@ -6,15 +6,17 @@ services:
     image: composer:1.10
     command: ["composer", "install"]
     volumes:
-     - ../:/app
+      - ../:/app
 
   #PHP Service
   php:
     build: .
     volumes:
-     - ../:/var/www/sousedskapomoc.cz
+      - ../:/var/www/sousedskapomoc.cz
+    environment:
+      - DEBUG=on
     depends_on:
-    - composer
+      - composer
 
   #Nginx Service
   web:
@@ -27,9 +29,9 @@ services:
              if [ -f ./app/config/local.neon.dev ]; then cp /var/www/sousedskapomoc.cz/app/config/local.neon.dev /var/www/sousedskapomoc.cz/app/config/local.neon; fi &&
              nginx -g 'daemon off;'"
     ports:
-      - 80:80
+      - ${PORT}:80
     volumes:
-     - ../:/var/www/sousedskapomoc.cz
-     - ./nginx_conf/sousedskapomoc.cz.conf:/etc/nginx/conf.d/sousedskapomoc.cz.conf
+      - ../:/var/www/sousedskapomoc.cz
+      - ./nginx_conf/sousedskapomoc.cz.conf:/etc/nginx/conf.d/sousedskapomoc.cz.conf
     depends_on:
-     - php
+      - php
