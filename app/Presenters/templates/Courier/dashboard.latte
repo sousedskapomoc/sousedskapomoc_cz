@@ -2,8 +2,11 @@
 {block content}
 <h1>{_templates.courierDashboard.title}</h1>
 <hr/>
-<h2>{_templates.courierDashboard.subtitle} - {$userOnline|logic}</h2>
-<h2>pro město {$user->getIdentity()->data['town']}</h2>
+<p>
+	<a href="https://sousedskapomoc.cz/pdf/zasady-kuryr.pdf" target="_blank"
+	   class="btn btn-info">Manuál kurýra</a>
+</p>
+<h2>{_templates.courierDashboard.subtitle} <small>pro město {$user->getIdentity()->data['town']}</small> - {$userOnline|logic}</h2>
 <a n:href="toggleActive! active => true"
         class="btn btn-success" n:if="!$userOnline">{_templates.courierDashboard.readyToWork}</a>
 <a n:href="toggleActive! active => false"
@@ -50,8 +53,4 @@
     </table>
 {else}
     <p>{_templates.courierDashboard.noYourOrders}</p>
-
 {/if}
-{*<h2>{_templates.courierDashboard.waitingOrders}</h2>*}
-{*<p>{_templates.courierDashboard.noOrdersYet}</p>*}
-{*<p>{_templates.coordinatorDashboard.noOrdersYet}</p>*}

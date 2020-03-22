@@ -101,7 +101,7 @@ courierDashboard:
 coordinatorDashboard:
     title: 'Pečovatel / koordinátor'
     orders: 'Objednávky'
-    makeOrder: 'Zadat objednávku'
+    makeOrder: 'Vytvořit novou objednávku'
     listOrders: 'Seznam objednávek'
     id: 'ID'
     address: 'Doručovací adresa'

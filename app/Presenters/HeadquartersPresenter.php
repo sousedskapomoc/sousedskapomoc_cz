@@ -42,7 +42,7 @@ class HeadquartersPresenter extends BasePresenter
 		$grid->addColumnText('delivery_phone', 'Telefon')->setFilterText();
 		$grid->addColumnText('order_items', 'Položky obj.')->setFilterText();
 		$grid->addFilterSelect('status', 'Stav obj', []);
-		$grid->addColumnDateTime('createdAt', 'Datum přidání')->setFilterDateRange();
+		$grid->addColumnDateTime('createdAt', 'Datum přidání');
 		$grid->addAction('approve', 'Schválit')->setClass("btn btn-success btn-sm");
 		$grid->addAction('detail', 'Detail')->setClass("btn btn-primary btn-sm");
 
