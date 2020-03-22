@@ -11,7 +11,7 @@ use SousedskaPomoc\Entities\Volunteer;
 
 /**
  * Class Transport
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="SousedskaPomoc\Repository\TransportRepository")
  */
 class Transport
 {

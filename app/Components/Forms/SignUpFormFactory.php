@@ -18,14 +18,10 @@ final class SignUpFormFactory
 	/** @var FormFactory */
 	private $factory;
 
-	/** @var Model\UserManager */
-	private $userManager;
 
-
-	public function __construct(FormFactory $factory, Model\UserManager $userManager)
+	public function __construct(FormFactory $factory)
 	{
 		$this->factory = $factory;
-		$this->userManager = $userManager;
 	}
 
 
@@ -47,7 +43,7 @@ final class SignUpFormFactory
 
 		$form->onSuccess[] = function (Form $form, \stdClass $values) use ($onSuccess): void {
 			try {
-				$this->userManager->add($values->username, $values->email, $values->password);
+//				$this->userManager->add($values->username, $values->email, $values->password);
 			} catch (Model\DuplicateNameException $e) {
 				$form['username']->addError('Username is already taken.');
 				return;

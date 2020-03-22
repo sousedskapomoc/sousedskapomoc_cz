@@ -27,6 +27,8 @@ registerCoordinator:
     button: 'Zaregistrovat se'
     carLabel: 'Na/v čem budu doručovat'
     carRequired: 'Potřebujeme vědět co uvezete'
+    password: 'Heslo'
+    passwordNeeded: 'Prosím zadejte heslo.'
 cars:
     small: 'malý osobní automobil (Škoda Citigo, VW eUP, Toyota Aygo)'
     big: 'vetší osobní automobil (Škoda Octavia, VW Passat)'
