@@ -6,6 +6,7 @@ namespace SousedskaPomoc\Entities;
 use Doctrine\Common\Collections\ArrayCollection;
 use SousedskaPomoc\Entities\Traits\Timestampable;
 use Doctrine\ORM\Mapping as ORM;
+//use Nettrine\ORM\Mapping as ORM;
 use Nettrine\ORM\Entity\Attributes\Id;
 use SousedskaPomoc\Entities\Role;
 use SousedskaPomoc\Entities\Address;
@@ -58,7 +59,7 @@ class Volunteer
     protected $roles;
 
     /**
-     * @ORM\OneToMany(targetEntity="Address", mappedBy="volunteers")
+     * @ORM\OneToOne(targetEntity="Address", inversedBy="volunteer")
      */
     protected $address;
 

@@ -31,6 +31,9 @@ services:
 	transportRepository:
 		class: SousedskaPomoc\Repository\TransportRepository
 		factory: @Doctrine\ORM\EntityManagerInterface::getRepository('SousedskaPomoc\Entities\Transport')
+	addressRepository:
+		class: SousedskaPomoc\Repository\AddressRepository
+		factory: @Doctrine\ORM\EntityManagerInterface::getRepository('SousedskaPomoc\Entities\Address')
 
 
 translation:

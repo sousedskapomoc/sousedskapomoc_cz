@@ -3,6 +3,8 @@
 
 namespace SousedskaPomoc\Entities;
 
+//use Nettrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Nettrine\ORM\Entity\Attributes\Id;
 use SousedskaPomoc\Entities\Traits\Timestampable;
@@ -11,8 +13,7 @@ use SousedskaPomoc\Entities\Demand;
 
 /**
  * Class AddressEntity
- * @ORM\Entity
- *
+ * @ORM\Entity(repositoryClass="SousedskaPomoc\Repository\AddressRepository")
  * @ORM\HasLifecycleCallbacks()
  */
 class Address
@@ -21,7 +22,7 @@ class Address
 
 
     /**
-     * @ORM\Column(type="bigint")
+     * @ORM\Column(type="string")
      */
     protected $locationId;
 
@@ -51,10 +52,16 @@ class Address
      */
     protected $postalCode;
 
+    /** @ORM\Column(type="string") */
+    protected $street;
+
+    /** @ORM\Column(type="string", nullable=true) */
+    protected $houseNumber;
+
     /**
-     * @ORM\ManyToOne(targetEntity="Volunteer", inversedBy="address")
+     * @ORM\OneToOne(targetEntity="Volunteer", mappedBy="address")
      */
-    protected $volunteers;
+    protected $volunteer;
 
     /**
      * @ORM\OneToMany(targetEntity="Demand", mappedBy="deliveryAddress")
@@ -65,6 +72,66 @@ class Address
      * @ORM\OneToMany(targetEntity="Stock", mappedBy="stockAddress")
      */
     protected $stocks;
+
+
+
+    /**
+     * @return mixed
+     */
+    public function getStreet()
+    {
+        return $this->street;
+    }
+
+
+
+    /**
+     * @param mixed $street
+     */
+    public function setStreet($street) : void
+    {
+        $this->street = $street;
+    }
+
+
+
+    /**
+     * @return mixed
+     */
+    public function getHouseNumber()
+    {
+        return $this->houseNumber;
+    }
+
+
+
+    /**
+     * @param mixed $houseNumber
+     */
+    public function setHouseNumber($houseNumber) : void
+    {
+        $this->houseNumber = $houseNumber;
+    }
+
+
+
+    /**
+     * @return mixed
+     */
+    public function getStocks()
+    {
+        return $this->stocks;
+    }
+
+
+
+    /**
+     * @param mixed $stocks
+     */
+    public function setStocks($stocks) : void
+    {
+        $this->stocks = $stocks;
+    }
 
 
 
@@ -191,19 +258,19 @@ class Address
     /**
      * @return mixed
      */
-    public function getVolunteers()
+    public function getVolunteer()
     {
-        return $this->volunteers;
+        return $this->volunteer;
     }
 
 
 
     /**
-     * @param mixed $volunteers
+     * @param mixed $volunteer
      */
-    public function setVolunteers($volunteers) : void
+    public function setVolunteer($volunteer) : void
     {
-        $this->volunteers = $volunteers;
+        $this->volunteer = $volunteer;
     }
 
 
