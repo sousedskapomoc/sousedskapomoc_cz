@@ -34,7 +34,7 @@
     "squizlabs/php_codesniffer": "^3.5",
     "sendgrid/sendgrid": "^7.4",
     "ext-simplexml": "*",
-    "guzzlehttp/guzzle": "~6.0",
+    "guzzlehttp/guzzle": "^6.5",
     "ext-json": "*",
     "contributte/forms-bootstrap": "^0.1.0",
     "ublaboo/datagrid": "^6.2",
