@@ -117,9 +117,6 @@ final class SystemPresenter extends BasePresenter
         $form->addEmail('personEmail', $this->translator->translate('forms.registerCoordinator.mailLabel'))
             ->setRequired($this->translator->translate('forms.registerCoordinator.mailRequired'));
 
-        $form->addText('town', $this->translator->translate('forms.registerCoordinator.townLabel'))
-            ->setRequired($this->translator->translate('forms.registerCoordinator.townRequired'));
-
         if ($this->user->isInRole('courier')) {
             $form->addSelect('car', $this->translator->translate('forms.registerCoordinator.carLabel'), $cars)
                 ->setRequired($this->translator->translate('forms.registerCoordinator.carRequired'))

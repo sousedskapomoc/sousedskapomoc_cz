@@ -3,8 +3,21 @@
 <div class="row">
     <div class="col-12">
         <h1>{_templates.dashboard.title}</h1>
-        <div n:if="$user->isInRole('admin')">
-            <h2>{_templates.dashboard.actualStatistics}</h2>
+		<div>
+
+			<h2>{_templates.operatorDashboard.promoteTitle}</h2>
+			<a n:href="Coordinator:printMaterial id => 'shopping'" target="_blank"
+																   class="btn btn-success">{_templates.operatorDashboard.materialShopping}</a>
+			<a n:href="Coordinator:printMaterial id => 'courierWanted'" target="_blank"
+																		class="btn btn-success">{_templates.operatorDashboard.materialCourier}</a>
+			<a n:href="Coordinator:printMaterial id => 'operatorWanted'" target="_blank"
+																		 class="btn btn-success">{_templates.operatorDashboard.materialCoordinator}</a>
+			<hr/>
+		</div>
+		<div n:if="$user->isInRole('admin')">
+
+			<h2>{_templates.dashboard.actualStatistics}</h2>
+
             <table class="table table-bordered table-hover col-6">
                 {foreach $statistics as $statisticName => $value}
                     <tr>

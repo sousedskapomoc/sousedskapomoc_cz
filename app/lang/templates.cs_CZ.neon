@@ -186,6 +186,7 @@ seamstress:
     howHelpList: '<li>Šije látkové roušky.</li><li>Shromažďuje je a připravuje kurýrům kodběru.</li>'
 profile:
     title: 'Můj profil'
+    enterTown: 'Změnit adresu kde rozvážím'
     success: 'Profil byl úspěšně upraven. Změna pozic se projeví po opětovném přihlášení.'
     fail: 'Tento e-mail je již použit jiným uživatelem'
     edit: 'Upravit profil'
