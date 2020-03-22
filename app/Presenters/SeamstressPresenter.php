@@ -31,15 +31,17 @@ final class SeamstressPresenter extends BasePresenter
 	public function createComponentPostOrder()
 	{
 		$form = new BootstrapForm();
+
 		$form->addText('delivery_address', $this->translator->translate('forms.postOrder.addressPick'))
 			->setRequired($this->translator->translate('forms.postOrder.addressRequired'))
 			->setPlaceholder($this->translator->translate('forms.postOrder.addressPlaceholder'));
-//        $form->addText('delivery_phone', $this->translator->translate('forms.postOrder.phoneLabel'))
-//            ->setPlaceholder($this->translator->translate('forms.postOrder.phonePlaceholder'));
-		$form->addHidden('note')
-			->setDefaultValue('rousky');
+
+		$form->addHidden('note')->setDefaultValue('rousky');
+
 		$form->addText('order_items', $this->translator->translate('templates.seamstress.itemsLabel'))
-			->setHtmlAttribute('rows', 10);
+			->setPlaceholder('min. 10 kusů')
+			->setRequired('Zadejte prosím počet roušek k vyzvednutí');
+
 		$form->addSubmit('postOrderFormSubmit', $this->translator->translate('templates.seamstress.button'));
 		$form->onSuccess[] = [$this, "postOrder"];
 

@@ -2,48 +2,48 @@
 {block content}
 <h1>{_templates.orderDetail.title}</h1>
 <div class="col-12">
-    <p><a n:href="Coordinator:dashboard" class="btn btn-primary">{_templates.orderDetail.back}</a></p>
+	<p><a n:href="Coordinator:dashboard" class="btn btn-primary">{_templates.orderDetail.back}</a></p>
 </div>
 <div class="col-12">
-    <div class="table-responsive">
-        <table class="table table-bordered table-condensed">
-            <tr>
-                <th>{_templates.orderDetail.id}</th>
-                <td>{$order->id}</td>
-            </tr>
-            <tr>
-                <th>{_templates.orderDetail.status}</th>
-                <td>{$order->status|humanFriendlyStatus}</td>
-            </tr>
-            <tr>
-                <th>{_templates.orderDetail.address}</th>
-                <td><a href="https://www.google.com/maps/search/{$order->delivery_address}"
-                       target="_blank">{$order->delivery_address}</a></td>
-            </tr>
-            <tr>
-                <th>{_templates.orderDetail.items}</th>
-                <td>{nl2br($order->order_items)|noescape}</td>
-            </tr>
-            <tr>
-                <th>{_templates.orderDetail.note}</th>
-                <td>{$order->note}</td>
-            </tr>
-            <tr>
-                <th>{_templates.orderDetail.created}</th>
-                <td>{date("d.n.Y H:i",$order->createdAt->getTimestamp())}</td>
-            </tr>
-            <tr>
-                <th>{_templates.orderDetail.lastUpdate)}</th>
-                <td>{date("d.n.Y H:i",$order->updatedAt->getTimestamp())}</td>
-            </tr>
-            <tr>
-                <th>{_templates.orderDetail.whoDelivers}</th>
-                <td>{$order->courier_id|fetchUser} - {$order->operator_id|fetchPhone}</td>
-            </tr>
+	<div class="table-responsive">
+		<table class="table table-bordered table-condensed">
+			<tr>
+				<th>{_templates.orderDetail.id}</th>
+				<td>{$order->id}</td>
+			</tr>
+			<tr>
+				<th>{_templates.orderDetail.status}</th>
+				<td>{$order->status|humanFriendlyStatus}</td>
+			</tr>
+			<tr>
+				<th>{_templates.orderDetail.address}</th>
+				<td><a href="https://www.google.com/maps/search/{$order->delivery_address}"
+					   target="_blank">{$order->delivery_address}</a></td>
+			</tr>
+			<tr>
+				<th>{_templates.orderDetail.items}</th>
+				<td>{nl2br($order->order_items)|noescape}</td>
+			</tr>
+			<tr>
+				<th>{_templates.orderDetail.note}</th>
+				<td>{$order->note}</td>
+			</tr>
+			<tr>
+				<th>{_templates.orderDetail.created}</th>
+				<td>{date("d.n.Y H:i",$order->createdAt->getTimestamp())}</td>
+			</tr>
+			<tr>
+				<th>{_templates.orderDetail.lastUpdate)}</th>
+				<td>{date("d.n.Y H:i",$order->updatedAt->getTimestamp())}</td>
+			</tr>
+			<tr>
+				<th>{_templates.orderDetail.whoDelivers}</th>
+				<td>{$order->courier_id|fetchUser} - {$order->operator_id|fetchPhone}</td>
+			</tr>
 			<tr>
 				<th>{_templates.orderDetail.whoAssigned}</th>
 				<td>{$order->operator_id|fetchUser} - {$order->operator_id|fetchPhone}</td>
 			</tr>
-        </table>
-    </div>
+		</table>
+	</div>
 </div>
