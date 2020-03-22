@@ -10,14 +10,13 @@ session:
 	expiration: 14 days
 
 services:
-	- SousedskaPomoc\Model\OrderManager
-	- SousedskaPomoc\Model\UserManager
 	- SousedskaPomoc\Forms\FormFactory
 	- SousedskaPomoc\Forms\SignInFormFactory
 	- SousedskaPomoc\Forms\SignUpFormFactory
 	router: SousedskaPomoc\Router\RouterFactory::createRouter
 	#Components
 	- SousedskaPomoc\Components\IEditVolunteerFormInterface
+	- SousedskaPomoc\Components\IRegisterVolunteerFormInterface
 	- SousedskaPomoc\Components\Mail
 	#Repository
 	roleRepository:
@@ -29,6 +28,9 @@ services:
 	orderRepository:
 		class: SousedskaPomoc\Repository\OrderRepository
 		factory: @Doctrine\ORM\EntityManagerInterface::getRepository('SousedskaPomoc\Entities\Orders')
+	transportRepository:
+		class: SousedskaPomoc\Repository\TransportRepository
+		factory: @Doctrine\ORM\EntityManagerInterface::getRepository('SousedskaPomoc\Entities\Transport')
 
 
 translation:

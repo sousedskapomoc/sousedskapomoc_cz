@@ -5,17 +5,19 @@ declare(strict_types=1);
 namespace SousedskaPomoc\Presenters;
 
 use Contributte\FormsBootstrap\BootstrapForm;
+use SousedskaPomoc\Model\OrderManager;
 use SousedskaPomoc\Repository\OrderRepository;
 use SousedskaPomoc\Entities\Orders;
 
 final class CourierPresenter extends BasePresenter
 {
-	/**
-	 * @var OrderRepository
-	 */
-	protected $orderRepository;
 
-	protected $orderId;
+    protected $orderId;
+
+    /**
+     * @var OrderRepository
+     */
+    protected $orderRepository;
 
 	public function beforeRender()
 	{
@@ -25,11 +27,6 @@ final class CourierPresenter extends BasePresenter
 			$this->redirect('Homepage:default');
 		}
 	}
-
-    public function injectOrderManager(OrderManager $orderManager)
-    {
-        $this->orderManager = $orderManager;
-    }
 
     public function injectOrderRepository(OrderRepository $orderRepository) {
         $this->orderRepository = $orderRepository;

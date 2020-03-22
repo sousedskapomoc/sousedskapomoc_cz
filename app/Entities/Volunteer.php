@@ -3,6 +3,7 @@
 
 namespace SousedskaPomoc\Entities;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use SousedskaPomoc\Entities\Traits\Timestampable;
 use Doctrine\ORM\Mapping as ORM;
 use Nettrine\ORM\Entity\Attributes\Id;
@@ -47,7 +48,7 @@ class Volunteer
     protected $online;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $password;
 
@@ -75,6 +76,37 @@ class Volunteer
      * @ORM\OneToMany(targetEntity="Orders", mappedBy="courier")
      */
     protected $deliveredOrders;
+
+    /**
+     * @ORM\Column(type="string", nullable=false)
+     */
+    protected $hash;
+
+
+
+    /**
+     * @return mixed
+     */
+    public function getHash()
+    {
+        return $this->hash;
+    }
+
+
+
+    /**
+     * @param mixed $hash
+     */
+    public function setHash($hash) : void
+    {
+        $this->hash = $hash;
+    }
+
+
+    public function __construct()
+    {
+        $this->roles = new ArrayCollection();
+    }
 
 
 
@@ -208,12 +240,9 @@ class Volunteer
 
 
 
-    /**
-     * @param mixed $roles
-     */
-    public function setRoles($roles) : void
+    public function setRoles($role) : void
     {
-        $this->roles = $roles;
+        $this->roles[] = $role;
     }
 
 

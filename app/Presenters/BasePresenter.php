@@ -21,25 +21,6 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 	/** @var Translator @inject */
 	public $translator;
 
-	/** @var UserManager */
-	protected $userManager;
-
-	/** @var OrderManager */
-	protected $orderManager;
-
-
-	public function injectOrderManager(OrderManager $orderManager)
-	{
-		$this->orderManager = $orderManager;
-	}
-
-
-	public function injectUserManager(UserManager $userManager)
-	{
-		$this->userManager = $userManager;
-	}
-
-
 	public function beforeRender()
 	{
 		if ($this->user->isLoggedIn()) {

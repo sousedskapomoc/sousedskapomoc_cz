@@ -3,6 +3,7 @@
 namespace SousedskaPomoc\Repository;
 
 use Doctrine\ORM\EntityRepository as DoctrineEntityRepository;
+use Nette\Security\AuthenticationException;
 use SousedskaPomoc\Entities\Volunteer;
 
 
@@ -49,5 +50,16 @@ class VolunteerRepository extends DoctrineEntityRepository
             $em->flush();
         }
 
+    }
+
+    public function register(Volunteer $user) {
+        $dbUser = $this->getByEmail($user->getPersonEmail());
+        if ($dbUser instanceof Volunteer) {
+            throw new AuthenticationException('This e-mail address is already registred.');
+        } else {
+            $em = $this->getEntityManager();
+            $em->persist($user);
+            $em->flush();
+        }
     }
 }
