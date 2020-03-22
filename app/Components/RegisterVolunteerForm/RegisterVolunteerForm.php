@@ -9,6 +9,7 @@ use Contributte\FormsBootstrap\Enums\RenderMode;
 use Kdyby\Translation\Translator;
 use Nette\Application\UI\Control;
 use Nette\Security\AuthenticationException;
+use SousedskaPomoc\Entities\Address;
 use SousedskaPomoc\Entities\Volunteer;
 use SousedskaPomoc\Repository\VolunteerRepository;
 use Nette\Security\Passwords;
@@ -75,6 +76,7 @@ class RegisterVolunteerFormControl extends Control
             ->setRequired($this->translator->translate('forms.registerCoordinator.phoneRequired'));
         $form->addEmail('personEmail', $this->translator->translate('forms.registerCoordinator.mailLabel'))
             ->setRequired($this->translator->translate('forms.registerCoordinator.mailRequired'));
+        $form->addHidden('locationId');
 
         if ($this->role == $this->roleRepository->getByName('courier') ) {
             $form->addSelect('car', $this->translator->translate('forms.registerCoordinator.carLabel'),
@@ -91,6 +93,24 @@ class RegisterVolunteerFormControl extends Control
     public function processAdd(BootstrapForm $form)
     {
         $values = $form->getValues();
+
+        $client = new \GuzzleHttp\Client();
+        /** @var \GuzzleHttp\Psr7\Response $response */
+        $response = $client->get('https://geocoder.ls.hereapi.com/6.2/geocode.json?locationid='. $values->locationId . '&jsonattributes=1&gen=9&apiKey=Kl0wK4fx38Pf63EIey6WyrmGEhS2IqaVHkuzx0IQ4-Q');
+        $content = $response->getBody()->getContents();
+
+        $content = json_decode($content);
+        dump($content->response->view['0']->result['0']->location->address);
+        die();
+
+        $address = new Address();
+        $address->setCity();
+        $address->setCountry();
+        $address->setDistrict();
+        $address->setLocationId();
+        $address->setPostalCode();
+        $address->setState();
+
 
         $user = new Volunteer();
         $user->setActive(true);
