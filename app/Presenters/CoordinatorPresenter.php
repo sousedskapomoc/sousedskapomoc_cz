@@ -49,6 +49,9 @@ final class CoordinatorPresenter extends BasePresenter
     public function createComponentPostOrder()
     {
         $form = new BootstrapForm();
+		$form->addText('pickup_address', $this->translator->translate('forms.postOrder.pickupAddressLabel'))
+			->setRequired($this->translator->translate('forms.postOrder.pickupAddressRequired'))
+			->setPlaceholder($this->translator->translate('forms.postOrder.pickupAddressPlaceholder'));
         $form->addText('delivery_address', $this->translator->translate('forms.postOrder.addressLabel'))
             ->setRequired($this->translator->translate('forms.postOrder.addressRequired'))
             ->setPlaceholder($this->translator->translate('forms.postOrder.addressPlaceholder'));
@@ -60,7 +63,7 @@ final class CoordinatorPresenter extends BasePresenter
         $form->addHidden('courier_note')
             ->setDefaultValue('');
         $form->addTextArea('order_items', $this->translator->translate('forms.postOrder.itemsLabel'))
-            ->setHtmlAttribute('rows', 10);
+            ->setHtmlAttribute('rows', 3);
         $form->addSubmit('postOrderFormSubmit', $this->translator->translate('forms.postOrder.button'));
         $form->onSuccess[] = [$this, "postOrder"];
 

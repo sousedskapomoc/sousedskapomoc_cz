@@ -104,6 +104,7 @@ coordinatorDashboard:
     makeOrder: 'Vytvořit novou objednávku'
     listOrders: 'Seznam objednávek'
     id: 'ID'
+    pickupAddress: 'Adresa k vyzvednutí'
     address: 'Doručovací adresa'
     items: 'Položky obj'
     note: 'Poznámka'
