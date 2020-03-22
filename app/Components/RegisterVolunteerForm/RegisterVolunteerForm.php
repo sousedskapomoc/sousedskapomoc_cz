@@ -11,6 +11,7 @@ use Nette\Application\UI\Control;
 use Nette\Security\AuthenticationException;
 use SousedskaPomoc\Entities\Address;
 use SousedskaPomoc\Entities\Volunteer;
+use SousedskaPomoc\Repository\AddressRepository;
 use SousedskaPomoc\Repository\VolunteerRepository;
 use Nette\Security\Passwords;
 use SousedskaPomoc\Entities\Transport;
@@ -38,6 +39,9 @@ class RegisterVolunteerFormControl extends Control
     /** @var \SousedskaPomoc\Components\Mail */
     private $mail;
 
+    /** @var AddressRepository */
+    private $addressRepository;
+
     private $role;
 
 
@@ -48,7 +52,8 @@ class RegisterVolunteerFormControl extends Control
         TransportRepository $transport,
         Role $role,
         RoleRepository $roleRepository,
-        Mail $mail
+        Mail $mail,
+        AddressRepository $addrRepository
     )
     {
         $this->volunteerRepository = $volunteerRepository;
@@ -58,6 +63,7 @@ class RegisterVolunteerFormControl extends Control
         $this->role = $role;
         $this->roleRepository = $roleRepository;
         $this->mail = $mail;
+        $this->addressRepository = $addrRepository;
     }
 
 
@@ -94,24 +100,6 @@ class RegisterVolunteerFormControl extends Control
     {
         $values = $form->getValues();
 
-        $client = new \GuzzleHttp\Client();
-        /** @var \GuzzleHttp\Psr7\Response $response */
-        $response = $client->get('https://geocoder.ls.hereapi.com/6.2/geocode.json?locationid='. $values->locationId . '&jsonattributes=1&gen=9&apiKey=Kl0wK4fx38Pf63EIey6WyrmGEhS2IqaVHkuzx0IQ4-Q');
-        $content = $response->getBody()->getContents();
-
-        $content = json_decode($content);
-        dump($content->response->view['0']->result['0']->location->address);
-        die();
-
-        $address = new Address();
-        $address->setCity();
-        $address->setCountry();
-        $address->setDistrict();
-        $address->setLocationId();
-        $address->setPostalCode();
-        $address->setState();
-
-
         $user = new Volunteer();
         $user->setActive(true);
         $user->setOnline(false);
@@ -123,6 +111,28 @@ class RegisterVolunteerFormControl extends Control
         if ($this->role == $this->roleRepository->getByName('courier')) {
             $user->setTransport($this->transportRepository->getById($values->car));
         }
+
+        $client = new \GuzzleHttp\Client();
+        /** @var \GuzzleHttp\Psr7\Response $response */
+        $response = $client->get('https://geocoder.ls.hereapi.com/6.2/geocode.json?locationid='. $values->locationId . '&jsonattributes=1&gen=9&apiKey=Kl0wK4fx38Pf63EIey6WyrmGEhS2IqaVHkuzx0IQ4-Q');
+        $content = $response->getBody()->getContents();
+
+        $content = json_decode($content);
+        $addr= $content->response->view['0']->result['0']->location->address;
+
+        $address = new Address();
+        $address->setCity($addr->city);
+        $address->setCountry($addr->country);
+        $address->setDistrict($addr->district);
+        $address->setLocationId($values->locationId);
+        $address->setPostalCode($addr->postalCode);
+        $address->setState($addr->state);
+        $address->setStreet($addr->street);
+        if (isset($addr->houseNumber)) {
+            $address->setHouseNumber($addr->houseNumber);
+        }
+
+
 
         $link = $this->getPresenter()->link('//Homepage:changePassword', $user->getHash());
         switch ($this->role->getName()){
@@ -141,7 +151,13 @@ class RegisterVolunteerFormControl extends Control
         }
 
         try {
+            $this->addressRepository->create($address);
+            /** @var Address $dbAddress */
+            $dbAddress = $this->addressRepository->getByLocationId($values->locationId);
+            $user->setAddress($dbAddress);
             $this->volunteerRepository->register($user);
+            $dbUser = $this->volunteerRepository->getByEmail($values->personEmail);
+//            $this->addressRepository->updateVolunteer($values->locatinoId, $dbUser);
             $this->getPresenter()->flashMessage($this->translator->translate('messages.registration.success'));
             $this->getPresenter()->redirect("Homepage:registrationFinished");
         } catch (AuthenticationException $e) {
