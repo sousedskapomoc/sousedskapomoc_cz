@@ -51,8 +51,14 @@
 	</button>
 	<div class="collapse navbar-collapse" id="navbarNav">
 		<ul class="navbar-nav">
+			<li>
+				<a n:href="System:profile" class="nav-link">{_templates.profile.title}</a>
+			</li>
+			<li n:if="$user->isLoggedIn()" class="nav-item">
+				<a n:href="System:dashboard" class="nav-link">{_templates.header.overview}</a>
+			</li>
 			<li n:if="$user->isInRole('courier')" class="nav-item">
-				<a n:href="Courier:dashboard" class="nav-link">{_templates.courier.title} <i class="far fa-circle"></i></a>
+				<a n:href="Courier:dashboard" class="nav-link">{_templates.courier.title}</a>
 			</li>
 			<li n:if="$user->isInRole('operator')" class="nav-item">
 				<a n:href="Operator:dashboard" class="nav-link">{_templates.operator.title}</a></li>
@@ -60,15 +66,10 @@
 				<a n:href="Coordinator:dashboard" class="nav-link">{_templates.coordinator.title}</a></li>
 			<li n:if="$user->isInRole('seamstress')" class="nav-item">
 				<a n:href="Seamstress:dashboard" class="nav-link">{_templates.seamstress.title}</a></li>
-			<li n:if="$user->isLoggedIn()" class="nav-item">
-				<a n:href="System:dashboard" class="nav-link">{_templates.header.overview}</a>
-			</li>
 			<li>
 				<a n:href="Headquarters:default" class="nav-link">{_templates.headquarters.title}</a>
 			</li>
-			<li>
-				<a n:href="System:profile" class="nav-link">{_templates.profile.title}</a>
-			</li>
+
 			<li n:if="$user->isLoggedIn()" class="nav-item">
 				<a n:href="Sign:out" class="nav-link">
 					{_templates.header.logout}</a>

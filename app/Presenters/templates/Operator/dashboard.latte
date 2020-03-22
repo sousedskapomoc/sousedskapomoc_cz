@@ -3,24 +3,13 @@
 	<div class="row">
 		<div class="col-12">
 			<div>
-				<h1>{_templates.operatorDashboard.title}</h1>
-				<h2>pro město {$user->getIdentity()->data['town']} <small><a n:href="System:enterTown">změnit
-							lokalitu</a></small></h2>
-				<a n:href="System:dashboard">{_templates.header.backOnMainPage}</a>
-			</div>
-			<div>
+				<h1>{_templates.operatorDashboard.title} pro město {$user->getIdentity()->data['town']}
+					<small><a n:href="System:enterTown">změnit
+							lokalitu</a></small></h1>
 				<p>
 					<a href="https://sousedskapomoc.cz/pdf/zasady-dispecer.pdf" target="_blank"
-					   class="btn btn-info">Manuál dispečera</a>
+					   class="btn btn-sm btn-info">Manuál dispečera</a>
 				</p>
-				<h2>{_templates.operatorDashboard.promoteTitle}</h2>
-				<a n:href="Coordinator:printMaterial id => 'shopping'" target="_blank"
-																	   class="btn btn-success">{_templates.operatorDashboard.materialShopping}</a>
-				<a n:href="Coordinator:printMaterial id => 'courierWanted'" target="_blank"
-																			class="btn btn-success">{_templates.operatorDashboard.materialCourier}</a>
-				<a n:href="Coordinator:printMaterial id => 'operatorWanted'" target="_blank"
-																			 class="btn btn-success">{_templates.operatorDashboard.materialCoordinator}</a>
-				<hr/>
 			</div>
 		</div>
 	</div>
@@ -87,7 +76,7 @@
 	<strong>Stav:</strong> {$order->status|humanFriendlyStatus}<br/>
 	<hr/>
 	<strong>Adresa doručení:</strong> <a href="https://www.google.com/maps/search/{$order->delivery_address}"
-								target="_blank">{$order->delivery_address}</a><br/>
+										 target="_blank">{$order->delivery_address}</a><br/>
 	<strong>Telefon:</strong> {$order->delivery_phone ?? 'neuveden'}<br/>
 
 
