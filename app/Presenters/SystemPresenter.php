@@ -60,9 +60,8 @@ final class SystemPresenter extends BasePresenter
 	public function updateAddress(BootstrapForm $form) {
     	$values = $form->getValues();
     	$this->userManager->updateTown($values->selectedTown, $this->user->getId());
-    	$this->flashMessage("Adresa byla nastavena - prosím přihlaste se!",'danger');
-    	$this->user->logout(true);
-    	$this->redirect("Sign:in");
+    	$this->flashMessage("Adresa byla změněna!",'danger');
+    	$this->redirect("System:profile");
 	}
 
 

@@ -21,7 +21,7 @@
     <h2>{_templates.printMaterial.callToAction}</h2>
     <h3>{_templates.printMaterial.contact} {$user->getIdentity()->data['personName']}</h3>
     <h3>{_templates.printMaterial.phone} {$user->getIdentity()->data['personPhone']}</h3>
-    <h3>{_templates.printMaterial.town} {$user->getIdentity()->data['town']}</h3>
+    <h3>{_templates.printMaterial.town} {$town}</h3>
 {/if}
 {if $id == "courierWanted"}
     <h2>{_templates.printMaterial.needHelpCourier}</h2>
@@ -36,7 +36,7 @@
         <h2>{_templates.printMaterial.courierWannaJoin}</h2>
         <h3>{_templates.printMaterial.contact} {$user->getIdentity()->data['personName']}</h3>
         <h3>{_templates.printMaterial.phone} {$user->getIdentity()->data['personPhone']}</h3>
-        <h3>{_templates.printMaterial.town} {$user->getIdentity()->data['town']}</h3>
+        <h3>{_templates.printMaterial.town} {$town}</h3>
     </div>
 {/if}
 {if $id == "operatorWanted"}
@@ -51,7 +51,7 @@
         <h2>{_templates.printMaterial.operatorWannaJoin}</h2>
         <h3>{_templates.printMaterial.contact} {$user->getIdentity()->data['personName']}</h3>
         <h3>{_templates.printMaterial.phone} {$user->getIdentity()->data['personPhone']}</h3>
-        <h3>{_templates.printMaterial.town} {$user->getIdentity()->data['town']}</h3>
+        <h3>{_templates.printMaterial.town} {$town}</h3>
 
     </div>
 {/if}
