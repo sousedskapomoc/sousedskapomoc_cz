@@ -3,6 +3,9 @@
 # https://nette.org/security-warning
 #
 parameters:
+	mail:
+		fromMail: 'robot@sousedskapomoc.cz'
+		fromName: 'Sousedská pomoc'
 
 
 application:
@@ -16,14 +19,22 @@ session:
 
 services:
 	- SousedskaPomoc\Commands\QueueConsumeCommand
+	- SousedskaPomoc\Model\EmailManager
 	- SousedskaPomoc\Model\OrderManager
 	- SousedskaPomoc\Model\UserManager
 	- SousedskaPomoc\Forms\FormFactory
 	- SousedskaPomoc\Forms\SignInFormFactory
 	- SousedskaPomoc\Forms\SignUpFormFactory
 	- SousedskaPomoc\Components\Mail
+
 	- PhpAmqpLib\Connection\AMQPStreamConnection(%rabbit.host%, %rabbit.port%, %rabbit.user%, %rabbit.password%)
+
+	emailQueue: SousedskaPomoc\Model\RabbitMqQueue('email')
 	router: SousedskaPomoc\Router\RouterFactory::createRouter
+
+	-
+		factory: SousedskaPomoc\Model\EmailConsumer(@emailQueue, %mail.fromMail%, %mail.fromName%)
+		tags: [consumer:email]
 
 translation:
 	debugger: true

@@ -5,17 +5,14 @@ parameters:
 		user: rabbitmq
 		password: rabbitmq
 
+services:
+	nette.mailer:
+		class: Nette\Mail\IMailer
+		factory: Nextras\MailPanel\FileMailer(%tempDir%/emails)
+
 database:
 	dsn: 'mysql:host=mysql:3306;dbname=sousedskapomoc'
 	user: 'sousedskapomoc'
 	password: 'password'
 	options:
 		lazy: yes
-
-mail:
-	smtp: true  # use SmtpMailer instead of SendmailMailer
-	host: 'smtp.seznam.cz'
-	port: 465
-	username: ''
-	password: ''
-	secure: ssl # possible values are ssl, tls or null
