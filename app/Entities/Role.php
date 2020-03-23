@@ -3,6 +3,7 @@
 
 namespace SousedskaPomoc\Entities;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use SousedskaPomoc\Entities\Traits\Timestampable;
 use Doctrine\ORM\Mapping as ORM;
 use Nettrine\ORM\Entity\Attributes\Id;
@@ -27,6 +28,21 @@ class Role
      * @ORM\ManyToMany(targetEntity="Volunteer", mappedBy="roles")
      */
     protected $users;
+
+
+    public function __construct()
+    {
+        $this->users = new ArrayCollection();
+    }
+
+    public function addUser(Volunteer $user)
+    {
+        $this->users->add($user);
+    }
+
+    public function removeUser(Volunteer $user) {
+        $this->users->removeElement($user);
+    }
 
 
 

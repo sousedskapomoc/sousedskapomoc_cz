@@ -10,6 +10,7 @@ use Kdyby\Translation\Translator;
 use Nette\Application\UI\Control;
 use Nette\Forms\Controls\BaseControl;
 use SousedskaPomoc\Bootstrap;
+use SousedskaPomoc\Repository\RoleRepository;
 use SousedskaPomoc\Repository\VolunteerRepository;
 use Nette\Security\Passwords;
 
@@ -24,16 +25,21 @@ class EditVolunteerFormControl extends Control
     /** @var Passwords */
     private $passwords;
 
+    /** @var \SousedskaPomoc\Repository\RoleRepository */
+    private $roleRepository;
+
 
     public function __construct(
         VolunteerRepository $volunteerRepository,
         Translator $translator,
-        Passwords $passwords
+        Passwords $passwords,
+        RoleRepository $roleRepository
     )
     {
         $this->volunteerRepository = $volunteerRepository;
         $this->translator = $translator;
         $this->passwords = $passwords;
+        $this->roleRepository = $roleRepository;
     }
 
 
@@ -104,7 +110,8 @@ class EditVolunteerFormControl extends Control
                 'personName' => $userDetails->getPersonName(),
                 'personEmail' => $userDetails->getPersonEmail(),
                 'personPhone' => $userDetails->getPersonPhone(),
-//                'town' => $userDetails->getAddress(),
+                //@TODO - refactor all to use complete address
+                'town' => $userDetails->getAddress()->getCity(),
                 'id' => $userDetails->getId(),
             ]
         );
@@ -118,25 +125,33 @@ class EditVolunteerFormControl extends Control
     public function processUpdate(BootstrapForm $form)
     {
         $values = $form->getValues();
-        $finalRoles = '';
-        foreach ($values->role as $key => $role) {
-            if ($role == 0) {
-                $finalRoles = $finalRoles.'courier';
+        $finalRoles = [];
+
+        foreach ($values->role as $role) {
+            switch($role) {
+                case 0:
+                    $name = 'courier';
+                    break;
+                case 1:
+                    $name = 'operator';
+                    break;
+                case 2:
+                    $name = 'seamstress';
+                    break;
+                case 3:
+                    $name = 'coordinator';
+                    break;
+                default:
+                    break;
             }
-            if ($role == 1) {
-                $finalRoles = $finalRoles.'operator';
-            }
-            if ($role == 2) {
-                $finalRoles = $finalRoles.'seamstress';
-            }
-            if ($role == 3) {
-                $finalRoles = $finalRoles.'coordinator';
-            }
-            if ($key != array_key_last($values->role)) {
-                $finalRoles = $finalRoles.';';
-            }
+            $finalRoles[] = $this->roleRepository->getByName($name);
         }
-        $values->role = $finalRoles;
+        if ($this->presenter->user->isInRole('admin')) {
+            $finalRoles[] = $this->roleRepository->getByName('admin');
+        }
+        if ($this->presenter->user->isInRole('superuser')) {
+            $finalRoles[] = $this->roleRepository->getByName('superuser');
+        }
         if ($values->password == null) {
             unset($values->password);
         } else {
@@ -147,16 +162,21 @@ class EditVolunteerFormControl extends Control
         if ($user->getId() != $values->id) {
             $form->addError($this->translator->translate('templates.profile.fail'));
         } else {
-//            if ($values->password != null) {
-//                $user->setPassword($this->passwords->hash($values->password));
-//            }
+            if ($values->password != null) {
+                $user->setPassword($this->passwords->hash($values->password));
+            }
             $user->setPersonEmail($values->personEmail);
             $user->setPersonPhone($values->personPhone);
             $user->setPersonName($values->personName);
+            foreach ($finalRoles as $role) {
+                $user->addRole($role);
+                dump("volam");
+            }
 
             $this->volunteerRepository->update($values->id, $user);
 
 
+            die();
             $this->flashMessage($this->translator->translate('templates.profile.success'));
             $this->getPresenter()->redirect("System:profile");
         }
