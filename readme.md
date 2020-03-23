@@ -14,10 +14,11 @@ Nově máme i soubory `Dockerfile` a `docker-compose.yml`, sloužící pro autom
 Jak nasadit:
 1. Zkontrolujte, že máte nainstalovaný docker-compose a zkuste spustit `docker-compose --version` ([see more here](https://docs.docker.com/compose/install/))
 2. Naklonujte si tento repozitář pomocí `git clone`
-3. V naklonovaném repozitáři spusťte ze složky docker příkaz `docker-compose up`
+3. Pokud ji nemáte, vytvořte si proměnnou prostředí PORT pomocí export PORT=80 (nebo třeba 8080)
+4. V naklonovaném repozitáři spusťte ze složky docker příkaz `docker-compose up`
     * Pokud byste chtěli spustit znovu a od začátku, použijte `docker-compose up --build`, případně nejprve smažte všechny docker images
     * Pokud byste chtěli spustit celý web bez výpisu na příkazovou řádku, spusťte `docker-compose up -d`
-4. Aplikace by nyní měla běžet na vašem zařízení (nějakou dobu trvá, než composer nainstaluje všechny dependencies)
+5. Aplikace by nyní měla běžet na vašem zařízení (nějakou dobu trvá, než composer nainstaluje všechny dependencies)
 
 
 ## Troubleshooting
