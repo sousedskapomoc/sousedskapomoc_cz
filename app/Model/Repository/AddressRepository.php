@@ -16,6 +16,15 @@ class AddressRepository extends DoctrineEntityRepository
     }
 
 
+    public function getByTown($town) {
+        return $this->findBy(['city'=>$town]);
+    }
+
+    public function countUniqueTowns() {
+        //@TODO - count uniqueTowns
+        return $this->findBy([]);
+    }
+
 
     public function getByLocationId($locationId)
     {

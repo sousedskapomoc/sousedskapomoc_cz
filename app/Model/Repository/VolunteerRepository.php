@@ -16,12 +16,38 @@ class VolunteerRepository extends DoctrineEntityRepository
     }
 
 
+    public function getTownForUser($id) {
+        /** @var \SousedskaPomoc\Entities\Address $address */
+        $address = $this->getById($id)->getAddress();
+        return $address->getCity();
+    }
 
     public function getByEmail($email)
     {
         return $this->findOneBy(['personEmail' => $email]);
     }
 
+    public function setPass($id, $password) {
+        /** @var Volunteer $user */
+        $user = $this->getById($id);
+
+        $user->setPassword($password);
+        $em = $this->getEntityManager();
+        $em->persist($user);
+        $em->flush();
+    }
+
+    public function getUserByHash($hash) {
+        return $this->findOneBy(['hash' => $hash]);
+    }
+
+    public function fetchTotalCount() {
+        return $this->count([]);
+    }
+
+    public function getNonActiveUsers() {
+        return $this->count(['password' => null]);
+    }
 
 
     /**

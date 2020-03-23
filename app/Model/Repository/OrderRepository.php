@@ -16,6 +16,13 @@ class OrderRepository extends DoctrineEntityRepository
     }
 
 
+    public function fetchCount() {
+        return $this->count([]);
+    }
+
+    public function findAllForUser($userId) {
+        return $this->findBy(['author'=>$userId]);
+    }
 
     /**
      * Finds all entities in the repository.

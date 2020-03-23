@@ -40,16 +40,20 @@ final class CoordinatorPresenter extends BasePresenter
     }
 
 
-	public function renderDashboard()
-	{
-		$this->template->orders = $this->orderRepository->getAllForUser($this->user->getId());
-	}
+
+    public function renderDashboard()
+    {
+        $this->template->orders = $this->orderRepository->findAllForUser($this->user->getId());
+    }
 
 
-	public function renderDetail($id)
-	{
-		$this->template->order = $this->orderReposutory->getById($id);
-	}
+
+    public function renderDetail($id)
+    {
+
+        $this->template->order = $this->orderRepository->getById($id);
+    }
+
 
 
 	public function createComponentPostOrder()
@@ -72,13 +76,14 @@ final class CoordinatorPresenter extends BasePresenter
 		$form->addSubmit('postOrderFormSubmit', $this->translator->translate('forms.postOrder.button'));
 		$form->onSuccess[] = [$this, "postOrder"];
 
-		return $form;
-	}
+        return $form;
+    }
 
 
-	public function postOrder(BootstrapForm $form)
-	{
-		$values = $form->getValues();
+
+    public function postOrder(BootstrapForm $form)
+    {
+        $values = $form->getValues();
 
         /** @var Orders $order */
         $order = new Orders();

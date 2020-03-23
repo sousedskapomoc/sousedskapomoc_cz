@@ -8,6 +8,8 @@ use Kdyby\Translation\Translator;
 use Nette;
 use SousedskaPomoc\Model\OrderManager;
 use SousedskaPomoc\Model\UserManager;
+use SousedskaPomoc\Repository\AddressRepository;
+use SousedskaPomoc\Repository\VolunteerRepository;
 
 
 /**
@@ -21,25 +23,39 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 	/** @var Translator @inject */
 	public $translator;
 
+	/** @var \SousedskaPomoc\Repository\VolunteerRepository */
+	protected $volunteerRepository;
+
+	/** @var \SousedskaPomoc\Repository\AddressRepository */
+	protected $addressRepository;
+
+	public function injectVolunteerRepository(VolunteerRepository $volunteerRepository) {
+	    $this->volunteerRepository = $volunteerRepository;
+    }
+
+    public function injectAddressRepository(AddressRepository $addressRepository) {
+	    $this->addressRepository = $addressRepository;
+    }
+
 	public function beforeRender()
 	{
 		if ($this->user->isLoggedIn()) {
-			$town = $this->userManager->getTownForUser($this->user->getId());
+		    $town = $this->volunteerRepository->getTownForUser($this->user->getId());
 			$this->template->town = $town;
 
 			if (($town == null || $town == "") && $this->presenter->view != "enterTown") {
 				$this->redirect("System:enterTown");
 			}
-			$this->template->availableCouriers = $this->userManager->fetchAvailableCouriersInTown($town);
+			$this->template->availableCouriers = $this->addressRepository->getByTown($town);
 		}
 
 		$this->template->addFilter('getTranslation', function ($string) {
 			return $this->translator->trans($string);
 		});
 
-		$this->template->addFilter('fetchUser', function ($courierId) {
-			return $this->userManager->fetchCourierName($courierId);
-		});
+//		$this->template->addFilter('fetchUser', function ($courierId) {
+//		    return $this->userManager->fetchCourierName($courierId);
+//		});
 
 		$this->template->addFilter('fetchPhone', function ($courierId) {
 			return $this->userManager->fetchPhoneNumber($courierId);
