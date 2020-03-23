@@ -13,7 +13,11 @@ class RoleRepository extends DoctrineEntityRepository
         return $this->findOneBy(['id' => $id]);
     }
 
-
+    public function countUsers(string $name) {
+        /** @var \SousedskaPomoc\Entities\Role $role */
+        $role = $this->getByName($name);
+        return sizeof($role->getUsers());
+    }
 
     public function getByName($name)
     {

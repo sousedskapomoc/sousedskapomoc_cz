@@ -9,6 +9,10 @@ use Contributte\FormsBootstrap\Enums\RenderMode;
 use Nette\Forms\Form;
 use Nette\Security\Passwords;
 use SousedskaPomoc\Components\IEditVolunteerFormInterface;
+use SousedskaPomoc\Entities\Role;
+use SousedskaPomoc\Repository\OrderRepository;
+use SousedskaPomoc\Repository\RoleRepository;
+use SousedskaPomoc\Repository\VolunteerRepository;
 
 final class SystemPresenter extends BasePresenter
 {
@@ -19,11 +23,27 @@ final class SystemPresenter extends BasePresenter
     /** @var IEditVolunteerFormInterface */
     private $editVolunteerFactory;
 
+    /** @var \SousedskaPomoc\Repository\OrderRepository */
+    protected $ordersRepository;
+
+    /** @var \SousedskaPomoc\Repository\RoleRepository */
+    protected $roleRepository;
+
 
     public function injectPasswords(Passwords $passwords)
     {
         $this->passwords = $passwords;
     }
+
+    public function injectRoleRepository(RoleRepository $roleRepository) {
+        $this->roleRepository = $roleRepository;
+    }
+
+    public function injectOrderRespository(OrderRepository $orderRepository)
+    {
+        $this->ordersRepository = $orderRepository;
+    }
+
 
 
     public function injectEditVolunteerFactory (IEditVolunteerFormInterface $editVolunteerForm) {
@@ -45,15 +65,15 @@ final class SystemPresenter extends BasePresenter
     public function renderDashboard()
     {
         $this->template->statistics = [
-            'totalCount' => $this->userManager->fetchTotalCount(),
-            'couriersCount' => $this->userManager->fetchCountBy(['role' => 'courier']),
-            'operatorsCount' => $this->userManager->fetchCountBy(['role' => 'operator']),
-            'coordinatorsCount' => $this->userManager->fetchCountBy(['role' => 'coordinator']),
-            'seamstressCount' => $this->userManager->fetchCountBy(['role' => 'seamstress']),
-            'usersWithoutAccess' => $this->userManager->fetchCountBy(['password' => null]),
-            'uniqueTowns' => $this->userManager->fetchUniqueTownsCount(),
-            'ordersCount' => $this->orderManager->fetchCount(),
-			'deliveredOrdersCount' => $this->orderManager->fetchDeliveredCount(),
+            'totalCount' => $this->volunteerRepository->fetchTotalCount(),
+            'couriersCount' => $this->roleRepository->countUsers('courier'),
+            'operatorsCount' => $this->roleRepository->countUsers('operator'),
+            'coordinatorsCount' => $this->roleRepository->countUsers('coordinator'),
+            'seamstressCount' => $this->roleRepository->countUsers('seamstress'),
+            'usersWithoutAccess' => $this->volunteerRepository->getNonActiveUsers(),
+            'uniqueTowns' => $this->addressRepository->countUniqueTowns(),
+            'ordersCount' => $this->ordersRepository->fetchCount(),
+			'deliveredOrdersCount' => $this->ordersRepository->fetchDeliveredCount(),
         ];
     }
 
@@ -83,6 +103,6 @@ final class SystemPresenter extends BasePresenter
 
     public function renderProfile()
     {
-        $this->template->userDetails = $this->userManager->getUserById($this->user->id);
+        $this->template->userDetails = $this->volunteerRepository->getById($this->user->getId());
     }
 }

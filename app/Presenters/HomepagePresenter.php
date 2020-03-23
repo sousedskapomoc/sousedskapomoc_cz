@@ -13,7 +13,9 @@ use Contributte\FormsBootstrap\Enums\RenderMode;
 use Nette\Database\Connection;
 use SousedskaPomoc\Components\IRegisterVolunteerFormInterface;
 use SousedskaPomoc\Components\Mail;
+use SousedskaPomoc\Entities\Volunteer;
 use SousedskaPomoc\Repository\RoleRepository;
+use SousedskaPomoc\Repository\VolunteerRepository;
 
 final class HomepagePresenter extends BasePresenter
 {
@@ -39,6 +41,10 @@ final class HomepagePresenter extends BasePresenter
     protected $personEmail;
 
     protected $id;
+
+
+    /** @var \SousedskaPomoc\Repository\VolunteerRepository */
+    protected $volunteerRepository;
 
 
 
@@ -71,7 +77,9 @@ final class HomepagePresenter extends BasePresenter
         $this->roleRepository = $roleRepository;
     }
 
-
+    public function injectVolunteerRepository(VolunteerRepository $volunteerRepository) {
+        $this->volunteerRepository = $volunteerRepository;
+    }
 
     public function createComponentRegisterAsCoordinator()
     {
@@ -104,13 +112,12 @@ final class HomepagePresenter extends BasePresenter
 	{
 		$form = new BootstrapForm;
 
-		$user = $this->userManager->getUserByEmailCode($this->emailCode);
-		$form->addHidden('personEmail');
-		$form->addHidden('id');
+        /** @var \SousedskaPomoc\Entities\Volunteer $user */
+        $user = $this->volunteerRepository->getUserByHash($this->emailCode);
+        $form->addHidden('personEmail');
+        $form->addHidden('id');
 
-		if (isset($user['id']) && isset($user['personEmail'])) {
-			$form->setDefaults(['personEmail' => $user['personEmail'], 'id' => $user['id']]);
-		}
+        $form->setDefaults(['personEmail' => $user->getPersonEmail(), 'id' => $user->getId()]);
 
 		$form->addPassword("newPass", "Nové heslo")
 			->addRule(Form::MIN_LENGTH, 'Heslo musi byt alespon %d dlouhe', 6)
@@ -128,21 +135,24 @@ final class HomepagePresenter extends BasePresenter
 	}
 
 
-	public function onSuccess(Form $form, $values)
-	{
-		if (!$this->userManager->check('personEmail', $values->personEmail)) {
-			$form->addError('Zadaný účet neexistuje.');
-		}
 
-		try {
-			$pass = $this->passwords->hash($values->newPass);
-			$this->userManager->setPass($values->id, $pass);
-			$this->presenter->flashMessage("Heslo bylo úspěšně změněno.");
-			$this->presenter->redirect("Sign:in");
-		} catch (AuthenticationException $e) {
-			$form->addError($e->getMessage());
-		}
-	}
+    public function onSuccess(Form $form, $values)
+    {
+        /** @var  \SousedskaPomoc\Entities\Volunteer $user */
+        $user = $this->volunteerRepository->getByEmail($values->personEmail);
+        if (!($user instanceof Volunteer)) {
+            $form->addError('Zadaný účet neexistuje.');
+        }
+
+        try {
+            $pass = $this->passwords->hash($values->newPass);
+            $this->volunteerRepository->setPass($values->id, $pass);
+            $this->presenter->flashMessage("Heslo bylo úspěšně změněno.");
+            $this->presenter->redirect("Sign:in");
+        } catch (AuthenticationException $e) {
+            $form->addError($e->getMessage());
+        }
+    }
 
 
 
@@ -157,12 +167,11 @@ final class HomepagePresenter extends BasePresenter
     {
         $this->emailCode = $this->presenter->getParameter('hash');
         try {
-            $user = $this->userManager->getUserByEmailCode($this->emailCode);
+            /** @var \SousedskaPomoc\Entities\Volunteer $user */
+            $user = $this->volunteerRepository->getUserByHash($this->emailCode);
         } catch (\Exception $err) {
-            dump($err->getMessage());
-            die();
-            $this->flashMessage("Email code is not valid.", BasePresenter::FLASH_TYPE_ERROR);
-            $this->redirect("Page:homepage");
+            $this->flashMessage("Email code is not valid.", 'error');
+            $this->redirect("Homepage:default");
         }
     }
 
