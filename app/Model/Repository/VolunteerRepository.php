@@ -63,7 +63,7 @@ class VolunteerRepository extends DoctrineEntityRepository
     public function update($id, Volunteer $user) {
         /** @var Volunteer $dbUser */
         $dbUser = $this->getById($id);
-        if ($user instanceof Volunteer) {
+        if ($dbUser instanceof Volunteer) {
             if ($user->getPassword() != null) {
                 $dbUser->setPassword($user->getPassword());
             }
@@ -71,8 +71,16 @@ class VolunteerRepository extends DoctrineEntityRepository
             $dbUser->setPersonEmail($user->getPersonEmail());
             $dbUser->setPersonPhone($user->getPersonPhone());
 
+            foreach($dbUser->getRoles() as $role) {
+                $dbUser->removeRole($role);
+            }
+
+            foreach ($user->getRoles() as $role) {
+                $dbUser->addRole($role);
+            }
+
             $em = $this->getEntityManager();
-            $em->persist($user);
+            $em->persist($dbUser);
             $em->flush();
         }
 

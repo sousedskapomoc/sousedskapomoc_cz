@@ -107,7 +107,7 @@ class RegisterVolunteerFormControl extends Control
         $user->setPersonPhone($values->personPhone);
         $user->setPersonName($values->personName);
         $user->setHash(md5($values->personEmail));
-        $user->setRoles($this->role);
+        $user->addRole($this->role);
         if ($this->role == $this->roleRepository->getByName('courier')) {
             $user->setTransport($this->transportRepository->getById($values->car));
         }

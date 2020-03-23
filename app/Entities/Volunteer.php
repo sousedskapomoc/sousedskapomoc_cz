@@ -239,11 +239,14 @@ class Volunteer
         return $this->roles;
     }
 
+    public function addRole(Role $role) {
+        $this->roles->add($role);
+        $role->addUser($this);
+    }
 
-
-    public function setRoles($role) : void
-    {
-        $this->roles[] = $role;
+    public function removeRole(Role $role) {
+        $this->roles->removeElement($role);
+        $role->removeUser($this);
     }
 
 
