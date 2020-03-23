@@ -18,6 +18,8 @@ services:
 	- SousedskaPomoc\Components\IEditVolunteerFormInterface
 	- SousedskaPomoc\Components\IRegisterVolunteerFormInterface
 	- SousedskaPomoc\Components\Mail
+	#Authenticator
+	authenticator: SousedskaPomoc\Components\Authenticator
 	#Repository
 	roleRepository:
 		class: SousedskaPomoc\Repository\RoleRepository
