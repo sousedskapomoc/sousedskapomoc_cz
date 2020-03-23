@@ -26,7 +26,7 @@ services:
              mkdir -p /var/www/sousedskapomoc.cz/temp/cache/ &&
              chmod -R 777 /var/www/sousedskapomoc.cz/temp/ &&
              chmod -R 777 /var/www/sousedskapomoc.cz/log/ &&
-             if [ -f ./app/config/local.neon.dev ]; then cp /var/www/sousedskapomoc.cz/app/config/local.neon.dev /var/www/sousedskapomoc.cz/app/config/local.neon; fi &&
+             if [ ! -f ./app/config/local.neon ]; then cp /var/www/sousedskapomoc.cz/app/config/local.neon.dev /var/www/sousedskapomoc.cz/app/config/local.neon; fi &&
              nginx -g 'daemon off;'"
     ports:
       - ${PORT}:80
