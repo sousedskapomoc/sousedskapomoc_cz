@@ -41,7 +41,8 @@
     "aws/aws-sdk-php": "^3.133",
     "aspera/xlsx-reader": "^0.7.7",
     "gamee/nette-rabbitmq": "^4.1",
-    "kdyby/translation": "^3.0"
+    "kdyby/translation": "^3.0",
+    "php-amqplib/php-amqplib": "^2.11.1"
   },
   "require-dev": {
     "nette/tester": "^2.0"

@@ -50,5 +50,15 @@ services:
     depends_on:
       - php
 
+  rabbitmq:
+    image: rabbitmq:3.8.3
+    environment:
+      RABBITMQ_DEFAULT_USER: "rabbitmq"
+      RABBITMQ_DEFAULT_PASS: "rabbitmq"
+    expose:
+      - 5672
+    ports:
+      - 5672:5672
+
 volumes:
   mysql:

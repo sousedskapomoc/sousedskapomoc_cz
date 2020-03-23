@@ -1,3 +1,10 @@
+parameters:
+	rabbit:
+		host: rabbitmq
+		port: 5672
+		user: rabbitmq
+		password: rabbitmq
+
 database:
 	dsn: 'mysql:host=mysql:3306;dbname=sousedskapomoc'
 	user: 'sousedskapomoc'

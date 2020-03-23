@@ -15,12 +15,14 @@ session:
 	expiration: 14 days
 
 services:
+	- SousedskaPomoc\Commands\QueueConsumeCommand
 	- SousedskaPomoc\Model\OrderManager
 	- SousedskaPomoc\Model\UserManager
 	- SousedskaPomoc\Forms\FormFactory
 	- SousedskaPomoc\Forms\SignInFormFactory
 	- SousedskaPomoc\Forms\SignUpFormFactory
 	- SousedskaPomoc\Components\Mail
+	- PhpAmqpLib\Connection\AMQPStreamConnection(%rabbit.host%, %rabbit.port%, %rabbit.user%, %rabbit.password%)
 	router: SousedskaPomoc\Router\RouterFactory::createRouter
 
 translation:
@@ -28,5 +30,10 @@ translation:
 	default: cs
 	fallback: [cs_CZ, cs]
 
+decorator:
+	Symfony\Component\Console\Command\Command:
+		inject: true
+
 extensions:
+	console: Contributte\Console\DI\ConsoleExtension(%consoleMode%)
 	translation: Kdyby\Translation\DI\TranslationExtension
