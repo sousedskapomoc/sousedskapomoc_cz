@@ -1,7 +1,7 @@
 database:
-	dsn: 'mysql:host=127.0.0.1;dbname=sousedskapomoc'
-	user:   root
-	password:   root
+	dsn: 'mysql:host=mysql:3306;dbname=sousedskapomoc'
+	user: 'sousedskapomoc'
+	password: 'password'
 	options:
 		lazy: yes
 
