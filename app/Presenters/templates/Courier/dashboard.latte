@@ -19,7 +19,8 @@
         <thead>
         <tr>
             <td>{_templates.coordinatorDashboard.id}</td>
-            <td>{_templates.coordinatorDashboard.address}</td>
+			<td>{_templates.coordinatorDashboard.pickupAddress}</td>
+			<td>{_templates.coordinatorDashboard.address}</td>
             <td>{_templates.coordinatorDashboard.items}</td>
             <td>{_templates.courierDashboard.status}</td>
             <td>{_templates.coordinatorDashboard.note}</td>
@@ -30,7 +31,8 @@
         {foreach $orders as $order}
             <tr>
                 <td>{$order->id} - {$order->status|humanFriendlyStatus}</td>
-                <td>{$order->delivery_address}</td>
+				<td>{$order->pickup_address ?? null}</td>
+				<td>{$order->delivery_address}</td>
                 <td>{$order->order_items}</td>
                 <td>
                     {if $order->status == 'assigned'}

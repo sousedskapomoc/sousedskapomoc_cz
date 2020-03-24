@@ -75,6 +75,10 @@
 	<h6><a n:href="Coordinator:detail id => $order->id" target="_blank">Pro: {$order->note ?? null}</a></h6>
 	<strong>Stav:</strong> {$order->status|humanFriendlyStatus}<br/>
 	<hr/>
+	{if $order->pickup_address}
+		<strong>Adresa vyzvednutí:</strong> <a href="https://www.google.com/maps/search/{$order->delivery_address}"
+											   target="_blank">{$order->pickup_address}</a><br/>
+	{/if}
 	<strong>Adresa doručení:</strong> <a href="https://www.google.com/maps/search/{$order->delivery_address}"
 										 target="_blank">{$order->delivery_address}</a><br/>
 	<strong>Telefon:</strong> {$order->delivery_phone ?? 'neuveden'}<br/>
