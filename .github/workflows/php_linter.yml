@@ -1,0 +1,15 @@
+name: PHP Linter
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: PHP Lint
+      uses: awanesia/PHP-Lint@master
