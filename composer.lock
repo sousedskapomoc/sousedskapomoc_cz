@@ -4,8 +4,82 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "744d6e1ec63fbdc0f80923bdc3181524",
+    "content-hash": "af498daf9da213ce5c1fd44de92847f2",
     "packages": [
+        {
+            "name": "apitte/core",
+            "version": "v0.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/apitte/core.git",
+                "reference": "560dd949850a1db0f2f47425a105e42e2d868f2e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/apitte/core/zipball/560dd949850a1db0f2f47425a105e42e2d868f2e",
+                "reference": "560dd949850a1db0f2f47425a105e42e2d868f2e",
+                "shasum": ""
+            },
+            "require": {
+                "contributte/phpdoc": "v0.3.0",
+                "contributte/psr7-http-message": "v0.6.0",
+                "ext-json": "*",
+                "nette/reflection": "~2.4",
+                "php": "^7.2"
+            },
+            "conflict": {
+                "nette/di": "<=3.0.0-RC"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.1.0",
+                "nette/di": "~3.0.0",
+                "ninjify/nunjuck": "^0.2.0",
+                "ninjify/qa": "^0.8.0",
+                "phpstan/extension-installer": "^1.0",
+                "phpstan/phpstan-deprecation-rules": "^0.11",
+                "phpstan/phpstan-nette": "^0.11",
+                "phpstan/phpstan-shim": "^0.11",
+                "phpstan/phpstan-strict-rules": "^0.11",
+                "psr/log": "^1.1",
+                "symfony/validator": "^4.1.1"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.7.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Apitte\\Core\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Milan Felix Šulc",
+                    "homepage": "https://f3l1x.io"
+                },
+                {
+                    "name": "Marek Bartoš",
+                    "homepage": "https://bartos.dev"
+                }
+            ],
+            "description": "Core API library in Apitte stack",
+            "homepage": "https://github.com/apitte/core",
+            "keywords": [
+                "annotation",
+                "api",
+                "apitte",
+                "http",
+                "nette",
+                "rest"
+            ],
+            "time": "2019-07-04T10:53:42+00:00"
+        },
         {
             "name": "aspera/xlsx-reader",
             "version": "v0.7.7",
@@ -515,6 +589,141 @@
                 "nette"
             ],
             "time": "2020-01-08T23:39:06+00:00"
+        },
+        {
+            "name": "contributte/phpdoc",
+            "version": "v0.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/contributte/phpdoc.git",
+                "reference": "972b5b51772b033952d0ef74faa9a50c47b8cc03"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/contributte/phpdoc/zipball/972b5b51772b033952d0ef74faa9a50c47b8cc03",
+                "reference": "972b5b51772b033952d0ef74faa9a50c47b8cc03",
+                "shasum": ""
+            },
+            "require": {
+                "contributte/di": "^0.4.0",
+                "doctrine/annotations": "^1.6.0",
+                "doctrine/cache": "^1.7.1",
+                "php": "^7.2"
+            },
+            "conflict": {
+                "nette/di": "<3.0.0"
+            },
+            "require-dev": {
+                "ninjify/nunjuck": "^0.2.0",
+                "ninjify/qa": "^0.8.0",
+                "phpstan/extension-installer": "^1.0",
+                "phpstan/phpstan-deprecation-rules": "^0.11",
+                "phpstan/phpstan-nette": "^0.11",
+                "phpstan/phpstan-shim": "^0.11",
+                "phpstan/phpstan-strict-rules": "^0.11"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.4.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Contributte\\PhpDoc\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Milan Felix Šulc",
+                    "homepage": "https://f3l1x.io"
+                }
+            ],
+            "description": "Doctrine Annotations for Nette Framework",
+            "homepage": "https://github.com/contributte/phpdoc",
+            "keywords": [
+                "annotations",
+                "nette",
+                "phpdoc",
+                "reflection"
+            ],
+            "abandoned": "nettrine/annotations",
+            "time": "2019-06-28T19:09:34+00:00"
+        },
+        {
+            "name": "contributte/psr7-http-message",
+            "version": "v0.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/contributte/psr7-http-message.git",
+                "reference": "3475b4b909fd7089c006c4ac10a3440853484962"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/contributte/psr7-http-message/zipball/3475b4b909fd7089c006c4ac10a3440853484962",
+                "reference": "3475b4b909fd7089c006c4ac10a3440853484962",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/psr7": "^1.5.2",
+                "php": "^7.2"
+            },
+            "conflict": {
+                "nette/di": "<3.0.0"
+            },
+            "require-dev": {
+                "nette/application": "~3.0.0",
+                "nette/di": "~3.0.0",
+                "nette/http": "~3.0.1",
+                "ninjify/nunjuck": "^0.2.0",
+                "ninjify/qa": "^0.8.0",
+                "phpstan/extension-installer": "^1.0",
+                "phpstan/phpstan-deprecation-rules": "^0.11",
+                "phpstan/phpstan-nette": "^0.11",
+                "phpstan/phpstan-shim": "^0.11",
+                "phpstan/phpstan-strict-rules": "^0.11"
+            },
+            "suggest": {
+                "nette/application": "to use $request->withApplicationRequest[Nette\\Application\\Request]",
+                "nette/di": "to use Psr7HttpExtension[CompilerExtension]",
+                "nette/http": "to use $request->withHttpRequest[Nette\\Http\\Request], to use Psr7RequestFactory, to use Psr7ServerRequestFactory"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.7.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Contributte\\Psr7\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Milan Felix Šulc",
+                    "homepage": "https://f3l1x.io"
+                }
+            ],
+            "description": "PSR-7 (HTTP Message Interface) to Nette Framework",
+            "homepage": "https://github.com/contributte/psr7-http-message",
+            "keywords": [
+                "http",
+                "message",
+                "nette",
+                "psr7",
+                "request",
+                "response"
+            ],
+            "time": "2019-06-18T10:32:29+00:00"
         },
         {
             "name": "doctrine/annotations",
@@ -3164,6 +3373,130 @@
             "time": "2019-12-27T03:47:50+00:00"
         },
         {
+            "name": "nettrine/annotations",
+            "version": "v0.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nettrine/annotations.git",
+                "reference": "b2efb797902de5bc1dcc3d858ee26cc50ed70fa8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nettrine/annotations/zipball/b2efb797902de5bc1dcc3d858ee26cc50ed70fa8",
+                "reference": "b2efb797902de5bc1dcc3d858ee26cc50ed70fa8",
+                "shasum": ""
+            },
+            "require": {
+                "contributte/di": "^0.4.0",
+                "doctrine/annotations": "^1.6.1",
+                "doctrine/cache": "^1.8.0",
+                "php": "^7.2"
+            },
+            "require-dev": {
+                "nettrine/cache": "^0.1.0",
+                "ninjify/qa": "^0.10.0",
+                "phpstan/extension-installer": "^1.0",
+                "phpstan/phpstan-deprecation-rules": "^0.11.0",
+                "phpstan/phpstan-nette": "^0.11.0",
+                "phpstan/phpstan-shim": "^0.11.5",
+                "phpstan/phpstan-strict-rules": "^0.11.0",
+                "phpunit/phpunit": "^8.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.6.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Nettrine\\Annotations\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Milan Felix Šulc",
+                    "homepage": "https://f3l1x.io"
+                },
+                {
+                    "name": "Marek Bartoš",
+                    "homepage": "https://github.com/mabar"
+                }
+            ],
+            "description": "Doctrine Annotations for Nette Framework",
+            "homepage": "https://github.com/nettrine/annotations",
+            "keywords": [
+                "annotations",
+                "doctrine",
+                "nette",
+                "nettrine"
+            ],
+            "time": "2019-11-26T17:18:26+00:00"
+        },
+        {
+            "name": "nettrine/cache",
+            "version": "v0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nettrine/cache.git",
+                "reference": "2d129d31ad2271631dc0a54434a9f4d7282125fe"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nettrine/cache/zipball/2d129d31ad2271631dc0a54434a9f4d7282125fe",
+                "reference": "2d129d31ad2271631dc0a54434a9f4d7282125fe",
+                "shasum": ""
+            },
+            "require": {
+                "contributte/di": "^0.4.0",
+                "doctrine/cache": "^1.8.0",
+                "php": "^7.2.0"
+            },
+            "require-dev": {
+                "ninjify/qa": "^0.9.0",
+                "phpstan/extension-installer": "^1.0",
+                "phpstan/phpstan-deprecation-rules": "^0.11.0",
+                "phpstan/phpstan-nette": "^0.11.0",
+                "phpstan/phpstan-shim": "^0.11.5",
+                "phpstan/phpstan-strict-rules": "^0.11.0",
+                "phpunit/phpunit": "^8.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Nettrine\\Cache\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MPL-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Marek Bartoš",
+                    "homepage": "https://github.com/mabar"
+                }
+            ],
+            "description": "Doctrine Cache for Nette Framework",
+            "homepage": "https://github.com/nettrine/cache",
+            "keywords": [
+                "cache",
+                "doctrine",
+                "nette",
+                "nettrine"
+            ],
+            "time": "2019-11-26T15:14:51+00:00"
+        },
+        {
             "name": "nettrine/dbal",
             "version": "v0.5.1",
             "source": {
@@ -4463,6 +4796,113 @@
             "time": "2019-11-18T17:27:11+00:00"
         },
         {
+            "name": "symfony/validator",
+            "version": "v5.0.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/validator.git",
+                "reference": "fc459a3d66bda9c0f8231a4d44dddd6daf23db92"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/validator/zipball/fc459a3d66bda9c0f8231a4d44dddd6daf23db92",
+                "reference": "fc459a3d66bda9c0f8231a4d44dddd6daf23db92",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2.5",
+                "symfony/polyfill-ctype": "~1.8",
+                "symfony/polyfill-mbstring": "~1.0",
+                "symfony/translation-contracts": "^1.1|^2"
+            },
+            "conflict": {
+                "doctrine/lexer": "<1.0.2",
+                "phpunit/phpunit": "<5.4.3",
+                "symfony/dependency-injection": "<4.4",
+                "symfony/http-kernel": "<4.4",
+                "symfony/intl": "<4.4",
+                "symfony/translation": "<4.4",
+                "symfony/yaml": "<4.4"
+            },
+            "require-dev": {
+                "doctrine/annotations": "~1.7",
+                "doctrine/cache": "~1.0",
+                "egulias/email-validator": "^2.1.10",
+                "symfony/cache": "^4.4|^5.0",
+                "symfony/config": "^4.4|^5.0",
+                "symfony/dependency-injection": "^4.4|^5.0",
+                "symfony/expression-language": "^4.4|^5.0",
+                "symfony/http-client": "^4.4|^5.0",
+                "symfony/http-foundation": "^4.4|^5.0",
+                "symfony/http-kernel": "^4.4|^5.0",
+                "symfony/intl": "^4.4|^5.0",
+                "symfony/mime": "^4.4|^5.0",
+                "symfony/property-access": "^4.4|^5.0",
+                "symfony/property-info": "^4.4|^5.0",
+                "symfony/translation": "^4.4|^5.0",
+                "symfony/yaml": "^4.4|^5.0"
+            },
+            "suggest": {
+                "doctrine/annotations": "For using the annotation mapping. You will also need doctrine/cache.",
+                "doctrine/cache": "For using the default cached annotation reader.",
+                "egulias/email-validator": "Strict (RFC compliant) email validation",
+                "psr/cache-implementation": "For using the mapping cache.",
+                "symfony/config": "",
+                "symfony/expression-language": "For using the Expression validator",
+                "symfony/http-foundation": "",
+                "symfony/intl": "",
+                "symfony/property-access": "For accessing properties within comparison constraints",
+                "symfony/property-info": "To automatically add NotNull and Type constraints",
+                "symfony/translation": "For translating validation errors.",
+                "symfony/yaml": ""
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "5.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Validator\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Validator Component",
+            "homepage": "https://symfony.com",
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2020-03-30T11:42:42+00:00"
+        },
+        {
             "name": "tracy/tracy",
             "version": "v2.7.3",
             "source": {
@@ -4685,5 +5125,6 @@
         "ext-simplexml": "*",
         "ext-json": "*"
     },
-    "platform-dev": []
+    "platform-dev": [],
+    "plugin-api-version": "1.1.0"
 }

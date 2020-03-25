@@ -18,10 +18,26 @@ services:
 	- SousedskaPomoc\Components\Mail
 	router: SousedskaPomoc\Router\RouterFactory::createRouter
 
-translation:
+apitte.api:
+	plugins:
+		Apitte\Core\DI\Plugin\CoreDecoratorPlugin:
+		Apitte\Core\DI\Plugin\CoreMappingPlugin:
+			request:
+				validator: Apitte\Core\Mapping\Validator\SymfonyValidator
+
+kdyby.translation:
 	debugger: true
 	default: cs
 	fallback: [cs_CZ, cs]
 
+contributte.resource:
+    resources:
+        SousedskaPomoc\Api\:
+            paths: [%appDir%/Api/]
+
 extensions:
-	translation: Kdyby\Translation\DI\TranslationExtension
+	apitte.api: Apitte\Core\DI\ApiExtension
+	contributte.resource: Contributte\DI\Extension\ResourceExtension
+	kdyby.translation: Kdyby\Translation\DI\TranslationExtension
+	nettrine.annotations: Nettrine\Annotations\DI\AnnotationsExtension
+	nettrine.cache: Nettrine\Cache\DI\CacheExtension
