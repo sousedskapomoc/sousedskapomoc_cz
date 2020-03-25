@@ -13,6 +13,7 @@ services:
     build: .
     volumes:
       - ../:/var/www/${DOMAIN}
+    working_dir: /var/www/${DOMAIN}
     environment:
       - DEBUG=on
       # LANG: cs
