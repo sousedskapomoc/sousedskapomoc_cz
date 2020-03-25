@@ -46,7 +46,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 			if (($town == null || $town == "") && $this->presenter->view != "enterTown") {
 				$this->redirect("System:enterTown");
 			}
-			$this->template->availableCouriers = $this->addressRepository->getByTown($town);
+			$this->template->availableCouriers = $this->volunteerRepository->getCourierByTown($town);
 		}
 
 		$this->template->addFilter('getTranslation', function ($string) {

@@ -8,6 +8,7 @@ use Contributte\FormsBootstrap\BootstrapForm;
 use SousedskaPomoc\Model\OrderManager;
 use SousedskaPomoc\Repository\OrderRepository;
 use SousedskaPomoc\Entities\Orders;
+use SousedskaPomoc\Repository\VolunteerRepository;
 
 final class CourierPresenter extends BasePresenter
 {
@@ -70,7 +71,7 @@ final class CourierPresenter extends BasePresenter
 
 	public function renderDetail($id)
 	{
-		$this->template->order = $this->orderRepository->getById($id);
+		$this->template->order = $this->ordersRepository->getById($id);
 	}
 
 

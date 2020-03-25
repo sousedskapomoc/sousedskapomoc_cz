@@ -22,7 +22,7 @@ class AddressRepository extends DoctrineEntityRepository
 
     public function countUniqueTowns() {
         //@TODO - count uniqueTowns
-        return $this->findBy([]);
+        return $this->count([]);
     }
 
 

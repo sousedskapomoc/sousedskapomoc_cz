@@ -9,10 +9,15 @@ use SousedskaPomoc\Entities\Volunteer;
 
 class VolunteerRepository extends DoctrineEntityRepository
 {
-
     public function getById($id)
     {
         return $this->findOneBy(['id' => $id]);
+    }
+
+    public function getCourierByTown($town) {
+        $em = $this->getEntityManager();
+        $query = $em->createQuery("SELECT u FROM SousedskaPomoc\Entities\Volunteer u JOIN u.address x WHERE x.city = '$town'");
+        return $query->getResult();
     }
 
 
@@ -60,6 +65,17 @@ class VolunteerRepository extends DoctrineEntityRepository
         return $this->findBy([]);
     }
 
+    public function setOnline($id, $active) {
+        /** @var Volunteer $user */
+        $user = $this->getById($id);
+        $user->setOnline($active);
+        $em = $this->getEntityManager();
+        $em->persist($user);
+        $em->flush();
+    }
+
+
+
     public function update($id, Volunteer $user) {
         /** @var Volunteer $dbUser */
         $dbUser = $this->getById($id);
@@ -71,11 +87,11 @@ class VolunteerRepository extends DoctrineEntityRepository
             $dbUser->setPersonEmail($user->getPersonEmail());
             $dbUser->setPersonPhone($user->getPersonPhone());
 
-            foreach($dbUser->getRoles() as $role) {
+            foreach($dbUser->getRole() as $role) {
                 $dbUser->removeRole($role);
             }
 
-            foreach ($user->getRoles() as $role) {
+            foreach ($user->getRole() as $role) {
                 $dbUser->addRole($role);
             }
 
@@ -84,6 +100,12 @@ class VolunteerRepository extends DoctrineEntityRepository
             $em->flush();
         }
 
+    }
+
+    public function isOnline($id) {
+        /** @var Volunteer $user */
+        $user = $this->getById($id);
+        return $user->getOnline();
     }
 
     public function register(Volunteer $user) {

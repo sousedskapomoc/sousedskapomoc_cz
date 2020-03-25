@@ -13,6 +13,7 @@ use SousedskaPomoc\Bootstrap;
 use SousedskaPomoc\Repository\RoleRepository;
 use SousedskaPomoc\Repository\VolunteerRepository;
 use Nette\Security\Passwords;
+use Nette\Utils\ArrayHash;
 
 class EditVolunteerFormControl extends Control
 {
@@ -69,23 +70,22 @@ class EditVolunteerFormControl extends Control
             3 => $this->translator->translate('templates.coordinator.title'),
         ];
 
-        $rolesDefault = [];
         if ($this->getPresenter()->user->isInRole('courier')) {
-            array_push($rolesDefault, 0);
+            $roleDefault = 0;
         }
         if ($this->getPresenter()->user->isInRole('operator')) {
-            array_push($rolesDefault, 1);
+            $roleDefault = 1;
         }
         if ($this->getPresenter()->user->isInRole('seamstress')) {
-            array_push($rolesDefault, 2);
+            $roleDefault = 2;
         }
         if ($this->getPresenter()->user->isInRole('coordinator')) {
-            array_push($rolesDefault, 3);
+            $roleDefault = 3;
         }
 
-        $form->addCheckboxList('role', $this->translator->translate('forms.registerCoordinator.role'),
+        $form->addSelect('role', $this->translator->translate('forms.registerCoordinator.role'),
             $roles)
-            ->setDefaultValue($rolesDefault);
+            ->setDefaultValue($roleDefault);
 
         $form->addHidden('id');
         $form->addText('personName', $this->translator->translate('forms.registerCoordinator.nameLabel'))
@@ -127,7 +127,6 @@ class EditVolunteerFormControl extends Control
         $values = $form->getValues();
         $finalRoles = [];
 
-        foreach ($values->role as $role) {
             switch($role) {
                 case 0:
                     $name = 'courier';
@@ -144,13 +143,12 @@ class EditVolunteerFormControl extends Control
                 default:
                     break;
             }
-            $finalRoles[] = $this->roleRepository->getByName($name);
+            $finalRole = $this->roleRepository->getByName($name);
+        if ($this->presenter->user->isInRole('superuser')) {
+            $finalRole = $this->roleRepository->getByName('superuser');
         }
         if ($this->presenter->user->isInRole('admin')) {
-            $finalRoles[] = $this->roleRepository->getByName('admin');
-        }
-        if ($this->presenter->user->isInRole('superuser')) {
-            $finalRoles[] = $this->roleRepository->getByName('superuser');
+            $finalRole= $this->roleRepository->getByName('admin');
         }
         if ($values->password == null) {
             unset($values->password);
@@ -162,21 +160,16 @@ class EditVolunteerFormControl extends Control
         if ($user->getId() != $values->id) {
             $form->addError($this->translator->translate('templates.profile.fail'));
         } else {
-            if ($values->password != null) {
+            if (isset($values->password)) {
                 $user->setPassword($this->passwords->hash($values->password));
             }
             $user->setPersonEmail($values->personEmail);
             $user->setPersonPhone($values->personPhone);
             $user->setPersonName($values->personName);
-            foreach ($finalRoles as $role) {
-                $user->addRole($role);
-                dump("volam");
-            }
+            $user->setRole($role);
 
             $this->volunteerRepository->update($values->id, $user);
 
-
-            die();
             $this->flashMessage($this->translator->translate('templates.profile.success'));
             $this->getPresenter()->redirect("System:profile");
         }

@@ -25,7 +25,7 @@ class Role
     protected $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Volunteer", mappedBy="roles")
+     * @ORM\OneToMany(targetEntity="Volunteer", mappedBy="role")
      */
     protected $users;
 

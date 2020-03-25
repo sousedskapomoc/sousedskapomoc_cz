@@ -11,8 +11,9 @@ use SousedskaPomoc\Entities\Address;
 
 
 /**
- * Class DemandEntity
- * @ORM\Entity
+ * Class Demand
+ * @ORM\Entity(repositoryClass="SousedskaPomoc\Repository\DemandRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Demand
 {
