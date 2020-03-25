@@ -1,9 +1,42 @@
 {block content}
-<div class="row justify-content-center">
-    <div class="col-md-8 col-lg-6">
-        <h2>{_templates.courier.wannaJoin}</h2>
-        {control registerAsCourier}
-        <ul id="suggestions"></ul>
+<div class="row justify-content-center page--role-info">
+    <div class="col-12">
+        <h1 class="text-center">Role Kurýra</h1>
+
+        <div class="row">
+            <div class="col-12 col-lg-6 col-xl-7">
+                <h4>ZÁSADY SPRÁVNÉHO Kurýra</h4>
+                <p>Jejich revírem jsou silnice. Jejich tempo je nedostižné. Jejich protivníkem je virus COVID-19 a lidé bez roušek. Dobrovolní kurýři Sousedské pomoci pomáhají důchodcům s nákupy a nedostatkem roušek ve dne v noci.</p>
+                <p>I když jsou neohrožení, nejsou neohrozitelní. A proto všichni kurýři musí dodržovat několik jednoduchých, avšak zásadních pravidel, která zajistí bezpečnost celého procesu a díky kterým to bude fungovat.</p>
+
+                <h4>JAK NA PŘEDÁNÍ?</h4>
+                <ol>
+                    <li>Jakmile dorazíte na místo určení, zavoláte švadleně. Ta vám položí balík s rouškami na smluvené místo.</li>
+                    <li>Počkáte, až švadlena bude v dostatečné vzdálenosti, a teprve poté si roušky přeberete.</li>
+                    <li>Dvě až tři roušky si necháte pro svoji potřebu a zbytek budete stejným postupem, tedy v roušce, s brýlemi, rukavicemi i bezpečným odstupem, doručovat těm potřebným, které vám určí dispečer.</li>
+                </ol>
+
+                <h4>(ČISTÉ) PENÍZE, NEBO ŽIVOT!</h4>
+                <p>Protože i na penězích se drží viry, peníze vždy přebírejte v rukavicích. Po převzetí si je uložte do obálky a po dobu 24 hodin se jich, pokud možno, nedotýkejte. Ale vůbec nejlepší bude, když s penězi nebudete zacházet bez rukavic vůbec.</p>
+
+                <h4>Čistota půl zdraví, správná hygiena celé</h4>
+                <p>Při kontaktu s jakoukoli osobou dodržujte, prosím, následující pravidla, která dělají sousedského dobrovolníka ohleduplným dobrovolníkem.</p>
+                <ol>
+                    <li><b>Sousedský dobrovolník je VŽDY vybaven rouškami, brýlemi a rukavicemi.</b> Zajistí tak zdraví své i toho, komu zrovna pomáhá.</li>
+                    <li><b>Telefon je základ.</b> Jedině tak se s ostatními dobrovolníky bezpečně a bez zbytečného kontaktu na všem domluví.</li>
+                    <li><b>3 metry</b> – to je bezpečný odstup, který při nutném kontaktu s kýmkoli jiným nikdy neporušuje.</li>
+                </ol>
+
+                <p>Připraveni? Tak tři, dva, jedna… a hurá dispečerovat!</p>
+            </div>
+            <div class="col-12 col-lg-6 col-xl-4 offset-xl-1 js-scroll-fix-wrapper">
+                <div class="js-scroll-fix">
+                    <h4>{_templates.courier.wannaJoin}</h4>
+                    {control registerAsCourier}
+                    <ul id="suggestions"></ul>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <script>

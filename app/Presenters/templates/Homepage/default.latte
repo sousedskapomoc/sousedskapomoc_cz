@@ -1,9 +1,9 @@
 {block content}
 <div class="row">
 	<div class="col-12 text-center">
-		<h2>
+		<h1>
 			{_templates.header.mainTitle|noescape}
-		</h2>
+		</h1>
 		<p>
 			{_templates.header.mainSubtitle|noescape}
 		</p>
@@ -81,24 +81,28 @@
 					<li>
 						<span><img src="{$basePath}/images/002-kind.svg"/></span>
 						<h4>{_templates.coordinator.title}</h4>
-						<p>{_templates.coordinator.subtitle}</p>
+						<p>stará se o hladký průběh pomoci, komunikuje s dispečerem</p>
 					</li>
 					<li>
 						<span><img src="{$basePath}/images/003-call-center-agent.svg"/></span>
 						<h4>{_templates.operator.title}</h4>
-						<p>{_templates.operator.subtitle}</p>
+						<p>přiřazuje objednávky kurýrům a dohlíží na včasné doručení</p>
 					</li>
 					<li>
 						<span><img src="{$basePath}/images/001-car.svg"/></span>
 						<h4>{_templates.courier.title}</h4>
-						<p>{_templates.courier.subtitle}</p>
+						<p>s autem, který nakupuje a doručuje potřebným</p>
 					</li>
 					<li>
 						<span><img src="{$basePath}/images/004-cut.svg"/></span>
 						<h4>{_templates.seamstress.title}</h4>
-						<p>{_templates.seamstress.subtitleHome}</p>
+						<p>šije roušky a připravuje je k odběru</p>
 					</li>
 				</ul>
+				<p class="text-center">
+					<a class="btn btn-green btn-lg"
+					href="/homepage/want-to-join">Chci se zapojit</a>
+				</p>
 			</div>
 		</div>
 	</div>
@@ -207,7 +211,7 @@
 							</div>
 						</div>
 						<a n:href="registerAsSeamstress" class="btn btn-purple"><i class="fas fa-cut"
-																				   aria-hidden="true"></i> {_templates.seamstress.wannaJoin}
+																				aria-hidden="true"></i> {_templates.seamstress.callToActionButton}
 						</a>
 					</div>
 				</div>

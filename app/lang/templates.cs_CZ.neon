@@ -184,6 +184,7 @@ seamstress:
     whatNeedList: '<li>Šikovné ruce</li><li>Šicí stroj, látky, gumičky</li><li>Telefon</li>'
     howHelpTitle: 'Jak pomáhá:'
     howHelpList: '<li>Šije látkové roušky.</li><li>Shromažďuje je a připravuje kurýrům kodběru.</li>'
+    callToActionButton: 'Chci být švadlenou'
 profile:
     title: 'Můj profil'
     enterTown: 'Změnit adresu kde rozvážím'
