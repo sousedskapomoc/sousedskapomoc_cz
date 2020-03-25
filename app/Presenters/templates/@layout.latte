@@ -52,8 +52,8 @@
 <div class="row header no-margin-sides">
 	<div class="container">
 		<div id="banner" class="flex justify-content-between align-items-center">
-			<h1><a class="logo" href="/"><img src="/images/SP_logo.svg"
-											  alt="{_templates.header.imgAlt}"></a></h1>
+			<a class="logo" href="/"><img src="/images/SP_logo.svg"
+											  alt="{_templates.header.imgAlt}"></a>
 			<div class="navigation">
 				<div class="burger-area">
 					<div class="burger">
@@ -63,8 +63,9 @@
 					</div>
 				</div>
 				<ul>
-					<li><a n:href="Homepage:addGovernmentCoordinator">Náš tým</a></li>
-					<li><a n:href="Homepage:addGovernmentCoordinator">Etický kodex</a></li>
+					{*<li><a n:href="Homepage:addGovernmentCoordinator">Náš tým</a></li>*}
+					<li><a n:href="Homepage:ethicalCode">Etický kodex</a></li>
+					<li><a n:href="Homepage:addMedicalCoordinator">Pro lékaře</a></li>
 					<li><a n:href="Homepage:addGovernmentCoordinator">{_templates.header.towns}</a></li>
                     <li><a href="/sign/in">{_templates.header.login}</a></li>
 				</ul>
@@ -78,7 +79,7 @@
 	{include content}
 </div>
 
-<div class="container">
+<div class="container footer-wrapper">
 	<div class="row footer">
 		<div class="col-12 text-center">
 			<p class="bigger-font">{_templates.footer.thankYou|noescape}</p>
@@ -87,13 +88,11 @@
 			</p>
 			<p class="smaller-font">
 				<a
-						n:href="Contact" target="_blank">Kontakty</a>,
+						href="https://instagram.com/sousedskapomoc.cz" target="_blank"><i class="fab fa-instagram"></i></a>
 				<a
-						href="https://www.facebook.com/Sousedskapomoccz-110011043956318" target="_blank">Facebook</a>,
+						href="https://www.facebook.com/Sousedskapomoccz-110011043956318" target="_blank"><i class="fab fa-facebook-f"></i></a>
 				<a
-						href="https://instagram.com/sousedskapomoc.cz" target="_blank">Instagram</a>,
-				<a
-						href="https://twitter.com/sousedskapomoc" target="_blank">Twitter</a>
+						href="https://twitter.com/sousedskapomoc" target="_blank"><i class="fab fa-twitter"></i></a>
 			</p>
 		</div>
 	</div>
