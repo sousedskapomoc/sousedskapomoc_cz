@@ -578,7 +578,7 @@ h3 {
 
 	.page--role-info h3 {
 		margin-bottom: 40px;
-	} 
+	}
 
 	.navigation ul {
 		background-color: transparent;
@@ -674,7 +674,7 @@ h3 {
 		flex-direction: row;
 		flex-wrap: wrap;
 	}
-	
+
 	.box-w-list--wrapper.subpage li {
 		width: 50%;
 		display: flex;
