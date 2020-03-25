@@ -27,8 +27,8 @@
             <tbody>
             {foreach $orders as $order}
                 <tr>
-                    <td>{$order->delivery_address}</td>
-                    <td>{$order->order_items}</td>
+                    <td>{$order->getDeliveryAddress()->getCity()}</td>
+                    <td>{$order->getItems()}</td>
                 </tr>
             {/foreach}
             </tbody>

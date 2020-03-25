@@ -12,7 +12,7 @@ use SousedskaPomoc\Entities\Volunteer;
 use SousedskaPomoc\Entities\Demand;
 
 /**
- * Class AddressEntity
+ * Class Address
  * @ORM\Entity(repositoryClass="SousedskaPomoc\Repository\AddressRepository")
  * @ORM\HasLifecycleCallbacks()
  */
@@ -72,6 +72,16 @@ class Address
      * @ORM\OneToMany(targetEntity="Stock", mappedBy="stockAddress")
      */
     protected $stocks;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Orders", mappedBy="pickupAddress")
+     */
+    protected $orderPickup;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Orders", mappedBy="deliveryAddress")
+     */
+    protected $orderDelivery;
 
 
 

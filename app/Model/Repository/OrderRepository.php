@@ -5,6 +5,7 @@ namespace SousedskaPomoc\Repository;
 use Doctrine\ORM\EntityRepository as DoctrineEntityRepository;
 use SousedskaPomoc\Entities\Orders;
 use SousedskaPomoc\Entities\Volunteer;
+use Doctrine\ORM\Query;
 
 
 class OrderRepository extends DoctrineEntityRepository
@@ -15,9 +16,49 @@ class OrderRepository extends DoctrineEntityRepository
         return $this->findOneBy(['id' => $id]);
     }
 
+    public function getByUser($id) {
+        return $this->findBy(['author'=>$id]);
+    }
+
 
     public function fetchCount() {
         return $this->count([]);
+    }
+
+    public function getAllLive($id) {
+        $this->findby(['courier' => $id]);
+    }
+
+    public function getAllInTownByStatus($town, $status) {
+        $em = $this->getEntityManager();
+        $query = $em->createQuery("SELECT o FROM SousedskaPomoc\Entities\Orders o JOIN o.deliveryAddress x WHERE x.city = '$town' AND o.stat = '$status'");
+        return $query->getResult();
+    }
+
+    public function getAllLiveInTown($town) {
+        $em = $this->getEntityManager();
+        $query = $em->createQuery("SELECT o FROM SousedskaPomoc\Entities\Orders o JOIN o.deliveryAddress x WHERE x.city = '$town' AND (o.stat = 'delivering' OR o.stat = 'picking' OR o.stat = 'assigned')");
+        return $query->getResult();
+    }
+
+    public function assignOrder($orderId, $courierId) {
+        /** @var Orders $order */
+        $order = $this->getById($orderId);
+        $order->setCourier($courierId);
+        $order->setStatus('assigned');
+        $em = $this->getEntityManager();
+        $em->persist($order);
+        $em->flush();
+    }
+
+    public function updateStatus($id, $active)
+    {
+        /** @var Orders $order */
+        $order = $this->getById($id);
+        $order->setStatus($active);
+        $em = $this->getEntityManager();
+        $em->persist($order);
+        $em->flush();
     }
 
     public function findAllForUser($userId) {

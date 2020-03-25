@@ -6,10 +6,20 @@ namespace SousedskaPomoc\Presenters;
 
 use Contributte\FormsBootstrap\BootstrapForm;
 use Contributte\FormsBootstrap\Enums\RenderMode;
+use SousedskaPomoc\Entities\Orders;
 use SousedskaPomoc\Model\OrderManager;
+use SousedskaPomoc\Repository\OrderRepository;
 
 final class SeamstressPresenter extends BasePresenter
 {
+
+    /** @var \SousedskaPomoc\Repository\OrderRepository */
+    protected $orderRepository;
+
+    public function injectOrderRepository(OrderRepository $orderRepository) {
+        $this->orderRepository = $orderRepository;
+    }
+
     public function createComponentPostOrder()
     {
         $form = new BootstrapForm();
@@ -38,7 +48,15 @@ final class SeamstressPresenter extends BasePresenter
 		$values->delivery_phone = $this->user->getIdentity()->data['personPhone'] ?? 'neuveden';
 		$values->status = "new";
 
-        $result = $this->orderManager->create($values);
+        $order = new Orders();
+        $order->setStatus('new');
+        $order->setAuthor($this->user->getId());
+        $order->setPickupAddress($values->delivery_address);
+        $order->setItems($values->order_items);
+        $order->setCustomerNote($values->note);
+
+
+        $result = $this->orderRepository->create($order);
         $this->flashMessage($this->translator->translate('messages.order.orderSuccess'));
         $this->redirect("Coordinator:dashboard");
     }
@@ -47,16 +65,15 @@ final class SeamstressPresenter extends BasePresenter
 
     public function renderDashboard()
     {
-        $this->template->orders = $this->orderManager->findAllForUser($this->user->getId());
-        $user = $this->userManager->isOnline($this->user->getId());
-        $this->template->userOnline = $user->active;
+        $this->template->orders = $this->orderRepository->getByUser($this->user->getId());
+        $this->template->userOnline = $this->volunteerRepository->isOnline($this->user->getId());;
     }
 
 
 
     public function handleToggleActive($active)
     {
-        $this->userManager->setOnline($this->user->getId(), $active);
+        $this->volunteerRepository->setOnline($this->user->getId(), $active);
         $this->flashMessage("Změna stavu byla nastavena.");
         $this->redirect('this');
     }

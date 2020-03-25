@@ -39,11 +39,7 @@ class Authenticator implements IAuthenticator
         if (!$this->passwords->verify($password, $user->getPassword())) {
             throw new AuthenticationException('Invalid password.');
         }
-        $roles = [];
-        foreach ($user->getRoles() as $role) {
-            $roles[] = $role->getName();
-        }
 
-        return new Identity($user->getId(), $roles, ['personEmail' => $user->getPersonEmail(), 'personPhone'=>$user->getPersonPhone(), 'personName'=>$user->getPersonName()]);
+        return new Identity($user->getId(), $user->getRole()->getName(), ['personEmail' => $user->getPersonEmail(), 'personPhone'=>$user->getPersonPhone(), 'personName'=>$user->getPersonName(), 'city'=>$user->getAddress()->getCity()]);
     }
 }

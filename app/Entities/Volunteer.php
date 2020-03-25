@@ -54,9 +54,9 @@ class Volunteer
     protected $password;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Role", inversedBy="users")
+     * @ORM\ManyToOne(targetEntity="Role", inversedBy="users")
      */
-    protected $roles;
+    protected $role;
 
     /**
      * @ORM\OneToOne(targetEntity="Address", inversedBy="volunteer")
@@ -84,6 +84,13 @@ class Volunteer
     protected $hash;
 
 
+    public function __construct()
+    {
+        $this->deliveredOrders = new ArrayCollection();
+        $this->createdOrders = new ArrayCollection();
+    }
+
+
 
     /**
      * @return mixed
@@ -101,12 +108,6 @@ class Volunteer
     public function setHash($hash) : void
     {
         $this->hash = $hash;
-    }
-
-
-    public function __construct()
-    {
-        $this->roles = new ArrayCollection();
     }
 
 
@@ -234,19 +235,14 @@ class Volunteer
     /**
      * @return mixed
      */
-    public function getRoles()
+    public function getRole()
     {
-        return $this->roles;
+        return $this->role;
     }
 
-    public function addRole(Role $role) {
-        $this->roles->add($role);
+    public function setRole($role) {
+        $this->role = $role;
         $role->addUser($this);
-    }
-
-    public function removeRole(Role $role) {
-        $this->roles->removeElement($role);
-        $role->removeUser($this);
     }
 
 

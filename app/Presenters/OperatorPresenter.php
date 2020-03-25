@@ -4,16 +4,24 @@ declare(strict_types=1);
 
 namespace SousedskaPomoc\Presenters;
 
-use SousedskaPomoc\Model\OrderManager;
+
+use SousedskaPomoc\Repository\OrderRepository;
 
 final class OperatorPresenter extends BasePresenter
 {
 
+    /** @var \SousedskaPomoc\Repository\OrderRepository */
+    protected $orderRepository;
+
+    public function injectOrderRepository(OrderRepository $orderRepository) {
+        $this->orderRepository = $orderRepository;
+    }
+
     public function renderDashboard()
     {
-        $this->template->newOrders = $this->orderManager->findAllNewInTown($this->user->getIdentity()->data);
-        $this->template->liveOrders = $this->orderManager->findAllLiveInTown($this->user->getIdentity()->data);
-        $this->template->deliveredOrders = $this->orderManager->findAllDeliveredInTown($this->user->getIdentity()->data);
+        $this->template->newOrders = $this->orderRepository->getAllInTownByStatus($this->user->getIdentity()->data['city'], 'new');
+        $this->template->liveOrders = $this->orderRepository->getAllLiveInTown($this->user->getIdentity()->data['city']);
+        $this->template->deliveredOrders = $this->orderRepository->getAllInTownByStatus($this->user->getIdentity()->data['city'], 'delivered');
     }
 
 
@@ -34,15 +42,11 @@ final class OperatorPresenter extends BasePresenter
 		$this->redirect('this');
 	}
 
-	public function handleAssignCourier()
-	{
-		$this->orderManager->assignOrder(
-			$_POST['courier_id'],
-			$_POST['order_id'],
-			$this->user->getId()
-		);
-
-		$this->flashMessage($this->translator->translate('messages.order.givenToCourier'));
-		$this->redirect('this');
-	}
+    public function handleAssignCourier()
+    {
+        $user = $this->volunteerRepository->getById($_POST['courier_id']);
+        $this->orderRepository->assignOrder($_POST['order_id'], $user);
+        $this->flashMessage($this->translator->translate('messages.order.givenToCourier'));
+        $this->redirect('this');
+    }
 }

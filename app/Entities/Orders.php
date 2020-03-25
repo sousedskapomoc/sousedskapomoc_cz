@@ -22,12 +22,12 @@ class Orders
 //    use Timestampable;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\OneToOne(targetEntity="Address", inversedBy="orderPickup")
      */
     protected $pickupAddress;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\OneToOne(targetEntity="Address", inversedBy="orderDelivery")
      */
     protected $deliveryAddress;
 
@@ -42,7 +42,7 @@ class Orders
     protected $courier;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="string")
      */
     protected $stat;
 
