@@ -185,7 +185,7 @@ final class OrderManager
 
 	public function fetchAllWebDemands()
 	{
-		$sql = "SELECT * FROM posted_orders WHERE note LIKE '[Z WEBU]%'";
+		$sql = "SELECT * FROM posted_orders WHERE status = 'waiting'";
 		return $this->database->query($sql)->fetchAll();
 	}
 
@@ -210,5 +210,10 @@ final class OrderManager
 	{
 		$sql = "SELECT posted_orders.*, volunteers.town FROM posted_orders, volunteers WHERE posted_orders.id_volunteers = volunteers.id";
 		return $this->database->query($sql)->fetchAll();
+	}
+
+	public function remove($id)
+	{
+		$this->database->table('posted_orders')->wherePrimary($id)->delete();
 	}
 }

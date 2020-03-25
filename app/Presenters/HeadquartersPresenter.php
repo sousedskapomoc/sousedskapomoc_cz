@@ -44,7 +44,8 @@ class HeadquartersPresenter extends BasePresenter
 		$grid->addFilterSelect('status', 'Stav obj', []);
 		$grid->addColumnDateTime('createdAt', 'Datum přidání');
 		$grid->addAction('approve', 'Schválit', 'approve!')->setClass("btn btn-success btn-sm");
-		$grid->addAction('detail', 'Detail','Courier:detail')->setClass("btn btn-primary btn-sm");
+		$grid->addAction('detail', 'Detail', 'Courier:detail')->setClass("btn btn-primary btn-sm");
+		$grid->addAction('delete', 'X', 'deleteDemand!')->setClass("btn btn-danger btn-sm");
 
 		return $grid;
 	}
@@ -63,7 +64,7 @@ class HeadquartersPresenter extends BasePresenter
 		$grid->addColumnDateTime('createdAt', 'Datum přidání');
 		$grid->addColumnText('status', 'Status')->setFilterText();
 		$grid->addAction('reset', 'Resetovat', 'reset!')->setClass("btn btn-danger btn-sm");
-		$grid->addAction('detail', 'Detail','Courier:detail')->setClass("btn btn-primary btn-sm");
+		$grid->addAction('detail', 'Detail', 'Courier:detail')->setClass("btn btn-primary btn-sm");
 
 		return $grid;
 	}
@@ -83,6 +84,13 @@ class HeadquartersPresenter extends BasePresenter
 		$this->orderManager->assignOrder(null, $id, null, 'new');
 		$this->flashMessage("Objednávka byla obnovena do výchozího stavu.");
 		$this->redirect('Headquarters:orders');
+	}
+
+	public function handleDeleteDemand($id)
+	{
+		$this->orderManager->remove($id);
+		$this->flashMessage("Objednávka byla smazána.");
+		$this->redirect('Headquarters:demands');
 	}
 
 	public function handleApprove($id)
