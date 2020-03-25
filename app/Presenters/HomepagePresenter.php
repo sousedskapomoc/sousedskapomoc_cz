@@ -88,6 +88,29 @@ final class HomepagePresenter extends BasePresenter
 		return $form;
 	}
 
+	public function createComponentRegisterAsMedicalCoordinator()
+	{
+		$form = new BootstrapForm;
+		$form->renderMode = RenderMode::VERTICAL_MODE;
+		$form->addHidden('role', 'coordinator');
+
+		$form->addText('personName', $this->translator->translate('forms.registerCoordinator.nameLabel'))
+			->setRequired($this->translator->translate('forms.registerCoordinator.nameRequired'));
+		$form->addText('personPhone', $this->translator->translate('forms.registerCoordinator.phoneLabel'))
+			->setRequired($this->translator->translate('forms.registerCoordinator.phoneRequired'));
+		$form->addEmail('personEmail', $this->translator->translate('forms.registerCoordinator.mailLabel'))
+			->setRequired($this->translator->translate('forms.registerCoordinator.mailRequired'));
+
+		$form->addText('town', "Město kde je lékařské zařízení")
+			->setRequired($this->translator->translate('forms.registerCoordinator.townRequired'));
+
+		$form->addSubmit('coordinatorRegFormSubmit', $this->translator->translate('forms.registerCoordinator.button'));
+		$form->onSuccess[] = [$this, "processRegistrationCoordinator"];
+
+		return $form;
+	}
+
+
 
 	public function createComponentRegisterAsSeamstress()
 	{

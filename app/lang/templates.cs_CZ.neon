@@ -29,7 +29,7 @@ homepage:
     howToHelp: 'Co mohu udělat pro své sousedy kteří si nemohou dojít nakoupit?'
     howToHelpDescription: 'Vzhledem k nouzovému stavu na území České Republiky a pandemii <a href="http://koronavirus.mzcr.cz/" target="_blank">Koronaviru</a> jsme se rozhodli vytvořit jednoduchý web který umožní organizovat dobrovolníky kteří chtějí pomoci.'
     info: 'Veškeré činnosti spojené s provozováním tohoto webu (kurýrní práce, práce operátora, vývoj) jsou prováděny BEZ NÁROKU na odměnu.'
-    notif: 'V Praze už obdobnou službu můžete najít na webu <a href="http://pomahamepraze.cz" target="_blank" style="color: #fff;text-decoration: underline">PomahamePraze.cz</a>.<br />Pokud tedy chcete pomáhat v Praze, obraťte se tam.<br /> <strong>My chceme službu rozšířit i do zbytku republiky.</strong>'
+    notif: '<p>Potřebujete zajistit roušky,<br />dojít nakoupit potraviny, léky nebo<br />jinou pomoc, a nemůžete opustit svůj domov?<br /></p><h2 style="font-family: Poppins;text-align: center;width: 100%;">800 88 55 99</h2><p>Volejte bezplatnou linku Sousedské pomoci!</p>'
     howItWork: 'Jak to funguje?'
     registerOnPosition: 'Registrujte se na vybranou pozici.'
     connectToVolunteers: 'Propojení s dobrovolníky'
