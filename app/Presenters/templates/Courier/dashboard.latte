@@ -6,7 +6,7 @@
 <a href="https://sousedskapomoc.cz/pdf/zasady-kuryr.pdf" target="_blank"
    class="btn btn-info">Manuál kurýra</a>
 </p>
-<h2>{_templates.courierDashboard.subtitle} <small>pro město {$user->getIdentity()->data['town']}</small> - {$userOnline|logic}</h2>
+<h2>{_templates.courierDashboard.subtitle} <small>pro město {$town}</small> - {$userOnline|logic}</h2>
 <a n:href="toggleActive! active => true"
         class="btn btn-success" n:if="!$userOnline">{_templates.courierDashboard.readyToWork}</a>
 <a n:href="toggleActive! active => false"

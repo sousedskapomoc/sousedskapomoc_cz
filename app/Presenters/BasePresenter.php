@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SousedskaPomoc\Presenters;
 
+use Kdyby\Translation\Translator;
 use Nette;
 use SousedskaPomoc\Model\OrderManager;
 use SousedskaPomoc\Model\UserManager;
@@ -17,7 +18,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 	/** @persistent */
 	public $locale;
 
-	/** @var \Kdyby\Translation\Translator @inject */
+	/** @var Translator @inject */
 	public $translator;
 
 	/** @var UserManager */
