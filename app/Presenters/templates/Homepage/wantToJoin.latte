@@ -1,65 +1,63 @@
 {block content}
+<div class="row">
+	<div class="col-12 text-center">
+		<h1 class="text-center" id="iWanaBeThere">
+			{_templates.homepage.howCanIJoin}
+		</h1>
 
-<div class="container">
-	<div class="row">
-		<div class="col-12 text-center">
-			<h1 class="text-center" id="iWanaBeThere">
-				{_templates.homepage.howCanIJoin}
-			</h1>
-
-			<div class="box-w-list--wrapper subpage">
-				<ul class="flex">
-					<li>
-						<span><a n:href="registerAsCoordinator"><img src="{$basePath}/images/002-kind.svg"/></a></span>
-						<a n:href="registerAsCoordinator"><h4>{_templates.coordinator.title}</h4></a>
-						<p>Dobrovolník, jenž si vybral roli pečovatele, má na starost vyhledávání osob, které potřebují
-							pomoci sobstaráním roušek, léků, s nákupem a vůbec se vším, co je mimo bezpečí jejich
-							domova. Pečovatel pak s nimi sestaví seznam toho, co osoba potřebuje, a tuto objednávku zadá
-							do systému. Vněm má pečovatel také přístup kletákům, které může vytisknout a rozvěsit po
-							okolí, a umožnit tak přístup kpomoci našich dobrovolníků co nejvíce lidem.</p>
-						<a n:href="registerAsCoordinator" class="btn btn-purple invert"><i class="fas fa-headset"
-																						   aria-hidden="true"></i> {_templates.coordinator.callToActionButton}
-						</a>
-					</li>
-					<li>
-						<span><a n:href="registerAsOperator"><img
-										src="{$basePath}/images/003-call-center-agent.svg"/></a></span>
-						<a n:href="registerAsOperator"><h4>{_templates.operator.title}</h4></a>
-						<p>Dobrovolník, který si zvolil roli dispečera, pracuje zdomova a skrze náš systém zajišťuje
-							plynulost celého procesu distribuce nezbytností kpotřebnému. Vsystému přiřazuje zadané
-							objednávky kurýrům, kteří jsoukpotřebnému nejblíže. Jakmile objednávku přiřadí, kontaktuje
-							kurýra i potřebného a soběma se domluví na podrobnostech. Po čas doručování je na příjmu a
-							zajišťuje bezpečné a bezproblémové doručení objednávky.</p>
-						<a n:href="registerAsOperator" class="btn btn-purple invert"><i class="fas fa-user-ninja"
-																						aria-hidden="true"></i> {_templates.operator.callToActionButton|noescape}
-						</a>
-					</li>
-					<li>
-						<span><a n:href="registerAsCourier"><img src="{$basePath}/images/001-car.svg"/></a></span>
-						<a n:href="registerAsCourier"><h4>{_templates.courier.title}</h4></a>
-						<p>Dobrovolník v roli kurýra je tím, kdo celý Jakmile mu dispečer přiřadí objednávku a po
-							telefonu se s ním domluví na podrobnostech, sedne do auta a nákup a ostatní nezbytnosti
-							obstará. Jakmile dorazí na místo určení, kontaktuje potřebného, který mu nechá na smluveném
-							místě peníze v obálce, a kurýr je vymění za objednávku.</p>
-						<a n:href="registerAsCourier" class="btn btn-purple invert"><i class="fas fa-car"
-																					   aria-hidden="true"></i> {_templates.courier.callToActionButton}
-						</a>
-					</li>
-					<li>
-						<span><a n:href="registerAsSeamstress"><img src="{$basePath}/images/004-cut.svg"/></a></span>
-						<a n:href="registerAsSeamstress"><h4>{_templates.seamstress.title}</h4></a>
-						<p>Úkol dobrovolníka v roli švadlenky je jednoduchý, avšak nesmírně náročný a vyčerpávající.
-							Švadlenky šijí roušky. Ty se pak prostřednictvím kurýrů dostávají ke stovkám lidí, proto je
-							potřeba, aby tito dobrovolníci měli při šití sami roušky nasazené a ruce pečlivě
-							vydezinfikované. Jakmile dobrovolníka dispečer kontaktuje, dle zásad bezpečnosti (v
-							rukavicích, s rouškou) je připraví pro kurýra na smluvené místo, aby si je mohl bezpečně
-							vyzvednout.</p>
-						<a n:href="registerAsSeamstress" class="btn btn-purple invert"><i class="fas fa-cut"
-																						  aria-hidden="true"></i> {_templates.seamstress.callToActionButton}
-						</a>
-					</li>
-				</ul>
-			</div>
+		<div class="box-w-list--wrapper subpage">
+			<ul class="flex">
+				<li>
+					<span><a n:href="registerAsCoordinator"><img src="{$basePath}/images/002-kind.svg"/></a></span>
+					<a n:href="registerAsCoordinator"><h4>{_templates.coordinator.title}</h4></a>
+					<p>Dobrovolník, jenž si vybral roli pečovatele, má na starost vyhledávání osob, které potřebují
+						pomoci sobstaráním roušek, léků, s nákupem a vůbec se vším, co je mimo bezpečí jejich
+						domova. Pečovatel pak s nimi sestaví seznam toho, co osoba potřebuje, a tuto objednávku zadá
+						do systému. Vněm má pečovatel také přístup kletákům, které může vytisknout a rozvěsit po
+						okolí, a umožnit tak přístup kpomoci našich dobrovolníků co nejvíce lidem.</p>
+					<a n:href="registerAsCoordinator" class="btn btn-purple invert"><i class="fas fa-headset"
+																						aria-hidden="true"></i> {_templates.coordinator.callToActionButton}
+					</a>
+				</li>
+				<li>
+					<span><a n:href="registerAsOperator"><img
+									src="{$basePath}/images/003-call-center-agent.svg"/></a></span>
+					<a n:href="registerAsOperator"><h4>{_templates.operator.title}</h4></a>
+					<p>Dobrovolník, který si zvolil roli dispečera, pracuje zdomova a skrze náš systém zajišťuje
+						plynulost celého procesu distribuce nezbytností kpotřebnému. Vsystému přiřazuje zadané
+						objednávky kurýrům, kteří jsoukpotřebnému nejblíže. Jakmile objednávku přiřadí, kontaktuje
+						kurýra i potřebného a soběma se domluví na podrobnostech. Po čas doručování je na příjmu a
+						zajišťuje bezpečné a bezproblémové doručení objednávky.</p>
+					<a n:href="registerAsOperator" class="btn btn-purple invert"><i class="fas fa-user-ninja"
+																					aria-hidden="true"></i> {_templates.operator.callToActionButton|noescape}
+					</a>
+				</li>
+				<li>
+					<span><a n:href="registerAsCourier"><img src="{$basePath}/images/001-car.svg"/></a></span>
+					<a n:href="registerAsCourier"><h4>{_templates.courier.title}</h4></a>
+					<p>Dobrovolník v roli kurýra je tím, kdo celý Jakmile mu dispečer přiřadí objednávku a po
+						telefonu se s ním domluví na podrobnostech, sedne do auta a nákup a ostatní nezbytnosti
+						obstará. Jakmile dorazí na místo určení, kontaktuje potřebného, který mu nechá na smluveném
+						místě peníze v obálce, a kurýr je vymění za objednávku.</p>
+					<a n:href="registerAsCourier" class="btn btn-purple invert"><i class="fas fa-car"
+																					aria-hidden="true"></i> {_templates.courier.callToActionButton}
+					</a>
+				</li>
+				<li>
+					<span><a n:href="registerAsSeamstress"><img src="{$basePath}/images/004-cut.svg"/></a></span>
+					<a n:href="registerAsSeamstress"><h4>{_templates.seamstress.title}</h4></a>
+					<p>Úkol dobrovolníka v roli švadlenky je jednoduchý, avšak nesmírně náročný a vyčerpávající.
+						Švadlenky šijí roušky. Ty se pak prostřednictvím kurýrů dostávají ke stovkám lidí, proto je
+						potřeba, aby tito dobrovolníci měli při šití sami roušky nasazené a ruce pečlivě
+						vydezinfikované. Jakmile dobrovolníka dispečer kontaktuje, dle zásad bezpečnosti (v
+						rukavicích, s rouškou) je připraví pro kurýra na smluvené místo, aby si je mohl bezpečně
+						vyzvednout.</p>
+					<a n:href="registerAsSeamstress" class="btn btn-purple invert"><i class="fas fa-cut"
+																						aria-hidden="true"></i> {_templates.seamstress.callToActionButton}
+					</a>
+				</li>
+			</ul>
 		</div>
 	</div>
+</div>
 

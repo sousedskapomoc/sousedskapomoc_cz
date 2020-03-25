@@ -1,40 +1,36 @@
 {block content}
-<div class="row">
-	<div class="col-12 text-center">
-		<h1>
-			{_templates.header.mainTitle|noescape}
-		</h1>
-		<p>
-			{_templates.header.mainSubtitle|noescape}
-		</p>
-	</div>
-</div>
-<div class="row">
-	<div class="col-6">
-		<br />
-		<br />
-		<br />
-		<p class="text-center">
-			<a class="btn btn-purple btn-lg" href="/homepage/post-demand">{_templates.header.postDemand}</a>
-		</p>
-	</div>
-	<div class="col-6">
-		<br />
-		<br />
-		<br />
-		<p class="text-center">
-			<a class="btn btn-green btn-lg"
-			   href="#iWanaBeThere">Chci se zapojit</a>
-		</p>
-	</div>
-</div>
-<div class="row">
-	<div class="col-12">
-		<div class="notif">
-			<p>{_templates.homepage.notif|noescape}</p>
+	<div class="header-banner">
+		<div class="row">
+			<div class="col-12 text-center">
+				<h1>
+					{_templates.header.mainTitle|noescape}
+				</h1>
+				<p>
+					{_templates.header.mainSubtitle|noescape}
+				</p>
+			</div>
+		</div>
+		<div class="row header-banner__buttons">
+			<div class="col-12 col-sm-6">
+				<p class="text-center">
+					<a class="btn btn-purple btn-lg" href="/homepage/post-demand">{_templates.header.postDemand}</a>
+				</p>
+			</div>
+			<div class="col-12 col-sm-6">
+				<p class="text-center">
+					<a class="btn btn-green btn-lg" href="#iWanaBeThere">Chci se zapojit</a>
+				</p>
+			</div>
+			
+		</div>
+		<div class="row">
+			<div class="col-12">
+				<div class="notif">
+					<p>{_templates.homepage.notif|noescape}</p>
+				</div>
+			</div>
 		</div>
 	</div>
-</div>
 </div>
 <div class="row bg-color no-margin-sides">
 	<div class="container">
