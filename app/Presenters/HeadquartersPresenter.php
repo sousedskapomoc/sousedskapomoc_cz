@@ -44,7 +44,7 @@ class HeadquartersPresenter extends BasePresenter
 		$grid->addFilterSelect('status', 'Stav obj', []);
 		$grid->addColumnDateTime('createdAt', 'Datum přidání');
 		$grid->addAction('approve', 'Schválit', 'approve!')->setClass("btn btn-success btn-sm");
-		$grid->addAction('detail', 'Detail')->setClass("btn btn-primary btn-sm");
+		$grid->addAction('detail', 'Detail','Courier:detail')->setClass("btn btn-primary btn-sm");
 
 		return $grid;
 	}
