@@ -92,7 +92,7 @@ final class HomepagePresenter extends BasePresenter
 	{
 		$form = new BootstrapForm;
 		$form->renderMode = RenderMode::VERTICAL_MODE;
-		$form->addHidden('role', 'coordinator');
+		$form->addHidden('role', 'medicalCoordinator');
 
 		$form->addText('personName', $this->translator->translate('forms.registerCoordinator.nameLabel'))
 			->setRequired($this->translator->translate('forms.registerCoordinator.nameRequired'));
