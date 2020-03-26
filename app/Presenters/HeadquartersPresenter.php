@@ -36,7 +36,7 @@ class HeadquartersPresenter extends BasePresenter
 	{
 		$grid = new DataGrid();
 		$grid->setDataSource($this->orderManager->fetchAllWebDemands());
-		$grid->addColumnNumber('id', 'ID');
+		$grid->addColumnNumber('id', 'ID')->setFilterText();
 		$grid->addColumnText('id_volunteers', 'Zadavatel');
 		$grid->addColumnText('delivery_address', 'Adresa')->setFilterText();
 		$grid->addColumnText('delivery_phone', 'Telefon')->setFilterText();
@@ -54,7 +54,7 @@ class HeadquartersPresenter extends BasePresenter
 	{
 		$grid = new DataGrid();
 		$grid->setDataSource($this->orderManager->findAllOrdersData());
-		$grid->addColumnNumber('id', 'ID');
+		$grid->addColumnNumber('id', 'ID')->setFilterText();
 		$grid->addColumnText('id_volunteers', 'Zadavatel');
 		$grid->addColumnText('town', 'Město')->setFilterText();
 		$grid->addColumnText('delivery_address', 'Adresa')->setFilterText();
