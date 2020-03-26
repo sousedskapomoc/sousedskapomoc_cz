@@ -49,7 +49,6 @@ final class CoordinatorPresenter extends BasePresenter
 	{
 		$form = new BootstrapForm();
 		$form->addText('pickup_address', $this->translator->translate('forms.postOrder.pickupAddressLabel'))
-			->setRequired($this->translator->translate('forms.postOrder.pickupAddressRequired'))
 			->setPlaceholder($this->translator->translate('forms.postOrder.pickupAddressPlaceholder'));
 		$form->addText('delivery_address', $this->translator->translate('forms.postOrder.addressLabel'))
 			->setRequired($this->translator->translate('forms.postOrder.addressRequired'))
