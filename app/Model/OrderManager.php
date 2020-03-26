@@ -91,9 +91,9 @@ final class OrderManager
 		])->fetchAll();
 	}
 
-	public function findAllLiveByCourierByTown($userData)
+	public function findAllLiveByCourierByTown($town, $userId)
 	{
-		$sql = "SELECT * FROM dispatch_orders_by_town WHERE town LIKE '%$userData[town]%' AND status IN ('assigned','picking','delivering') AND courier_id = '$userData[id]'";
+		$sql = "SELECT * FROM dispatch_orders_by_town WHERE town LIKE '%$town%' AND status IN ('assigned','picking','delivering') AND courier_id = '$userId'";
 		return $this->database->query($sql)->fetchAll();
 	}
 
