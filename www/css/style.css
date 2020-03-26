@@ -249,9 +249,12 @@ p, span, h1, h2, h3, h4, h5, h6, b {
 }
 
 .logo {
-	width: 180px;
-	height: 88px;
+	height: 120px;
 	display: block;
+}
+
+.logo img {
+	max-height: 100%;
 }
 
 .navigation li {
@@ -625,6 +628,10 @@ h3 {
 		top: 0;
 	}
 
+	.logo {
+		height: 100px;
+	}
+
 	.header-banner {
 		padding-top: 30px;
 	}
@@ -727,8 +734,7 @@ h3 {
 	}
 
 	.logo {
-		width: 245px;
-		height: 70px;
+		height: 130px;
 		display: block;
 	}
 
@@ -774,6 +780,10 @@ h3 {
 	h1 {
 		font-size: 40px;
 		margin-bottom: 50px;
+	}
+
+	.logo {
+		height: 150px;
 	}
 
 	.thank-you-need-help p span, .thank-you-need-help p{
