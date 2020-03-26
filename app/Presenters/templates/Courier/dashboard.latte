@@ -24,6 +24,7 @@
             <td>{_templates.coordinatorDashboard.items}</td>
             <td>{_templates.courierDashboard.status}</td>
             <td>{_templates.coordinatorDashboard.note}</td>
+            <td>Telefon příjemce</td>
             <td>{_templates.coordinatorDashboard.action}</td>
         </tr>
         </thead>
@@ -42,9 +43,9 @@
                     {elseif $order->status == 'delivering'}
                         <a class="btn btn-sm btn-success" n:href="changeStatus! id => $order->id, status=>'delivered'">{_templates.courierDashboard.delivered}</a>
                     {/if}
-
                 </td>
                 <td>{$order->note}</td>
+                <td>{$order->delivery_phone ?? null}</td>
                 <td>
                     <a n:href="Edit id => $order->id">{_templates.courierDashboard.edit}</a>,
                     <a n:href="Detail id => $order->id">{_templates.coordinatorDashboard.detail}</a>

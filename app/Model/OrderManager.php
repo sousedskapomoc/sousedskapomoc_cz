@@ -91,9 +91,9 @@ final class OrderManager
 		])->fetchAll();
 	}
 
-	public function findAllLiveByCourierByTown($userData)
+	public function findAllLiveByCourierByTown($town, $userId)
 	{
-		$sql = "SELECT * FROM dispatch_orders_by_town WHERE town LIKE '%$userData[town]%' AND status IN ('assigned','picking','delivering') AND courier_id = '$userData[id]'";
+		$sql = "SELECT * FROM dispatch_orders_by_town WHERE town LIKE '%$town%' AND status IN ('assigned','picking','delivering') AND courier_id = '$userId'";
 		return $this->database->query($sql)->fetchAll();
 	}
 
@@ -132,17 +132,13 @@ final class OrderManager
 	public function findAllNewInTown($town)
 	{
 		$sql = "SELECT
-				posted_orders.*,
-				volunteers.town AS limitMesto
+				*
 				FROM
-				posted_orders,
-				volunteers
+				dispatch_orders_by_town
 				WHERE
-				posted_orders.id_volunteers = volunteers.id
+				town LIKE '%$town%'
 				AND
-				volunteers.town LIKE '%$town%'
-				AND
-				posted_orders.status = 'new'
+				status = 'new'
 				";
 
 		return $this->database->query("$sql")->fetchAll();
@@ -208,7 +204,7 @@ final class OrderManager
 
 	public function findAllOrdersData()
 	{
-		$sql = "SELECT posted_orders.*, volunteers.town FROM posted_orders, volunteers WHERE posted_orders.id_volunteers = volunteers.id";
+		$sql = "SELECT * FROM dispatch_orders_by_town";
 		return $this->database->query($sql)->fetchAll();
 	}
 

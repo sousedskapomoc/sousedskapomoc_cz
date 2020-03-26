@@ -40,12 +40,15 @@
 		}
 	</style>
 	<![endif]-->
+	{include 'ga.latte'}
 </head>
 
 <body>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KT829TC"
+				  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
 	<a class="navbar-brand" href="{$basePath}/">
-		<img src="https://sousedskapomoc.cz/images/SP_logo.svg" alt="{_templates.header.title}" height="50"/>
+		<img src="https://sousedskapomoc.cz/images/sp-logo.svg" alt="{_templates.header.title}" height="50"/>
 	</a>
 	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
 			aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -78,7 +81,6 @@
 				<a n:href="Headquarters:default" class="nav-link"><i class="fab fa-accessible-icon"
 																	 aria-hidden="true"></i> {_templates.headquarters.title}</a>
 			</li>
-
 			<li n:if="$user->isLoggedIn()" class="nav-item">
 				<a n:href="Sign:out" class="nav-link"><i class="fas fa-sign-out-alt"
 														 aria-hidden="true"></i> {_templates.header.logout}</a>

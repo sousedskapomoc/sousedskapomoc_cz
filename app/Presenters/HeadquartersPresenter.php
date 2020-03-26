@@ -36,7 +36,7 @@ class HeadquartersPresenter extends BasePresenter
 	{
 		$grid = new DataGrid();
 		$grid->setDataSource($this->orderManager->fetchAllWebDemands());
-		$grid->addColumnNumber('id', 'ID');
+		$grid->addColumnNumber('id', 'ID')->setFilterText();
 		$grid->addColumnText('id_volunteers', 'Zadavatel');
 		$grid->addColumnText('delivery_address', 'Adresa')->setFilterText();
 		$grid->addColumnText('delivery_phone', 'Telefon')->setFilterText();
@@ -54,7 +54,7 @@ class HeadquartersPresenter extends BasePresenter
 	{
 		$grid = new DataGrid();
 		$grid->setDataSource($this->orderManager->findAllOrdersData());
-		$grid->addColumnNumber('id', 'ID');
+		$grid->addColumnNumber('id', 'ID')->setFilterText();
 		$grid->addColumnText('id_volunteers', 'Zadavatel');
 		$grid->addColumnText('town', 'Město')->setFilterText();
 		$grid->addColumnText('delivery_address', 'Adresa')->setFilterText();
@@ -65,6 +65,7 @@ class HeadquartersPresenter extends BasePresenter
 		$grid->addColumnText('status', 'Status')->setFilterText();
 		$grid->addAction('reset', 'Resetovat', 'reset!')->setClass("btn btn-danger btn-sm");
 		$grid->addAction('detail', 'Detail', 'Courier:detail')->setClass("btn btn-primary btn-sm");
+		$grid->addAction('delete', 'X', 'deleteOrder!')->setClass("btn btn-danger btn-sm");
 
 		return $grid;
 	}
@@ -89,8 +90,15 @@ class HeadquartersPresenter extends BasePresenter
 	public function handleDeleteDemand($id)
 	{
 		$this->orderManager->remove($id);
-		$this->flashMessage("Objednávka byla smazána.");
+		$this->flashMessage("Poptávka byla smazána.");
 		$this->redirect('Headquarters:demands');
+	}
+
+	public function handleDeleteOrder($id)
+	{
+		$this->orderManager->remove($id);
+		$this->flashMessage("Objednávka byla smazána.");
+		$this->redirect('Headquarters:orders');
 	}
 
 	public function handleApprove($id)

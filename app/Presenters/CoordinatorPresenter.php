@@ -45,36 +45,35 @@ final class CoordinatorPresenter extends BasePresenter
 	}
 
 
-
-    public function createComponentPostOrder()
-    {
-        $form = new BootstrapForm();
+	public function createComponentPostOrder()
+	{
+		$form = new BootstrapForm();
 		$form->addText('pickup_address', $this->translator->translate('forms.postOrder.pickupAddressLabel'))
-			->setRequired($this->translator->translate('forms.postOrder.pickupAddressRequired'))
 			->setPlaceholder($this->translator->translate('forms.postOrder.pickupAddressPlaceholder'));
-        $form->addText('delivery_address', $this->translator->translate('forms.postOrder.addressLabel'))
-            ->setRequired($this->translator->translate('forms.postOrder.addressRequired'))
-            ->setPlaceholder($this->translator->translate('forms.postOrder.addressPlaceholder'));
-        $form->addText('delivery_phone', $this->translator->translate('forms.postOrder.phoneLabel'))
-            ->setPlaceholder($this->translator->translate('forms.postOrder.phonePlaceholder'));
-        $form->addText('note',
-            $this->translator->translate('forms.postOrder.noteLabel'))
-            ->setPlaceholder($this->translator->translate('forms.postOrder.notePlaceholder'));
-        $form->addHidden('courier_note')
-            ->setDefaultValue('');
-        $form->addTextArea('order_items', $this->translator->translate('forms.postOrder.itemsLabel'))
-            ->setHtmlAttribute('rows', 3);
-        $form->addSubmit('postOrderFormSubmit', $this->translator->translate('forms.postOrder.button'));
-        $form->onSuccess[] = [$this, "postOrder"];
+		$form->addText('delivery_address', $this->translator->translate('forms.postOrder.addressLabel'))
+			->setRequired($this->translator->translate('forms.postOrder.addressRequired'))
+			->setPlaceholder($this->translator->translate('forms.postOrder.addressPlaceholder'));
+		$form->addText('delivery_phone', $this->translator->translate('forms.postOrder.phoneLabel'))
+			->setPlaceholder($this->translator->translate('forms.postOrder.phonePlaceholder'));
+		$form->addText('note',
+			$this->translator->translate('forms.postOrder.noteLabel'))
+			->setPlaceholder($this->translator->translate('forms.postOrder.notePlaceholder'));
+		$form->addHidden('courier_note')
+			->setDefaultValue('');
+		$form->addTextArea('order_items', $this->translator->translate('forms.postOrder.itemsLabel'))
+			->setHtmlAttribute('rows', 3);
+		$form->addSubmit('postOrderFormSubmit', $this->translator->translate('forms.postOrder.button'));
+		$form->onSuccess[] = [$this, "postOrder"];
 
-        return $form;
-    }
+		return $form;
+	}
 
 
 	public function postOrder(BootstrapForm $form)
 	{
 		$values = $form->getValues();
 
+		$values->town = $this->userManager->getTownForUser($this->user->getId());
 		$values->id_volunteers = $this->user->getId();
 		$values->status = "new";
 
