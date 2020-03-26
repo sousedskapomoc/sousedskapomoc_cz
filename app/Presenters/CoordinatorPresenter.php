@@ -75,6 +75,7 @@ final class CoordinatorPresenter extends BasePresenter
 	{
 		$values = $form->getValues();
 
+		$values->town = $this->template->town;
 		$values->id_volunteers = $this->user->getId();
 		$values->status = "new";
 
