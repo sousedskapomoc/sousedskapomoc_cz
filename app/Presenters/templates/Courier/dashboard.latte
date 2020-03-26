@@ -45,7 +45,7 @@
                     {/if}
                 </td>
                 <td>{$order->note}</td>
-                <td>{$order->delivery_phone}</td>
+                <td>{$order->delivery_phone ?? null}</td>
                 <td>
                     <a n:href="Edit id => $order->id">{_templates.courierDashboard.edit}</a>,
                     <a n:href="Detail id => $order->id">{_templates.coordinatorDashboard.detail}</a>
