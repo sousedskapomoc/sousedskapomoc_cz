@@ -208,7 +208,7 @@ final class OrderManager
 
 	public function findAllOrdersData()
 	{
-		$sql = "SELECT posted_orders.*, volunteers.town FROM posted_orders, volunteers WHERE posted_orders.id_volunteers = volunteers.id";
+		$sql = "SELECT * FROM dispatch_orders_by_town";
 		return $this->database->query($sql)->fetchAll();
 	}
 
