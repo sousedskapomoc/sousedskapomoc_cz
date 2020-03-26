@@ -30,7 +30,7 @@
 			</tr>
 			<tr>
 				<th>Telefon příjemce</th>
-				<td>{$order->delivery_phone}</td>
+				<td>{$order->delivery_phone ?? null}</td>
 			</tr>
 			<tr>
 				<th>{_templates.orderDetail.created}</th>
