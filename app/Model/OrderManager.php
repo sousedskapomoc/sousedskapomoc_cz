@@ -132,17 +132,13 @@ final class OrderManager
 	public function findAllNewInTown($town)
 	{
 		$sql = "SELECT
-				posted_orders.*,
-				volunteers.town AS limitMesto
+				*
 				FROM
-				posted_orders,
-				volunteers
+				dispatch_orders_by_town
 				WHERE
-				posted_orders.id_volunteers = volunteers.id
+				town LIKE '%$town%'
 				AND
-				volunteers.town LIKE '%$town%'
-				AND
-				posted_orders.status = 'new'
+				status = 'new'
 				";
 
 		return $this->database->query("$sql")->fetchAll();
