@@ -253,6 +253,11 @@ final class UserManager implements Nette\Security\IAuthenticator
 
 		return $data->personPhone ?? 'Nezadán';
 	}
+
+	public function findAllOnlineUsers()
+	{
+		return $this->database->table(self::TABLE_NAME)->where(['active' => true])->fetchAll();
+	}
 }
 
 

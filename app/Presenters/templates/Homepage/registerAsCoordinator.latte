@@ -1,9 +1,40 @@
 {block content}
-<div class="row justify-content-center">
-    <div class="col-md-8 col-lg-6">
-        <h2>{_templates.coordinator.wannaJoin}</h2>
-        {control registerAsCoordinator}
-        <ul id="suggestions"></ul>
+<div class="row justify-content-center page--role-info">
+    <div class="col-12">
+        <h1 class="text-center">Role pečovatele</h1>
+
+        <div class="row">
+            <div class="col-12 col-lg-6 col-xl-7">
+                <h4>Zásady správného pečovatele</h4>
+                <p>Kdo hledá, najde. To je heslo našich pečovatelů. Jejich úkolem je vyhledávat ty, kteří v této nelehké situaci potřebují naši pomoc. Pomoc dobrovolníků, kteří jim zprostředkují roušku, zajistí nákup potravin, potřebných léků i dalších nezbytností.</p>
+                <p>Že to není žádná brnkačka, to snad ani nemusíme zmiňovat. Mnozí lidé se stydí nebo se bojí si o pomoc požádat a spousta z nich ani neví, jak na to. Proto jsou tu naši pečovatelé s velmi speciální sadou dovedností. Takže jestli se někdo potřebuje pomoc dobrovolníků, naši pečovatelé je budou hledat. A najdou je. A pomůžou jim.</p>                
+          
+                <h4>JAK NAJÍT TY, KDO POTŘEBUJÍ POMOC?</h4>
+                <ol>
+                    <li>Ptejte se lidí ve svém okolí. Zazvoňte u sousedky od naproti, zavolejte svým rodičům, kteří bydlí daleko a nemůžete jim pomoc obstarat sami, zavolejte jejich rodičům, zavolejte vaší učitelce ze základky, která vám dávala tolik zabrat se zlomky. Zkrátka komukoli.</li>
+                    <li>Nezapomeňte, že při jakémkoli osobním setkání musíte mít na sobě roušku a nejlépe i brýle s rukavicemi.</li>
+                    <li>Jakmile najdete někoho, kdo naši pomoc a pomoc dobrovolníků potřebuje, vytvoříte s ním nákupní seznam, a ten zadáte do systému.</li>
+                    <li>Opakujte do aleluja. <3</li>
+                </ol>
+
+                <h4>Čistota půl zdraví, správná hygiena celé</h4>
+                <p>Při kontaktu s jakoukoli osobou dodržujte, prosím, následující pravidla, která dělají sousedského dobrovolníka ohleduplným dobrovolníkem.</p>
+                <ol>
+                    <li><b>Sousedský dobrovolník je VŽDY vybaven rouškami, brýlemi a rukavicemi.</b> Zajistí tak zdraví své i toho, komu zrovna pomáhá.</li>
+                    <li><b>Telefon je základ.</b> Jedině tak se s ostatními dobrovolníky bezpečně a bez zbytečného kontaktu na všem domluví.</li>
+                    <li><b>3 metry</b> – to je bezpečný odstup, který při nutném kontaktu s kýmkoli jiným nikdy neporušuje.</li>
+                </ol>
+                
+                <p>Tak a teď hurá hledat ty, kterým naše práce může zachránit život!</p>
+            </div>
+            <div class="col-12 col-lg-6 col-xl-4 offset-xl-1 js-scroll-fix-wrapper">
+                <div class="js-scroll-fix">
+                    <h4>{_templates.coordinator.wannaJoin}</h4>
+                    {control registerAsCoordinator}
+                    <ul id="suggestions"></ul>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <script>

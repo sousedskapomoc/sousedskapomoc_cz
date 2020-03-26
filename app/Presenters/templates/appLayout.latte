@@ -44,35 +44,44 @@
 
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-	<a class="navbar-brand" href="#">{_templates.header.title}</a>
+	<a class="navbar-brand" href="{$basePath}/">
+		<img src="https://sousedskapomoc.cz/images/SP_logo.svg" alt="{_templates.header.title}" height="50"/>
+	</a>
 	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
 			aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 		<span class="navbar-toggler-icon"></span>
 	</button>
 	<div class="collapse navbar-collapse" id="navbarNav">
 		<ul class="navbar-nav">
-			<li>
-				<a n:href="System:profile" class="nav-link">{_templates.profile.title}</a>
+			<li class="nav-item">
+				<a n:href="System:profile" class="nav-link"><i class="fas fa-user"
+															   aria-hidden="true"></i> {_templates.profile.title}</a>
 			</li>
 			<li n:if="$user->isLoggedIn()" class="nav-item">
-				<a n:href="System:dashboard" class="nav-link">{_templates.header.overview}</a>
+				<a n:href="System:dashboard" class="nav-link"><i class="fas fa-chart-line"
+																 aria-hidden="true"></i> {_templates.header.overview}</a>
 			</li>
 			<li n:if="$user->isInRole('courier')" class="nav-item">
-				<a n:href="Courier:dashboard" class="nav-link">{_templates.courier.title}</a>
+				<a n:href="Courier:dashboard" class="nav-link"><i class="fas fa-car"
+																  aria-hidden="true"></i> {_templates.courier.title}</a>
 			</li>
 			<li n:if="$user->isInRole('operator')" class="nav-item">
-				<a n:href="Operator:dashboard" class="nav-link">{_templates.operator.title}</a></li>
+				<a n:href="Operator:dashboard" class="nav-link"><i class="fas fa-headset"
+																   aria-hidden="true"></i> {_templates.operator.title}</a></li>
 			<li n:if="$user->isInRole('coordinator')" class="nav-item">
-				<a n:href="Coordinator:dashboard" class="nav-link">{_templates.coordinator.title}</a></li>
+				<a n:href="Coordinator:dashboard" class="nav-link"><i class="fas fa-user-ninja"
+																	  aria-hidden="true"></i> {_templates.coordinator.title}</a></li>
 			<li n:if="$user->isInRole('seamstress')" class="nav-item">
-				<a n:href="Seamstress:dashboard" class="nav-link">{_templates.seamstress.title}</a></li>
-			<li>
-				<a n:href="Headquarters:default" class="nav-link">{_templates.headquarters.title}</a>
+				<a n:href="Seamstress:dashboard" class="nav-link"><i class="fas fa-cut"
+																	 aria-hidden="true"></i> {_templates.seamstress.title}</a></li>
+			<li n:if="$user->isInRole('admin')" class="nav-item">
+				<a n:href="Headquarters:default" class="nav-link"><i class="fab fa-accessible-icon"
+																	 aria-hidden="true"></i> {_templates.headquarters.title}</a>
 			</li>
 
 			<li n:if="$user->isLoggedIn()" class="nav-item">
-				<a n:href="Sign:out" class="nav-link">
-					{_templates.header.logout}</a>
+				<a n:href="Sign:out" class="nav-link"><i class="fas fa-sign-out-alt"
+														 aria-hidden="true"></i> {_templates.header.logout}</a>
 			</li>
 		</ul>
 	</div>

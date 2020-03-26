@@ -104,11 +104,11 @@ final class OrderManager
 	}
 
 
-	public function assignOrder($courier_id, $order_id, $operator_id)
+	public function assignOrder($courier_id, $order_id, $operator_id, $status = "assigned")
 	{
 		$this->database->table('posted_orders')->wherePrimary($order_id)->update([
 			'courier_id' => $courier_id,
-			'status' => 'assigned',
+			'status' => $status,
 			'operator_id' => $operator_id
 		]);
 	}
@@ -129,10 +129,8 @@ final class OrderManager
 		return $this->database->table('posted_orders')->count();
 	}
 
-	public function findAllNewInTown($userData)
+	public function findAllNewInTown($town)
 	{
-		$town = $userData->town ?? null;
-
 		$sql = "SELECT
 				posted_orders.*,
 				volunteers.town AS limitMesto
@@ -150,19 +148,15 @@ final class OrderManager
 		return $this->database->query("$sql")->fetchAll();
 	}
 
-	public function findAllLiveInTown($userData)
+	public function findAllLiveInTown($town, $operatorId)
 	{
-		$operatorId = $userData['id'] ?? null;
-
-		$sql = "SELECT * FROM dispatch_orders_by_town WHERE town LIKE '%$userData[town]%' AND operator_id = $operatorId AND status IN ('assigned','picking','delivering')";
+		$sql = "SELECT * FROM dispatch_orders_by_town WHERE town LIKE '%$town%' AND operator_id = $operatorId AND status IN ('assigned','picking','delivering')";
 		return $this->database->query($sql)->fetchAll();
 	}
 
-	public function findAllDeliveredInTown($userData)
+	public function findAllDeliveredInTown($town, $operatorId)
 	{
-		$operatorId = $userData['id'] ?? null;
-
-		$sql = "SELECT * FROM dispatch_orders_by_town WHERE town LIKE '%$userData[town]%' AND operator_id = $operatorId AND status = 'delivered'";
+		$sql = "SELECT * FROM dispatch_orders_by_town WHERE town LIKE '%$town%' AND operator_id = $operatorId AND status = 'delivered'";
 		return $this->database->query("$sql")->fetchAll();
 	}
 
@@ -191,7 +185,7 @@ final class OrderManager
 
 	public function fetchAllWebDemands()
 	{
-		$sql = "SELECT * FROM posted_orders WHERE note LIKE '[Z WEBU]%'";
+		$sql = "SELECT * FROM posted_orders WHERE status = 'waiting'";
 		return $this->database->query($sql)->fetchAll();
 	}
 
@@ -216,5 +210,10 @@ final class OrderManager
 	{
 		$sql = "SELECT posted_orders.*, volunteers.town FROM posted_orders, volunteers WHERE posted_orders.id_volunteers = volunteers.id";
 		return $this->database->query($sql)->fetchAll();
+	}
+
+	public function remove($id)
+	{
+		$this->database->table('posted_orders')->wherePrimary($id)->delete();
 	}
 }

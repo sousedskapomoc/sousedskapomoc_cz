@@ -28,9 +28,9 @@ final class OperatorPresenter extends BasePresenter
 
 	public function renderDashboard()
 	{
-		$this->template->newOrders = $this->orderManager->findAllNewInTown($this->user->getIdentity()->data);
-		$this->template->liveOrders = $this->orderManager->findAllLiveInTown($this->user->getIdentity()->data);
-		$this->template->deliveredOrders = $this->orderManager->findAllDeliveredInTown($this->user->getIdentity()->data);
+		$this->template->newOrders = $this->orderManager->findAllNewInTown($this->template->town);
+		$this->template->liveOrders = $this->orderManager->findAllLiveInTown($this->template->town, $this->user->getId());
+		$this->template->deliveredOrders = $this->orderManager->findAllDeliveredInTown($this->template->town, $this->user->getId());
 	}
 
 

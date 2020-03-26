@@ -1,20 +1,15 @@
-#
-# WARNING: it is CRITICAL that this file & directory are NOT accessible directly via a web browser!
-# https://nette.org/security-warning
-#
 parameters:
 	mail:
 		fromMail: 'robot@sousedskapomoc.cz'
 		fromName: 'Sousedská pomoc'
-
 
 application:
 	errorPresenter: Error
 	mapping:
 		*: SousedskaPomoc\*Module\Presenters\*Presenter
 
-
 session:
+	debugger: true
 	expiration: 14 days
 
 services:

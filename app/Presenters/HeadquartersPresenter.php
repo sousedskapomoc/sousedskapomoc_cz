@@ -43,8 +43,9 @@ class HeadquartersPresenter extends BasePresenter
 		$grid->addColumnText('order_items', 'Položky obj.')->setFilterText();
 		$grid->addFilterSelect('status', 'Stav obj', []);
 		$grid->addColumnDateTime('createdAt', 'Datum přidání');
-		$grid->addAction('approve', 'Schválit')->setClass("btn btn-success btn-sm");
-		$grid->addAction('detail', 'Detail')->setClass("btn btn-primary btn-sm");
+		$grid->addAction('approve', 'Schválit', 'approve!')->setClass("btn btn-success btn-sm");
+		$grid->addAction('detail', 'Detail', 'Courier:detail')->setClass("btn btn-primary btn-sm");
+		$grid->addAction('delete', 'X', 'deleteDemand!')->setClass("btn btn-danger btn-sm");
 
 		return $grid;
 	}
@@ -62,7 +63,9 @@ class HeadquartersPresenter extends BasePresenter
 
 		$grid->addColumnDateTime('createdAt', 'Datum přidání');
 		$grid->addColumnText('status', 'Status')->setFilterText();
-		$grid->addAction('detail', 'Detail')->setClass("btn btn-primary btn-sm");
+		$grid->addAction('reset', 'Resetovat', 'reset!')->setClass("btn btn-danger btn-sm");
+		$grid->addAction('detail', 'Detail', 'Courier:detail')->setClass("btn btn-primary btn-sm");
+		$grid->addAction('delete', 'X', 'deleteOrder!')->setClass("btn btn-danger btn-sm");
 
 		return $grid;
 	}
@@ -75,5 +78,33 @@ class HeadquartersPresenter extends BasePresenter
 	public function renderTowns()
 	{
 		$this->template->towns = $this->userManager->getTowns();
+	}
+
+	public function handleReset($id)
+	{
+		$this->orderManager->assignOrder(null, $id, null, 'new');
+		$this->flashMessage("Objednávka byla obnovena do výchozího stavu.");
+		$this->redirect('Headquarters:orders');
+	}
+
+	public function handleDeleteDemand($id)
+	{
+		$this->orderManager->remove($id);
+		$this->flashMessage("Poptávka byla smazána.");
+		$this->redirect('Headquarters:demands');
+	}
+
+	public function handleDeleteOrder($id)
+	{
+		$this->orderManager->remove($id);
+		$this->flashMessage("Objednávka byla smazána.");
+		$this->redirect('Headquarters:orders');
+	}
+
+	public function handleApprove($id)
+	{
+		$this->orderManager->changeStatus($id, 'new');
+		$this->flashMessage("Objednávka byla schválena.");
+		$this->redirect('Headquarters:demands');
 	}
 }

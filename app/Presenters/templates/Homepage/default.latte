@@ -1,40 +1,36 @@
 {block content}
-<div class="row">
-	<div class="col-12 text-center">
-		<h2>
-			{_templates.header.mainTitle|noescape}
-		</h2>
-		<p>
-			{_templates.header.mainSubtitle|noescape}
-		</p>
-	</div>
-</div>
-<div class="row">
-	<div class="col-6">
-		<br />
-		<br />
-		<br />
-		<p class="text-center">
-			<a class="btn btn-purple btn-lg" href="/homepage/post-demand">{_templates.header.postDemand}</a>
-		</p>
-	</div>
-	<div class="col-6">
-		<br />
-		<br />
-		<br />
-		<p class="text-center">
-			<a class="btn btn-green btn-lg"
-			   href="#iWanaBeThere">Chci se zapojit</a>
-		</p>
-	</div>
-</div>
-<div class="row">
-	<div class="col-12">
-		<div class="notif">
-			<p>{_templates.homepage.notif|noescape}</p>
+	<div class="header-banner">
+		<div class="row">
+			<div class="col-12 text-center">
+				<h1>
+					{_templates.header.mainTitle|noescape}
+				</h1>
+				<p>
+					{_templates.header.mainSubtitle|noescape}
+				</p>
+			</div>
+		</div>
+		<div class="row header-banner__buttons">
+			<div class="col-12 col-sm-6">
+				<p class="text-center">
+					<a class="btn btn-purple btn-lg" href="/homepage/post-demand">{_templates.header.postDemand}</a>
+				</p>
+			</div>
+			<div class="col-12 col-sm-6">
+				<p class="text-center">
+					<a class="btn btn-green btn-lg" href="#iWanaBeThere">Chci se zapojit</a>
+				</p>
+			</div>
+			
+		</div>
+		<div class="row">
+			<div class="col-12">
+				<div class="notif">
+					<p>{_templates.homepage.notif|noescape}</p>
+				</div>
+			</div>
 		</div>
 	</div>
-</div>
 </div>
 <div class="row bg-color no-margin-sides">
 	<div class="container">
@@ -79,141 +75,32 @@
 			<div class="box-w-list--wrapper">
 				<ul class="flex">
 					<li>
-						<span><img src="{$basePath}/images/002-kind.svg"/></span>
-						<h4>{_templates.coordinator.title}</h4>
-						<p>{_templates.coordinator.subtitle}</p>
+						<span><a n:href="registerAsCoordinator"><img src="{$basePath}/images/002-kind.svg"/></a></span>
+						<a n:href="registerAsCoordinator"><h4>{_templates.coordinator.title}</h4></a>
+						<p>stará se o hladký průběh pomoci, komunikuje s dispečerem</p>
 					</li>
 					<li>
-						<span><img src="{$basePath}/images/003-call-center-agent.svg"/></span>
-						<h4>{_templates.operator.title}</h4>
-						<p>{_templates.operator.subtitle}</p>
+						<span><a n:href="registerAsOperator"><img src="{$basePath}/images/003-call-center-agent.svg"/></a></span>
+						<a n:href="registerAsOperator"><h4>{_templates.operator.title}</h4></a>
+						<p>přiřazuje objednávky kurýrům a dohlíží na včasné doručení</p>
 					</li>
 					<li>
-						<span><img src="{$basePath}/images/001-car.svg"/></span>
-						<h4>{_templates.courier.title}</h4>
-						<p>{_templates.courier.subtitle}</p>
+						<span><a n:href="registerAsCourier"><img src="{$basePath}/images/001-car.svg"/></a></span>
+						<a n:href="registerAsCourier"><h4>{_templates.courier.title}</h4></a>
+						<p>s autem, který nakupuje a doručuje potřebným</p>
 					</li>
 					<li>
-						<span><img src="{$basePath}/images/004-cut.svg"/></span>
-						<h4>{_templates.seamstress.title}</h4>
-						<p>{_templates.seamstress.subtitleHome}</p>
+						<span><a n:href="registerAsSeamstress"><img src="{$basePath}/images/004-cut.svg"/></a></span>
+						<a n:href="registerAsSeamstress"><h4>{_templates.seamstress.title}</h4></a>
+						<p>šije roušky a připravuje je k odběru</p>
 					</li>
 				</ul>
+				<p class="text-center">
+					<br />
+					<a class="btn btn-green btn-lg"
+					href="/homepage/want-to-join">Chci se zapojit</a>
+				</p>
 			</div>
 		</div>
 	</div>
-
-	<div class="row">
-		<div class="col-12">
-			<div class="row content-w-pic">
-				<div class="col-md-4">
-					<img alt="{_templates.coordinator.title}" src="{$basePath}/images/dispecer.png"/>
-				</div>
-				<div class="col-md-8 content-w-pic-wrapper flex">
-					<div class="content-w-pic--text">
-						<h4>{_templates.coordinator.title}</h4>
-						<div class="content-w-pic--text-wrap--list flex">
-							<div class="content-w-pic--text-list">
-								<h5>{_templates.coordinator.whatNeedTitle}</h5>
-								<ul>
-									{_templates.coordinator.whatNeedList|noescape}
-								</ul>
-							</div>
-							<div class="content-w-pic--text-list">
-								<h5>{_templates.coordinator.howHelpTitle}</h5>
-								<ul>
-									{_templates.coordinator.howHelpList|noescape}
-								</ul>
-							</div>
-						</div>
-						<a n:href="registerAsCoordinator" class="btn btn-purple"><i class="fas fa-headset"
-																					aria-hidden="true"></i> {_templates.coordinator.callToActionButton}
-						</a>
-					</div>
-				</div>
-			</div>
-
-			<div class="row content-w-pic">
-				<div class="col-md-8 content-w-pic-wrapper flex small-order-2">
-					<div class="content-w-pic--text">
-						<h4>{_templates.operator.title}</h4>
-						<div class="content-w-pic--text-wrap--list flex">
-							<div class="content-w-pic--text-list">
-								<h5>{_templates.operator.whatNeedTitle}</h5>
-								<ul>
-									{_templates.operator.whatNeedList|noescape}
-								</ul>
-							</div>
-							<div class="content-w-pic--text-list">
-								<h5>{_templates.operator.howHelp}</h5>
-								<ul>
-									{_templates.operator.howHelpList|noescape}
-								</ul>
-							</div>
-						</div>
-						<a n:href="registerAsOperator" class="btn btn-purple"><i class="fas fa-user-ninja"
-																				 aria-hidden="true"></i> {_templates.operator.callToActionButton|noescape}
-						</a>
-					</div>
-				</div>
-				<div class="col-md-4 ">
-					<img alt="{_templates.operator.title}" src="{$basePath}/images/pecovatel.png"/>
-				</div>
-			</div>
-
-			<div class="row content-w-pic">
-				<div class=" col-md-4">
-					<img alt="{_templates.courier.title}" src="{$basePath}/images/kuryr.png"/>
-				</div>
-				<div class="col-md-8 content-w-pic-wrapper flex">
-					<div class="content-w-pic--text">
-						<h4>{_templates.courier.title}</h4>
-						<div class="content-w-pic--text-wrap--list flex">
-							<div class="content-w-pic--text-list">
-								<h5>{_templates.courier.whatNeedTitle}</h5>
-								<ul>
-									{_templates.courier.whatNeedList|noescape}
-								</ul>
-							</div>
-							<div class="content-w-pic--text-list">
-								<h5>{_templates.courier.howHelpTitle}</h5>
-								<ul>
-									{_templates.courier.howHelpList|noescape}
-								</ul>
-							</div>
-						</div>
-						<a n:href="registerAsCourier" class="btn btn-purple"><i class="fas fa-car"
-																				aria-hidden="true"></i> {_templates.courier.callToActionButton}
-						</a>
-					</div>
-				</div>
-			</div>
-			<div class="row content-w-pic">
-				<div class="col-md-8 content-w-pic-wrapper flex small-order-2">
-					<div class="content-w-pic--text">
-						<h4>{_templates.seamstress.title}</h4>
-						<div class="content-w-pic--text-wrap--list flex">
-							<div class="content-w-pic--text-list">
-								<h5>{_templates.seamstress.whatNeedTitle}</h5>
-								<ul>
-									{_templates.seamstress.whatNeedList|noescape}
-								</ul>
-							</div>
-							<div class="content-w-pic--text-list">
-								<h5>{_templates.seamstress.howHelpTitle}</h5>
-								<ul>
-									{_templates.seamstress.howHelpList|noescape}
-								</ul>
-							</div>
-						</div>
-						<a n:href="registerAsSeamstress" class="btn btn-purple"><i class="fas fa-cut"
-																				   aria-hidden="true"></i> {_templates.seamstress.wannaJoin}
-						</a>
-					</div>
-				</div>
-				<div class="col-md-4">
-					<img alt="{_templates.seamstress.title}" src="{$basePath}/images/svadlena.jpg"/>
-				</div>
-			</div>
-		</div>
-	</div>
+</div>
