@@ -10,7 +10,7 @@ use SousedskaPomoc\Model\OrderManager;
 
 final class SeamstressPresenter extends BasePresenter
 {
-	/** @var \SousedskaPomoc\Model\OrderManager */
+	/** @var OrderManager */
 	protected $orderManager;
 
 	public function beforeRender()
@@ -54,6 +54,7 @@ final class SeamstressPresenter extends BasePresenter
 		$values = $form->getValues();
 
 		$values->id_volunteers = $this->user->getId();
+		$values->delivery_phone = $this->user->getIdentity()->data['personPhone'] ?? 'neuveden';
 		$values->status = "new";
 
 		$result = $this->orderManager->create($values);
