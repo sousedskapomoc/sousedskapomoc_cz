@@ -1,11 +1,13 @@
 {layout "../appLayout.latte"}
 {block content}
 <div class="row">
-    <div class="col-12">
-        <h1>{_templates.dashboard.title}</h1>
+	<div class="col-12">
+		<h1>{_templates.dashboard.title}</h1>
 		<div>
 
 			<h2>{_templates.operatorDashboard.promoteTitle}</h2>
+			<a href="{$basePath}/pdf/zasady-letak-potrebni.pdf" class="btn btn-info" target="_blank">Leták k
+				vytištění</a>
 			<a n:href="Coordinator:printMaterial id => 'shopping'" target="_blank"
 																   class="btn btn-success">{_templates.operatorDashboard.materialShopping}</a>
 			<a n:href="Coordinator:printMaterial id => 'courierWanted'" target="_blank"
@@ -18,16 +20,16 @@
 
 			<h2>{_templates.dashboard.actualStatistics}</h2>
 
-            <table class="table table-bordered table-hover col-6">
-                {foreach $statistics as $statisticName => $value}
-                    <tr>
-                        <th class="table-dark">{$statisticName|getTranslation}</th>
-                        <td class="table-primary">{$value}</td>
-                    </tr>
-                {/foreach}
-            </table>
-        </div>
+			<table class="table table-bordered table-hover col-6">
+				{foreach $statistics as $statisticName => $value}
+					<tr>
+						<th class="table-dark">{$statisticName|getTranslation}</th>
+						<td class="table-primary">{$value}</td>
+					</tr>
+				{/foreach}
+			</table>
+		</div>
 
-    </div>
+	</div>
 
 </div>
