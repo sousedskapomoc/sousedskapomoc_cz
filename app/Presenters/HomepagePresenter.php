@@ -96,7 +96,7 @@ final class HomepagePresenter extends BasePresenter
 
 		$form->addText('personName', $this->translator->translate('forms.registerCoordinator.nameLabel'))
 			->setRequired($this->translator->translate('forms.registerCoordinator.nameRequired'));
-		$form->addText('personPhone', $this->translator->translate('forms.registerCoordinator.phoneLabel'))
+		$form->addText('personPhone', 'Telefon do ordinace')
 			->setRequired($this->translator->translate('forms.registerCoordinator.phoneRequired'));
 		$form->addEmail('personEmail', $this->translator->translate('forms.registerCoordinator.mailLabel'))
 			->setRequired($this->translator->translate('forms.registerCoordinator.mailRequired'));
@@ -105,7 +105,7 @@ final class HomepagePresenter extends BasePresenter
 			->setRequired($this->translator->translate('forms.registerCoordinator.townRequired'));
 
 		$form->addSubmit('coordinatorRegFormSubmit', $this->translator->translate('forms.registerCoordinator.button'));
-		$form->onSuccess[] = [$this, "processRegistrationCoordinator"];
+		$form->onSuccess[] = [$this, "processRegistrationMedical"];
 
 		return $form;
 	}
@@ -361,6 +361,24 @@ final class HomepagePresenter extends BasePresenter
 			$link = $this->link('//Homepage:changePassword', $hash);
 			$this->userManager->setUserCode($user['id'], $hash);
 			$this->mail->sendCoordinatorMail($values->personEmail, $link);
+
+			$this->flashMessage($this->translator->translate('messages.registration.success'));
+			$this->redirect("RegistrationFinished");
+		} else {
+			$form->addError($this->translator->translate('messages.registration.fail'));
+		}
+	}
+
+	public function processRegistrationMedical(BootstrapForm $form)
+	{
+		$values = $form->getValues();
+		if (!$this->userManager->check('personEmail', $values->personEmail)) {
+
+			$user = $this->userManager->register($values);
+			$hash = md5($user['personEmail']);
+			$link = $this->link('//Homepage:changePassword', $hash);
+			$this->userManager->setUserCode($user['id'], $hash);
+			$this->mail->sendMedicMail($values->personEmail, $link);
 
 			$this->flashMessage($this->translator->translate('messages.registration.success'));
 			$this->redirect("RegistrationFinished");
