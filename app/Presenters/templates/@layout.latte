@@ -29,7 +29,7 @@
 	<link rel="apple-touch-icon" sizes="144x144" href="/images/favicon/apple-icon-144x144.png">
 	<link rel="apple-touch-icon" sizes="152x152" href="/images/favicon/apple-icon-152x152.png">
 	<link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-icon-180x180.png">
-	<link rel="icon" type="image/png" sizes="192x192"  href="/images/favicon/android-icon-192x192.png">
+	<link rel="icon" type="image/png" sizes="192x192" href="/images/favicon/android-icon-192x192.png">
 	<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon/favicon-32x32.png">
 	<link rel="icon" type="image/png" sizes="96x96" href="/images/favicon/favicon-96x96.png">
 	<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon/favicon-16x16.png">
@@ -61,17 +61,19 @@
 		}
 	</style>
 	<![endif]-->
-{include 'ga.latte'}
+	{include 'ga.latte'}
 </head>
 
 <body>
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KT829TC"
-				  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<noscript>
+	<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KT829TC"
+			height="0" width="0" style="display:none;visibility:hidden"></iframe>
+</noscript>
 <div class="row header no-margin-sides">
 	<div class="container">
 		<div id="banner" class="flex justify-content-between align-items-center">
 			<a class="logo" href="/"><img src="/images/SP_logo.png"
-											  alt="{_templates.header.imgAlt}"></a>
+										  alt="{_templates.header.imgAlt}"></a>
 			<div class="navigation">
 				<div class="burger-area">
 					<div class="burger">
@@ -85,7 +87,7 @@
 					<li><a n:href="Homepage:ethicalCode">Etický kodex</a></li>
 					<li><a n:href="Homepage:addMedicalCoordinator">Pro lékaře</a></li>
 					<li><a n:href="Homepage:addGovernmentCoordinator">{_templates.header.towns}</a></li>
-                    <li><a href="/sign/in">{_templates.header.login}</a></li>
+					<li><a href="/sign/in">{_templates.header.login}</a></li>
 				</ul>
 			</div>
 		</div>
@@ -95,27 +97,7 @@
 	<div n:foreach="$flashes as $flash" n:class="alert, 'alert-' . $flash->type">{$flash->message}</div>
 	{include content}
 </div>
-<div class="container footer-wrapper">
-	<div class="row footer">
-		<div class="col-12 text-center">
-			<p class="bigger-font">{_templates.footer.thankYou|noescape}</p>
-			<p class="text-center">
-				{_templates.footer.questions|noescape}
-			</p>
-			<p class="text-center">
-				<a n:href="Homepage:cooperation">Spolupracují s námi</a>
-			</p>
-			<p class="smaller-font">
-				<a
-						href="https://instagram.com/sousedskapomoc.cz" target="_blank"><i class="fab fa-instagram"></i></a>
-				<a
-						href="https://www.facebook.com/Sousedskapomoccz-110011043956318" target="_blank"><i class="fab fa-facebook-f"></i></a>
-				<a
-						href="https://twitter.com/sousedskapomoc" target="_blank"><i class="fab fa-twitter"></i></a>
-			</p>
-		</div>
-	</div>
-</div>
+{include "Homepage/footer.latte"}
 
 {block scripts}
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"
