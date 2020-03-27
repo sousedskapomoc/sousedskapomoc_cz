@@ -16,6 +16,12 @@ p, span, h1, h2, h3, h4, h5, h6, b {
 	position: fixed;
 }
 
+.logos img {
+	max-width: 150px;
+	max-height: 150px;
+	margin: 15px;
+}
+
 .thank-you-need-help p, .thank-you-need-help p span {
 	font-family: Poppins, arial;
 }
