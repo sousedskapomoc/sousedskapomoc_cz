@@ -14,7 +14,7 @@ services:
     volumes:
       - ../:/var/www/${DOMAIN}
     environment:
-      DEBUG: on
+      - DEBUG=on
       # LANG: cs
       # MYSQL_DATABASE: ${MYSQL_DATABASE}
       # MYSQL_USER: ${MYSQL_USER}
