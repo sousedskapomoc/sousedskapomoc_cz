@@ -12,19 +12,24 @@ services:
   php:
     build: .
     volumes:
-      - ../:/var/www/sousedskapomoc.cz
+      - ../:/var/www/${DOMAIN}
     environment:
       - DEBUG=on
+      # LANG: cs
+      # MYSQL_DATABASE: ${MYSQL_DATABASE}
+      # MYSQL_USER: ${MYSQL_USER}
+      # MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      # MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     depends_on:
       - composer
 
   mysql:
     image: mysql:5.7
     environment:
-      MYSQL_DATABASE: 'sousedskapomoc'
-      MYSQL_USER: 'sousedskapomoc'
-      MYSQL_PASSWORD: 'password'
-      MYSQL_ROOT_PASSWORD: 'root_password'
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     ports:
       - ${MYSQL_PORT}:3306
     expose:
@@ -37,16 +42,16 @@ services:
     image: nginx:latest
     command: >
       sh -c "if [ -f /etc/nginx/conf.d/default.conf ]; then rm /etc/nginx/conf.d/default.conf; fi&&
-             mkdir -p /var/www/sousedskapomoc.cz/temp/cache/ &&
-             chmod -R 777 /var/www/sousedskapomoc.cz/temp/ &&
-             chmod -R 777 /var/www/sousedskapomoc.cz/log/ &&
-             if [ ! -f ./app/config/local.neon ]; then cp /var/www/sousedskapomoc.cz/app/config/local.neon.dev /var/www/sousedskapomoc.cz/app/config/local.neon; fi &&
+             mkdir -p /var/www/${DOMAIN}/temp/cache/ &&
+             chmod -R 777 /var/www/${DOMAIN}/temp/ &&
+             chmod -R 777 /var/www/${DOMAIN}/log/ &&
+             if [ ! -f ./app/config/local.neon ]; then cp /var/www/${DOMAIN}/app/config/local.neon.dev /var/www/${DOMAIN}/app/config/local.neon; fi &&
              nginx -g 'daemon off;'"
     ports:
       - ${WEB_PORT}:80
     volumes:
-      - ../:/var/www/sousedskapomoc.cz
-      - ./nginx_conf/sousedskapomoc.cz.conf:/etc/nginx/conf.d/sousedskapomoc.cz.conf
+      - ../:/var/www/${DOMAIN}
+      - ./nginx_conf/${DOMAIN}.conf:/etc/nginx/conf.d/${DOMAIN}.conf
     depends_on:
       - php
 
