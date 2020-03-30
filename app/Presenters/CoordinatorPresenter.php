@@ -81,20 +81,4 @@ final class CoordinatorPresenter extends BasePresenter
 		$this->flashMessage($this->translator->translate('messages.order.orderSuccess'));
 		$this->redirect("Coordinator:dashboard");
 	}
-
-	public function handleUpdateOrderStatus($orderId, $orderStatus)
-	{
-		$orderStatus = $_POST['orderStatus'] ?? $orderStatus;
-		$this->orderManager->updateStatus($orderId, $orderStatus);
-		$this->flashMessage($this->translator->translate('messages.order.statusChanged'));
-		$this->redirect('this');
-	}
-
-	public function handleUpdateTown($orderId, $town)
-	{
-		$town = $_POST['town'] ?? $town;
-		$this->orderManager->updateTown($orderId, $town);
-		$this->flashMessage($this->translator->translate('messages.order.townChanged'));
-		$this->redirect('this');
-	}
 }
