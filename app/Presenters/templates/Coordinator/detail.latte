@@ -48,6 +48,34 @@
 				<th>{_templates.orderDetail.whoAssigned}</th>
 				<td>{$order->operator_id|fetchUser} - {$order->operator_id|fetchPhone}</td>
 			</tr>
+			<tr>
+				<th>Změna stavu objednávky</th>
+				<td>
+					<form action="{link updateOrderStatus! orderId => $order->id}" method="post" onchange="this.submit();"
+						  class="form form-vertical">
+						<div class="form-group">
+							<label for="orderStatus"><strong>Nastavit stav:</strong></label>
+							<select name="orderStatus" class="form-control">
+								<option value="picking"
+										{if $order->status == 'picking'}selected="selected"{/if}>{_templates.order.picking}</option>
+								<option value="delivering"
+										{if $order->status == 'delivering'}selected="selected"{/if}>{_templates.order.delivering}</option>
+								<option value="delivered"
+										{if $order->status == 'delivered'}selected="selected"{/if}>{_templates.order.delivered}</option>
+							</select>
+						</div>
+					</form>
+				</td>
+			</tr>
+			<tr>
+				<th>Změna přiřazení města</th>
+				<td>
+					<form action="{link updateTown! orderId => $order->id}" method="post"
+						  class="form form-vertical">
+					<input type="text" name="town" value="{$order->town}" />
+						<input type="submit" value="Uložit" class="btn btn-sm btn-primary btn-default" />
+				</td>
+			</tr>
 		</table>
 	</div>
 </div>
