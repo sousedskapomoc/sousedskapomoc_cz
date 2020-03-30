@@ -48,7 +48,7 @@
 				<th>{_templates.orderDetail.whoAssigned}</th>
 				<td>{$order->operator_id|fetchUser} - {$order->operator_id|fetchPhone}</td>
 			</tr>
-			<tr>
+			<tr n:if="$user->isInRole('admin')">
 				<th>Změna stavu objednávky</th>
 				<td>
 					<form action="{link updateOrderStatus! orderId => $order->id}" method="post" onchange="this.submit();"
@@ -67,7 +67,7 @@
 					</form>
 				</td>
 			</tr>
-			<tr>
+			<tr n:if="$user->isInRole('admin')">
 				<th>Změna přiřazení města</th>
 				<td>
 					<form action="{link updateTown! orderId => $order->id}" method="post"
