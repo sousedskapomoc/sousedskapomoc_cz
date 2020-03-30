@@ -221,4 +221,9 @@ final class OrderManager
 			]);
 		}
 	}
+
+	public function fetchDeliveredCount()
+	{
+		return $this->database->table('posted_orders')->where(['status' => 'delivered'])->count();
+	}
 }
