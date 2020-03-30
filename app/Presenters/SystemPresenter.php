@@ -45,6 +45,7 @@ final class SystemPresenter extends BasePresenter
             'usersWithoutAccess' => $this->userManager->fetchCountBy(['password' => null]),
             'uniqueTowns' => $this->userManager->fetchUniqueTownsCount(),
             'ordersCount' => $this->orderManager->fetchCount(),
+			'deliveredOrdersCount' => $this->orderManager->fetchDeliveredCount(),
         ];
     }
 
