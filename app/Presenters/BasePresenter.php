@@ -100,4 +100,19 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 			return $statusList[$status] ?? $status;
 		});
 	}
+	public function handleUpdateOrderStatus($orderId, $orderStatus)
+	{
+		$orderStatus = $_POST['orderStatus'] ?? $orderStatus;
+		$this->orderManager->updateStatus($orderId, $orderStatus);
+		$this->flashMessage($this->translator->translate('messages.order.statusChanged'));
+		$this->redirect('this');
+	}
+
+	public function handleUpdateTown($orderId, $town)
+	{
+		$town = $_POST['town'] ?? $town;
+		$this->orderManager->updateTown($orderId, $town);
+		$this->flashMessage($this->translator->translate('messages.order.townChanged'));
+		$this->redirect('this');
+	}
 }
