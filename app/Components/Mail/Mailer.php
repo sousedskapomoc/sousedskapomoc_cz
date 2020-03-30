@@ -117,4 +117,17 @@ final class Mail
 
         $this->mailer->send($mail);
     }
+
+	public function sendMedicMail($to, $link)
+	{
+		$mail = new Message;
+		$latte = new Engine;
+		$mail->setFrom('robot@sousedskapomoc.cz')
+			->addTo($to)
+//			->addAttachment('path/to/example.zip'); TODO - add path to attachment for doctors
+			->setSubject('SousedskaPomoc.cz - Úspěšná registrace')
+			->setHtmlBody($latte->renderToString(__DIR__.'/doctorMail.latte', ['url' => $link]));
+
+		$this->mailer->send($mail);
+	}
 }
