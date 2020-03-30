@@ -212,4 +212,13 @@ final class OrderManager
 	{
 		$this->database->table('posted_orders')->wherePrimary($id)->delete();
 	}
+
+	public function updateTown($orderId, $town)
+	{
+		if ($town != null) {
+			$this->database->table('posted_orders')->wherePrimary($orderId)->update([
+				'town' => $town,
+			]);
+		}
+	}
 }
