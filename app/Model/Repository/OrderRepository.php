@@ -65,6 +65,10 @@ class OrderRepository extends DoctrineEntityRepository
         return $this->findBy(['author'=>$userId]);
     }
 
+	public function fetchDeliveredCount() {
+		return $this->count(['stat'=>'delivered']);
+	}
+
     /**
      * Finds all entities in the repository.
      *
