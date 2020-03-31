@@ -15,12 +15,10 @@ final class SystemPresenter extends BasePresenter
     protected $passwords;
 
 
-
     public function injectPasswords(Passwords $passwords)
     {
         $this->passwords = $passwords;
     }
-
 
 
     public function beforeRender()
@@ -31,7 +29,6 @@ final class SystemPresenter extends BasePresenter
             $this->redirect('Homepage:default');
         }
     }
-
 
 
     public function renderDashboard()
@@ -45,25 +42,27 @@ final class SystemPresenter extends BasePresenter
             'usersWithoutAccess' => $this->userManager->fetchCountBy(['password' => null]),
             'uniqueTowns' => $this->userManager->fetchUniqueTownsCount(),
             'ordersCount' => $this->orderManager->fetchCount(),
-			'deliveredOrdersCount' => $this->orderManager->fetchDeliveredCount(),
+            'deliveredOrdersCount' => $this->orderManager->fetchDeliveredCount(),
         ];
     }
 
-    public function createComponentRegisterAddress() {
-    	$form = new BootstrapForm();
-    	$form->addText("town","Město ve kterém působím");
-    	$form->addHidden("selectedTown")->setRequired("Prosím vyberte z našeptávače město ve kterém působíte.");
-		$form->addSubmit("addressSubmit","Uložit adresu");
-		$form->onSuccess[] = [$this, "updateAddress"];
-    	return $form;
-	}
+    public function createComponentRegisterAddress()
+    {
+        $form = new BootstrapForm();
+        $form->addText("town", "Město ve kterém působím");
+        $form->addHidden("selectedTown")->setRequired("Prosím vyberte z našeptávače město ve kterém působíte.");
+        $form->addSubmit("addressSubmit", "Uložit adresu");
+        $form->onSuccess[] = [$this, "updateAddress"];
+        return $form;
+    }
 
-	public function updateAddress(BootstrapForm $form) {
-    	$values = $form->getValues();
-    	$this->userManager->updateTown($values->selectedTown, $this->user->getId());
-    	$this->flashMessage("Adresa byla změněna!",'danger');
-    	$this->redirect("System:profile");
-	}
+    public function updateAddress(BootstrapForm $form)
+    {
+        $values = $form->getValues();
+        $this->userManager->updateTown($values->selectedTown, $this->user->getId());
+        $this->flashMessage("Adresa byla změněna!", 'danger');
+        $this->redirect("System:profile");
+    }
 
 
     public function createComponentEditForm()
@@ -104,8 +103,11 @@ final class SystemPresenter extends BasePresenter
             array_push($rolesDefault, 3);
         }
 
-        $form->addCheckboxList('role', $this->translator->translate('forms.registerCoordinator.role'),
-            $roles)
+        $form->addCheckboxList(
+            'role',
+            $this->translator->translate('forms.registerCoordinator.role'),
+            $roles
+        )
             ->setDefaultValue($rolesDefault);
 
         $form->addHidden('id');
@@ -140,26 +142,25 @@ final class SystemPresenter extends BasePresenter
     }
 
 
-
     public function processUpdate(BootstrapForm $form)
     {
         $values = $form->getValues();
         $finalRoles = '';
         foreach ($values->role as $key => $role) {
             if ($role == 0) {
-                $finalRoles = $finalRoles.'courier';
+                $finalRoles = $finalRoles . 'courier';
             }
             if ($role == 1) {
-                $finalRoles = $finalRoles.'operator';
+                $finalRoles = $finalRoles . 'operator';
             }
             if ($role == 2) {
-                $finalRoles = $finalRoles.'seamstress';
+                $finalRoles = $finalRoles . 'seamstress';
             }
             if ($role == 3) {
-                $finalRoles = $finalRoles.'coordinator';
+                $finalRoles = $finalRoles . 'coordinator';
             }
             if ($key != array_key_last($values->role)) {
-                $finalRoles = $finalRoles.';';
+                $finalRoles = $finalRoles . ';';
             }
         }
         $values->role = $finalRoles;
@@ -178,7 +179,6 @@ final class SystemPresenter extends BasePresenter
             $this->redirect("profile");
         }
     }
-
 
 
     public function renderProfile()
