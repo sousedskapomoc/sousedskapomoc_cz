@@ -9,15 +9,14 @@ use Contributte\FormsBootstrap\Enums\RenderMode;
 use Nette;
 use Nette\Application\UI\Form;
 
-
 final class FormFactory
 {
-	use Nette\SmartObject;
+    use Nette\SmartObject;
 
-	public function create(): Form
-	{
-		$form = new BootstrapForm;
+    public function create(): Form
+    {
+        $form = new BootstrapForm;
         $form->renderMode = RenderMode::VERTICAL_MODE;
-		return $form;
-	}
+        return $form;
+    }
 }
