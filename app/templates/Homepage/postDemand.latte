@@ -1,0 +1,83 @@
+{block content}
+
+<div class="row justify-content-center">
+	<div class="col-md-8 col-lg-6">
+		<h1 class="text-center">Potřebuji pomoc</h1>
+		<div class="col-md-12">
+			{form postDemand}
+
+				<div class="form-group">
+					{label address}
+					{input address class => 'form-control'}
+				</div>
+				<div class="form-group">
+					<a href="#" id="townSearch" class="btn btn-purple">Vyhledat město</a>
+				</div>
+				<ul id="suggestions">
+				</ul>
+
+				<div class="hiddenForm" style="display: none">
+					<div class="form-group">
+						{label deliveryAddress}
+						{input deliveryAddress class => 'form-control'}
+					</div>
+					<div class="form-group">
+						{label deliveryPerson}
+						{input deliveryPerson class => 'form-control'}
+					</div>
+					<div class="form-group">
+						{label deliveryPhone}
+						{input deliveryPhone class => 'form-control'}
+					</div>
+					<div class="form-group">
+						{label orderItems}
+						{input orderItems, rows => 5, class => 'form-control'}
+					</div>
+					<div class="form-group">
+						{input demandFormSubmit}
+					</div>
+				</div>
+			{/form}
+		</div>
+	</div>
+</div>
+
+
+<script>
+	document.addEventListener("DOMContentLoaded", function (event) {
+
+		$("#townSearch").on('click', function () {
+
+			var hereMapsEndpoint = "https://autocomplete.geocoder.ls.hereapi.com/6.2/suggest.json?apiKey=Kl0wK4fx38Pf63EIey6WyrmGEhS2IqaVHkuzx0IQ4-Q&country=CZE&query=";
+			var query = encodeURIComponent($("#frm-postDemand-address").val());
+
+			jQuery.getJSON(hereMapsEndpoint + query, function (data) {
+				console.log(data);
+				$("#suggestions").empty();
+				$.each(data.suggestions, function (index) {
+
+					if (data.suggestions[index].matchLevel == "district") {
+						$("#suggestions").append(
+								"<li><a href='#' class='suggestion' data-town-label='" + data.suggestions[index].address.district + " " + data.suggestions[index].address.postalCode + "' data-town='" + data.suggestions[index].address.city + "'>" + data.suggestions[index].address.district + " " + data.suggestions[index].address.postalCode + "</a></li>"
+						);
+					}
+				});
+			});
+		});
+
+		$(window).keydown(function (event) {
+			if (event.keyCode == 13) {
+				event.preventDefault();
+				return false;
+			}
+		});
+
+		$(document).on("click", "a.suggestion", function () {
+			var address = $(this).data("town");
+
+			$("#frm-postDemand-address").val(address);
+			$("#suggestions").empty();
+			$(".hiddenForm").show();
+		});
+	});
+</script>

@@ -1,6 +1,7 @@
 vendor/
 .idea/
-temp/
-temp/cache/
-app/config/local.neon
+var/log/
+var/temp/
+var/temp/cache/
+config/local.neon
 composer.lock
