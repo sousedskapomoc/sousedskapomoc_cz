@@ -1,0 +1,19 @@
+includes:
+    - extensions.neon
+    - services.neon
+
+parameters:
+
+application:
+	errorPresenter: Error
+	mapping:
+		*: SousedskaPomoc\*Module\Presenters\*Presenter
+
+session:
+	debugger: true
+	expiration: 14 days
+
+translation:
+	debugger: true
+	default: cs
+	fallback: [cs_CZ, cs]

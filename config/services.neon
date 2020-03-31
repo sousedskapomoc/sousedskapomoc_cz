@@ -1,14 +1,3 @@
-parameters:
-
-application:
-	errorPresenter: Error
-	mapping:
-		*: SousedskaPomoc\*Module\Presenters\*Presenter
-
-session:
-	debugger: true
-	expiration: 14 days
-
 services:
 	- SousedskaPomoc\Model\OrderManager
 	- SousedskaPomoc\Model\UserManager
@@ -17,11 +6,3 @@ services:
 	- SousedskaPomoc\Forms\SignUpFormFactory
 	- SousedskaPomoc\Components\Mail
 	router: SousedskaPomoc\Router\RouterFactory::createRouter
-
-translation:
-	debugger: true
-	default: cs
-	fallback: [cs_CZ, cs]
-
-extensions:
-	translation: Kdyby\Translation\DI\TranslationExtension
