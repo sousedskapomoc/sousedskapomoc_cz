@@ -38,6 +38,7 @@ class HeadquartersPresenter extends BasePresenter
         $grid->setDataSource($this->orderManager->fetchAllWebDemands());
         $grid->addColumnNumber('id', 'ID')->setFilterText();
         $grid->addColumnText('id_volunteers', 'Zadavatel');
+        $grid->addColumnText('town', 'Město')->setFilterText();
         $grid->addColumnText('delivery_address', 'Adresa')->setFilterText();
         $grid->addColumnText('delivery_phone', 'Telefon')->setFilterText();
         $grid->addColumnText('order_items', 'Položky obj.')->setFilterText();
