@@ -1,0 +1,7 @@
+console:
+    name: "SousedskaPomoc.cz"
+    version: '0.2-alpha'
+    catchExceptions: true
+    autoExit: true
+    url: https://sousedskapomoc.cz
+    lazy: false

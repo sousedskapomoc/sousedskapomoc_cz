@@ -1,8 +1,10 @@
 includes:
     - extensions.neon
     - services.neon
+    - console.neon
 
-parameters:
+di:
+    debugger: true
 
 application:
 	errorPresenter: Error
@@ -18,6 +20,22 @@ translation:
 	default: cs
 	fallback: [cs_CZ, cs]
 
+doctrine.orm:
+    configuration:
+        proxyDir: '%tempDir%/proxies'
+        autoGenerateProxyClasses: FALSE
+        proxyNamespace: 'Nettrine\Proxy'
+        namingStrategy: Doctrine\ORM\Mapping\UnderscoreNamingStrategy
+
+doctrine.orm.annotations:
+    paths:
+        - '%appDir%/Entities'
+
+doctrine.dbal:
+    debug:
+        panel: %debugMode%
+    connection:
+        driver: pdo_mysql
 logging:
     logDir: %appDir%/../log
 
