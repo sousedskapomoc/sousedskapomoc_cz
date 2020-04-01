@@ -3,6 +3,7 @@
 namespace SousedskaPomoc\Repository;
 
 use Doctrine\ORM\EntityRepository as DoctrineEntityRepository;
+use SousedskaPomoc\Entities\Order;
 
 class OrderRepository extends DoctrineEntityRepository
 {
@@ -95,15 +96,16 @@ class OrderRepository extends DoctrineEntityRepository
     }
 
 
-    public function create(Orders $order)
+    public function create(Order $order)
     {
         $em = $this->getEntityManager();
         $em->persist($order);
         $em->flush();
+
     }
 
 
-    public function update(Orders $dbOrder, Orders $tmpOrder)
+    public function update(Order $dbOrder, Order $tmpOrder)
     {
         $dbOrder->setCourier($tmpOrder->getCourier());
         $dbOrder->setDeliveryAddress($tmpOrder->getDeliveryAddress());
@@ -118,7 +120,7 @@ class OrderRepository extends DoctrineEntityRepository
     }
 
 
-    public function upsert(Orders $order)
+    public function upsert(Order $order)
     {
         $localOrder = $this->getById($order->getId());
         if ($localOrder instanceof Orders) {
