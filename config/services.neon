@@ -1,8 +1,29 @@
 services:
 	- SousedskaPomoc\Model\OrderManager
 	- SousedskaPomoc\Model\UserManager
+	# Forms
 	- SousedskaPomoc\Forms\FormFactory
 	- SousedskaPomoc\Forms\SignInFormFactory
 	- SousedskaPomoc\Forms\SignUpFormFactory
+	# Components
 	- SousedskaPomoc\Components\Mail
+	# Repositories
+	addressRepository:
+		class: SousedskaPomoc\Repository\AddressRepository
+		factory: @Doctrine\ORM\EntityManagerInterface::getRepository('SousedskaPomoc\Entities\Address')
+	demandRepository:
+		class: SousedskaPomoc\Repository\AddressRepository
+		factory: @Doctrine\ORM\EntityManagerInterface::getRepository('SousedskaPomoc\Entities\Address')
+	orderRepository:
+		class: SousedskaPomoc\Repository\AddressRepository
+		factory: @Doctrine\ORM\EntityManagerInterface::getRepository('SousedskaPomoc\Entities\Address')
+	roleRepository:
+		class: SousedskaPomoc\Repository\AddressRepository
+		factory: @Doctrine\ORM\EntityManagerInterface::getRepository('SousedskaPomoc\Entities\Address')
+	transportRepository:
+		class: SousedskaPomoc\Repository\AddressRepository
+		factory: @Doctrine\ORM\EntityManagerInterface::getRepository('SousedskaPomoc\Entities\Address')
+	volunteerRepository:
+		class: SousedskaPomoc\Repository\AddressRepository
+		factory: @Doctrine\ORM\EntityManagerInterface::getRepository('SousedskaPomoc\Entities\Address')
 	router: SousedskaPomoc\Router\RouterFactory::createRouter
