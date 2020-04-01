@@ -1,9 +1,22 @@
+parameters:
+
 database:
 	dsn: 'mysql:host=mysql:3306;dbname=sousedskapomoc'
 	user: 'sousedskapomoc'
 	password: 'password'
 	options:
 		lazy: yes
+
+dbal:
+    debug:
+        panel: true
+    connection:
+        host: host.db.sousedskapomoc.cz
+        port: 25060
+        driver: pdo_pgsql
+        dbname:	sousedskapomoc_cz
+        user:	sousedskapomoc
+        password:	password
 
 mail:
 	smtp: true  # use SmtpMailer instead of SendmailMailer
