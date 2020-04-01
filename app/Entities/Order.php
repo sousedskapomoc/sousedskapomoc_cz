@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Class Orders
  * @ORM\Entity(repositoryClass="SousedskaPomoc\Repository\OrderRepository")
+ * @ORM\Table(name="orders")
  * @ORM\HasLifecycleCallbacks()
  */
 class Order
