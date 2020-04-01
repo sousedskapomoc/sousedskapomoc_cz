@@ -72,12 +72,12 @@ class Address
     protected $stocks;
 
     /**
-     * @ORM\OneToOne(targetEntity="Orders", mappedBy="pickupAddress")
+     * @ORM\OneToOne(targetEntity="Order", mappedBy="pickupAddress")
      */
     protected $orderPickup;
 
     /**
-     * @ORM\OneToOne(targetEntity="Orders", mappedBy="deliveryAddress")
+     * @ORM\OneToOne(targetEntity="Order", mappedBy="deliveryAddress")
      */
     protected $orderDelivery;
 
