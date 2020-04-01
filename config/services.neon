@@ -13,17 +13,17 @@ services:
 		class: SousedskaPomoc\Repository\AddressRepository
 		factory: @Doctrine\ORM\EntityManagerInterface::getRepository('SousedskaPomoc\Entities\Address')
 	demandRepository:
-		class: SousedskaPomoc\Repository\DemandRepository
-		factory: @Doctrine\ORM\EntityManagerInterface::getRepository('SousedskaPomoc\Entities\Demand')
+		class: SousedskaPomoc\Repository\AddressRepository
+		factory: @Doctrine\ORM\EntityManagerInterface::getRepository('SousedskaPomoc\Entities\Address')
 	orderRepository:
-		class: SousedskaPomoc\Repository\OrderRepository
-		factory: @Doctrine\ORM\EntityManagerInterface::getRepository('SousedskaPomoc\Entities\Order')
+		class: SousedskaPomoc\Repository\AddressRepository
+		factory: @Doctrine\ORM\EntityManagerInterface::getRepository('SousedskaPomoc\Entities\Address')
 	roleRepository:
-		class: SousedskaPomoc\Repository\RoleRepository
-		factory: @Doctrine\ORM\EntityManagerInterface::getRepository('SousedskaPomoc\Entities\Role')
+		class: SousedskaPomoc\Repository\AddressRepository
+		factory: @Doctrine\ORM\EntityManagerInterface::getRepository('SousedskaPomoc\Entities\Address')
 	transportRepository:
-		class: SousedskaPomoc\Repository\TransportRepository
-		factory: @Doctrine\ORM\EntityManagerInterface::getRepository('SousedskaPomoc\Entities\Transport')
+		class: SousedskaPomoc\Repository\AddressRepository
+		factory: @Doctrine\ORM\EntityManagerInterface::getRepository('SousedskaPomoc\Entities\Address')
 	volunteerRepository:
 		class: SousedskaPomoc\Repository\VolunteerRepository
 		factory: @Doctrine\ORM\EntityManagerInterface::getRepository('SousedskaPomoc\Entities\Volunteer')
