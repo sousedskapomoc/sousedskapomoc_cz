@@ -27,3 +27,5 @@ services:
 	volunteerRepository:
 		class: SousedskaPomoc\Repository\VolunteerRepository
 		factory: @Doctrine\ORM\EntityManagerInterface::getRepository('SousedskaPomoc\Entities\Volunteer')
+	#Commands
+	- SousedskaPomoc\Command\MigrateDbCommand
