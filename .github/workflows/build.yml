@@ -1,0 +1,31 @@
+name: 'App Build'
+
+on:
+  push:
+    branches: [ master, develop ]
+  pull_request:
+    types: [opened, edited, synchronize, reopened]
+    paths:
+      - 'app/**.php'
+      - '*.php'
+
+jobs:
+  phpcs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Validate composer.json and composer.lock
+        run: composer validate
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress --no-suggest
+
+      - name: Detecting PHP Code Standards Violations
+        run: composer run-script phpcs
+
+      - name: Detecting PHP Code Standards Violations
+        run: composer run-script tests
+
+      - name: Detecting PHP Code Standards Violations
+        run: bin/console o:i
