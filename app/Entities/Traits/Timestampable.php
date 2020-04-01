@@ -73,6 +73,7 @@ trait Timestampable
      * Set updatedAt
      *
      * @param \DateTime $updatedAt
+     * @return Timestampable
      */
     public function setUpdatedAt($updatedAt)
     {
