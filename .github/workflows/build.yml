@@ -4,6 +4,7 @@ on:
   push:
     branches: [ master, develop ]
   pull_request:
+    branches: [ master, develop ]
     types: [opened, edited, synchronize, reopened]
     paths:
       - 'app/**.php'
