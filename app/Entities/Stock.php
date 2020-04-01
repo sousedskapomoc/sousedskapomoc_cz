@@ -1,12 +1,10 @@
 <?php
 
-
 namespace SousedskaPomoc\Entities;
 
 use Doctrine\ORM\Mapping as ORM;
 use Nettrine\ORM\Entity\Attributes\Id;
 use SousedskaPomoc\Entities\Traits\Timestampable;
-
 
 /**
  * Class Stock

@@ -3,42 +3,63 @@
 namespace SousedskaPomoc\Repository;
 
 use Doctrine\ORM\EntityRepository as DoctrineEntityRepository;
-use SousedskaPomoc\Entities\Order;
 
 class OrderRepository extends DoctrineEntityRepository
 {
-
     public function getById($id)
     {
         return $this->findOneBy(['id' => $id]);
     }
 
-    public function getByUser($id) {
-        return $this->findBy(['author'=>$id]);
+    public function getByUser($id)
+    {
+        return $this->findBy(['author' => $id]);
     }
 
 
-    public function fetchCount() {
+    public function fetchCount()
+    {
         return $this->count([]);
     }
 
-    public function getAllLive($id) {
+    public function getAllLive($id)
+    {
         $this->findby(['courier' => $id]);
     }
 
-    public function getAllInTownByStatus($town, $status) {
+    public function getAllInTownByStatus($town, $status)
+    {
         $em = $this->getEntityManager();
-        $query = $em->createQuery("SELECT o FROM SousedskaPomoc\Entities\Orders o JOIN o.deliveryAddress x WHERE x.city = '$town' AND o.stat = '$status'");
+        $query = $em->createQuery("
+        SELECT
+        o
+        FROM
+        SousedskaPomoc\Entities\Orders o JOIN o.deliveryAddress x
+        WHERE
+        x.city = '$town'
+        AND
+        o.stat = '$status'
+        ");
         return $query->getResult();
     }
 
-    public function getAllLiveInTown($town) {
+    public function getAllLiveInTown($town)
+    {
         $em = $this->getEntityManager();
-        $query = $em->createQuery("SELECT o FROM SousedskaPomoc\Entities\Orders o JOIN o.deliveryAddress x WHERE x.city = '$town' AND (o.stat = 'delivering' OR o.stat = 'picking' OR o.stat = 'assigned')");
+        $query = $em->createQuery("
+        SELECT
+        o
+        FROM
+        SousedskaPomoc\Entities\Orders o JOIN o.deliveryAddress x
+        WHERE
+        x.city = '$town'
+        AND (o.stat = 'delivering' OR o.stat = 'picking' OR o.stat = 'assigned')
+        ");
         return $query->getResult();
     }
 
-    public function assignOrder($orderId, $courierId) {
+    public function assignOrder($orderId, $courierId)
+    {
         /** @var Orders $order */
         $order = $this->getById($orderId);
         $order->setCourier($courierId);
@@ -58,8 +79,9 @@ class OrderRepository extends DoctrineEntityRepository
         $em->flush();
     }
 
-    public function findAllForUser($userId) {
-        return $this->findBy(['author'=>$userId]);
+    public function findAllForUser($userId)
+    {
+        return $this->findBy(['author' => $userId]);
     }
 
     /**
@@ -73,14 +95,12 @@ class OrderRepository extends DoctrineEntityRepository
     }
 
 
-
     public function create(Orders $order)
     {
         $em = $this->getEntityManager();
         $em->persist($order);
         $em->flush();
     }
-
 
 
     public function update(Orders $dbOrder, Orders $tmpOrder)
@@ -98,7 +118,6 @@ class OrderRepository extends DoctrineEntityRepository
     }
 
 
-
     public function upsert(Orders $order)
     {
         $localOrder = $this->getById($order->getId());
@@ -109,7 +128,8 @@ class OrderRepository extends DoctrineEntityRepository
         }
     }
 
-    public function updateCourierNote($id, $note) {
+    public function updateCourierNote($id, $note)
+    {
         $order = $this->getById($id);
         if ($order instanceof Orders) {
             $order->setCourierNote($note);

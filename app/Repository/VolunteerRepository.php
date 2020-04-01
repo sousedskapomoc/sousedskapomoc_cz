@@ -6,7 +6,6 @@ use Doctrine\ORM\EntityRepository as DoctrineEntityRepository;
 use Nette\Security\AuthenticationException;
 use SousedskaPomoc\Entities\Volunteer;
 
-
 class VolunteerRepository extends DoctrineEntityRepository
 {
     public function getById($id)
@@ -17,7 +16,14 @@ class VolunteerRepository extends DoctrineEntityRepository
     public function getCourierByTown($town)
     {
         $em = $this->getEntityManager();
-        $query = $em->createQuery("SELECT u FROM SousedskaPomoc\Entities\Volunteer u JOIN u.address x WHERE x.city = '$town'");
+        $query = $em->createQuery("
+        SELECT
+        u
+        FROM
+        SousedskaPomoc\Entities\Volunteer u JOIN u.address x
+        WHERE
+        x.city = '$town'
+        ");
         return $query->getResult();
     }
 
@@ -106,7 +112,6 @@ class VolunteerRepository extends DoctrineEntityRepository
             $em->persist($dbUser);
             $em->flush();
         }
-
     }
 
     public function isOnline($id)
