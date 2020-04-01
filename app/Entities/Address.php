@@ -50,7 +50,7 @@ class Address
      */
     protected $postalCode;
 
-    /** @ORM\Column(type="string") */
+    /** @ORM\Column(type="string", nullable=true) */
     protected $street;
 
     /** @ORM\Column(type="string", nullable=true) */
@@ -72,12 +72,12 @@ class Address
     protected $stocks;
 
     /**
-     * @ORM\OneToOne(targetEntity="Orders", mappedBy="pickupAddress")
+     * @ORM\OneToOne(targetEntity="Order", mappedBy="pickupAddress")
      */
     protected $orderPickup;
 
     /**
-     * @ORM\OneToOne(targetEntity="Orders", mappedBy="deliveryAddress")
+     * @ORM\OneToOne(targetEntity="Order", mappedBy="deliveryAddress")
      */
     protected $orderDelivery;
 
