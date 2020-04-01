@@ -31,7 +31,7 @@ class Address
     protected $country;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $state;
 
@@ -46,7 +46,7 @@ class Address
     protected $city;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $postalCode;
 
@@ -55,6 +55,12 @@ class Address
 
     /** @ORM\Column(type="string", nullable=true) */
     protected $houseNumber;
+
+    /** @ORM\Column(type="string") */
+    protected $longitude;
+
+    /** @ORM\Column(type="string") */
+    protected $latitude;
 
     /**
      * @ORM\OneToOne(targetEntity="Volunteer", mappedBy="address")
@@ -80,6 +86,47 @@ class Address
      * @ORM\OneToOne(targetEntity="Order", mappedBy="deliveryAddress")
      */
     protected $orderDelivery;
+
+
+
+    /**
+     * @return mixed
+     */
+    public function getLongitude()
+    {
+        return $this->longitude;
+    }
+
+
+
+    /**
+     * @param mixed $longtitude
+     */
+    public function setLongitude($longitude) : void
+    {
+        $this->longitude = $longitude;
+    }
+
+
+
+    /**
+     * @return mixed
+     */
+    public function getLatitude()
+    {
+        return $this->latitude;
+    }
+
+
+
+    /**
+     * @param mixed $latitude
+     */
+    public function setLatitude($latitude) : void
+    {
+        $this->latitude = $latitude;
+    }
+
 
 
     /**
