@@ -36,6 +36,11 @@ services:
 	addressRepository:
 		class: SousedskaPomoc\Repository\AddressRepository
 		factory: @Doctrine\ORM\EntityManagerInterface::getRepository('SousedskaPomoc\Entities\Address')
+	#Console
+	- SousedskaPomoc\Commands\MigrateDbCommand
+#	migrateDbCommand:
+#		class: SousedskaPomoc\Commands\MigrateDbCommand
+#		tags: [kdyby.console.command]
 
 
 translation:
