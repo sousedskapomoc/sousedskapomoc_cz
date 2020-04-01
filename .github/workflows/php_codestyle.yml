@@ -1,4 +1,4 @@
-name: Composer installation & Code Style check
+name: 'Composer installation, Code Style check'
 
 on:
   pull_request:
