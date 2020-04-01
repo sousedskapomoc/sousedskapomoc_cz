@@ -129,9 +129,8 @@ class MigrateDbCommand extends Command
             }
 
             try {
-                $this->addressRepository-
-                ($address);
-                $this->volunteerRepository->register($newUser);
+                $this->addressRepository->create($address);
+//                $this->volunteerRepository->register($newUser);
             } catch (AuthenticationException $e) {
                 continue;
             }

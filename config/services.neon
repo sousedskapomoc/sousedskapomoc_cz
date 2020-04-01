@@ -1,6 +1,7 @@
 services:
 	- SousedskaPomoc\Model\OrderManager
 	- SousedskaPomoc\Model\UserManager
+	router: SousedskaPomoc\Router\RouterFactory::createRouter
 	# Forms
 	- SousedskaPomoc\Forms\FormFactory
 	- SousedskaPomoc\Forms\SignInFormFactory
@@ -26,6 +27,5 @@ services:
 	volunteerRepository:
 		class: SousedskaPomoc\Repository\VolunteerRepository
 		factory: @Doctrine\ORM\EntityManagerInterface::getRepository('SousedskaPomoc\Entities\Volunteer')
-	router: SousedskaPomoc\Router\RouterFactory::createRouter
 	#Commands
 	- SousedskaPomoc\Command\MigrateDbCommand
