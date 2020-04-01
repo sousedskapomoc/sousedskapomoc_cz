@@ -134,6 +134,47 @@ class Address
     }
 
 
+
+    /**
+     * @return mixed
+     */
+    public function getLongitude()
+    {
+        return $this->longitude;
+    }
+
+
+
+    /**
+     * @param mixed $longtitude
+     */
+    public function setLongitude($longitude) : void
+    {
+        $this->longitude = $longitude;
+    }
+
+
+
+    /**
+     * @return mixed
+     */
+    public function getLatitude()
+    {
+        return $this->latitude;
+    }
+
+
+
+    /**
+     * @param mixed $latitude
+     */
+    public function setLatitude($latitude) : void
+    {
+        $this->latitude = $latitude;
+    }
+
+
+
     /**
      * @return mixed
      */
