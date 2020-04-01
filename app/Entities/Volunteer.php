@@ -64,12 +64,12 @@ class Volunteer
     protected $transport;
 
     /**
-     * @ORM\OneToMany(targetEntity="Orders", mappedBy="author")
+     * @ORM\OneToMany(targetEntity="Order", mappedBy="author")
      */
     protected $createdOrders;
 
     /**
-     * @ORM\OneToMany(targetEntity="Orders", mappedBy="courier")
+     * @ORM\OneToMany(targetEntity="Order", mappedBy="courier")
      */
     protected $deliveredOrders;
 
