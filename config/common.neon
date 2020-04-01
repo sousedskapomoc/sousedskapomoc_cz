@@ -1,0 +1,43 @@
+includes:
+    - extensions.neon
+    - services.neon
+    - console.neon
+
+di:
+    debugger: true
+
+application:
+	errorPresenter: Error
+	mapping:
+		*: SousedskaPomoc\*Module\Presenters\*Presenter
+
+session:
+	debugger: true
+	expiration: 14 days
+
+translation:
+	debugger: true
+	default: cs
+	fallback: [cs_CZ, cs]
+
+doctrine.orm:
+    configuration:
+        proxyDir: '%tempDir%/proxies'
+        autoGenerateProxyClasses: FALSE
+        proxyNamespace: 'Nettrine\Proxy'
+        namingStrategy: Doctrine\ORM\Mapping\UnderscoreNamingStrategy
+
+doctrine.orm.annotations:
+    paths:
+        - '%appDir%/Entities'
+
+doctrine.dbal:
+    debug:
+        panel: %debugMode%
+    connection:
+        driver: pdo_mysql
+logging:
+    logDir: %appDir%/../log
+
+sentry:
+    url: http://dfc5b1fa81e94e738fa6e3ab24b623f8@sentry.vyvoj.pl/6

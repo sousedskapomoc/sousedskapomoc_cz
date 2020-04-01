@@ -7,7 +7,6 @@ use Nette\Mail\Mailer;
 use Nette\Mail\Message;
 use Latte\Engine;
 
-
 final class Mail
 {
     use Nette\SmartObject;
@@ -18,12 +17,10 @@ final class Mail
     protected $mailer;
 
 
-
     public function __construct(Mailer $mailer)
     {
         $this->mailer = $mailer;
     }
-
 
 
     public function sendMail($to, $title, $body)
@@ -38,7 +35,6 @@ final class Mail
     }
 
 
-
     public function sendCourierMail($to, $link)
     {
         $mail = new Message;
@@ -46,11 +42,10 @@ final class Mail
         $mail->setFrom('robot@sousedskapomoc.cz')
             ->addTo($to)
             ->setSubject('SousedskaPomoc.cz - Úspěšná registrace')
-            ->setHtmlBody($latte->renderToString(__DIR__.'/courierMail.latte', ['url' => $link]));
+            ->setHtmlBody($latte->renderToString(__DIR__ . '/courierMail.latte', ['url' => $link]));
 
         $this->mailer->send($mail);
     }
-
 
 
     public function sendSeamstressMail($to, $link)
@@ -60,10 +55,9 @@ final class Mail
         $mail->setFrom('robot@sousedskapomoc.cz')
             ->addTo($to)
             ->setSubject('SousedskaPomoc.cz - Úspěšná registrace')
-            ->setHtmlBody($latte->renderToString(__DIR__.'/seamstressMail.latte', ['url' => $link]));
+            ->setHtmlBody($latte->renderToString(__DIR__ . '/seamstressMail.latte', ['url' => $link]));
         $this->mailer->send($mail);
     }
-
 
 
     public function sendOperatorMail($to, $link)
@@ -73,11 +67,10 @@ final class Mail
         $mail->setFrom('robot@sousedskapomoc.cz')
             ->addTo($to)
             ->setSubject('SousedskaPomoc.cz - Úspěšná registrace')
-            ->setHtmlBody($latte->renderToString(__DIR__.'/operatorMail.latte', ['url' => $link]));
+            ->setHtmlBody($latte->renderToString(__DIR__ . '/operatorMail.latte', ['url' => $link]));
 
         $this->mailer->send($mail);
     }
-
 
 
     public function sendCoordinatorMail($to, $link)
@@ -87,11 +80,10 @@ final class Mail
         $mail->setFrom('robot@sousedskapomoc.cz')
             ->addTo($to)
             ->setSubject('SousedskaPomoc.cz - Úspěšná registrace')
-            ->setHtmlBody($latte->renderToString(__DIR__.'/coordinatorMail.latte', ['url' => $link]));
+            ->setHtmlBody($latte->renderToString(__DIR__ . '/coordinatorMail.latte', ['url' => $link]));
 
         $this->mailer->send($mail);
     }
-
 
 
     public function sendLostPasswordMail($to, $link)
@@ -101,7 +93,7 @@ final class Mail
         $mail->setFrom('robot@sousedskapomoc.cz')
             ->addTo($to)
             ->setSubject('SousedskaPomoc.cz - Zapomenuté heslo')
-            ->setHtmlBody($latte->renderToString(__DIR__.'/lostPassword.latte', ['url' => $link]));
+            ->setHtmlBody($latte->renderToString(__DIR__ . '/lostPassword.latte', ['url' => $link]));
 
         $this->mailer->send($mail);
     }
@@ -113,21 +105,20 @@ final class Mail
         $mail->setFrom('robot@sousedskapomoc.cz')
             ->addTo($to)
             ->setSubject('SousedskaPomoc.cz - Úspěšná registrace')
-            ->setHtmlBody($latte->renderToString(__DIR__.'/superuserMail.latte', ['url' => $link]));
+            ->setHtmlBody($latte->renderToString(__DIR__ . '/superuserMail.latte', ['url' => $link]));
 
         $this->mailer->send($mail);
     }
 
-	public function sendMedicMail($to, $link)
-	{
-		$mail = new Message;
-		$latte = new Engine;
-		$mail->setFrom('robot@sousedskapomoc.cz')
-			->addTo($to)
-//			->addAttachment('path/to/example.zip'); TODO - add path to attachment for doctors
-			->setSubject('SousedskaPomoc.cz - Úspěšná registrace')
-			->setHtmlBody($latte->renderToString(__DIR__.'/doctorMail.latte', ['url' => $link]));
+    public function sendMedicMail($to, $link)
+    {
+        $mail = new Message;
+        $latte = new Engine;
+        $mail->setFrom('robot@sousedskapomoc.cz')
+            ->addTo($to)
+            ->setSubject('SousedskaPomoc.cz - Úspěšná registrace')
+            ->setHtmlBody($latte->renderToString(__DIR__ . '/doctorMail.latte', ['url' => $link]));
 
-		$this->mailer->send($mail);
-	}
+        $this->mailer->send($mail);
+    }
 }
