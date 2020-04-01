@@ -11,6 +11,8 @@ use Nettrine\ORM\Entity\Attributes\Id;
 /**
  * Class Volunteer
  * @ORM\Entity(repositoryClass="SousedskaPomoc\Repository\VolunteerRepository")
+ *
+ * @ORM\HasLifecycleCallbacks()
  */
 class Volunteer
 {
@@ -49,7 +51,7 @@ class Volunteer
     protected $password;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Role", inversedBy="users")
+     * @ORM\ManyToOne(targetEntity="Role", inversedBy="users", cascade={"persist"})
      */
     protected $role;
 
@@ -223,7 +225,6 @@ class Volunteer
     public function setRole($role)
     {
         $this->role = $role;
-        $role->addUser($this);
     }
 
 
