@@ -17,3 +17,9 @@ translation:
 	debugger: true
 	default: cs
 	fallback: [cs_CZ, cs]
+
+logging:
+    logDir: %appDir%/../log
+
+sentry:
+    url: http://dfc5b1fa81e94e738fa6e3ab24b623f8@sentry.vyvoj.pl/6

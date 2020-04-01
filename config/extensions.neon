@@ -1,2 +1,4 @@
 extensions:
 	translation: Kdyby\Translation\DI\TranslationExtension
+	logging: Contributte\Logging\DI\TracyLoggingExtension
+	sentry: Contributte\Logging\DI\SentryLoggingExtension
