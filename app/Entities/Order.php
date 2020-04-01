@@ -30,12 +30,12 @@ class Order
     protected $deliveryAddress;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Volunteer", inversedBy="createdOrders")
+     * @ORM\ManyToOne(targetEntity="Volunteer", inversedBy="createdOrders", cascade={persist})
      */
     protected $author;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Volunteer", inversedBy="deliveredOrders")
+     * @ORM\ManyToOne(targetEntity="Volunteer", inversedBy="deliveredOrders", cascade={persist})
      */
     protected $courier;
 
