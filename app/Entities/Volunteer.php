@@ -56,7 +56,7 @@ class Volunteer
     protected $role;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Address", inversedBy="volunteer", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="Address", inversedBy="volunteer", cascade={"persist"})
      */
     protected $address;
 
