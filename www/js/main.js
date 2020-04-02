@@ -123,4 +123,33 @@ $(function(){
         var wrapper = $(this).parent().find("js-add-element__wrapper");
         element.clone().attr("data-count", elementCount).appendTo($(".js-add-element__wrapper"));
     })
+
+    if($(".js-select").length){
+        $(".js-select").each(function(){
+            var optionsCount = $(this).find("option").length;
+            $(this).after("<div class='js-select--new'><span class='close'></span><ul></ul></div>");
+            for(var i=0; i<optionsCount ; i++){
+                if(i == 0) {
+                    $(this).next(".js-select--new").find("ul").append("<li class='active'>"+ $(this).find("option").eq(i).text() +"</li>")
+                } else {
+                    $(this).next(".js-select--new").find("ul").append("<li>"+ $(this).find("option").eq(i).text() +"</li>")
+                }
+            }
+        })
+    }
+
+    $(document).on("click", ".js-select--new", function(e) {
+        var target = $(e.target);
+        if (!$(this).hasClass("js-select--new--open")) {
+            $(this).addClass("js-select--new--open");
+        } else {
+            $(this).removeClass("js-select--new--open");
+        }
+
+        if(target.is("li")){
+            target.parent().find("li").removeClass("active")
+            target.addClass("active");
+        }
+    })
+
 });
