@@ -1,0 +1,59 @@
+{block content}
+<div class="row justify-content-center">
+    <div class="col-12">
+        <h1>Nabízím pomoc - registrace uživatele</h1>
+        <p class="page__subheadline"><span class="color--purple">Pro vytvoření dané poptávky se musíte přihlásit nebo registrovat.</span>
+         Tímto způsobem chceme zamezit zneužívání Sousedské pomoci. Doufáme, že to chápete.</p>
+    </div>
+</div>
+
+<div class="row justify-content-center padding-top--50">
+    <div class="col-12 col-md-8 col-lg-6">
+        <form class="form--plain form--plain__wantToHelpRegister">
+            <fieldset>
+                <label for="wantToHelp-name-reg">Jméno a příjmení</label>
+                <input type="text" name="wantToHelp-name-reg" id="wantToHelp-name-reg"/>
+            </fieldset>
+            <fieldset>
+                <label for="wantToHelp-email-reg">Email</label>
+                <input type="email" name="wantToHelp-email-reg" id="wantToHelp-email-reg"/>
+            </fieldset>
+            <fieldset>
+                <label for="wantToHelp-pass-reg">Heslo</label>
+                <input type="password" name="wantToHelp-pass-reg" id="wantToHelp-pass-reg"/>
+            </fieldset>
+            <fieldset>
+                <label for="wantToHelp-pass-again-reg">Opakovat heslo</label>
+                <input type="password" name="wantToHelp-pass-again-reg" id="wantToHelp-pass-again-reg"/>
+            </fieldset>
+            <fieldset>
+                <label for="wantToHelp-phone-reg">Telefon</label>
+                <input type="text" name="wantToHelp-phone-reg" id="wantToHelp-phone-reg"/>
+            </fieldset>
+            <fieldset>
+                <div>
+                    <label for="wantToHelp-address-reg">Adresa bydliště / kde chcete pomáhat</label>
+                    <input class="js-add-element__element" type="text" name="wantToHelp-address-reg" id="wantToHelp-address-reg"/>
+                    <div class="js-add-element__wrapper"></div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <a class="link-with-icon js-add-element" ><i class="fas fa-plus"></i>Přidat další adresu kde chcete pomáhat</a>
+            </fieldset>
+            <fieldset>
+                <div class="input-group">
+                    <input type="checkbox" name="wantToHelp-notif" id="wantToHelp-notif" />
+                    <label for="wantToHelp-notif"><b>Chci aby mi chodili notifikace o pomoci pro mé okolí</b></label>
+                </div>
+            </fieldset>
+            <fieldset>
+                <p class="form--plain__input-subheadline">Vaše fotografie - aby vás zachránce poznal i ze 2 metrů :)</p>
+                <div class="picture-holder"></div>
+                <input type="file" name="wantToHelp-photo-reg" id="wantToHelp-photo-reg"/>
+                <label for="wantToHelp-photo-reg">Nahrát fotografii ze souboru</label>
+            </fieldset>
+            <p class="form--plain__agreement">Odesláním souhlasíte s našimi <a href="">všeobecnými obchodními podmínkami</a> a berete na vědomí naše <a href="">zásady zpracování osobních údajů</a>.</p>
+            <button class="btn btn-green btn-lg">Registrovat</button>
+        </form>
+    </div>
+</div>
