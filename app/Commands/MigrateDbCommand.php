@@ -93,7 +93,10 @@ class MigrateDbCommand extends Command
                     7 => 'Chůze'
                 ];
                 $newUser->setTransport($this->transportRepository->getByType($car[$user['car']]));
+            } else {
+                $newUser->setTransport($this->transportRepository->getById(7));
             }
+
             $newUser->setPersonPhone($user['personPhone']);
             $newUser->setPersonEmail($user['personEmail']);
             $newUser->setPersonName($user['personName']);
@@ -101,7 +104,7 @@ class MigrateDbCommand extends Command
             $newUser->setPassword($user['password']);
             $newUser->setHash($user['emailCode']);
 
-            if ($user['town'] != NULL ) {
+            if ($user['town'] != NULL) {
                 //Parse user town and make an address from it
                 $client = new \GuzzleHttp\Client();
                 try {
@@ -135,14 +138,14 @@ class MigrateDbCommand extends Command
                         $newUser->setAddress($address);
                     }
                 } catch (\Exception $e) {
-
+                    Debugger::dump("User not imported because ", $e->getMessage());
                 }
             }
 
             try {
                 $this->volunteerRepository->register($newUser);
-            } catch (DBALException $e) {
-                Debugger::dump("User not imported because ", $e->getMessage());
+            } catch (AuthenticationException $e) {
+                Debugger::dump("User registration failed because ", $e->getMessage());
             }
             $progressBar->advance();
         }
@@ -167,19 +170,19 @@ class MigrateDbCommand extends Command
             //Parse user town and make an address from it
             $client = new \GuzzleHttp\Client();
             /** @var \GuzzleHttp\Psr7\Response $response */
-            $response = $client->get('https://geocoder.ls.hereapi.com/6.2/geocode.json?country=CZE&city='. $o['town'] . '&jsonattributes=1&gen=9&apiKey=Kl0wK4fx38Pf63EIey6WyrmGEhS2IqaVHkuzx0IQ4-Q');
+            $response = $client->get('https://geocoder.ls.hereapi.com/6.2/geocode.json?country=CZE&city=' . $o['town'] . '&jsonattributes=1&gen=9&apiKey=Kl0wK4fx38Pf63EIey6WyrmGEhS2IqaVHkuzx0IQ4-Q');
             $content = $response->getBody()->getContents();
 
             $content = json_decode($content);
 
             //array with address things
-            $addr= $content->response->view['0']->result['0']->location->address;
+            $addr = $content->response->view['0']->result['0']->location->address;
 
             //HERE maps Id
             $locationId = $content->response->view['0']->result['0']->location->locationId;
 
             //array with latitude and longtitude
-            $gps= $content->response->view['0']->result['0']->location->navigationPosition;
+            $gps = $content->response->view['0']->result['0']->location->navigationPosition;
 
             /** @var Address $address */
             $address = new Address();
@@ -194,7 +197,7 @@ class MigrateDbCommand extends Command
 
             try {
                 $this->addressRepository->create($address);
-                 $this->orderRepository->create($order);
+                $this->orderRepository->create($order);
                 $values['id'] = $order->getId();
                 $values['delivery_address'] = $o['delivery_address'];
                 $values['pickup_address'] = $o['pickup_address'];
@@ -204,6 +207,6 @@ class MigrateDbCommand extends Command
             }
             $progressBar->advance();
         }
-            return true;
-        }
+        return true;
+    }
 }
