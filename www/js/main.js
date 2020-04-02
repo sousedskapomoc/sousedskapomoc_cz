@@ -86,4 +86,41 @@ $(function(){
             el.removeClass("pos--fixed right top")
         }
     }
+
+    if($(".form--plain__box--hideable").length) {
+        $(document).on("change", ".switcher input[type='checkbox']", function() {
+            var target = $(this).data("target");
+            $(".form--plain__box--hideable").removeClass("visible");
+            $("#" + target).addClass("visible");
+            $(".switcher input[type='checkbox']").not($(this)).prop("checked", false);
+            $(".switcher input[type='checkbox']").not($(this)).parent().parent().removeClass("checked")
+            $(this).parent().parent().addClass("checked");
+            if (!$(this).is(":checked")){
+                $(".form--plain__box--hideable").removeClass("visible");
+                $(".form--plain__box--hideable.default").addClass("visible");
+                $(this).parent().parent().removeClass("checked");
+            }
+        })
+    }
+
+    $(document).on("change", ".js-show-target", function() {
+        var target = $(this).data("target");
+        if ($(this).hasClass("target-visible")){
+            $("#" + target).hide();
+            $(this).removeClass("target-visible")
+        } else {
+            $("#" + target).show();
+            $(this).addClass("target-visible")
+        }
+    })
+    if($('.js-add-element__element').length){
+        var element = $('.js-add-element__element');
+        var elementCount = 0;
+    }
+    $(document).on("click", ".js-add-element", function(e) {
+        e.preventDefault;
+        elementCount = elementCount + 1;
+        var wrapper = $(this).parent().find("js-add-element__wrapper");
+        element.clone().attr("data-count", elementCount).appendTo($(".js-add-element__wrapper"));
+    })
 });
