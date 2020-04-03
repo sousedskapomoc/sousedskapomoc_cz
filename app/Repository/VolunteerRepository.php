@@ -114,6 +114,12 @@ class VolunteerRepository extends DoctrineEntityRepository
         }
     }
 
+    public function save($user) {
+        $em = $this->getEntityManager();
+        $em->persist($user);
+        $em->flush();
+    }
+
     public function isOnline($id)
     {
         /** @var Volunteer $user */

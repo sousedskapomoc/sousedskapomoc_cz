@@ -56,7 +56,7 @@ class Volunteer
     protected $role;
 
     /**
-     * @ORM\OneToOne(targetEntity="Address", inversedBy="volunteer", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="Address", inversedBy="volunteer", cascade={"persist"})
      */
     protected $address;
 
@@ -66,12 +66,12 @@ class Volunteer
     protected $transport;
 
     /**
-     * @ORM\OneToMany(targetEntity="Order", mappedBy="author")
+     * @ORM\OneToMany(targetEntity="Order", mappedBy="owner", cascade={"persist"})
      */
     protected $createdOrders;
 
     /**
-     * @ORM\OneToMany(targetEntity="Order", mappedBy="courier")
+     * @ORM\OneToMany(targetEntity="Order", mappedBy="courier", cascade={"persist"})
      */
     protected $deliveredOrders;
 
@@ -274,11 +274,25 @@ class Volunteer
 
 
     /**
-     * @param mixed $createdOrders
+     * @param mixed $order
      */
-    public function setCreatedOrders($createdOrders): void
+    public function addCreatedOrder($order): self
     {
-        $this->createdOrders = $createdOrders;
+        if (!$this->createdOrders->contains($order)) {
+            $this->createdOrders[] = $order;
+            /** @var \SousedskaPomoc\Entities\Order $order */
+            $order->setOwner($this);;
+        }
+        return $this;
+    }
+
+    public function removeCreatedOrder($order): self {
+        if($this->createdOrders->contains($order)) {
+            $this->createdOrders->removeElement($order);
+            /** @var \SousedskaPomoc\Entities\Order $order */
+            $order->setOwner(null);
+        }
+        return $this;
     }
 
 
@@ -292,11 +306,25 @@ class Volunteer
 
 
     /**
-     * @param mixed $deliveredOrders
+     * @param mixed $order
      */
-    public function setDeliveredOrders($deliveredOrders): void
+    public function addDeliveredOrder($order): self
     {
-        $this->deliveredOrders = $deliveredOrders;
+        if (!$this->deliveredOrders->contains($order)) {
+            $this->deliveredOrders[] = $order;
+            /** @var \SousedskaPomoc\Entities\Order $order */
+            $order->setCourier($this);;
+        }
+        return $this;
+    }
+
+    public function removeDeliveredOrder($order): self {
+        if($this->deliveredOrders->contains($order)) {
+            $this->deliveredOrders->removeElement($order);
+            /** @var \SousedskaPomoc\Entities\Order $order */
+            $order->setCourier(null);
+        }
+        return $this;
     }
 
     public function setId($id)
