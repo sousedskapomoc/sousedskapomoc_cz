@@ -4,6 +4,7 @@ namespace SousedskaPomoc\Repository;
 
 use Doctrine\ORM\EntityRepository as DoctrineEntityRepository;
 use SousedskaPomoc\Entities\Order;
+use SousedskaPomoc\Entities\Volunteer;
 
 class OrderRepository extends DoctrineEntityRepository
 {
@@ -82,8 +83,108 @@ class OrderRepository extends DoctrineEntityRepository
 
     public function findAllForUser($userId)
     {
-        return $this->findBy(['author' => $userId]);
+        return $this->findBy(['owner' => $userId]);
     }
+
+    public function findAllForCourier($userId)
+    {
+        return $this->findBy(['courier' => $userId]);
+    }
+
+    public function find($id)
+    {
+        return $this->findOneBy(['id' => $id]);
+    }
+
+    public function findAllNew()
+    {
+        return $this->findBy(['stat' => 'new']);
+    }
+
+    public function changeStatus($orderId, $status)
+    {
+        /** @var Order $order */
+        $order =  $this->findBy(['id' => $orderId]);
+        if ($order instanceof Order) {
+            $order->setStatus($status);
+            $em = $this->getEntityManager();
+            $em->persist($order);
+            $em->flush();
+        } else {
+            throw new \Exception('Order not found.');
+        }
+    }
+
+    public function updateNote($orderId, $note)
+    {
+        /** @var Order $order */
+        $order =  $this->findBy(['id' => $orderId]);
+        if ($order instanceof Order) {
+            $order->setCourierNote($note);
+            $em = $this->getEntityManager();
+            $em->persist($order);
+            $em->flush();
+        } else {
+            throw new \Exception('Order not found.');
+        }
+    }
+
+    public function findAllLive()
+    {
+        $em = $this->getEntityManager();
+        $query = $em->createQuery("SELECT o FROM Order o WHERE o.stat = 'assigned' OR o.stat = 'picking' OR o.stat = 'delivering'");
+        return $query->getResult();
+    }
+
+    public function findAllLiveByCourierByTown($town, $userId)
+    {
+        $em = $this->getEntityManager();
+        $query = $em->createQuery("SELECT o FROM Order o JOIN o.deliveryAddress x WHERE x.city = '$town' AND o.stat IN ('assigned','picking','delivering') AND o.courier = '$userId'");
+        return $query->getResult();
+    }
+
+    public function findAllDelivered()
+    {
+        return $this->findBy(['stat'=>'delivered']);
+    }
+
+    public function assignOrder(Volunteer $courier, $order_id)
+    {
+        /** @var Order $order */
+        $order = $this->findOneBy(['id'=>$order_id]);
+        $order->setStatus('assigned');
+        $courier->addDeliveredOrder($order);
+        $em = $this->getEntityManager();
+        $em->persist($courier);
+        $em->flush();
+    }
+
+    public function fetchCount()
+    {
+        return $this->count([]);
+    }
+
+    public function findAllNewInTown($town)
+    {
+        $em = $this->getEntityManager();
+        $query = $em->createQuery("SELECT o FROM Order o JOIN o.deliveryAddress x WHERE x.city = '$town' AND o.stat = 'new'");
+        return $query->getResult();
+    }
+
+    public function findAllLiveInTown($town)
+    {
+        $em = $this->getEntityManager();
+        $query = $em->createQuery("SELECT o FROM Order o JOIN o.deliveryAddress x WHERE x.city = '$town' AND o.stat IN ('assigned','picking','delivering')");
+        return $query->getResult();
+    }
+
+    public function findAllDeliveredInTown($town)
+    {
+        $em = $this->getEntityManager();
+        $query = $em->createQuery("SELECT o FROM Order o JOIN o.deliveryAddress x WHERE x.city = '$town' AND o.stat = 'delivered'");
+        return $query->getResult();
+    }
+
 
     /**
      * Finds all entities in the repository.
