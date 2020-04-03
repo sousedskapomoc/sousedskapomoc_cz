@@ -428,7 +428,7 @@ final class HomepagePresenter extends BasePresenter
 
         try {
             $hash = $this->userManager->getUserByEmail($values->personEmail)->emailCode;
-            $link = $this->link('//Homepage:changePassword', $hash);
+            $link = $this->lemink('//Homepage:changePassword', $hash);
             $this->mail->sendLostPasswordMail($values->personEmail, $link);
             $this->presenter->flashMessage("E-mail s odkazem byl úspěšně odeslán.");
             $this->presenter->redirect("Sign:in");

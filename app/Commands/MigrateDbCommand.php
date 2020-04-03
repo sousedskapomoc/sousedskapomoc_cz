@@ -4,6 +4,7 @@
 namespace SousedskaPomoc\Command;
 
 use Doctrine\DBAL\DBALException;
+use GuzzleHttp\Exception\ClientException;
 use Nette\Database\Context;
 use Nette\Security\AuthenticationException;
 use SousedskaPomoc\Entities\Address;
@@ -79,61 +80,68 @@ class MigrateDbCommand extends Command
         $users = $this->database->table('volunteers')->fetchAll();
         $progressBar = new ProgressBar($this->output, count($users));
         foreach ($users as $user) {
-            if ($this->volunteerRepository->getByEmail($user['personEmail']) == NULL) {
-                /** @var Volunteer $newUser */
-                $newUser = new Volunteer();
-                $newUser->setOnline(0);
-                // TODO - parse Role
-                $roles = explode(";", $user['role']);
-                if (in_array("admin", $roles)) {
-                    $newUser->setRole($this->roleRepository->getByName('admin'));
-                } else if (in_array("superuser", $roles)) {
-                    $newUser->setRole($this->roleRepository->getByName("superuser"));
-                } else {
-                    $newUser->setRole($this->roleRepository->getByName($roles[0]));
-                }
-                if ($user['car'] != null) {
-                    $car = [
-                        1 => 'Malé auto',
-                        2 => 'Velké auto',
-                        3 => 'Malá dodávka',
-                        4 => 'Velká dodávka',
-                        5 => 'Kolo',
-                        6 => 'Motorka',
-                        7 => 'Chůze',
-                    ];
-                    $newUser->setTransport($this->transportRepository->getByType($car[$user['car']]));
-                } else {
-                    $newUser->setTransport($this->transportRepository->getByType('Chůze'));
-                }
+            if ($this->volunteerRepository->getByEmail($user['personEmail']) != NULL) {
+                $progressBar->advance();
+                continue;
+            }
+            /** @var Volunteer $newUser */
+            $newUser = new Volunteer();
+            $newUser->setOnline(0);
+            // TODO - parse Role
+            $roles = explode(";", $user['role']);
+            if (in_array("admin", $roles)) {
+                $newUser->setRole($this->roleRepository->getByName('admin'));
+            } else if (in_array("superuser", $roles)) {
+                $newUser->setRole($this->roleRepository->getByName("superuser"));
+            } else {
+                $newUser->setRole($this->roleRepository->getByName($roles[0]));
+            }
+            if ($user['car'] != null) {
+                $car = [
+                    1 => 'Malé auto',
+                    2 => 'Velké auto',
+                    3 => 'Malá dodávka',
+                    4 => 'Velká dodávka',
+                    5 => 'Kolo',
+                    6 => 'Motorka',
+                    7 => 'Chůze',
+                ];
+                $newUser->setTransport($this->transportRepository->getByType($car[$user['car']]));
+            } else {
+                $newUser->setTransport($this->transportRepository->getByType('Chůze'));
+            }
 
-                $newUser->setPersonPhone($user['personPhone']);
-                $newUser->setPersonEmail($user['personEmail']);
-                $newUser->setPersonName($user['personName']);
-                $newUser->setActive(1);
-                $newUser->setPassword($user['password']);
-                $newUser->setHash($user['emailCode']);
+            $newUser->setPersonPhone($user['personPhone']);
+            $newUser->setPersonEmail($user['personEmail']);
+            $newUser->setPersonName($user['personName']);
+            $newUser->setActive(1);
+            $newUser->setPassword($user['password']);
+            if ($user['emailCode'] == null) {
+                $user['emailCode'] = md5($user['personEmail']);
+            }
+            $newUser->setHash($user['emailCode']);
 
-                if ($user['town'] != NULL) {
-                    //Parse user town and make an address from it
-                    $client = new \GuzzleHttp\Client();
-                    try {
-                        /** @var \GuzzleHttp\Psr7\Response $response */
-                        $response = $client->get('https://geocoder.ls.hereapi.com/6.2/geocode.json?country=CZE&city=' . $user['town'] . '&jsonattributes=1&gen=9&apiKey=Kl0wK4fx38Pf63EIey6WyrmGEhS2IqaVHkuzx0IQ4-Q');
-                        $content = $response->getBody()->getContents();
+            if ($user['town'] != NULL) {
+                //Parse user town and make an address from it
+                $client = new \GuzzleHttp\Client();
+                try {
+                    /** @var \GuzzleHttp\Psr7\Response $response */
+                    $response = $client->get('https://geocoder.ls.hereapi.com/6.2/geocode.json?country=CZE&city=' . $user['town'] . '&jsonattributes=1&gen=9&apiKey=Kl0wK4fx38Pf63EIey6WyrmGEhS2IqaVHkuzx0IQ4-Q');
+                    $content = $response->getBody()->getContents();
 
-                        $content = json_decode($content);
+                    $content = json_decode($content);
 
-                        //array with address things
-                        $addr = $content->response->view['0']->result['0']->location->address;
+                    //array with address things
+                    $addr = $content->response->view['0']->result['0']->location->address;
 
-                        //HERE maps Id
-                        $locationId = $content->response->view['0']->result['0']->location->locationId;
+                    //HERE maps Id
+                    $locationId = $content->response->view['0']->result['0']->location->locationId;
 
-                        //array with latitude and longtitude
-                        $gps = $content->response->view['0']->result['0']->location->navigationPosition;
+                    //array with latitude and longtitude
+                    $gps = $content->response->view['0']->result['0']->location->navigationPosition;
 
-                        if ($locationId != NULL) {
+                    if ($locationId != NULL) {
+                        if (!$this->addressRepository->updateVolunteers($locationId, $newUser)) {
                             /** @var Address $address */
                             $address = new Address();
                             $address->setCity($addr->city);
@@ -144,29 +152,40 @@ class MigrateDbCommand extends Command
                             $address->setPostalCode($addr->postalCode);
                             $address->setLongitude($gps['0']->longitude);
                             $address->setLatitude($gps['0']->latitude);
-                            $this->addressRepository->create($address);
-                            $newUser->setAddress($address);
+                            $address->addVolunteer($newUser);
+                            try {
+                                $this->addressRepository->create($address);
+                                $progressBar->advance();
+                                continue;
+                            } catch (AuthenticationException $e) {
+                                Debugger::dump("User registration failed because ", $e->getMessage());
+                            }
                         }
-                    } catch (\Exception $e) {
-                        Debugger::dump("User not imported because ", $e->getMessage());
                     }
-                }
-
-                try {
-                    $this->volunteerRepository->register($newUser);
-                } catch (AuthenticationException $e) {
-                    Debugger::dump("User registration failed because ", $e->getMessage());
+                } catch (ClientException $e) {
+                    Debugger::dump("Bad response from HERE Maps, reason ", $e->getMessage());
                 }
             }
-            $progressBar->advance();
+
+            try {
+                $this->volunteerRepository->register($newUser);
+                $progressBar->advance();
+            } catch (AuthenticationException $e) {
+                Debugger::dump("User registration failed because ", $e->getMessage());
+            }
         }
     }
 
     public function migrateOrders() {
+        $this->output->writeLn('');
         $this->output->writeLn('Starting migrating orders');
-        $orders = $this->database->table('posted_orders')->fetchAll();
+        $orders = $this->database->table('posted_orders');
         $progressBar = new ProgressBar($this->output, count($orders));
         foreach ($orders as $o) {
+            if ($this->orderRepository->getById($o['id']) != NULL) {
+                $progressBar->advance();
+                continue;
+            }
             /** @var Order $order */
             $order = new Order();
             $order->setItems($o['order_items']);
@@ -174,50 +193,70 @@ class MigrateDbCommand extends Command
             $order->setCourierNote($o['courier_note']);
             $order->setDeliveryPhone($o['delivery_phone']);
             $order->setStatus($o['status']);
-            $courier = $this->volunteerRepository->getByEmail($o['courier_id']['personEmail']);
-            $order->setCourier($courier);
-            $usr = $this->volunteerRepository->getByEmail($o['id_volunteers']['personEmail']);
-            $order->setAuthor($usr);
+            $order->setId($o['id']);
 
-            //Parse user town and make an address from it
-            $client = new \GuzzleHttp\Client();
-            /** @var \GuzzleHttp\Psr7\Response $response */
-            $response = $client->get('https://geocoder.ls.hereapi.com/6.2/geocode.json?country=CZE&city=' . $o['town'] . '&jsonattributes=1&gen=9&apiKey=Kl0wK4fx38Pf63EIey6WyrmGEhS2IqaVHkuzx0IQ4-Q');
-            $content = $response->getBody()->getContents();
+            if ($o['courier_id'] != NULL) {
+                /** @var Volunteer $courier */
+                $cour = $this->database->table('volunteers')->where('id',$o['courier_id'])->fetch();
+                $courier = $this->volunteerRepository->getByEmail($cour['personEmail']);
+                $courier->addDeliveredOrder($order);
+                $this->volunteerRepository->save($courier);
+            }
 
-            $content = json_decode($content);
+            /** @var Volunteer $usr */
+            $us = $this->database->table('volunteers')->where('id',$o['id_volunteers'])->fetch();
+            $usr = $this->volunteerRepository->getByEmail($us['personEmail']);
+            $usr->addCreatedOrder($order);
+            $this->volunteerRepository->save($usr);
 
-            //array with address things
-            $addr = $content->response->view['0']->result['0']->location->address;
+            try {
+                //Parse user town and make an address from it
+                $client = new \GuzzleHttp\Client();
+                /** @var \GuzzleHttp\Psr7\Response $response */
+                $response = $client->get('https://geocoder.ls.hereapi.com/6.2/geocode.json?country=CZE&city='.$o['town'].'&jsonattributes=1&gen=9&apiKey=Kl0wK4fx38Pf63EIey6WyrmGEhS2IqaVHkuzx0IQ4-Q');
+                $content = $response->getBody()->getContents();
 
-            //HERE maps Id
-            $locationId = $content->response->view['0']->result['0']->location->locationId;
+                $content = json_decode($content);
 
-            //array with latitude and longtitude
-            $gps = $content->response->view['0']->result['0']->location->navigationPosition;
+                //array with address things
+                $addr = $content->response->view['0']->result['0']->location->address;
 
-            /** @var Address $address */
-            $address = new Address();
-            $address->setCity($addr->city);
-            $address->setState($addr->state);
-            $address->setLocationId($locationId);
-            $address->setCountry($addr->country);
-            $address->setDistrict($addr->county);
-            $address->setPostalCode($addr->postalCode);
+                //HERE maps Id
+                $locationId = $content->response->view['0']->result['0']->location->locationId;
 
-            $order->setDeliveryAddress($address);
+                //array with latitude and longtitude
+                $gps = $content->response->view['0']->result['0']->location->navigationPosition;
+
+                if ($locationId != NULL ) {
+                    /** @var Address $address */
+                    $address = new Address();
+                    $address->setCity($addr->city);
+                    $address->setState($addr->state);
+                    $address->setLocationId($locationId);
+                    $address->setCountry($addr->country);
+                    $address->setDistrict($addr->county);
+                    $address->setPostalCode($addr->postalCode);
+                    $address->setLongitude($gps['0']->longitude);
+                    $address->setLatitude($gps['0']->latitude);
+                    $address->addPickupOrder($order);
+                    $address->addDeliveryOrder($order);
+                }
+            } catch (ClientException $e) {
+                Debugger::dump("Bad response from HERE Maps, reason ", $e->getMessage());
+            }
 
             try {
                 $this->addressRepository->create($address);
-                $this->orderRepository->create($order);
-                $values['id'] = $order->getId();
-                $values['delivery_address'] = $o['delivery_address'];
+
+                $values['id'] = $o['id'];
+                $values['delivery_address'] =  $o['delivery_address'];
                 $values['pickup_address'] = $o['pickup_address'];
                 $this->database->table('orders_address')->insert($values);
-            } catch (DBALException $e) {
+                $progressBar->advance();
+            } catch (AuthenticationException $e) {
                 Debugger::dump("Order not imported because ", $e->getMessage());
             }
-            $progressBar->advance();
         }
+        $this->output->writeLn('');
     }
 }
