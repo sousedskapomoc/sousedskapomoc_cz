@@ -3,6 +3,7 @@
 
 namespace SousedskaPomoc\Entities;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Nettrine\ORM\Entity\Attributes\Id;
 use Doctrine\ORM\Mapping as ORM;
 use SousedskaPomoc\Entities\Traits\Timestampable;
@@ -36,12 +37,12 @@ class Address
     protected $state;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $district;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $city;
 
@@ -63,29 +64,39 @@ class Address
     protected $latitude;
 
     /**
-     * @ORM\OneToOne(targetEntity="Volunteer", mappedBy="address")
+     * @ORM\OneToMany(targetEntity="Volunteer", mappedBy="address", cascade={"persist"})
      */
-    protected $volunteer;
+    protected $volunteers;
 
     /**
-     * @ORM\OneToMany(targetEntity="Demand", mappedBy="deliveryAddress")
+     * @ORM\OneToMany(targetEntity="Demand", mappedBy="deliveryAddress", cascade={"persist"})
      */
     protected $demandOrders;
 
     /**
-     * @ORM\OneToMany(targetEntity="Stock", mappedBy="stockAddress")
+     * @ORM\OneToMany(targetEntity="Stock", mappedBy="stockAddress", cascade={"persist"})
      */
     protected $stocks;
 
     /**
-     * @ORM\OneToOne(targetEntity="Order", mappedBy="pickupAddress")
+     * @ORM\OneToMany(targetEntity="Order", mappedBy="pickupAddress", cascade={"persist"})
      */
-    protected $orderPickup;
+    protected $ordersPickup;
 
     /**
-     * @ORM\OneToOne(targetEntity="Order", mappedBy="deliveryAddress")
+     * @ORM\OneToMany(targetEntity="Order", mappedBy="deliveryAddress", cascade={"persist"})
      */
-    protected $orderDelivery;
+    protected $ordersDelivery;
+
+
+    public function __construct()
+    {
+        $this->demandOrders = new ArrayCollection();
+        $this->ordersPickup = new ArrayCollection();
+        $this->ordersDelivery = new ArrayCollection();
+        $this->stocks = new ArrayCollection();
+        $this->volunteers = new ArrayCollection();
+    }
 
 
 
@@ -294,18 +305,9 @@ class Address
     /**
      * @return mixed
      */
-    public function getVolunteer()
+    public function getVolunteers()
     {
-        return $this->volunteer;
-    }
-
-
-    /**
-     * @param mixed $volunteer
-     */
-    public function setVolunteer($volunteer): void
-    {
-        $this->volunteer = $volunteer;
+        return $this->volunteers;
     }
 
 
@@ -318,11 +320,103 @@ class Address
     }
 
 
-    /**
-     * @param mixed $demandOrders
-     */
-    public function setDemandOrders($demandOrders): void
+    public function addDemandOrder($demandOrder) :self
     {
-        $this->demandOrders = $demandOrders;
+        if (!$this->demandOrders->contains($demandOrder)) {
+            $this->demandOrders[] = $demandOrder;
+
+            /** @var \SousedskaPomoc\Entities\Demand $demandOrders */
+            $demandOrder->setDeliveryAddress($this);
+        }
+        return $this;
+    }
+
+    public function removeDemandOrder($demandOrder): self
+    {
+        if ($this->demandOrders->contains($demandOrder)) {
+            $this->demandOrders->removeElement($demandOrder);
+
+            // set the owning side to null (unless already changed)
+            /** @var \SousedskaPomoc\Entities\Demand $demandOrder */
+            if ($demandOrder->getDeliveryAddress() === $this) {
+                $demandOrder->setDeliveryAddress(null);
+            }
+        }
+        return $this;
+    }
+
+    public function addPickupOrder($order) :self
+    {
+        if (!$this->ordersPickup->contains($order)) {
+            $this->ordersPickup[] = $order;
+
+            /** @var \SousedskaPomoc\Entities\Order $order */
+            $order->setPickupAddress($this);
+        }
+        return $this;
+    }
+
+    public function removePickupOrder($order): self
+    {
+        if ($this->ordersPickup->contains($order)) {
+            $this->ordersPickup->removeElement($order);
+
+            // set the owning side to null (unless already changed)
+            /** @var \SousedskaPomoc\Entities\Order $order */
+            if ($order->getPickupAddress() === $this) {
+                $order->setPickupAddress(null);
+            }
+        }
+        return $this;
+    }
+
+    public function addDeliveryOrder($order) :self
+    {
+        if (!$this->ordersDelivery->contains($order)) {
+            $this->ordersDelivery[] = $order;
+
+            /** @var \SousedskaPomoc\Entities\Order $order */
+            $order->setDeliveryAddress($this);
+        }
+        return $this;
+    }
+
+    public function removeDeliveryOrder($order): self
+    {
+        if ($this->ordersDelivery->contains($order)) {
+            $this->ordersDelivery->removeElement($order);
+
+            // set the owning side to null (unless already changed)
+            /** @var \SousedskaPomoc\Entities\Order $order */
+            if ($order->getDeliveryAddress() === $this) {
+                $order->setDeliveryAddress(null);
+            }
+        }
+        return $this;
+    }
+
+    public function addVolunteer($user) :self
+    {
+        if (!$this->volunteers->contains($user)) {
+            $this->volunteers[] = $user;
+
+            /** @var \SousedskaPomoc\Entities\Volunteer $user */
+            $user->setAddress($this);
+        }
+        return $this;
+    }
+
+    public function removeVolunteer($user): self
+    {
+        if ($this->volunteers->contains($user)) {
+            $this->volunteers->removeElement($user);
+
+            // set the owning side to null (unless already changed)
+            /** @var \SousedskaPomoc\Entities\Volunteer $user */
+            if ($user->getAddress() === $this) {
+                $user->setAddress(null);
+            }
+        }
+        return $this;
     }
 }
