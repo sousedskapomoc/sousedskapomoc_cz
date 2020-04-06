@@ -62,7 +62,7 @@ class OrderRepository extends DoctrineEntityRepository
 
     public function updateStatus($id, $active)
     {
-        /** @var Orders $order */
+        /** @var Order $order */
         $order = $this->getById($id);
         $order->setStatus($active);
         $em = $this->getEntityManager();
@@ -203,7 +203,7 @@ class OrderRepository extends DoctrineEntityRepository
     public function upsert(Order $order)
     {
         $localOrder = $this->getById($order->getId());
-        if ($localOrder instanceof Orders) {
+        if ($localOrder instanceof Order) {
             $this->update($localOrder, $order);
         } else {
             $this->create($order);
@@ -213,7 +213,7 @@ class OrderRepository extends DoctrineEntityRepository
     public function updateCourierNote($id, $note)
     {
         $order = $this->getById($id);
-        if ($order instanceof Orders) {
+        if ($order instanceof Order) {
             $order->setCourierNote($note);
 
             $em = $this->getEntityManager();
@@ -222,5 +222,32 @@ class OrderRepository extends DoctrineEntityRepository
         } else {
             throw new \Exception('Orders not found.');
         }
+    }
+
+    public function removeCourier($orderId)
+    {
+        /** @var Order $order */
+        $order = $this->findOneBy(['id'=>$orderId]);
+        /** @var Volunteer $courier */
+        $courier = $order->getCourier();
+        $courier->removeDeliveredOrder($order);
+        $em = $this->getEntityManager();
+        $em->persist($courier);
+        $em->flush();
+    }
+
+    public function remove($id)
+    {
+        /** @var Order $order */
+        $order = $this->findOneBy(['id'=>$id]);
+        $order->setStatus('archived');
+        $em = $this->getEntityManager();
+        $em->persist($order);
+        $em->flush();
+    }
+
+    public function fetchDeliveredCount()
+    {
+        return $this->count(['stat'=>'delivered']);
     }
 }

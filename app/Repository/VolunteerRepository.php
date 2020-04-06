@@ -138,4 +138,57 @@ class VolunteerRepository extends DoctrineEntityRepository
             $em->flush();
         }
     }
+
+    public function getTowns()
+    {
+        $em = $this->getEntityManager();
+        $query = $em->createQuery("
+        SELECT
+        COUNT(u.id), x.city
+        FROM
+        SousedskaPomoc\Entities\Volunteer u JOIN u.address x
+        GROUP BY x.city");
+        return $query->getResult();
+    }
+
+    public function fetchAllUsersInRole($role = null)
+    {
+        $em = $this->getEntityManager();
+        $query = $em->createQuery("
+        SELECT
+        u
+        FROM
+        SousedskaPomoc\Entities\Volunteer u JOIN u.role x
+        WHERE
+        x.name = '$role'");
+        return $query->getResult();
+    }
+
+    public function fetchAvailableCouriersInTown($town)
+    {
+        $em = $this->getEntityManager();
+        $query = $em->createQuery("
+        SELECT
+        u
+        FROM
+        SousedskaPomoc\Entities\Volunteer u JOIN u.address x
+        WHERE
+        x.city = '$town'
+        AND
+        u.online = 1");
+        return $query->getResult();
+    }
+
+    public function fetchPhoneNumber($courierId)
+    {
+        /** @var Volunteer $courier */
+        $courier = $this->findOneBy(['id'=>$courierId]);
+        return $courier->getPersonPhone() ?? 'Nezadán';
+    }
+
+    public function findAllOnlineUsers()
+    {
+        return $this->findBy(['online'=>1]);
+    }
+
 }
