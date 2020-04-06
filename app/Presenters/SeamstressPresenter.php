@@ -66,8 +66,7 @@ final class SeamstressPresenter extends BasePresenter
     public function renderDashboard()
     {
         $this->template->orders = $this->orderManager->findAllForUser($this->user->getId());
-        $user = $this->userManager->isOnline($this->user->getId());
-        $this->template->userOnline = $user->active;
+        $this->template->userOnline = $this->userManager->isOnline($this->user->getId());
     }
 
     public function handleToggleActive($active)

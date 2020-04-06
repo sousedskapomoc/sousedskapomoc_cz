@@ -116,14 +116,15 @@ class OrderRepository extends DoctrineEntityRepository
     public function findAllLive()
     {
         $em = $this->getEntityManager();
-        $query = $em->createQuery("SELECT o FROM Order o WHERE o.stat = 'assigned' OR o.stat = 'picking' OR o.stat = 'delivering'");
+        $query = $em->createQuery("SELECT o FROM SousedskaPomoc\Entities\Orders o WHERE o.stat = 'assigned' OR o.stat = 'picking' OR o.stat = 'delivering'");
         return $query->getResult();
     }
 
     public function findAllLiveByCourierByTown($town, $userId)
     {
         $em = $this->getEntityManager();
-        $query = $em->createQuery("SELECT o FROM Order o JOIN o.deliveryAddress x WHERE x.city = '$town' AND o.stat IN ('assigned','picking','delivering') AND o.courier = '$userId'");
+        //@TODO - add filtering by town
+        $query = $em->createQuery("SELECT o FROM SousedskaPomoc\Entities\Order o WHERE o.courier = '$userId' AND o.stat IN ('assigned','picking','delivering')");
         return $query->getResult();
     }
 

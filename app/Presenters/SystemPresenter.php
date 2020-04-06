@@ -127,11 +127,11 @@ final class SystemPresenter extends BasePresenter
 
         $form->setDefaults(
             [
-                'personName' => $userDetails->personName,
-                'personEmail' => $userDetails->personEmail,
-                'personPhone' => $userDetails->personPhone,
-                'town' => $userDetails->town,
-                'id' => $userDetails->id,
+                'personName' => $userDetails->getPersonName(),
+                'personEmail' => $userDetails->getPersonEmail(),
+                'personPhone' => $userDetails->getPersonPhone(),
+                'town' => $userDetails->getAddress()->getCity(),
+                'id' => $userDetails->getId(),
             ]
         );
 
