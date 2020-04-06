@@ -27,36 +27,36 @@
 		</tr>
 		<tr>
 			<td>Jméno</td>
-			<td>{$userDetails->personName}</td>
+			<td>{$userDetails->getPersonName()}</td>
 		</tr>
 		<tr>
 			<td>Email:</td>
-			<td>{$userDetails->personEmail}</td>
+			<td>{$userDetails->getPersonEmail()}</td>
 		</tr>
 		<tr>
 			<td>Telefon:</td>
-			<td>{$userDetails->personPhone}</td>
+			<td>{$userDetails->getPersonPhone()}</td>
 		</tr>
 		<tr>
 			<td>Město:</td>
-			<td>{$userDetails->town}</td>
+			<td>{$userDetails->getAddress()->getCity()}</td>
 		</tr>
-		<tr n:if="$user->isInRole('courier') && $userDetails->car">
+		<tr n:if="$user->isInRole('courier') && $userDetails->getTransport()->getId()">
 			<td>Dopravní prostředek:</td>
 			<td>
-				{if $userDetails->car == 1}
+				{if $userDetails->getTransport()->getId() == 1}
 					{_forms.cars.small}
-				{elseif $userDetails->car == 2}
+				{elseif $userDetails->getTransport()->getId() == 2}
 					{_forms.cars.big}
-				{elseif $userDetails->car == 3}
+				{elseif $userDetails->getTransport()->getId() == 3}
 					{_forms.cars.smallTruck}
-				{elseif $userDetails->car == 4}
+				{elseif $userDetails->getTransport()->getId() == 4}
 					{_forms.cars.bigTruck}
-				{elseif $userDetails->car == 5}
+				{elseif $userDetails->getTransport()->getId() == 5}
 					{_forms.cars.bike}
-				{elseif $userDetails->car == 6}
+				{elseif $userDetails->getTransport()->getId() == 6}
 					{_forms.cars.motorcycle}
-				{elseif $userDetails->car == 7}
+				{elseif $userDetails->getTransport()->getId() == 7}
 					{_forms.cars.walk}
 				{/if}
 			</td>
