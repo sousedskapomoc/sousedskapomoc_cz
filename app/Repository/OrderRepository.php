@@ -60,17 +60,6 @@ class OrderRepository extends DoctrineEntityRepository
         return $query->getResult();
     }
 
-    public function assignOrder($orderId, $courierId)
-    {
-        /** @var Orders $order */
-        $order = $this->getById($orderId);
-        $order->setCourier($courierId);
-        $order->setStatus('assigned');
-        $em = $this->getEntityManager();
-        $em->persist($order);
-        $em->flush();
-    }
-
     public function updateStatus($id, $active)
     {
         /** @var Orders $order */
@@ -91,11 +80,6 @@ class OrderRepository extends DoctrineEntityRepository
         return $this->findBy(['courier' => $userId]);
     }
 
-    public function find($id)
-    {
-        return $this->findOneBy(['id' => $id]);
-    }
-
     public function findAllNew()
     {
         return $this->findBy(['stat' => 'new']);
@@ -104,7 +88,7 @@ class OrderRepository extends DoctrineEntityRepository
     public function changeStatus($orderId, $status)
     {
         /** @var Order $order */
-        $order =  $this->findBy(['id' => $orderId]);
+        $order = $this->findBy(['id' => $orderId]);
         if ($order instanceof Order) {
             $order->setStatus($status);
             $em = $this->getEntityManager();
@@ -118,7 +102,7 @@ class OrderRepository extends DoctrineEntityRepository
     public function updateNote($orderId, $note)
     {
         /** @var Order $order */
-        $order =  $this->findBy(['id' => $orderId]);
+        $order = $this->findBy(['id' => $orderId]);
         if ($order instanceof Order) {
             $order->setCourierNote($note);
             $em = $this->getEntityManager();
@@ -145,23 +129,18 @@ class OrderRepository extends DoctrineEntityRepository
 
     public function findAllDelivered()
     {
-        return $this->findBy(['stat'=>'delivered']);
+        return $this->findBy(['stat' => 'delivered']);
     }
 
     public function assignOrder(Volunteer $courier, $order_id)
     {
         /** @var Order $order */
-        $order = $this->findOneBy(['id'=>$order_id]);
+        $order = $this->findOneBy(['id' => $order_id]);
         $order->setStatus('assigned');
         $courier->addDeliveredOrder($order);
         $em = $this->getEntityManager();
         $em->persist($courier);
         $em->flush();
-    }
-
-    public function fetchCount()
-    {
-        return $this->count([]);
     }
 
     public function findAllNewInTown($town)
