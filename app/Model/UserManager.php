@@ -43,6 +43,39 @@ final class UserManager
 
 
     /**
+     * Performs an authentication.
+     *
+     * @throws Nette\Security\AuthenticationException
+     */
+    public function authenticate(array $credentials): Nette\Security\IIdentity
+    {
+        [$username, $password] = $credentials;
+
+        $row = $this->database->table(self::TABLE_NAME)
+            ->where(self::COLUMN_NAME, $username)
+            ->fetch();
+
+        if (!$row) {
+            throw new Nette\Security\AuthenticationException('The username is incorrect.', self::IDENTITY_NOT_FOUND);
+        } elseif (!$this->passwords->verify($password, $row[self::COLUMN_PASSWORD_HASH])) {
+            throw new Nette\Security\AuthenticationException('The password is incorrect.', self::INVALID_CREDENTIAL);
+        } elseif ($this->passwords->needsRehash($row[self::COLUMN_PASSWORD_HASH])) {
+            $row->update([
+                self::COLUMN_PASSWORD_HASH => $this->passwords->hash($password),
+            ]);
+        }
+
+        $roles = explode(";", $row->role ?? 'user');
+
+        $arr = $row->toArray();
+        unset($arr[self::COLUMN_PASSWORD_HASH]);
+
+
+        return new Nette\Security\Identity($row[self::COLUMN_ID], $roles, $arr);
+    }
+
+
+    /**
      * Adds new user.
      *
      * @throws DuplicateNameException
