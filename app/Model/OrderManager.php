@@ -3,6 +3,8 @@
 namespace SousedskaPomoc\Model;
 
 use Nette;
+use SousedskaPomoc\Repository\OrderRepository;
+use SousedskaPomoc\Repository\VolunteerRepository;
 
 final class OrderManager
 {
@@ -11,15 +13,27 @@ final class OrderManager
     /** @var \Nette\Database\Context */
     protected $database;
 
+    /** @var  \SousedskaPomoc\Repository\OrderRepository*/
+    protected $orderRepository;
+
+    /** @var \SousedskaPomoc\Repository\VolunteerRepository */
+    protected $volunteerRepository;
+
 
     /**
      * OrderManager constructor.
      *
      * @param \Nette\Database\Context $database
      */
-    public function __construct(Nette\Database\Context $database)
+    public function __construct(
+        Nette\Database\Context $database,
+        OrderRepository $orderRepository,
+    VolunteerRepository $volunteerRepository
+    )
     {
         $this->database = $database;
+        $this->orderRepository = $orderRepository;
+        $this->volunteerRepository = $volunteerRepository;
     }
 
 
@@ -30,7 +44,7 @@ final class OrderManager
      */
     public function create($values)
     {
-        return $this->database->table('posted_orders')->insert($values);
+        return $this->orderRepository->create($values);
     }
 
 
@@ -41,13 +55,13 @@ final class OrderManager
      */
     public function findAllForUser($userId)
     {
-        return $this->database->table('posted_orders')->where('id_volunteers', $userId)->fetchAll();
+        return $this->orderRepository->findAllForUser($userId);
     }
 
 
     public function findAllForCourier($userId)
     {
-        return $this->database->table('posted_orders')->where('courier_id', $userId)->fetchAll();
+        return $this->orderRepository->findAllForCourier($userId);
     }
 
 
@@ -64,129 +78,70 @@ final class OrderManager
 
     public function findAllNew()
     {
-        return $this->database->table('posted_orders')->where(['status' => 'new'])->fetchAll();
+        return $this->orderRepository->findAllNew();
     }
 
 
     public function changeStatus($orderId, $status)
     {
-        return $this->database->table('posted_orders')->wherePrimary($orderId)->update(['status' => $status]);
+        $this->orderRepository->changeStatus($orderId, $status);
     }
 
 
     public function updateNote($orderId, $note)
     {
-        return $this->database->table('posted_orders')->wherePrimary($orderId)->update(['courier_note' => $note]);
+        $this->orderRepository->updateCourierNote($orderId, $note);
     }
 
 
     public function findAllLive()
     {
-        return $this->database->table('posted_orders')->whereOr([
-            'status' => [
-                'assigned',
-                'picking',
-                'delivering',
-            ],
-        ])->fetchAll();
+        return $this->orderRepository->findAllLive();
     }
 
     public function findAllLiveByCourierByTown($town, $userId)
     {
-        $sql = "
-SELECT 
-       * 
-FROM 
-     dispatch_orders_by_town 
-WHERE 
-      town LIKE '%$town%' 
-  AND 
-      status IN ('assigned','picking','delivering') 
-  AND 
-      courier_id = '$userId'";
-
-        return $this->database->query($sql)->fetchAll();
+        return $this->orderRepository->findAllLiveByCourierByTown($town, $userId);
     }
 
 
     public function findAllDelivered()
     {
-        return $this->database->table('posted_orders')->where(['status' => 'delivered'])->fetchAll();
+        return $this->orderRepository->findAllDelivered();
     }
 
 
     public function assignOrder($courier_id, $order_id, $operator_id, $status = "assigned")
     {
-        $this->database->table('posted_orders')->wherePrimary($order_id)->update([
-            'courier_id' => $courier_id,
-            'status' => $status,
-            'operator_id' => $operator_id
-        ]);
+        $courier = $this->volunteerRepository->getById($courier_id);
+        $this->orderRepository->assignOrder($courier, $order_id);
     }
 
 
     public function updateStatus($orderId, $orderStatus = null)
     {
-        if ($orderStatus != null) {
-            $this->database->table('posted_orders')->wherePrimary($orderId)->update([
-                'status' => $orderStatus,
-            ]);
-        }
+        $this->orderRepository->updateStatus($orderId, $orderStatus);
     }
 
 
     public function fetchCount()
     {
-        return $this->database->table('posted_orders')->count();
+        return $this->orderRepository->fetchCount();
     }
 
     public function findAllNewInTown($town)
     {
-        $sql = "SELECT
-				*
-				FROM
-				dispatch_orders_by_town
-				WHERE
-				town LIKE '%$town%'
-				AND
-				status = 'new'
-				";
-
-        return $this->database->query("$sql")->fetchAll();
+        return $this->orderRepository->findAllNewInTown($town);
     }
 
     public function findAllLiveInTown($town, $operatorId)
     {
-        $sql = "
-SELECT 
-       * 
-FROM 
-     dispatch_orders_by_town 
-WHERE 
-      town LIKE '%$town%' 
-  AND 
-      operator_id = $operatorId 
-  AND 
-      status IN ('assigned','picking','delivering')
-      ";
-        return $this->database->query($sql)->fetchAll();
+        return $this->orderRepository->findAllLiveInTown($town);
     }
 
     public function findAllDeliveredInTown($town, $operatorId)
     {
-        $sql = "
-SELECT 
-       * 
-FROM 
-     dispatch_orders_by_town 
-WHERE 
-      town LIKE '%$town%' 
-  AND 
-      operator_id = $operatorId 
-  AND 
-      status = 'delivered'
-      ";
-        return $this->database->query("$sql")->fetchAll();
+        return $this->orderRepository->findAllDeliveredInTown($town);
     }
 
     public function saveDemand($demand)
@@ -220,7 +175,7 @@ WHERE
 
     public function findAll()
     {
-        return $this->database->table('posted_orders')->fetchAll();
+        return $this->orderRepository->findAll();
     }
 
     public function removeOperator($orderId)
@@ -231,8 +186,7 @@ WHERE
 
     public function removeCourier($orderId)
     {
-        $sql = "UPDATE posted_orders SET courier_id = null WHERE id = $orderId";
-        return $this->database->query($sql);
+        return $this->orderRepository->removeCourier($orderId);
     }
 
     public function findAllOrdersData()
@@ -243,7 +197,7 @@ WHERE
 
     public function remove($id)
     {
-        $this->database->table('posted_orders')->wherePrimary($id)->delete();
+        $this->orderRepository->remove($id);
     }
 
     public function updateTown($orderId, $town)
@@ -257,6 +211,6 @@ WHERE
 
     public function fetchDeliveredCount()
     {
-        return $this->database->table('posted_orders')->where(['status' => 'delivered'])->count();
+        return $this->orderRepository->fetchDeliveredCount();
     }
 }

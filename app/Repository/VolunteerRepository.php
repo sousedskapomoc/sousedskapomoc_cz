@@ -190,5 +190,5 @@ class VolunteerRepository extends DoctrineEntityRepository
     {
         return $this->findBy(['online'=>1]);
     }
-    
+
 }
