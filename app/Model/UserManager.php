@@ -6,6 +6,7 @@ namespace SousedskaPomoc\Model;
 
 use Nette;
 use Nette\Security\Passwords;
+use SousedskaPomoc\Repository\VolunteerRepository;
 
 /**
  * Users management.
@@ -29,11 +30,15 @@ final class UserManager implements Nette\Security\IAuthenticator
     /** @var Passwords */
     private $passwords;
 
+    /** @var \SousedskaPomoc\Repository\VolunteerRepository */
+    protected $volunteerRepository;
 
-    public function __construct(Nette\Database\Context $database, Passwords $passwords)
+
+    public function __construct(Nette\Database\Context $database, Passwords $passwords, VolunteerRepository $volunteerRepository)
     {
         $this->database = $database;
         $this->passwords = $passwords;
+        $this->volunteerRepository = $volunteerRepository;
     }
 
 
@@ -106,41 +111,31 @@ final class UserManager implements Nette\Security\IAuthenticator
 
     public function setPass($id, $password)
     {
-        return $this->database->table(self::TABLE_NAME)
-            ->where('id', $id) // must be called before update()
-            ->update(['password' => $password]);
+        $this->volunteerRepository->setPass($id, $password);
     }
 
 
     public function getUserByEmailCode($emailCode)
     {
-        return $this->database->table(self::TABLE_NAME)
-            ->where('emailCode', $emailCode)
-            ->fetch();
+        return $this->volunteerRepository->getUserByHash($emailCode);
     }
 
 
     public function getUserByEmail($email)
     {
-        return $this->database->table(self::TABLE_NAME)
-            ->where('personEmail', $email)
-            ->fetch();
+        return $this->volunteerRepository->getByEmail($email);
     }
 
 
     public function getUserById($id)
     {
-        return $this->database->table(self::TABLE_NAME)
-            ->where('id', $id)
-            ->fetch();
+        return $this->volunteerRepository->getById($id);
     }
 
 
     public function setUserCode($userId, $emailCode)
     {
-        return $this->database->table(self::TABLE_NAME)
-            ->where('id', $userId)
-            ->update(['emailCode' => $emailCode]);
+        $this->setUserCode($userId, $emailCode);
     }
 
 
@@ -182,7 +177,7 @@ final class UserManager implements Nette\Security\IAuthenticator
 
     public function fetchTotalCount()
     {
-        return $this->database->table(self::TABLE_NAME)->count();
+        return $this->volunteerRepository->fetchTotalCount();
     }
 
 
@@ -202,19 +197,17 @@ final class UserManager implements Nette\Security\IAuthenticator
 
     public function isOnline($userId)
     {
-        return $this->database->table(self::TABLE_NAME)->select('active')->wherePrimary($userId)->fetch();
+        return $this->volunteerRepository->isOnline($userId);
     }
 
     public function setOnline($userId, $active)
     {
-        return $this->database->table(self::TABLE_NAME)->wherePrimary($userId)->update(['active' => $active]);
+        return $this->volunteerRepository->setOnline($userId, $active);
     }
 
     public function fetchAvailableCouriersInTown($town)
     {
-        $sql = "SELECT * FROM volunteers WHERE role LIKE '%courier%' AND town LIKE '%$town%' AND active = 1";
-
-        return $this->database->query($sql)->fetchAll();
+        return $this->volunteerRepository->fetchAvailableCouriersInTown($town)''
     }
 
     public function updateTown($selectedTown, $userId)
@@ -224,45 +217,26 @@ final class UserManager implements Nette\Security\IAuthenticator
 
     public function getTownForUser($userId)
     {
-        $data = $this->database->table(self::TABLE_NAME)->wherePrimary($userId)->fetch();
-        return $data->town ?? null;
+        return $this->volunteerRepository->getTownForUser($userId);
     }
 
     public function getTowns()
     {
-        $sql = "
-SELECT
-       COUNT(id) AS countUsers, town
-FROM
-     volunteers
-WHERE
-      town IS NOT NULL
-GROUP BY
-         town
-ORDER BY
-         countUsers DESC";
-        return $this->database->query($sql)->fetchAll();
+        return $this->volunteerRepository->getTowns();
     }
 
     public function fetchAllUsersInRole($role = null)
     {
-        $sql = "SELECT * FROM volunteers WHERE role LIKE '%{$role}%'";
-        return $this->database->query($sql)->fetchAll();
+        return $this->volunteerRepository->fetchAllUsersInRole($role);
     }
 
     public function fetchPhoneNumber($courierId)
     {
-        $data = $this->database
-            ->table(self::TABLE_NAME)
-            ->select('personPhone')
-            ->wherePrimary($courierId)
-            ->fetch();
-
-        return $data->personPhone ?? 'Nezadán';
+        return $this->volunteerRepository->fetchPhoneNumber($courierId);
     }
 
     public function findAllOnlineUsers()
     {
-        return $this->database->table(self::TABLE_NAME)->where(['active' => true])->fetchAll();
+        return $this->volunteerRepository->findAllOnlineUsers();
     }
 }
