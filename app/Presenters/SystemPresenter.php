@@ -8,19 +8,12 @@ use Contributte\FormsBootstrap\BootstrapForm;
 use Contributte\FormsBootstrap\Enums\RenderMode;
 use Nette\Forms\Form;
 use Nette\Security\Passwords;
-use SousedskaPomoc\Components\IEditVolunteerFormInterface;
 
 final class SystemPresenter extends BasePresenter
 {
     /** @var \Nette\Security\Passwords */
     protected $passwords;
 
-    /** @var \SousedskaPomoc\Components\IEditVolunteerFormInterface */
-    protected $editVolunteerForm;
-
-    public function injectEditVolunteerForm (IEditVolunteerFormInterface $editVolunteerForm) {
-        $this->editVolunteerForm = $editVolunteerForm;
-    }
 
     public function injectPasswords(Passwords $passwords)
     {
@@ -74,7 +67,117 @@ final class SystemPresenter extends BasePresenter
 
     public function createComponentEditForm()
     {
-        return $this->editVolunteerForm->create();
+        $cars = [
+            1 => $this->translator->translate('forms.cars.small'),
+            2 => $this->translator->translate('forms.cars.big'),
+            3 => $this->translator->translate('forms.cars.smallTruck'),
+            4 => $this->translator->translate('forms.cars.bigTruck'),
+            5 => $this->translator->translate('forms.cars.bike'),
+            6 => $this->translator->translate('forms.cars.motorcycle'),
+            7 => $this->translator->translate('forms.cars.walk'),
+        ];
+
+        $userDetails = $this->userManager->getUserById($this->user->id);
+
+        $form = new BootstrapForm;
+        $form->renderMode = RenderMode::VERTICAL_MODE;
+
+        $roles = [
+            0 => $this->translator->translate('templates.courier.title'),
+            1 => $this->translator->translate('templates.operator.title'),
+            2 => $this->translator->translate('templates.seamstress.title'),
+            3 => $this->translator->translate('templates.coordinator.title'),
+        ];
+
+        $rolesDefault = [];
+        if ($this->user->isInRole('courier')) {
+            array_push($rolesDefault, 0);
+        }
+        if ($this->user->isInRole('operator')) {
+            array_push($rolesDefault, 1);
+        }
+        if ($this->user->isInRole('seamstress')) {
+            array_push($rolesDefault, 2);
+        }
+        if ($this->user->isInRole('coordinator')) {
+            array_push($rolesDefault, 3);
+        }
+
+        $form->addCheckboxList(
+            'role',
+            $this->translator->translate('forms.registerCoordinator.role'),
+            $roles
+        )
+            ->setDefaultValue($rolesDefault);
+
+        $form->addHidden('id');
+        $form->addText('personName', $this->translator->translate('forms.registerCoordinator.nameLabel'))
+            ->setRequired($this->translator->translate('forms.registerCoordinator.nameRequired'));
+        $form->addPassword("password", "Nové heslo");
+        $form->addText('personPhone', $this->translator->translate('forms.registerCoordinator.phoneLabel'))
+            ->setRequired($this->translator->translate('forms.registerCoordinator.phoneRequired'));
+        $form->addEmail('personEmail', $this->translator->translate('forms.registerCoordinator.mailLabel'))
+            ->setRequired($this->translator->translate('forms.registerCoordinator.mailRequired'));
+
+        if ($this->user->isInRole('courier')) {
+            $form->addSelect('car', $this->translator->translate('forms.registerCoordinator.carLabel'), $cars)
+                ->setRequired($this->translator->translate('forms.registerCoordinator.carRequired'))
+                ->setDefaultValue($userDetails->car);
+        }
+
+        $form->setDefaults(
+            [
+                'personName' => $userDetails->getPersonName(),
+                'personEmail' => $userDetails->getPersonEmail(),
+                'personPhone' => $userDetails->getPersonPhone(),
+                'town' => $userDetails->getAddress()->getCity(),
+                'id' => $userDetails->getId(),
+            ]
+        );
+
+        $form->addSubmit('coordinatorEditFormSubmit', $this->translator->translate('templates.profile.button'));
+        $form->onSuccess[] = [$this, "processUpdate"];
+
+        return $form;
+    }
+
+
+    public function processUpdate(BootstrapForm $form)
+    {
+        $values = $form->getValues();
+        $finalRoles = '';
+        foreach ($values->role as $key => $role) {
+            if ($role == 0) {
+                $finalRoles = $finalRoles . 'courier';
+            }
+            if ($role == 1) {
+                $finalRoles = $finalRoles . 'operator';
+            }
+            if ($role == 2) {
+                $finalRoles = $finalRoles . 'seamstress';
+            }
+            if ($role == 3) {
+                $finalRoles = $finalRoles . 'coordinator';
+            }
+            if ($key != array_key_last($values->role)) {
+                $finalRoles = $finalRoles . ';';
+            }
+        }
+        $values->role = $finalRoles;
+        if ($values->password == null) {
+            unset($values->password);
+        } else {
+            $values->password = $this->passwords->hash($values->password);
+        }
+        $usr = $this->userManager->getUserById($values->id);
+        if ($usr->id != $values->id) {
+            $form->addError($this->translator->translate('templates.profile.fail'));
+        } else {
+            $user = $this->userManager->update($values);
+
+            $this->flashMessage($this->translator->translate('templates.profile.success'));
+            $this->redirect("profile");
+        }
     }
 
 
