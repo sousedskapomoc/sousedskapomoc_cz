@@ -25,7 +25,7 @@ class HeadquartersPresenter extends BasePresenter
         $grid->addColumnText('personName', 'Jméno a příjmení')->setFilterText();
         $grid->addColumnText('personEmail', 'E-mail')->setFilterText();
         $grid->addColumnText('personPhone', 'Telefon')->setFilterText();
-        $grid->addColumnText('town', 'Město')->setFilterText();
+        $grid->addColumnText('address', 'Město')->setFilterText()->setAttribute('city');
         $grid->addColumnNumber('active', 'Online')->setFilterText();
         $grid->setDefaultPerPage(100);
 
