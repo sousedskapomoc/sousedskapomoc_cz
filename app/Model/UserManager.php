@@ -207,7 +207,7 @@ final class UserManager implements Nette\Security\IAuthenticator
 
     public function fetchAvailableCouriersInTown($town)
     {
-        return $this->volunteerRepository->fetchAvailableCouriersInTown($town)''
+        return $this->volunteerRepository->fetchAvailableCouriersInTown($town);
     }
 
     public function updateTown($selectedTown, $userId)
