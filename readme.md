@@ -31,4 +31,8 @@ We are using our own pre-built Docker image which consits of nginx, php-fpm, sup
 
 ## How to start local development
 
-*TBD*
+Docker local development
+========================
+
+Docker deployment process
+=========================
