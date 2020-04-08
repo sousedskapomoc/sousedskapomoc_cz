@@ -61,11 +61,15 @@ class OrderRepository extends DoctrineEntityRepository
     public function updateStatus($id, $active)
     {
         /** @var Order $order */
-        $order = $this->getById($id);
-        $order->setStatus($active);
-        $em = $this->getEntityManager();
-        $em->persist($order);
-        $em->flush();
+        $order = $this->findOneBy(['id' => $orderId]);
+        if ($order instanceof Order) {
+            $order->setStatus($status);
+            $em = $this->getEntityManager();
+            $em->persist($order);
+            $em->flush();
+        } else {
+            throw new \Exception('Order not found.');
+        }
     }
 
     public function findAllForUser($userId)
@@ -183,7 +187,7 @@ class OrderRepository extends DoctrineEntityRepository
     public function changeStatus($orderId, $status)
     {
         /** @var Order $order */
-        $order = $this->findBy(['id' => $orderId]);
+        $order = $this->findOneBy(['id' => $orderId]);
         if ($order instanceof Order) {
             $order->setStatus($status);
             $em = $this->getEntityManager();
