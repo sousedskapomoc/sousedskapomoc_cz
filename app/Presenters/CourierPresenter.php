@@ -6,11 +6,15 @@ namespace SousedskaPomoc\Presenters;
 
 use Contributte\FormsBootstrap\BootstrapForm;
 use SousedskaPomoc\Model\OrderManager;
+use SousedskaPomoc\Repository\OrderRepository;
 
 final class CourierPresenter extends BasePresenter
 {
     /** @var \SousedskaPomoc\Model\OrderManager */
     protected $orderManager;
+
+    /** @var \SousedskaPomoc\Repository\OrderRepository */
+    protected $orderRepository;
 
     protected $orderId;
 
@@ -21,6 +25,10 @@ final class CourierPresenter extends BasePresenter
         if (!$this->user->isLoggedIn()) {
             $this->redirect('Homepage:default');
         }
+    }
+
+    public function injectOrderRepository(OrderRepository $orderRepository) {
+        $this->orderRepository = $orderRepository;
     }
 
     public function injectOrderManager(OrderManager $orderManager)
@@ -46,9 +54,9 @@ final class CourierPresenter extends BasePresenter
     {
         $values = $form->getValues();
 
-        $result = $this->orderManager->updateNote($values->id, $values->courier_note);
+        $result = $this->orderRepository->updateCourierNote($values->id, $values->courier_note);
         $this->flashMessage($this->translator->translate('messages.order.orderSuccess'));
-        $this->redirect("Coordinator:dashboard");
+        $this->redirect("Courier:dashboard");
     }
 
 
@@ -64,7 +72,7 @@ final class CourierPresenter extends BasePresenter
 
     public function renderDetail($id)
     {
-        $this->template->order = $this->orderManager->find($id);
+        $this->template->order = $this->orderRepository->getById($id);
     }
 
 
