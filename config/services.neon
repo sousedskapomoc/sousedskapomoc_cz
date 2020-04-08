@@ -2,6 +2,8 @@ services:
 	- SousedskaPomoc\Model\OrderManager
 	- SousedskaPomoc\Model\UserManager
 	router: SousedskaPomoc\Router\RouterFactory::createRouter
+	#Authenticator
+	authenticator: SousedskaPomoc\Components\Authenticator
 	# Forms
 	- SousedskaPomoc\Forms\FormFactory
 	- SousedskaPomoc\Forms\SignInFormFactory
