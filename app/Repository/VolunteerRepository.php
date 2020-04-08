@@ -99,14 +99,7 @@ class VolunteerRepository extends DoctrineEntityRepository
             $dbUser->setPersonName($user->getPersonName());
             $dbUser->setPersonEmail($user->getPersonEmail());
             $dbUser->setPersonPhone($user->getPersonPhone());
-
-            foreach ($dbUser->getRole() as $role) {
-                $dbUser->removeRole($role);
-            }
-
-            foreach ($user->getRole() as $role) {
-                $dbUser->addRole($role);
-            }
+            $dbUser->setRole($user->getRole());
 
             $em = $this->getEntityManager();
             $em->persist($dbUser);
