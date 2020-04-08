@@ -61,9 +61,9 @@ class OrderRepository extends DoctrineEntityRepository
     public function updateStatus($id, $active)
     {
         /** @var Order $order */
-        $order = $this->findOneBy(['id' => $orderId]);
+        $order = $this->findOneBy(['id' => $id]);
         if ($order instanceof Order) {
-            $order->setStatus($status);
+            $order->setStatus($active);
             $em = $this->getEntityManager();
             $em->persist($order);
             $em->flush();
