@@ -64,17 +64,17 @@
 				<a n:href="System:dashboard" class="nav-link"><i class="fas fa-chart-line"
 																 aria-hidden="true"></i> {_templates.header.overview}</a>
 			</li>
-			<li n:if="$user->isInRole('courier')" class="nav-item">
+			<li n:if="$user->isInRole('courier') or $user->isInRole('admin')" class="nav-item">
 				<a n:href="Courier:dashboard" class="nav-link"><i class="fas fa-car"
 																  aria-hidden="true"></i> {_templates.courier.title}</a>
 			</li>
-			<li n:if="$user->isInRole('operator')" class="nav-item">
+			<li n:if="$user->isInRole('operator') or $user->isInRole('admin')" class="nav-item">
 				<a n:href="Operator:dashboard" class="nav-link"><i class="fas fa-headset"
 																   aria-hidden="true"></i> {_templates.operator.title}</a></li>
-			<li n:if="$user->isInRole('coordinator')" class="nav-item">
+			<li n:if="$user->isInRole('coordinator') or $user->isInRole('admin')" class="nav-item">
 				<a n:href="Coordinator:dashboard" class="nav-link"><i class="fas fa-user-ninja"
 																	  aria-hidden="true"></i> {_templates.coordinator.title}</a></li>
-			<li n:if="$user->isInRole('seamstress')" class="nav-item">
+			<li n:if="$user->isInRole('seamstress') or $user->isInRole('admin')" class="nav-item">
 				<a n:href="Seamstress:dashboard" class="nav-link"><i class="fas fa-cut"
 																	 aria-hidden="true"></i> {_templates.seamstress.title}</a></li>
 			<li n:if="$user->isInRole('admin')" class="nav-item">
