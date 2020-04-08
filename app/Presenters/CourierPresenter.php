@@ -86,7 +86,7 @@ final class CourierPresenter extends BasePresenter
 
     public function handleChangeStatus($id, $status)
     {
-        $this->orderManager->changeStatus($id, $status);
+        $this->orderRepository->changeStatus($id, $status);
         $this->flashMessage("Změna stavu byla nastavena.");
         $this->redirect('this');
     }
