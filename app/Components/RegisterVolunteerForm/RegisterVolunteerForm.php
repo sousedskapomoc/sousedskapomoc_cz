@@ -110,7 +110,7 @@ class RegisterVolunteerFormControl extends Control
         if ($this->role == $this->roleRepository->getByName('courier')) {
             $user->setTransport($this->transportRepository->getById($values->car));
         } else {
-            $user->setTransport($this->transportRepository->getByName("Chůze"));
+            $user->setTransport($this->transportRepository->getByType("Chůze"));
         }
 
         $client = new \GuzzleHttp\Client();
