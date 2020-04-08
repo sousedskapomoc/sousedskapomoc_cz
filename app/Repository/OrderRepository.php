@@ -145,15 +145,25 @@ class OrderRepository extends DoctrineEntityRepository
         return $this->findBy(['stat' => 'delivered']);
     }
 
-    public function assignOrder(Volunteer $courier, $order_id)
+    public function assignOrder($courier, $order_id)
     {
         /** @var Order $order */
         $order = $this->findOneBy(['id' => $order_id]);
-        $order->setStatus('assigned');
-        $courier->addDeliveredOrder($order);
-        $em = $this->getEntityManager();
-        $em->persist($courier);
-        $em->flush();
+        if ($courier instanceof Volunteer) {
+            $order->setStatus('assigned');
+            $courier->addDeliveredOrder($order);
+            $em = $this->getEntityManager();
+            $em->persist($courier);
+            $em->flush();
+        } else {
+            $order->setStatus('new');
+            /** @var Volunteer $dbCourier */
+            $dbCourier = $order->getCourier();
+            $dbCourier->removeDeliveredOrder($order);
+            $em = $this->getEntityManager();
+            $em->persist($dbCourier);
+            $em->flush();
+        }
     }
 
     public function findAllNewInTown($town)

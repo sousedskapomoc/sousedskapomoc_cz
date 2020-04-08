@@ -2,10 +2,18 @@
 
 namespace SousedskaPomoc\Presenters;
 
+use SousedskaPomoc\Repository\OrderRepository;
 use Ublaboo\DataGrid\DataGrid;
 
 class HeadquartersPresenter extends BasePresenter
 {
+    /** @var \SousedskaPomoc\Repository\OrderRepository */
+    protected $orderRepository;
+
+    public function injectOrderRepository(OrderRepository $orderRepository) {
+        $this->orderRepository = $orderRepository;
+    }
+
     public function beforeRender()
     {
         if (!$this->user->isInRole('admin')) {
@@ -19,13 +27,21 @@ class HeadquartersPresenter extends BasePresenter
     {
         $role = $this->presenter->getParameter('role');
 
+        //@TODO - add text filter into address
         $grid = new DataGrid();
         $grid->setDataSource($this->userManager->fetchAllUsersInRole($role));
         $grid->addColumnNumber('id', 'ID uživatele');
         $grid->addColumnText('personName', 'Jméno a příjmení')->setFilterText();
         $grid->addColumnText('personEmail', 'E-mail')->setFilterText();
         $grid->addColumnText('personPhone', 'Telefon')->setFilterText();
-        $grid->addColumnText('address', 'Město')->setFilterText()->setAttribute('city');
+        $grid->addColumnText('address', 'Město')
+            ->setRenderer(function ($item) {
+                if ($item->getAddress() != null) {
+                    return $item->getAddress()->getCity();
+                } else {
+                    return "Not specified";
+                }
+            });
         $grid->addColumnNumber('active', 'Online')->setFilterText();
         $grid->setDefaultPerPage(100);
 
@@ -35,11 +51,19 @@ class HeadquartersPresenter extends BasePresenter
     public function createComponentDemandsDataGrid()
     {
         $grid = new DataGrid();
+
+        //@TODO - add text filter into address
         $grid->setDataSource($this->orderManager->fetchAllWebDemands());
         $grid->addColumnNumber('id', 'ID')->setFilterText();
         $grid->addColumnText('id_volunteers', 'Zadavatel');
-        $grid->addColumnText('town', 'Město')->setFilterText();
-        $grid->addColumnText('delivery_address', 'Adresa')->setFilterText();
+        $grid->addColumnText('delivery_address', 'Adresa')
+            ->setRenderer(function ($item) {
+                if ($item->getDeliveryAddress() != null) {
+                    return $item->getDeliveryAddress()->getCity();
+                } else {
+                    return "Not specified";
+                }
+            });
         $grid->addColumnText('delivery_phone', 'Telefon')->setFilterText();
         $grid->addColumnText('order_items', 'Položky obj.')->setFilterText();
         $grid->addFilterSelect('status', 'Stav obj', []);
@@ -54,13 +78,28 @@ class HeadquartersPresenter extends BasePresenter
     public function createComponentOrdersDataGrid()
     {
         $grid = new DataGrid();
-        $grid->setDataSource($this->orderManager->findAllOrdersData());
+
+        //@TODO - add text filter into address
+        $grid->setDataSource($this->orderRepository->getAll());
         $grid->addColumnNumber('id', 'ID')->setFilterText();
-        $grid->addColumnText('id_volunteers', 'Zadavatel');
-        $grid->addColumnText('town', 'Město')->setFilterText();
-        $grid->addColumnText('delivery_address', 'Adresa')->setFilterText();
+        $grid->addColumnText('owner', 'Zadavatel')
+            ->setRenderer(function ($item) {
+                if ($item->getOwner()->getPersonName() != null) {
+                    return $item->getOwner()->getPersonName();
+                } else {
+                    return "Not specified";
+                }
+            });
+        $grid->addColumnText('delivery_address', 'Adresa')
+            ->setRenderer(function ($item) {
+                if ($item->getDeliveryAddress() != null) {
+                    return $item->getDeliveryAddress()->getCity();
+                } else {
+                    return "Not specified";
+                }
+            });
         $grid->addColumnText('delivery_phone', 'Telefon')->setFilterText();
-        $grid->addColumnText('order_items', 'Položky obj.')->setFilterText();
+        $grid->addColumnText('items', 'Položky obj.')->setFilterText();
 
         $grid->addColumnDateTime('createdAt', 'Datum přidání');
         $grid->addColumnText('status', 'Status')->setFilterText();
