@@ -1,6 +1,5 @@
 <?php
 
-
 namespace SousedskaPomoc\Components;
 
 use Nette\Security\IAuthenticator;
@@ -20,7 +19,7 @@ class Authenticator implements IAuthenticator
     /** @var Passwords */
     private $passwords;
 
-    public function __construct(VolunteerRepository $volunteerRepository,  Passwords $passwords)
+    public function __construct(VolunteerRepository $volunteerRepository, Passwords $passwords)
     {
         $this->volunteerRepository = $volunteerRepository;
         $this->passwords = $passwords;
@@ -40,6 +39,15 @@ class Authenticator implements IAuthenticator
             throw new AuthenticationException('Invalid password.');
         }
 
-        return new Identity($user->getId(), $user->getRole()->getName(), ['personEmail' => $user->getPersonEmail(), 'personPhone'=>$user->getPersonPhone(), 'personName'=>$user->getPersonName(), 'city'=>$user->getAddress()->getCity()]);
+        return new Identity(
+            $user->getId(),
+            $user->getRole()->getName(),
+            [
+                'personEmail' => $user->getPersonEmail(),
+                'personPhone' => $user->getPersonPhone(),
+                'personName' => $user->getPersonName(),
+                'city' => $user->getAddress()->getCity()
+            ]
+        );
     }
 }

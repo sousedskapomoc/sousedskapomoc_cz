@@ -44,8 +44,7 @@ class MigrateDbCommand extends Command
         TransportRepository $transportRepository,
         AddressRepository $addressRepository,
         OrderRepository $orderRepository
-    )
-    {
+    ) {
         parent::__construct();
         $this->database = $database;
         $this->volunteerRepository = $volunteerRepository;
@@ -73,7 +72,7 @@ class MigrateDbCommand extends Command
             $roles = explode(";", $user['role']);
             if (in_array("admin", $roles)) {
                 $newUser->setRole($this->roleRepository->getByName('admin'));
-            } else if (in_array("superuser", $roles)) {
+            } elseif (in_array("superuser", $roles)) {
                 $newUser->setRole($this->roleRepository->getByName("superuser"));
             } else {
                 $newUser->setRole($this->roleRepository->getByName($roles[0]));
@@ -97,11 +96,16 @@ class MigrateDbCommand extends Command
             $newUser->setPassword($user['password']);
             $newUser->setHash($user['emailCode']);
 
-            if ($user['town'] != NULL ) {
+            if ($user['town'] != null) {
                 //Parse user town and make an address from it
                 $client = new \GuzzleHttp\Client();
+
+                $basePath = "https://geocoder.ls.hereapi.com/6.2/geocode.json?city=";
+                $apiKey = "Kl0wK4fx38Pf63EIey6WyrmGEhS2IqaVHkuzx0IQ4-Q";
+
                 /** @var \GuzzleHttp\Psr7\Response $response */
-                $response = $client->get('https://geocoder.ls.hereapi.com/6.2/geocode.json?city=' . $user['town'] . '&jsonattributes=1&gen=9&apiKey=Kl0wK4fx38Pf63EIey6WyrmGEhS2IqaVHkuzx0IQ4-Q');
+                $response = $client->get(
+                    $basePath . $user['town'] . '&jsonattributes=1&gen=9&apiKey='.$apiKey);
                 $content = $response->getBody()->getContents();
 
                 $content = json_decode($content);
@@ -125,7 +129,7 @@ class MigrateDbCommand extends Command
                 $address->setPostalCode($addr->postalCode);
 
 //            $newUser->setAddress($address);
-            $address->setVolunteer($newUser);
+                $address->setVolunteer($newUser);
             }
 
             try {
@@ -188,6 +192,6 @@ class MigrateDbCommand extends Command
 //            $values['pickup_address'] = $o['pickup_address'];
 //            $this->database->table('orders_address')->insert($values);
 //        }
-            return true;
-        }
+        return true;
+    }
 }

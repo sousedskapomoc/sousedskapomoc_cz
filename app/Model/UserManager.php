@@ -34,8 +34,11 @@ final class UserManager
     protected $volunteerRepository;
 
 
-    public function __construct(Nette\Database\Context $database, Passwords $passwords, VolunteerRepository $volunteerRepository)
-    {
+    public function __construct(
+        Nette\Database\Context $database,
+        Passwords $passwords,
+        VolunteerRepository $volunteerRepository
+    ) {
         $this->database = $database;
         $this->passwords = $passwords;
         $this->volunteerRepository = $volunteerRepository;

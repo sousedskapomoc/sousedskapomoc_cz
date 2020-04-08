@@ -27,7 +27,8 @@ final class CourierPresenter extends BasePresenter
         }
     }
 
-    public function injectOrderRepository(OrderRepository $orderRepository) {
+    public function injectOrderRepository(OrderRepository $orderRepository)
+    {
         $this->orderRepository = $orderRepository;
     }
 

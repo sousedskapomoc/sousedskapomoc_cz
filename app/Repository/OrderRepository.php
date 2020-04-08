@@ -49,8 +49,8 @@ class OrderRepository extends DoctrineEntityRepository
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('o')
-            ->from('\SousedskaPomoc\Entities\Order','o')
-            ->leftJoin('o.deliveryAddress','a')
+            ->from('\SousedskaPomoc\Entities\Order', 'o')
+            ->leftJoin('o.deliveryAddress', 'a')
             ->setParameter('town', $town)
             ->andWhere("a.city = :town")
             ->andWhere("o.stat IN ('assigned','picking','delivering')");
@@ -119,7 +119,7 @@ class OrderRepository extends DoctrineEntityRepository
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('o')
-            ->from('\SousedskaPomoc\Entities\Order','o')
+            ->from('\SousedskaPomoc\Entities\Order', 'o')
             ->Where("o.stat IN ('assigned','picking','delivering')");
         $query = $qb->getQuery();
         return $query->getResult();
@@ -129,8 +129,8 @@ class OrderRepository extends DoctrineEntityRepository
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('o')
-            ->from('\SousedskaPomoc\Entities\Order','o')
-            ->leftJoin('o.deliveryAddress','a')
+            ->from('\SousedskaPomoc\Entities\Order', 'o')
+            ->leftJoin('o.deliveryAddress', 'a')
             ->setParameter('courier', $userId)
             ->where("o.courier = :courier")
             ->setParameter('town', $town)
@@ -160,8 +160,8 @@ class OrderRepository extends DoctrineEntityRepository
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('o')
-            ->from('\SousedskaPomoc\Entities\Order','o')
-            ->leftJoin('o.deliveryAddress','a')
+            ->from('\SousedskaPomoc\Entities\Order', 'o')
+            ->leftJoin('o.deliveryAddress', 'a')
             ->where("o.stat = 'new'")
             ->setParameter('town', $town)
             ->andWhere("a.city = :town");
@@ -270,8 +270,8 @@ class OrderRepository extends DoctrineEntityRepository
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('o')
-            ->from('\SousedskaPomoc\Entities\Order','o')
-            ->leftJoin('o.deliveryAddress','a')
+            ->from('\SousedskaPomoc\Entities\Order', 'o')
+            ->leftJoin('o.deliveryAddress', 'a')
             ->where("o.stat IN ('assigned', 'picking', 'delivering')")
             ->setParameter('town', $town)
             ->andWhere("a.city = :town");
@@ -283,8 +283,8 @@ class OrderRepository extends DoctrineEntityRepository
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('o')
-            ->from('\SousedskaPomoc\Entities\Order','o')
-            ->leftJoin('o.deliveryAddress','a')
+            ->from('\SousedskaPomoc\Entities\Order', 'o')
+            ->leftJoin('o.deliveryAddress', 'a')
             ->where("o.stat = 'delivered'")
             ->setParameter('town', $town)
             ->andWhere("a.city = :town");
@@ -309,7 +309,6 @@ class OrderRepository extends DoctrineEntityRepository
         $em = $this->getEntityManager();
         $em->persist($order);
         $em->flush();
-
     }
 
 
@@ -355,7 +354,7 @@ class OrderRepository extends DoctrineEntityRepository
     public function removeCourier($orderId)
     {
         /** @var Order $order */
-        $order = $this->findOneBy(['id'=>$orderId]);
+        $order = $this->findOneBy(['id' => $orderId]);
         /** @var Volunteer $courier */
         $courier = $order->getCourier();
         $courier->removeDeliveredOrder($order);
@@ -367,7 +366,7 @@ class OrderRepository extends DoctrineEntityRepository
     public function remove($id)
     {
         /** @var Order $order */
-        $order = $this->findOneBy(['id'=>$id]);
+        $order = $this->findOneBy(['id' => $id]);
         $order->setStatus('archived');
         $em = $this->getEntityManager();
         $em->persist($order);
@@ -376,6 +375,6 @@ class OrderRepository extends DoctrineEntityRepository
 
     public function fetchDeliveredCount()
     {
-        return $this->count(['stat'=>'delivered']);
+        return $this->count(['stat' => 'delivered']);
     }
 }

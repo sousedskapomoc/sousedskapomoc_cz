@@ -1,8 +1,6 @@
 <?php
 
-
 namespace SousedskaPomoc\Components;
-
 
 use Contributte\FormsBootstrap\BootstrapForm;
 use Contributte\FormsBootstrap\Enums\RenderMode;
@@ -35,14 +33,12 @@ class EditVolunteerForm extends Control
         Translator $translator,
         Passwords $passwords,
         RoleRepository $roleRepository
-    )
-    {
+    ) {
         $this->volunteerRepository = $volunteerRepository;
         $this->translator = $translator;
         $this->passwords = $passwords;
         $this->roleRepository = $roleRepository;
     }
-
 
 
     public function createComponentEditVolunteerForm()
@@ -85,8 +81,11 @@ class EditVolunteerForm extends Control
         }
 
         if (isset($roleDefault)) {
-            $form->addSelect('role', $this->translator->translate('forms.registerCoordinator.role'),
-                $roles)
+            $form->addSelect(
+                'role',
+                $this->translator->translate('forms.registerCoordinator.role'),
+                $roles
+            )
                 ->setDefaultValue($roleDefault);
         }
 
@@ -127,7 +126,7 @@ class EditVolunteerForm extends Control
         $finalRoles = [];
 
         if (isset($values['role'])) {
-            switch($values['role']) {
+            switch ($values['role']) {
                 case 0:
                     $finalRole = $this->roleRepository->getByName('courier');
                     break;
@@ -148,7 +147,7 @@ class EditVolunteerForm extends Control
             $finalRole = $this->roleRepository->getByName('superuser');
         }
         if ($this->presenter->user->isInRole('admin')) {
-            $finalRole= $this->roleRepository->getByName('admin');
+            $finalRole = $this->roleRepository->getByName('admin');
         }
         if ($values->password == null) {
             unset($values->password);
@@ -177,8 +176,7 @@ class EditVolunteerForm extends Control
 
     public function render()
     {
-        $this->template->setFile(__DIR__.'/edit.latte');
+        $this->template->setFile(__DIR__ . '/edit.latte');
         $this->template->render();
     }
-
 }
