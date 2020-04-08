@@ -10,8 +10,10 @@ use Nette\Security\Passwords;
 use Contributte\FormsBootstrap\BootstrapForm;
 use Contributte\FormsBootstrap\Enums\RenderMode;
 use Nette\Database\Connection;
+use SousedskaPomoc\Components\IRegisterVolunteerFormInterface;
 use SousedskaPomoc\Components\Mail;
 use SousedskaPomoc\Model\UserManager;
+use SousedskaPomoc\Repository\RoleRepository;
 
 final class HomepagePresenter extends BasePresenter
 {
@@ -32,12 +34,26 @@ final class HomepagePresenter extends BasePresenter
 
     protected $id;
 
+    /** @var \SousedskaPomoc\Components\IRegisterVolunteerFormInterface */
+    protected $registerVolunteerForm;
+
+    /** @var \SousedskaPomoc\Repository\RoleRepository */
+    protected $roleRepository;
+
 
     public function beforeRender()
     {
         if ($this->user->isLoggedIn()) {
             $this->redirect("System:dashboard");
         }
+    }
+
+    public function injectRoleRepository(RoleRepository $roleRepository) {
+        $this->roleRepository = $roleRepository;
+    }
+
+    public function injectRegisterVolunteerFormFactory(IRegisterVolunteerFormInterface $registerVolunteerForm) {
+        $this->registerVolunteerForm = $registerVolunteerForm;
     }
 
 
@@ -67,92 +83,32 @@ final class HomepagePresenter extends BasePresenter
 
     public function createComponentRegisterAsCoordinator()
     {
-        $form = new BootstrapForm;
-        $form->renderMode = RenderMode::VERTICAL_MODE;
-        $form->addHidden('role', 'coordinator');
-
-        $form->addText('personName', $this->translator->translate('forms.registerCoordinator.nameLabel'))
-            ->setRequired($this->translator->translate('forms.registerCoordinator.nameRequired'));
-        $form->addText('personPhone', $this->translator->translate('forms.registerCoordinator.phoneLabel'))
-            ->setRequired($this->translator->translate('forms.registerCoordinator.phoneRequired'));
-        $form->addEmail('personEmail', $this->translator->translate('forms.registerCoordinator.mailLabel'))
-            ->setRequired($this->translator->translate('forms.registerCoordinator.mailRequired'));
-
-        $form->addText('town', $this->translator->translate('forms.registerCoordinator.townLabel'))
-            ->setRequired($this->translator->translate('forms.registerCoordinator.townRequired'));
-
-        $form->addSubmit('coordinatorRegFormSubmit', $this->translator->translate('forms.registerCoordinator.button'));
-        $form->onSuccess[] = [$this, "processRegistrationCoordinator"];
-
-        return $form;
+        /** @var \SousedskaPomoc\Entities\Role $role */
+        $role = $this->roleRepository->getByName('coordinator');
+        return $this->registerVolunteerForm->create($role);
     }
 
     public function createComponentRegisterAsMedicalCoordinator()
     {
-        $form = new BootstrapForm;
-        $form->renderMode = RenderMode::VERTICAL_MODE;
-        $form->addHidden('role', 'medicalCoordinator');
-
-        $form->addText('personName', $this->translator->translate('forms.registerCoordinator.nameLabel'))
-            ->setRequired($this->translator->translate('forms.registerCoordinator.nameRequired'));
-        $form->addText('personPhone', 'Telefon do ordinace')
-            ->setRequired($this->translator->translate('forms.registerCoordinator.phoneRequired'));
-        $form->addEmail('personEmail', $this->translator->translate('forms.registerCoordinator.mailLabel'))
-            ->setRequired($this->translator->translate('forms.registerCoordinator.mailRequired'));
-
-        $form->addText('town', "Město kde je lékařské zařízení")
-            ->setRequired($this->translator->translate('forms.registerCoordinator.townRequired'));
-
-        $form->addSubmit('coordinatorRegFormSubmit', $this->translator->translate('forms.registerCoordinator.button'));
-        $form->onSuccess[] = [$this, "processRegistrationMedical"];
-
-        return $form;
+        /** @var \SousedskaPomoc\Entities\Role $role */
+        $role = $this->roleRepository->getByName('medicalCoordinator');
+        return $this->registerVolunteerForm->create($role);
     }
 
 
     public function createComponentRegisterAsSeamstress()
     {
-        $form = new BootstrapForm;
-        $form->renderMode = RenderMode::VERTICAL_MODE;
-        $form->addHidden('role', 'seamstress');
-
-        $form->addText('personName', $this->translator->translate('forms.registerCoordinator.nameLabel'))
-            ->setRequired($this->translator->translate('forms.registerCoordinator.nameRequired'));
-        $form->addText('personPhone', $this->translator->translate('forms.registerCoordinator.phoneLabel'))
-            ->setRequired($this->translator->translate('forms.registerCoordinator.phoneRequired'));
-        $form->addEmail('personEmail', $this->translator->translate('forms.registerCoordinator.mailLabel'))
-            ->setRequired($this->translator->translate('forms.registerCoordinator.mailRequired'));
-
-        $form->addText('town', $this->translator->translate('forms.registerCoordinator.townLabel'))
-            ->setRequired($this->translator->translate('forms.registerCoordinator.townRequired'));
-
-        $form->addSubmit('coordinatorRegFormSubmit', $this->translator->translate('forms.registerCoordinator.button'));
-        $form->onSuccess[] = [$this, "processRegistrationSeamstress"];
-
-        return $form;
+        /** @var \SousedskaPomoc\Entities\Role $role */
+        $role = $this->roleRepository->getByName('seamstress');
+        return $this->registerVolunteerForm->create($role);
     }
 
 
     public function createComponentRegisterAsOperator()
     {
-        $form = new BootstrapForm;
-        $form->renderMode = RenderMode::VERTICAL_MODE;
-        $form->addHidden('role', 'operator');
-
-        $form->addText('personName', $this->translator->translate('forms.registerCoordinator.nameLabel'))
-            ->setRequired($this->translator->translate('forms.registerCoordinator.nameRequired'));
-        $form->addText('personPhone', $this->translator->translate('forms.registerCoordinator.phoneLabel'))
-            ->setRequired($this->translator->translate('forms.registerCoordinator.phoneRequired'));
-        $form->addEmail('personEmail', $this->translator->translate('forms.registerCoordinator.mailLabel'))
-            ->setRequired($this->translator->translate('forms.registerCoordinator.mailRequired'));
-
-        $form->addText('town', $this->translator->translate('forms.registerCoordinator.townLabel'))
-            ->setRequired($this->translator->translate('forms.registerCoordinator.townRequired'));
-
-        $form->addSubmit('coordinatorRegFormSubmit', $this->translator->translate('forms.registerCoordinator.button'));
-        $form->onSuccess[] = [$this, "processRegistrationOperator"];
-
-        return $form;
+        /** @var \SousedskaPomoc\Entities\Role $role */
+        $role = $this->roleRepository->getByName('operator');
+        return $this->registerVolunteerForm->create($role);
     }
 
     public function createComponentPostDemand()
@@ -178,36 +134,9 @@ final class HomepagePresenter extends BasePresenter
 
     public function createComponentAddGovernmentCoordinator()
     {
-        $form = new BootstrapForm;
-        $form->addText('address', 'Město ve kterém jste');
-        $form->addHidden('role')
-            ->setDefaultValue('superuser');
-        $form->addText('personName', 'Jméno a přijmení');
-        $form->addText('personPhone', 'Telefon');
-        $form->addText('personEmail', 'E-mail');
-        $form->addSubmit('demandFormSubmit', 'Zaregistrovat');
-        $form->onSuccess[] = [$this, "addSuper"];
-        return $form;
-    }
-
-    public function addSuper(BootstrapForm $form)
-    {
-        $values = $form->getValues();
-        $values->town = $values->address;
-        unset($values->address);
-
-        if (!$this->userManager->check('personEmail', $values->personEmail)) {
-            $user = $this->userManager->register($values);
-            $hash = md5($user['personEmail']);
-            $link = $this->link('//Homepage:changePassword', $hash);
-            $this->userManager->setUserCode($user['id'], $hash);
-            $this->mail->sendSuperuserMail($values->personEmail, $link);
-
-            $this->flashMessage("Kontakt uložen. Budeme Vás kontaktovat pro ověření totožnosti.");
-            $this->redirect("RegistrationFinished");
-        } else {
-            $form->addError($this->translator->translate('messages.registration.fail'));
-        }
+        /** @var \SousedskaPomoc\Entities\Role $role */
+        $role = $this->roleRepository->getByName('superuser');
+        return $this->registerVolunteerForm->create($role);
     }
 
     public function createComponentChangePasswordForm()
@@ -257,126 +186,9 @@ final class HomepagePresenter extends BasePresenter
 
     public function createComponentRegisterAsCourier()
     {
-        $cars = [
-            1 => $this->translator->translate('forms.cars.small'),
-            2 => $this->translator->translate('forms.cars.big'),
-            3 => $this->translator->translate('forms.cars.smallTruck'),
-            4 => $this->translator->translate('forms.cars.bigTruck'),
-            5 => $this->translator->translate('forms.cars.bike'),
-            6 => $this->translator->translate('forms.cars.motorcycle'),
-            7 => $this->translator->translate('forms.cars.walk'),
-        ];
-
-        $form = new BootstrapForm;
-        $form->renderMode = RenderMode::VERTICAL_MODE;
-        $form->addHidden('role', 'courier');
-
-        $form->addText('personName', $this->translator->translate('forms.registerCoordinator.nameLabel'))
-            ->setRequired($this->translator->translate('forms.registerCoordinator.nameRequired'));
-        $form->addText('personPhone', $this->translator->translate('forms.registerCoordinator.phoneLabel'))
-            ->setRequired($this->translator->translate('forms.registerCoordinator.phoneRequired'));
-        $form->addEmail('personEmail', $this->translator->translate('forms.registerCoordinator.mailLabel'))
-            ->setRequired($this->translator->translate('forms.registerCoordinator.mailRequired'));
-
-        $form->addText('town', $this->translator->translate('forms.registerCoordinator.townLabel'))
-            ->setRequired($this->translator->translate('forms.registerCoordinator.townRequired'));
-
-        $form->addSelect('car', $this->translator->translate('forms.registerCoordinator.carLabel'), $cars)
-            ->setRequired($this->translator->translate('forms.registerCoordinator.carRequired'));
-
-        $form->addSubmit('coordinatorRegFormSubmit', $this->translator->translate('forms.registerCoordinator.button'));
-        $form->onSuccess[] = [$this, "processRegistrationCourier"];
-
-        return $form;
-    }
-
-
-    public function processRegistrationSeamstress(BootstrapForm $form)
-    {
-        $values = $form->getValues();
-        if (!$this->userManager->check('personEmail', $values->personEmail)) {
-            $user = $this->userManager->register($values);
-            $hash = md5($user['personEmail']);
-            $link = $this->link('//Homepage:changePassword', $hash);
-            $this->userManager->setUserCode($user['id'], $hash);
-            $this->mail->sendSeamstressMail($values->personEmail, $link);
-
-            $this->flashMessage($this->translator->translate('messages.registration.success'));
-            $this->redirect("RegistrationFinished");
-        } else {
-            $form->addError($this->translator->translate('messages.registration.fail'));
-        }
-    }
-
-
-    public function processRegistrationCourier(BootstrapForm $form)
-    {
-        $values = $form->getValues();
-        if (!$this->userManager->check('personEmail', $values->personEmail)) {
-            $user = $this->userManager->register($values);
-            $hash = md5($user['personEmail']);
-            $link = $this->link('//Homepage:changePassword', $hash);
-            $this->userManager->setUserCode($user['id'], $hash);
-            $this->mail->sendCourierMail($values->personEmail, $link);
-
-            $this->flashMessage($this->translator->translate('messages.registration.success'));
-            $this->redirect("RegistrationFinished");
-        } else {
-            $form->addError($this->translator->translate('messages.registration.fail'));
-        }
-    }
-
-
-    public function processRegistrationOperator(BootstrapForm $form)
-    {
-        $values = $form->getValues();
-        if (!$this->userManager->check('personEmail', $values->personEmail)) {
-            $user = $this->userManager->register($values);
-            $hash = md5($user['personEmail']);
-            $link = $this->link('//Homepage:changePassword', $hash);
-            $this->userManager->setUserCode($user['id'], $hash);
-            $this->mail->sendOperatorMail($values->personEmail, $link);
-
-            $this->flashMessage($this->translator->translate('messages.registration.success'));
-            $this->redirect("RegistrationFinished");
-        } else {
-            $form->addError($this->translator->translate('messages.registration.fail'));
-        }
-    }
-
-
-    public function processRegistrationCoordinator(BootstrapForm $form)
-    {
-        $values = $form->getValues();
-        if (!$this->userManager->check('personEmail', $values->personEmail)) {
-            $user = $this->userManager->register($values);
-            $hash = md5($user['personEmail']);
-            $link = $this->link('//Homepage:changePassword', $hash);
-            $this->userManager->setUserCode($user['id'], $hash);
-            $this->mail->sendCoordinatorMail($values->personEmail, $link);
-
-            $this->flashMessage($this->translator->translate('messages.registration.success'));
-            $this->redirect("RegistrationFinished");
-        } else {
-            $form->addError($this->translator->translate('messages.registration.fail'));
-        }
-    }
-
-    public function processRegistrationMedical(BootstrapForm $form)
-    {
-        $values = $form->getValues();
-        if (!$this->userManager->check('personEmail', $values->personEmail)) {
-            $user = $this->userManager->register($values);
-            $hash = md5($user['personEmail']);
-            $link = $this->link('//Homepage:changePassword', $hash);
-            $this->userManager->setUserCode($user['id'], $hash);
-            $this->mail->sendMedicMail($values->personEmail, $link);
-
-            $this->flashMessage($this->translator->translate('messages.registration.success'));
-            $this->redirect("RegistrationFinished");
-        } else {
-            $form->addError($this->translator->translate('messages.registration.fail'));
-        }
+        /** @var \SousedskaPomoc\Entities\Role $role */
+        $role = $this->roleRepository->getByName('courier');
+        return $this->registerVolunteerForm->create($role);
     }
 
 
