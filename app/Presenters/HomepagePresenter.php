@@ -48,11 +48,13 @@ final class HomepagePresenter extends BasePresenter
         }
     }
 
-    public function injectRoleRepository(RoleRepository $roleRepository) {
+    public function injectRoleRepository(RoleRepository $roleRepository)
+    {
         $this->roleRepository = $roleRepository;
     }
 
-    public function injectRegisterVolunteerFormFactory(IRegisterVolunteerFormInterface $registerVolunteerForm) {
+    public function injectRegisterVolunteerFormFactory(IRegisterVolunteerFormInterface $registerVolunteerForm)
+    {
         $this->registerVolunteerForm = $registerVolunteerForm;
     }
 

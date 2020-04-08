@@ -281,13 +281,14 @@ class Volunteer
         if (!$this->createdOrders->contains($order)) {
             $this->createdOrders[] = $order;
             /** @var Order $order */
-            $order->setOwner($this);;
+            $order->setOwner($this);
         }
         return $this;
     }
 
-    public function removeCreatedOrder($order): self {
-        if($this->createdOrders->contains($order)) {
+    public function removeCreatedOrder($order): self
+    {
+        if ($this->createdOrders->contains($order)) {
             $this->createdOrders->removeElement($order);
             /** @var Order $order */
             $order->setOwner(null);
@@ -314,13 +315,14 @@ class Volunteer
         if (!$this->deliveredOrders->contains($order)) {
             $this->deliveredOrders[] = $order;
             /** @var Order $order */
-            $order->setCourier($this);;
+            $order->setCourier($this);
         }
         return $this;
     }
 
-    public function removeDeliveredOrder($order): self {
-        if($this->deliveredOrders->contains($order)) {
+    public function removeDeliveredOrder($order): self
+    {
+        if ($this->deliveredOrders->contains($order)) {
             $this->deliveredOrders->removeElement($order);
             /** @var Order $order */
             $order->setCourier(null);

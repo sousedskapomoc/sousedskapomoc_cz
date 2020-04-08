@@ -13,7 +13,7 @@ final class OrderManager
     /** @var \Nette\Database\Context */
     protected $database;
 
-    /** @var  \SousedskaPomoc\Repository\OrderRepository*/
+    /** @var  \SousedskaPomoc\Repository\OrderRepository */
     protected $orderRepository;
 
     /** @var \SousedskaPomoc\Repository\VolunteerRepository */
@@ -28,9 +28,8 @@ final class OrderManager
     public function __construct(
         Nette\Database\Context $database,
         OrderRepository $orderRepository,
-    VolunteerRepository $volunteerRepository
-    )
-    {
+        VolunteerRepository $volunteerRepository
+    ) {
         $this->database = $database;
         $this->orderRepository = $orderRepository;
         $this->volunteerRepository = $volunteerRepository;

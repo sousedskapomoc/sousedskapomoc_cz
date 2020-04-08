@@ -1,6 +1,5 @@
 <?php
 
-
 namespace SousedskaPomoc\Components;
 
 use SousedskaPomoc\Entities\Role;
