@@ -9,59 +9,61 @@
 		<table class="table table-bordered table-condensed">
 			<tr>
 				<th>{_templates.orderDetail.id}</th>
-				<td>{$order->id}</td>
+				<td>{$order->getId()}</td>
 			</tr>
 			<tr>
 				<th>{_templates.orderDetail.status}</th>
-				<td>{$order->status|humanFriendlyStatus}</td>
+				<td>{$order->getStatus()|humanFriendlyStatus}</td>
 			</tr>
-			<tr>
+			{if $order->getDeliveryAddress()}
+            <tr>
 				<th>{_templates.orderDetail.address}</th>
-				<td><a href="https://www.google.com/maps/search/{$order->delivery_address}"
-					   target="_blank">{$order->delivery_address}</a></td>
+				<td><a href="https://www.google.com/maps/search/{$order->getDeliveryAddress()->getStreet()}"
+					   target="_blank">{$order->getDeliveryAddress()->getStreet() ?? "Nezadano"}</a></td>
 			</tr>
+            {/if}
 			<tr>
 				<th>{_templates.orderDetail.items}</th>
-				<td>{nl2br($order->order_items)|noescape}</td>
+				<td>{nl2br($order->getItems())|noescape}</td>
 			</tr>
 			<tr>
 				<th>{_templates.orderDetail.note}</th>
-				<td>{$order->note}</td>
+				<td>{$order->getCustomerNote()}</td>
 			</tr>
 			<tr>
 				<th>Telefon příjemce</th>
-				<td>{$order->delivery_phone ?? null}</td>
+				<td>{$order->getDeliveryPhone() ?? null}</td>
 			</tr>
 			<tr>
 				<th>{_templates.orderDetail.created}</th>
-				<td>{date("d.n.Y H:i",$order->createdAt->getTimestamp())}</td>
+				<td>{date("d.m.Y H:i",$order->getCreatedAt()->getTimestamp())}</td>
 			</tr>
 			<tr>
 				<th>{_templates.orderDetail.lastUpdate)}</th>
-				<td>{date("d.n.Y H:i",$order->updatedAt->getTimestamp())}</td>
+				<td>{date("d.m.Y H:i",$order->getUpdatedAt()->getTimestamp())}</td>
 			</tr>
 			<tr>
 				<th>{_templates.orderDetail.whoDelivers}</th>
-				<td>{$order->courier_id|fetchUser} - {$order->courier_id|fetchPhone}</td>
+				<td>{$order->getCourier()->getPersonName()} - {$order->getCourier()->getPersonPhone()}</td>
 			</tr>
-			<tr>
-				<th>{_templates.orderDetail.whoAssigned}</th>
-				<td>{$order->operator_id|fetchUser} - {$order->operator_id|fetchPhone}</td>
-			</tr>
+{*			<tr>*}
+{*				<th>{_templates.orderDetail.whoAssigned}</th>*}
+{*				<td>{$order->operator_id|fetchUser} - {$order->operator_id|fetchPhone}</td>*}
+{*			</tr>*}
 			<tr n:if="$user->isInRole('admin')">
 				<th>Změna stavu objednávky</th>
 				<td>
-					<form action="{link updateOrderStatus! orderId => $order->id}" method="post" onchange="this.submit();"
+					<form action="{link updateOrderStatus! orderId => $order->getId()}" method="post" onchange="this.submit();"
 						  class="form form-vertical">
 						<div class="form-group">
 							<label for="orderStatus"><strong>Nastavit stav:</strong></label>
 							<select name="orderStatus" class="form-control">
 								<option value="picking"
-										{if $order->status == 'picking'}selected="selected"{/if}>{_templates.order.picking}</option>
+										{if $order->getStatus() == 'picking'}selected="selected"{/if}>{_templates.order.picking}</option>
 								<option value="delivering"
-										{if $order->status == 'delivering'}selected="selected"{/if}>{_templates.order.delivering}</option>
+										{if $order->getStatus() == 'delivering'}selected="selected"{/if}>{_templates.order.delivering}</option>
 								<option value="delivered"
-										{if $order->status == 'delivered'}selected="selected"{/if}>{_templates.order.delivered}</option>
+										{if $order->getStatus() == 'delivered'}selected="selected"{/if}>{_templates.order.delivered}</option>
 							</select>
 						</div>
 					</form>
@@ -70,9 +72,9 @@
 			<tr n:if="$user->isInRole('admin')">
 				<th>Změna přiřazení města</th>
 				<td>
-					<form action="{link updateTown! orderId => $order->id}" method="post"
+					<form action="{link updateTown! orderId => $order->getId()}" method="post"
 						  class="form form-vertical">
-					<input type="text" name="town" value="{$order->town}" />
+					<input type="text" name="town" value="{$order->getDeliveryAddress()->getCity()}" />
 						<input type="submit" value="Uložit" class="btn btn-sm btn-primary btn-default" />
 				</td>
 			</tr>
