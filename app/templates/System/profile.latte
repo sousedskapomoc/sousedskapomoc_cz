@@ -10,20 +10,7 @@
 	<table class="table table-hover">
 		<tr>
 			<td>Role</td>
-			<td>
-				{if $user->isInRole('courier')}
-					{_templates.courier.title}
-				{/if}
-				{if $user->isInRole('coordinator')}
-					{_templates.coordinator.title}
-				{/if}
-				{if $user->isInRole('seamstress')}
-					{_templates.seamstress.title}
-				{/if}
-				{if $user->isInRole('operator')}
-					{_templates.operator.title}
-				{/if}
-			</td>
+			<td>{$userDetails->getRole()->getName()}</td>
 		</tr>
 		<tr>
 			<td>Jméno</td>
@@ -43,23 +30,7 @@
 		</tr>
 		<tr n:if="$user->isInRole('courier') && $userDetails->getTransport()->getId()">
 			<td>Dopravní prostředek:</td>
-			<td>
-				{if $userDetails->getTransport()->getId() == 1}
-					{_forms.cars.small}
-				{elseif $userDetails->getTransport()->getId() == 2}
-					{_forms.cars.big}
-				{elseif $userDetails->getTransport()->getId() == 3}
-					{_forms.cars.smallTruck}
-				{elseif $userDetails->getTransport()->getId() == 4}
-					{_forms.cars.bigTruck}
-				{elseif $userDetails->getTransport()->getId() == 5}
-					{_forms.cars.bike}
-				{elseif $userDetails->getTransport()->getId() == 6}
-					{_forms.cars.motorcycle}
-				{elseif $userDetails->getTransport()->getId() == 7}
-					{_forms.cars.walk}
-				{/if}
-			</td>
+			<td>{$userDetails->getTransport()->getName()}</td>
 		</tr>
 	</table>
 </div>
