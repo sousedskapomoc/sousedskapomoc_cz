@@ -134,12 +134,18 @@ class RegisterVolunteerFormControl extends Control
         if ($locationId != null) {
             /** @var Address $address */
             $address = new Address();
-            $address->setCity($addr->city);
+            if (isset($addr->city)) {
+                $address->setCity($addr->city);
+            }
             $address->setState($addr->state);
             $address->setLocationId($locationId);
             $address->setCountry($addr->country);
-            $address->setDistrict($addr->county);
-            $address->setPostalCode($addr->postalCode);
+            if (isset($addr->county)) {
+                $address->setDistrict($addr->county);
+            }
+            if (isset($addr->postalCode)) {
+                $address->setPostalCode($addr->postalCode);
+            }
             $address->setLongitude($gps->longitude);
             $address->setLatitude($gps->latitude);
         }

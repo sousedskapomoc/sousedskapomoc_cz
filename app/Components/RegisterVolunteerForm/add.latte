@@ -27,6 +27,12 @@
                     {input personPhone class => 'form-control'}
                     {input locationId class=> 'locationId'}
                 </div>
+                {if $role->getName() == 'courier'}
+                    <div class="form-group">
+                        {label car}
+                        {input car}
+                    </div>
+                {/if}
                 <div class="form-group">
                     {input addVolunteerFormSubmit}
                 </div>
