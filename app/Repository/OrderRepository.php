@@ -210,16 +210,26 @@ class OrderRepository extends DoctrineEntityRepository
 
     public function findAllLive()
     {
-        $em = $this->getEntityManager();
-        $query = $em->createQuery("SELECT o FROM SousedskaPomoc\Entities\Orders o WHERE o.stat = 'assigned' OR o.stat = 'picking' OR o.stat = 'delivering'");
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('o')
+            ->from('\SousedskaPomoc\Entities\Order','o')
+            ->Where("o.stat IN ('assigned','picking','delivering')");
+        $query = $qb->getQuery();
         return $query->getResult();
     }
 
     public function findAllLiveByCourierByTown($town, $userId)
     {
-        $em = $this->getEntityManager();
-        //@TODO - add filtering by town
-        $query = $em->createQuery("SELECT o FROM SousedskaPomoc\Entities\Order o WHERE o.courier = '$userId' AND o.stat IN ('assigned','picking','delivering')");
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('o')
+            ->from('\SousedskaPomoc\Entities\Order','o')
+            ->leftJoin('o.deliveryAddress','a')
+            ->setParameter('courier', $userId)
+            ->where("o.courier = :courier")
+            ->setParameter('town', $town)
+            ->andWhere("a.city = :town")
+            ->andWhere("o.stat IN ('assigned','picking','delivering')");
+        $query = $qb->getQuery();
         return $query->getResult();
     }
 
@@ -241,22 +251,40 @@ class OrderRepository extends DoctrineEntityRepository
 
     public function findAllNewInTown($town)
     {
-        $em = $this->getEntityManager();
-        $query = $em->createQuery("SELECT o FROM Order o JOIN o.deliveryAddress x WHERE x.city = '$town' AND o.stat = 'new'");
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('o')
+            ->from('\SousedskaPomoc\Entities\Order','o')
+            ->leftJoin('o.deliveryAddress','a')
+            ->where("o.stat = 'new'")
+            ->setParameter('town', $town)
+            ->andWhere("a.city = :town");
+        $query = $qb->getQuery();
         return $query->getResult();
     }
 
     public function findAllLiveInTown($town)
     {
-        $em = $this->getEntityManager();
-        $query = $em->createQuery("SELECT o FROM Order o JOIN o.deliveryAddress x WHERE x.city = '$town' AND o.stat IN ('assigned','picking','delivering')");
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('o')
+            ->from('\SousedskaPomoc\Entities\Order','o')
+            ->leftJoin('o.deliveryAddress','a')
+            ->where("o.stat IN ('assigned', 'picking', 'delivering')")
+            ->setParameter('town', $town)
+            ->andWhere("a.city = :town");
+        $query = $qb->getQuery();
         return $query->getResult();
     }
 
     public function findAllDeliveredInTown($town)
     {
-        $em = $this->getEntityManager();
-        $query = $em->createQuery("SELECT o FROM Order o JOIN o.deliveryAddress x WHERE x.city = '$town' AND o.stat = 'delivered'");
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('o')
+            ->from('\SousedskaPomoc\Entities\Order','o')
+            ->leftJoin('o.deliveryAddress','a')
+            ->where("o.stat = 'delivered'")
+            ->setParameter('town', $town)
+            ->andWhere("a.city = :town");
+        $query = $qb->getQuery();
         return $query->getResult();
     }
 
