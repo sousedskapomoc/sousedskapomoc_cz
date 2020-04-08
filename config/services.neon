@@ -11,7 +11,6 @@ services:
 	# Components
 	- SousedskaPomoc\Components\Mail
 	- SousedskaPomoc\Components\IRegisterVolunteerFormInterface
-	- SousedskaPomoc\Components\IRegisterVolunteerFormInterface
 	- SousedskaPomoc\Components\IEditVolunteerFormInterface
 	# Repositories
 	addressRepository:
