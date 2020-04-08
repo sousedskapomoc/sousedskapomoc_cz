@@ -38,12 +38,6 @@ final class HomepagePresenter extends BasePresenter
 
     protected $id;
 
-    /** @var \SousedskaPomoc\Components\IRegisterVolunteerFormInterface */
-    protected $registerVolunteerForm;
-
-    /** @var \SousedskaPomoc\Repository\RoleRepository */
-    protected $roleRepository;
-
 
     public function injectRoleRepository(RoleRepository $roleRepository)
     {
