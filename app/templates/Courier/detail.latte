@@ -66,9 +66,9 @@
 			<tr n:if="$user->isInRole('admin')">
 				<th>Změna přiřazení města</th>
 				<td>
-					<form action="{link updateTown! orderId => $order->id}" method="post"
+					<form action="{link updateTown! orderId => $order->getId()}" method="post"
 						  class="form form-vertical">
-						<input type="text" name="town" value="{$order->town}" />
+						<input type="text" name="town" value="{$order->getDeliveryAddress()->getCity()}" />
 						<input type="submit" value="Uložit" class="btn btn-sm btn-primary btn-default" />
 				</td>
 			</tr>
