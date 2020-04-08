@@ -36,6 +36,12 @@ class AddressRepository extends DoctrineEntityRepository
     {
         $addr = $this->getByLocationId($address->getLocationId());
         if ($addr instanceof Address) {
+            foreach ($address->getVolunteers() as $volunteer) {
+                $addr->addVolunteer($volunteer);
+            }
+            $em = $this->getEntityManager();
+            $em->persist($addr);
+            $em->flush();
             return $addr;
         } else {
             $em = $this->getEntityManager();
