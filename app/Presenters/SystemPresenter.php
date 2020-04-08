@@ -18,7 +18,8 @@ final class SystemPresenter extends BasePresenter
     /** @var \SousedskaPomoc\Components\IEditVolunteerFormInterface */
     protected $editVolunteerForm;
 
-    public function injectEditVolunteerForm (IEditVolunteerFormInterface $editVolunteerForm) {
+    public function injectEditVolunteerForm(IEditVolunteerFormInterface $editVolunteerForm)
+    {
         $this->editVolunteerForm = $editVolunteerForm;
     }
 

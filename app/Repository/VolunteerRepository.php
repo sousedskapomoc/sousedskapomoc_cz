@@ -107,7 +107,8 @@ class VolunteerRepository extends DoctrineEntityRepository
         }
     }
 
-    public function save($user) {
+    public function save($user)
+    {
         $em = $this->getEntityManager();
         $em->persist($user);
         $em->flush();
@@ -167,7 +168,7 @@ class VolunteerRepository extends DoctrineEntityRepository
         SousedskaPomoc\Entities\Volunteer u JOIN u.address x
         WHERE
         x.city = '$town'
-        AND 
+        AND
         u.online = 1");
         return $query->getResult();
     }
@@ -175,13 +176,12 @@ class VolunteerRepository extends DoctrineEntityRepository
     public function fetchPhoneNumber($courierId)
     {
         /** @var Volunteer $courier */
-        $courier = $this->findOneBy(['id'=>$courierId]);
+        $courier = $this->findOneBy(['id' => $courierId]);
         return $courier->getPersonPhone() ?? 'Nezadán';
     }
 
     public function findAllOnlineUsers()
     {
-        return $this->findBy(['online'=>1]);
+        return $this->findBy(['online' => 1]);
     }
-
 }

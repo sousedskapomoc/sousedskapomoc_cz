@@ -1,8 +1,6 @@
 <?php
 
-
 namespace SousedskaPomoc\Components;
-
 
 use Contributte\FormsBootstrap\BootstrapForm;
 use Contributte\FormsBootstrap\Enums\RenderMode;
@@ -54,8 +52,7 @@ class RegisterVolunteerFormControl extends Control
         RoleRepository $roleRepository,
         Mail $mail,
         AddressRepository $addrRepository
-    )
-    {
+    ) {
         $this->volunteerRepository = $volunteerRepository;
         $this->translator = $translator;
         $this->passwords = $passwords;
@@ -65,7 +62,6 @@ class RegisterVolunteerFormControl extends Control
         $this->mail = $mail;
         $this->addressRepository = $addrRepository;
     }
-
 
 
     public function createComponentRegisterVolunteerForm()
@@ -84,9 +80,12 @@ class RegisterVolunteerFormControl extends Control
             ->setRequired($this->translator->translate('forms.registerCoordinator.mailRequired'));
         $form->addHidden('locationId');
 
-        if ($this->role == $this->roleRepository->getByName('courier') ) {
-            $form->addSelect('car', $this->translator->translate('forms.registerCoordinator.carLabel'),
-                $this->transportRepository->getAllAsArray())
+        if ($this->role == $this->roleRepository->getByName('courier')) {
+            $form->addSelect(
+                'car',
+                $this->translator->translate('forms.registerCoordinator.carLabel'),
+                $this->transportRepository->getAllAsArray()
+            )
                 ->setRequired($this->translator->translate('forms.registerCoordinator.carRequired'));
         }
 
@@ -116,13 +115,15 @@ class RegisterVolunteerFormControl extends Control
 
         $client = new \GuzzleHttp\Client();
         /** @var \GuzzleHttp\Psr7\Response $response */
-        $response = $client->get('https://geocoder.ls.hereapi.com/6.2/geocode.json?locationid='. $values->locationId . '&jsonattributes=1&gen=9&apiKey=Kl0wK4fx38Pf63EIey6WyrmGEhS2IqaVHkuzx0IQ4-Q');
+        $baseUri = "https://geocoder.ls.hereapi.com/6.2/geocode.json?locationid=";
+        $apiKey = "Kl0wK4fx38Pf63EIey6WyrmGEhS2IqaVHkuzx0IQ4-Q";
+        $response = $client->get($baseUri . $values->locationId . '&jsonattributes=1&gen=9&apiKey=' . $apiKey);
         $content = $response->getBody()->getContents();
 
         $content = json_decode($content);
 
         //Address information
-        $addr= $content->response->view['0']->result['0']->location->address;
+        $addr = $content->response->view['0']->result['0']->location->address;
 
         //HERE maps Id
         $locationId = $content->response->view['0']->result['0']->location->locationId;
@@ -130,7 +131,7 @@ class RegisterVolunteerFormControl extends Control
         //array with latitude and longtitude
         $gps = $content->response->view['0']->result['0']->location->displayPosition;
 
-        if ($locationId != NULL ) {
+        if ($locationId != null) {
             /** @var Address $address */
             $address = new Address();
             $address->setCity($addr->city);
@@ -144,10 +145,9 @@ class RegisterVolunteerFormControl extends Control
         }
 
 
-
         $link = $this->getPresenter()->link('//Homepage:changePassword', $user->getHash());
         //@TODO-Add sending mail for medical person and for government user
-        switch ($this->role->getName()){
+        switch ($this->role->getName()) {
             case 'courier':
                 $this->mail->sendCourierMail($values->personEmail, $link);
                 break;
@@ -178,9 +178,8 @@ class RegisterVolunteerFormControl extends Control
 
     public function render()
     {
-        $this->template->setFile(__DIR__.'/add.latte');
+        $this->template->setFile(__DIR__ . '/add.latte');
         $this->template->role = $this->role;
         $this->template->render();
     }
-
 }

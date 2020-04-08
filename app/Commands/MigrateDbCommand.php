@@ -1,8 +1,8 @@
 <?php
 
-
 namespace SousedskaPomoc\Command;
 
+use GuzzleHttp\Exception\ClientException;
 use Nette\Database\Context;
 use Nette\Security\AuthenticationException;
 use SousedskaPomoc\Entities\Address;
@@ -16,6 +16,8 @@ use SousedskaPomoc\Repository\VolunteerRepository;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Helper\ProgressBar;
+use Tracy\Debugger;
 
 class MigrateDbCommand extends Command
 {
@@ -37,6 +39,8 @@ class MigrateDbCommand extends Command
     /** @var Context */
     private $database;
 
+    private $output;
+
     public function __construct(
         VolunteerRepository $volunteerRepository,
         Context $database,
@@ -44,8 +48,7 @@ class MigrateDbCommand extends Command
         TransportRepository $transportRepository,
         AddressRepository $addressRepository,
         OrderRepository $orderRepository
-    )
-    {
+    ) {
         parent::__construct();
         $this->database = $database;
         $this->volunteerRepository = $volunteerRepository;
@@ -63,9 +66,22 @@ class MigrateDbCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $output->writeLn('Starting migrating users');
+        $this->output = $output;
+        $this->migrateUsers();
+        $this->migrateOrders();
+        return true;
+    }
+
+    public function migrateUsers()
+    {
+        $this->output->writeLn('Starting migrating users');
         $users = $this->database->table('volunteers')->fetchAll();
+        $progressBar = new ProgressBar($this->output, count($users));
         foreach ($users as $user) {
+            if ($this->volunteerRepository->getByEmail($user['personEmail']) != null) {
+                $progressBar->advance();
+                continue;
+            }
             /** @var Volunteer $newUser */
             $newUser = new Volunteer();
             $newUser->setOnline(0);
@@ -73,7 +89,7 @@ class MigrateDbCommand extends Command
             $roles = explode(";", $user['role']);
             if (in_array("admin", $roles)) {
                 $newUser->setRole($this->roleRepository->getByName('admin'));
-            } else if (in_array("superuser", $roles)) {
+            } elseif (in_array("superuser", $roles)) {
                 $newUser->setRole($this->roleRepository->getByName("superuser"));
             } else {
                 $newUser->setRole($this->roleRepository->getByName($roles[0]));
@@ -86,22 +102,123 @@ class MigrateDbCommand extends Command
                     4 => 'Velká dodávka',
                     5 => 'Kolo',
                     6 => 'Motorka',
-                    7 => 'Chůze'
+                    7 => 'Chůze',
                 ];
                 $newUser->setTransport($this->transportRepository->getByType($car[$user['car']]));
+            } else {
+                $newUser->setTransport($this->transportRepository->getByType('Chůze'));
             }
+
             $newUser->setPersonPhone($user['personPhone']);
             $newUser->setPersonEmail($user['personEmail']);
             $newUser->setPersonName($user['personName']);
             $newUser->setActive(1);
             $newUser->setPassword($user['password']);
+            if ($user['emailCode'] == null) {
+                $user['emailCode'] = md5($user['personEmail']);
+            }
             $newUser->setHash($user['emailCode']);
 
-            if ($user['town'] != NULL ) {
+            if ($user['town'] != null) {
+                //Parse user town and make an address from it
+                $client = new \GuzzleHttp\Client();
+                try {
+                    /** @var \GuzzleHttp\Psr7\Response $response */
+                    $basePath = 'https://geocoder.ls.hereapi.com/6.2/geocode.json?country=CZE&city=';
+                    $apiKey = "Kl0wK4fx38Pf63EIey6WyrmGEhS2IqaVHkuzx0IQ4-Q";
+                    $response = $client->get(
+                        $basePath . $user['town'] . '&jsonattributes=1&gen=9&apiKey=' . $apiKey
+                    );
+                    $content = $response->getBody()->getContents();
+
+                    $content = json_decode($content);
+
+                    //array with address things
+                    $addr = $content->response->view['0']->result['0']->location->address;
+
+                    //HERE maps Id
+                    $locationId = $content->response->view['0']->result['0']->location->locationId;
+
+                    //array with latitude and longtitude
+                    $gps = $content->response->view['0']->result['0']->location->navigationPosition;
+
+                    if ($locationId != null) {
+                        if (!$this->addressRepository->updateVolunteers($locationId, $newUser)) {
+                            /** @var Address $address */
+                            $address = new Address();
+                            $address->setCity($addr->city);
+                            $address->setState($addr->state);
+                            $address->setLocationId($locationId);
+                            $address->setCountry($addr->country);
+                            $address->setDistrict($addr->county);
+                            $address->setPostalCode($addr->postalCode);
+                            $address->setLongitude($gps['0']->longitude);
+                            $address->setLatitude($gps['0']->latitude);
+                            $address->addVolunteer($newUser);
+                            try {
+                                $this->addressRepository->create($address);
+                                $progressBar->advance();
+                                continue;
+                            } catch (AuthenticationException $e) {
+                                Debugger::dump("User registration failed because ", $e->getMessage());
+                            }
+                        }
+                    }
+                } catch (ClientException $e) {
+                    Debugger::dump("Bad response from HERE Maps, reason ", $e->getMessage());
+                }
+            }
+
+            try {
+                $this->volunteerRepository->register($newUser);
+                $progressBar->advance();
+            } catch (AuthenticationException $e) {
+                Debugger::dump("User registration failed because ", $e->getMessage());
+            }
+        }
+    }
+
+    public function migrateOrders()
+    {
+        $this->output->writeLn('');
+        $this->output->writeLn('Starting migrating orders');
+        $orders = $this->database->table('posted_orders');
+        $progressBar = new ProgressBar($this->output, count($orders));
+        foreach ($orders as $o) {
+            if ($this->orderRepository->getById($o['id']) != null) {
+                $progressBar->advance();
+                continue;
+            }
+            /** @var Order $order */
+            $order = new Order();
+            $order->setItems($o['order_items']);
+            $order->setCustomerNote($o['note']);
+            $order->setCourierNote($o['courier_note']);
+            $order->setDeliveryPhone($o['delivery_phone']);
+            $order->setStatus($o['status']);
+            $order->setId($o['id']);
+
+            if ($o['courier_id'] != null) {
+                /** @var Volunteer $courier */
+                $cour = $this->database->table('volunteers')->where('id', $o['courier_id'])->fetch();
+                $courier = $this->volunteerRepository->getByEmail($cour['personEmail']);
+                $courier->addDeliveredOrder($order);
+                $this->volunteerRepository->save($courier);
+            }
+
+            /** @var Volunteer $usr */
+            $us = $this->database->table('volunteers')->where('id', $o['id_volunteers'])->fetch();
+            $usr = $this->volunteerRepository->getByEmail($us['personEmail']);
+            $usr->addCreatedOrder($order);
+            $this->volunteerRepository->save($usr);
+
+            try {
                 //Parse user town and make an address from it
                 $client = new \GuzzleHttp\Client();
                 /** @var \GuzzleHttp\Psr7\Response $response */
-                $response = $client->get('https://geocoder.ls.hereapi.com/6.2/geocode.json?city=' . $user['town'] . '&jsonattributes=1&gen=9&apiKey=Kl0wK4fx38Pf63EIey6WyrmGEhS2IqaVHkuzx0IQ4-Q');
+                $basePath = 'https://geocoder.ls.hereapi.com/6.2/geocode.json?country=CZE&city=';
+                $apiKey = "Kl0wK4fx38Pf63EIey6WyrmGEhS2IqaVHkuzx0IQ4-Q";
+                $response = $client->get($basePath . $o['town'] . '&jsonattributes=1&gen=9&apiKey=' . $apiKey);
                 $content = $response->getBody()->getContents();
 
                 $content = json_decode($content);
@@ -115,79 +232,36 @@ class MigrateDbCommand extends Command
                 //array with latitude and longtitude
                 $gps = $content->response->view['0']->result['0']->location->navigationPosition;
 
-                /** @var Address $address */
-                $address = new Address();
-                $address->setCity($addr->city);
-                $address->setState($addr->state);
-                $address->setLocationId($locationId);
-                $address->setCountry($addr->country);
-                $address->setDistrict($addr->county);
-                $address->setPostalCode($addr->postalCode);
-
-//            $newUser->setAddress($address);
-            $address->setVolunteer($newUser);
+                if ($locationId != null) {
+                    /** @var Address $address */
+                    $address = new Address();
+                    $address->setCity($addr->city);
+                    $address->setState($addr->state);
+                    $address->setLocationId($locationId);
+                    $address->setCountry($addr->country);
+                    $address->setDistrict($addr->county);
+                    $address->setPostalCode($addr->postalCode);
+                    $address->setLongitude($gps['0']->longitude);
+                    $address->setLatitude($gps['0']->latitude);
+                    $address->addPickupOrder($order);
+                    $address->addDeliveryOrder($order);
+                }
+            } catch (ClientException $e) {
+                Debugger::dump("Bad response from HERE Maps, reason ", $e->getMessage());
             }
 
             try {
                 $this->addressRepository->create($address);
-//                $this->volunteerRepository->register($newUser);
+
+                $values['id'] = $o['id'];
+                $values['delivery_address'] = $o['delivery_address'];
+                $values['pickup_address'] = $o['pickup_address'];
+                $this->database->table('orders_address')->insert($values);
+                $progressBar->advance();
             } catch (AuthenticationException $e) {
-                continue;
+                Debugger::dump("Order not imported because ", $e->getMessage());
             }
         }
-
-//        //Migrate orders
-//        $output->writeLn('Starting migrating orders');
-//        $orders = $this->database->table('posted_orders')->fetchAll();
-//        foreach ($orders as $o) {
-//            /** @var Orders $order */
-//            $order = new Orders();
-//            $order->setItems($o['order_items']);
-//            $order->setCustomerNote($o['note']);
-//            $order->setCourierNote($o['courier_note']);
-//            $order->setDeliveryPhone($o['delivery_phone']);
-//            $order->setStatus($o['status']);
-//            $courier = $this->volunteerRepository->getByEmail($o['courier_id']['personEmail']);
-//            $order->setCourier($courier);
-//            $usr = $this->volunteerRepository->getByEmail($o['id_volunteers']['personEmail']);
-//            $order->setAuthor($usr);
-//
-//            //Parse user town and make an address from it
-//            $client = new \GuzzleHttp\Client();
-//            /** @var \GuzzleHttp\Psr7\Response $response */
-//            $response = $client->get('https://geocoder.ls.hereapi.com/6.2/geocode.json?city='. $order['town'] . '&jsonattributes=1&gen=9&apiKey=Kl0wK4fx38Pf63EIey6WyrmGEhS2IqaVHkuzx0IQ4-Q');
-//            $content = $response->getBody()->getContents();
-//
-//            $content = json_decode($content);
-//
-//            //array with address things
-//            $addr= $content->response->view['0']->result['0']->location->address;
-//
-//            //HERE maps Id
-//            $locationId = $content->response->view['0']->result['0']->location->locationId;
-//
-//            //array with latitude and longtitude
-//            $gps= $content->response->view['0']->result['0']->location->navigationPosition;
-//
-//            /** @var Address $address */
-//            $address = new Address();
-//            $address->setCity($addr->city);
-//            $address->setState($addr->state);
-//            $address->setLocationId($locationId);
-//            $address->setCountry($addr->country);
-//            $address->setDistrict($addr->county);
-//            $address->setPostalCode($addr->postalCode);
-//
-//            $order->setDeliveryAddress($address);
-//
-//            $this->addressRepository->create($address);
-//            $this->orderRepository->create($order);
-//
-//            $values['id'] = $order->getId();
-//            $values['delivery_address'] = $o['delivery_address'];
-//            $values['pickup_address'] = $o['pickup_address'];
-//            $this->database->table('orders_address')->insert($values);
-//        }
-            return true;
-        }
+        $this->output->writeLn('');
+    }
 }
