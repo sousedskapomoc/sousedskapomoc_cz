@@ -6,11 +6,15 @@ namespace SousedskaPomoc\Presenters;
 
 use Contributte\FormsBootstrap\BootstrapForm;
 use SousedskaPomoc\Model\OrderManager;
+use SousedskaPomoc\Repository\OrderRepository;
 
 final class CoordinatorPresenter extends BasePresenter
 {
     /** @var \SousedskaPomoc\Model\OrderManager */
     protected $orderManager;
+
+    /** @var \SousedskaPomoc\Repository\OrderRepository */
+    protected $orderRepository;
 
     public function beforeRender()
     {
@@ -19,6 +23,10 @@ final class CoordinatorPresenter extends BasePresenter
         if (!$this->user->isLoggedIn()) {
             $this->redirect('Homepage:default');
         }
+    }
+
+    public function injectOrderRepository(OrderRepository $orderRepository) {
+        $this->orderRepository = $orderRepository;
     }
 
     public function injectOrderManager(OrderManager $orderManager)
@@ -41,7 +49,7 @@ final class CoordinatorPresenter extends BasePresenter
 
     public function renderDetail($id)
     {
-        $this->template->order = $this->orderManager->find($id);
+        $this->template->order = $this->orderRepository->getById($id);
     }
 
 
