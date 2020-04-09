@@ -21,7 +21,7 @@ class DemandRepository extends DoctrineEntityRepository
         $em->flush();
     }
 
-    public function setProcessed($id, bool $processed) {
+    public function setProcessed($id, $processed) {
         /** @var Demand $demand */
         $demand = $this->findOneBy(['id'=>$id]);
         $demand->setProcessed($processed);
