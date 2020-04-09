@@ -42,14 +42,12 @@
 				<th>{_templates.orderDetail.lastUpdate)}</th>
 				<td>{date("d.m.Y H:i",$order->getUpdatedAt()->getTimestamp())}</td>
 			</tr>
-			<tr>
+			{if $order->getCourier()}
+            <tr>
 				<th>{_templates.orderDetail.whoDelivers}</th>
 				<td>{$order->getCourier()->getPersonName()} - {$order->getCourier()->getPersonPhone()}</td>
 			</tr>
-{*			<tr>*}
-{*				<th>{_templates.orderDetail.whoAssigned}</th>*}
-{*				<td>{$order->operator_id|fetchUser} - {$order->operator_id|fetchPhone}</td>*}
-{*			</tr>*}
+            {/if}
 			<tr n:if="$user->isInRole('admin')">
 				<th>Změna stavu objednávky</th>
 				<td>
