@@ -13,6 +13,7 @@ services:
 	- SousedskaPomoc\Components\IRegisterVolunteerFormInterface
 	- SousedskaPomoc\Components\IEditVolunteerFormInterface
 	- SousedskaPomoc\Components\IDemandFormInterface
+	- SousedskaPomoc\Components\ICreateOrderFormInterface
 	# Repositories
 	addressRepository:
 		class: SousedskaPomoc\Repository\AddressRepository
