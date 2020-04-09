@@ -215,7 +215,7 @@ gridCreateUser:
     phone: 'Telefon'
     address: 'Město'
     notSpecified: 'Nespecifikovano'
-    Online: 'Online' 
+    Online: 'Online'
 gridCreateDemand:
     id: 'ID'
     submitter: 'Zadavatel'
@@ -240,4 +240,11 @@ gridCreateOdrers:
     reset: 'Resetovat'
     detail: 'Detail'
     delete: 'Smazat'
-
+vehicleType:
+    smallCar: 'Malé auto'
+    bigCar: 'Velké auto'
+    smallVan: 'Malá dodávka'
+    bigVan: 'Velká dodávka'
+    bicycle: 'Kolo'
+    motorbike: 'Motorka'
+    walk: 'Chůze'

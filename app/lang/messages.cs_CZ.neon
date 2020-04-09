@@ -40,4 +40,3 @@ passwdChange:
     hashMissMatch: 'Email code is not valid.'
     sendNewPasswd: 'Zaslat nove heslo'
     emailSendSuccess: 'E-mail s odkazem byl úspěšně odeslán.'
-    

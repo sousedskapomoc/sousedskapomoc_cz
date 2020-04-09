@@ -6,8 +6,6 @@ namespace SousedskaPomoc\Presenters;
 
 use Kdyby\Translation\Translator;
 use Nette;
-use SousedskaPomoc\Components\Suggester\ISuggesterAddressInterface;
-use SousedskaPomoc\Components\Suggester\ISuggesterTownInterface;
 use SousedskaPomoc\Model\OrderManager;
 use SousedskaPomoc\Model\UserManager;
 
@@ -91,13 +89,13 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 
         $this->template->addFilter('fetchCar', function ($courierId) {
             $car = [
-                1 => $this->translator->translate('templates.cars.small'),
-                2 => $this->translator->translate('templates.cars.big'),
-                3 => $this->translator->translate('templates.cars.smallTruck'),
-                4 => $this->translator->translate('templates.cars.bigTruck'),
-                5 => $this->translator->translate('templates.cars.bike'),
-                6 => $this->translator->translate('templates.cars.motorcycle'),
-                7 => $this->translator->translate('templates.cars.walk')
+                1 => $this->translator->translate('templates.vehicleType.smallCar'),
+                2 => $this->translator->translate('templates.vehicleType.bigCar'),
+                3 => $this->translator->translate('templates.vehicleType.smallVan'),
+                4 => $this->translator->translate('templates.vehicleType.bigVan'),
+                5 => $this->translator->translate('templates.vehicleType.bicycle'),
+                6 => $this->translator->translate('templates.vehicleType.motorbike'),
+                7 => $this->translator->translate('templates.vehicleType.walk')
             ];
 
             return $car[$courierId] ?? $this->translator->translate('templates.cars.notSpecified');
