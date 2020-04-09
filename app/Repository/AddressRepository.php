@@ -39,6 +39,9 @@ class AddressRepository extends DoctrineEntityRepository
             foreach ($address->getVolunteers() as $volunteer) {
                 $addr->addVolunteer($volunteer);
             }
+            foreach ($address->getDemandOrders() as $demand) {
+                $addr->addDemandOrder($demand);
+            }
             $em = $this->getEntityManager();
             $em->persist($addr);
             $em->flush();
