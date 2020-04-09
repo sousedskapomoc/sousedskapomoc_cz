@@ -65,13 +65,13 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 
         $this->template->addFilter('fetchCar', function ($courierId) {
             $car = [
-                1 => 'Malé auto',
-                2 => 'Velké auto',
-                3 => 'Malá dodávka',
-                4 => 'Velká dodávka',
-                5 => 'Kolo',
-                6 => 'Motorka',
-                7 => 'Chůze'
+                1 => $this->translator->translate('templates.vehicleType.smallCar'),
+                2 => $this->translator->translate('templates.vehicleType.bigCar'),
+                3 => $this->translator->translate('templates.vehicleType.smallVan'),
+                4 => $this->translator->translate('templates.vehicleType.bigVan'),
+                5 => $this->translator->translate('templates.vehicleType.bicycle'),
+                6 => $this->translator->translate('templates.vehicleType.motorbike'),
+                7 => $this->translator->translate('templates.vehicleType.walk')
             ];
 
             return $car[$courierId] ?? 'neuveden';
@@ -79,8 +79,8 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 
         $this->template->addFilter('logic', function ($state) {
             $states = [
-                0 => 'Vypnuto',
-                1 => 'Zapnuto'
+                0 => $this->translator->translate('messeges.status.disabled'),
+                1 => $this->translator->translate('messeges.status.enabled')
             ];
 
             return $states[$state] ?? $state[0];
