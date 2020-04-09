@@ -202,9 +202,9 @@ final class HomepagePresenter extends BasePresenter
 
     public function actionChangePassword($hash = null)
     {
-        $this->emailCode = $this->presenter->getParameter('hash');
+        $hash = $this->presenter->getParameter('hash');
         try {
-            $user = $this->userManager->getUserByEmailCode($this->emailCode);
+            $this->userManager->getUserByEmailCode($hash);
         } catch (\Exception $err) {
             $this->flashMessage("Email code is not valid.", BasePresenter::FLASH_TYPE_ERROR);
             $this->redirect("Page:homepage");
@@ -233,8 +233,10 @@ final class HomepagePresenter extends BasePresenter
         }
 
         try {
-            $hash = $this->userManager->getUserByEmail($values->personEmail)->emailCode;
-            $link = $this->lemink('//Homepage:changePassword', $hash);
+            /** @var \SousedskaPomoc\Entities\Volunteer $user */
+            $user = $this->userManager->getUserByEmail($values->personEmail);
+            $hash = $user->getHash();
+            $link = $this->link('//Homepage:changePassword', $hash);
             $this->mail->sendLostPasswordMail($values->personEmail, $link);
             $this->presenter->flashMessage("E-mail s odkazem byl úspěšně odeslán.");
             $this->presenter->redirect("Sign:in");
