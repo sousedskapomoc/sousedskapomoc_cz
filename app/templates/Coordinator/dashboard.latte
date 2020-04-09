@@ -37,13 +37,13 @@
                     <tbody>
                     {foreach $orders as $order}
                         <tr>
-                            <td>{$order->id}</td>
-                            <td>{$order->delivery_address}</td>
-                            <td>{$order->order_items}</td>
-                            <td>{$order->note}</td>
-							<td>{$order->status|humanFriendlyStatus}</td>
+                            <td>{$order->getID()}</td>
+                            <td>{$order->getDeliveryAddress()->getCity()}</td>
+                            <td>{$order->getItems()}</td>
+                            <td>{$order->getCustomerNote()}</td>
+							<td>{$order->getStatus()|humanFriendlyStatus}</td>
                             <td>
-                                <a n:href="Detail id => $order->id">{_templates.coordinatorDashboard.detail}</a>
+                                <a n:href="Detail id => $order->getId()">{_templates.coordinatorDashboard.detail}</a>
                             </td>
                         </tr>
                     {/foreach}
