@@ -10,6 +10,7 @@ use Nette\Security\Passwords;
 use Contributte\FormsBootstrap\BootstrapForm;
 use Contributte\FormsBootstrap\Enums\RenderMode;
 use Nette\Database\Connection;
+use SousedskaPomoc\Components\IDemandFormInterface;
 use SousedskaPomoc\Components\IRegisterVolunteerFormInterface;
 use SousedskaPomoc\Components\Mail;
 use SousedskaPomoc\Model\UserManager;
@@ -25,6 +26,9 @@ final class HomepagePresenter extends BasePresenter
 
     /** @var \SousedskaPomoc\Components\Mail */
     protected $mail;
+
+    /** @var \SousedskaPomoc\Components\IDemandFormInterface */
+    protected $demandFormFactory;
 
     protected $emailCode;
 
@@ -51,6 +55,10 @@ final class HomepagePresenter extends BasePresenter
     public function injectRoleRepository(RoleRepository $roleRepository)
     {
         $this->roleRepository = $roleRepository;
+    }
+
+    public function injectDemandFormFactory(IDemandFormInterface $demandForm) {
+        $this->demandFormFactory = $demandForm;
     }
 
     public function injectRegisterVolunteerFormFactory(IRegisterVolunteerFormInterface $registerVolunteerForm)
@@ -115,23 +123,7 @@ final class HomepagePresenter extends BasePresenter
 
     public function createComponentPostDemand()
     {
-        $form = new BootstrapForm;
-        $form->addText('address', 'Město ve kterém jste');
-        $form->addText('deliveryAddress', 'Adresa doručení');
-        $form->addText('deliveryPhone', 'Telefon');
-        $form->addText('deliveryPerson', 'Jméno a příjmení');
-        $form->addTextArea('orderItems', 'Položky objednávky');
-        $form->addSubmit('demandFormSubmit', 'Uložit poptávku');
-        $form->onSuccess[] = [$this, "saveDemand"];
-        return $form;
-    }
-
-    public function saveDemand(BootstrapForm $form)
-    {
-        $values = $form->getValues();
-        $this->orderManager->saveDemand($values);
-        $this->flashMessage("Uložili jsme co potřebujete a pracujeme na tom ať to odbavíme");
-        $this->redirect('Homepage:default');
+        return $this->demandFormFactory->create();
     }
 
     public function createComponentAddGovernmentCoordinator()

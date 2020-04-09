@@ -325,7 +325,7 @@ class Address
         if (!$this->demandOrders->contains($demandOrder)) {
             $this->demandOrders[] = $demandOrder;
 
-            /** @var \SousedskaPomoc\Entities\Demand $demandOrders */
+            /** @var \SousedskaPomoc\Entities\Demand $demandOrder */
             $demandOrder->setDeliveryAddress($this);
         }
         return $this;

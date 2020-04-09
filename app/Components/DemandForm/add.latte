@@ -1,0 +1,81 @@
+{block content}
+
+<div class="row justify-content-center">
+    <div class="col-md-12 col-lg-12">
+            {form demandForm}
+            <div class="form-group">
+                {label town}
+                {input town class => 'form-control addressInput'}
+            </div>
+            <ul id="suggestions">
+            </ul>
+            <div class="form-group">
+                <a href="#" id="townSearch" class="btn btn-purple">Vyhledat adresu</a>
+            </div>
+
+            <div class="hiddenForm" style="display: none">
+                <div class="form-group">
+                    {label name}
+                    {input name class => 'form-control'}
+                </div>
+                <div class="form-group">
+                    {label phone}
+                    {input phone class => 'form-control'}
+                    {input locationId class=> 'locationId'}
+                </div>
+                <div class="form-group">
+                    {label items}
+                    {input items class => 'form-control'}
+                </div>
+                <div class="form-group">
+                    {input addDemandFormSubmit}
+                </div>
+            </div>
+            {/form}
+    </div>
+</div>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function (event) {
+        $(".addressInput").on('keydown', function () {
+            var hereMapsEndpoint = "https://autocomplete.geocoder.ls.hereapi.com/6.2/suggest.json?apiKey=Kl0wK4fx38Pf63EIey6WyrmGEhS2IqaVHkuzx0IQ4-Q&country=CZE&query=";
+            var query = encodeURIComponent($(".addressInput").val());
+            jQuery.getJSON(hereMapsEndpoint + query, function (data) {
+                $("#suggestions").empty();
+                $.each(data.suggestions, function (index) {
+                    if ($(".addressInput").val().match(`[0-9]`)) {
+                        $(".locationId").val(data.suggestions[index].locationId);
+                        $("#suggestions").append(
+                            "<li><a href='#' class='suggestion' " +
+                            "data-country='" + data.suggestions[index].address.country +
+                            "' data-state='" + data.suggestions[index].address.state +
+                            "' data-county='" + data.suggestions[index].address.county +
+                            "' data-city='" + data.suggestions[index].address.city +
+                            "' data-district='" + data.suggestions[index].address.district +
+                            "' data-street='" + data.suggestions[index].address.street +
+                            "' data-houseNumber='" + data.suggestions[index].address.houseNumber +
+                            "' data-postalCode='" + data.suggestions[index].address.postalCode +
+                            "' data-label='" + data.suggestions[index].label +
+                            "'>" + data.suggestions[index].label + "</a></li>"
+                        );
+                    }
+                });
+            });
+        });
+        $(window).keydown(function (event) {
+            if (event.keyCode == 13) {
+                event.preventDefault();
+                return false;
+            }
+        });
+        $(document).on("click", "a.suggestion", function () {
+            const address = document.querySelector('a.suggestion');
+            console.log(address);
+            console.log(address.dataset.label);
+            $(".addressInput").val(address.dataset.label);
+            $("#suggestions").empty();
+            $(".hiddenForm").show();
+        });
+    });
+</script>
