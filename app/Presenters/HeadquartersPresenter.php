@@ -2,6 +2,8 @@
 
 namespace SousedskaPomoc\Presenters;
 
+use Doctrine\ORM\Mapping\Embeddable;
+use SousedskaPomoc\Repository\DemandRepository;
 use SousedskaPomoc\Repository\OrderRepository;
 use Ublaboo\DataGrid\DataGrid;
 
@@ -10,8 +12,15 @@ class HeadquartersPresenter extends BasePresenter
     /** @var \SousedskaPomoc\Repository\OrderRepository */
     protected $orderRepository;
 
+    /** @var \SousedskaPomoc\Repository\DemandRepository */
+    protected $demandRepository;
+
     public function injectOrderRepository(OrderRepository $orderRepository) {
         $this->orderRepository = $orderRepository;
+    }
+
+    public function injectDemandRepository(DemandRepository $demandRepository) {
+        $this->demandRepository = $demandRepository;
     }
 
     public function beforeRender()
@@ -53,10 +62,9 @@ class HeadquartersPresenter extends BasePresenter
         $grid = new DataGrid();
 
         //@TODO - add text filter into address
-        $grid->setDataSource($this->orderManager->fetchAllWebDemands());
+        $grid->setDataSource($this->demandRepository->getAll());
         $grid->addColumnNumber('id', 'ID')->setFilterText();
-        $grid->addColumnText('id_volunteers', 'Zadavatel');
-        $grid->addColumnText('delivery_address', 'Adresa')
+        $grid->addColumnText('deliveryAddress', 'Adresa')
             ->setRenderer(function ($item) {
                 if ($item->getDeliveryAddress() != null) {
                     return $item->getDeliveryAddress()->getCity();
@@ -64,12 +72,12 @@ class HeadquartersPresenter extends BasePresenter
                     return "Not specified";
                 }
             });
-        $grid->addColumnText('delivery_phone', 'Telefon')->setFilterText();
-        $grid->addColumnText('order_items', 'Položky obj.')->setFilterText();
-        $grid->addFilterSelect('status', 'Stav obj', []);
+        $grid->addColumnText('phone', 'Telefon')->setFilterText();
+        $grid->addColumnText('processed', 'Stav poptavky')->setFilterText();
+        $grid->addColumnText('name', 'Položky obj.')->setFilterText();
         $grid->addColumnDateTime('createdAt', 'Datum přidání');
-        $grid->addAction('approve', 'Schválit', 'approve!')->setClass("btn btn-success btn-sm");
-        $grid->addAction('detail', 'Detail', 'Courier:detail')->setClass("btn btn-primary btn-sm");
+//        $grid->addAction('approve', 'Schválit', 'approve!')->setClass("btn btn-success btn-sm");
+        $grid->addAction('detail', 'Detail', 'Headquarters:demandDetail')->setClass("btn btn-primary btn-sm");
         $grid->addAction('delete', 'X', 'deleteDemand!')->setClass("btn btn-danger btn-sm");
 
         return $grid;
@@ -129,8 +137,8 @@ class HeadquartersPresenter extends BasePresenter
 
     public function handleDeleteDemand($id)
     {
-        $this->orderManager->remove($id);
-        $this->flashMessage("Poptávka byla smazána.");
+        $this->demandRepository->setProcessed($id, 'declined');
+        $this->flashMessage("Poptávka byla zamítnuta.");
         $this->redirect('Headquarters:demands');
     }
 
@@ -146,5 +154,10 @@ class HeadquartersPresenter extends BasePresenter
         $this->orderManager->changeStatus($id, 'new');
         $this->flashMessage("Objednávka byla schválena.");
         $this->redirect('Headquarters:demands');
+    }
+
+    public function renderDemandDetail($id)
+    {
+        $this->template->demand = $this->demandRepository->getById($id);
     }
 }

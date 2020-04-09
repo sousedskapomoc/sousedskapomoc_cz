@@ -1,0 +1,45 @@
+{layout "../appLayout.latte"}
+{block content}
+<h1>{_templates.orderDetail.title}</h1>
+<div class="col-12">
+    <p><a href="javascript:history.back()" class="btn btn-primary">{_templates.orderDetail.back}</a></p>
+</div>
+<div class="col-12">
+    <div class="table-responsive">
+        <table class="table table-bordered table-condensed">
+            <tr>
+                <th>{_templates.orderDetail.id}</th>
+                <td>{$demand->getId()}</td>
+            </tr>
+            <tr>
+                <th>{_templates.orderDetail.status}</th>
+                <td>{$demand->getProcessed()}</td>
+            </tr>
+            <tr>
+                <th>{_templates.orderDetail.address}</th>
+                <td><a href="https://www.google.com/maps/search/{$demand->getDeliveryAddress()->getStreet()}"
+                       target="_blank">{$demand->getDeliveryAddress()->getStreet()}, {$demand->getDeliveryAddress()->getCity()}, {$demand->getDeliveryAddress()->getPostalCode()}</a></td>
+            </tr>
+            <tr>
+                <th>{_templates.orderDetail.items}</th>
+                <td>{nl2br($demand->getItems())|noescape}</td>
+            </tr>
+            <tr>
+                <th>Telefon příjemce</th>
+                <td>{$demand->getPhone() ?? null}</td>
+            </tr>
+            <tr>
+                <th>{_templates.orderDetail.created}</th>
+                <td>{date("d.m.Y H:i",$demand->getCreatedAt()->getTimestamp())}</td>
+            </tr>
+            <tr>
+                <th>{_templates.orderDetail.lastUpdate}</th>
+                <td>{date("d.m.Y H:i",$demand->getUpdatedAt()->getTimestamp())}</td>
+            </tr>
+            <tr>
+                <th>Adresát</th>
+                <td>{$demand->getName()}</td>
+            </tr>
+        </table>
+    </div>
+</div>

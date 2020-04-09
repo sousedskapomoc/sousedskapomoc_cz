@@ -39,7 +39,7 @@ class Demand
     protected $name;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="string")
      */
     protected $processed;
 
