@@ -179,11 +179,9 @@ order:
     statusPicking: 'Kurýr vyzvedává'
     statusDelivering: 'Kurýr doručuje'
     statusDelivered: 'Kurýr doručil'
-    statusWaiting: 'Čekající'
 seamstress:
     wannaJoin: 'Chci se stát švadlenou'
     title: 'Švadlena'
-    description: 'Šije roušky a předává je kurýrům k distribuci těm, kteří je potřebují.'
     subtitleHome: 'šije roušky a připravuje je k odběru'
     subtitle: 'Aktuální akce'
     itemsLabel: 'Počet roušek'
@@ -210,4 +208,11 @@ profile:
     send: 'Pokračovat'
 headquarters:
 	title: 'Velín'
-
+vehicleType:
+    smallCar: 'Malé auto'
+    bigCar: 'Velké auto'
+    smallVan: 'Malá dodávka'
+    bigVan: 'Velká dodávka'
+    bicycle: 'Kolo'
+    motorbike: 'Motorka'
+    walk: 'Chůze'
