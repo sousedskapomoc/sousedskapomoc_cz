@@ -39,8 +39,8 @@ class DemandFormControl extends Control
     {
         $form = new BootstrapForm;
 
-        $form->addText('town', $this->translator->translate('forms.registerCoordinator.townLabel'))
-            ->setPlaceholder('Ulice včetně čísla popisného')
+        $form->addText('town', 'Zadejte ulici vcetne cisla popisneho')
+            ->setPlaceholder('Na Vypichu 25')
             ->setRequired($this->translator->translate('forms.registerCoordinator.townRequired'));
         $form->addText('name', $this->translator->translate('forms.registerCoordinator.nameLabel'))
             ->setRequired($this->translator->translate('forms.registerCoordinator.nameRequired'));
@@ -65,6 +65,7 @@ class DemandFormControl extends Control
         $demand->setName($values->name);
         $demand->setPhone($values->phone);
         $demand->setItems($values->items);
+
 
         $client = new \GuzzleHttp\Client();
         /** @var \GuzzleHttp\Psr7\Response $response */
