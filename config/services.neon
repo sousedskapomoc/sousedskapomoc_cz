@@ -14,6 +14,7 @@ services:
 	- SousedskaPomoc\Components\IEditVolunteerFormInterface
 	- SousedskaPomoc\Components\IDemandFormInterface
 	- SousedskaPomoc\Components\ICreateOrderFormInterface
+	- SousedskaPomoc\Components\IEditOrderFormInterface
 	# Repositories
 	addressRepository:
 		class: SousedskaPomoc\Repository\AddressRepository

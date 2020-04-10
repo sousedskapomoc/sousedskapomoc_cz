@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace SousedskaPomoc\Presenters;
 
 use Contributte\FormsBootstrap\BootstrapForm;
+use Nette\ComponentModel\IComponent;
 use SousedskaPomoc\Components\ICreateOrderFormInterface;
+use SousedskaPomoc\Components\IEditOrderFormInterface;
 use SousedskaPomoc\Model\OrderManager;
 use SousedskaPomoc\Repository\OrderRepository;
 
@@ -19,6 +21,11 @@ final class CoordinatorPresenter extends BasePresenter
 
     /** @var \SousedskaPomoc\Components\ICreateOrderFormInterface */
     protected $orderFormFactory;
+
+    /** @var \SousedskaPomoc\Components\IEditOrderFormInterface */
+    protected $editOrderFormFactory;
+
+    protected $orderId;
 
     public function beforeRender()
     {
@@ -44,6 +51,17 @@ final class CoordinatorPresenter extends BasePresenter
         $this->orderManager = $orderManager;
     }
 
+    public function injectEditOrderFormFactory(IEditOrderFormInterface $editOrderForm) {
+        $this->editOrderFormFactory = $editOrderForm;
+    }
+
+    public function createComponentEditOrderForm() {
+        return $this->editOrderFormFactory->create();
+    }
+
+    public function renderEditOrder($id) {
+
+    }
 
     public function renderPrintMaterial($id)
     {

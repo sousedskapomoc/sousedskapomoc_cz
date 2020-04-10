@@ -358,23 +358,34 @@ class Address
 
     public function removePickupOrder($order): self
     {
-        if ($this->ordersPickup->contains($order)) {
-            $this->ordersPickup->removeElement($order);
-
+        if ($this->ordersPickup) {
+            if ($this->ordersPickup->contains($order)) {
+                $this->ordersPickup->removeElement($order);
+            }
             // set the owning side to null (unless already changed)
             /** @var \SousedskaPomoc\Entities\Order $order */
             if ($order->getPickupAddress() === $this) {
                 $order->setPickupAddress(null);
             }
+        } else {
+            if ($order->getPickupAddress() === $this) {
+                $order->setPickupAddress(null);
+            }
         }
+
         return $this;
     }
 
     public function addDeliveryOrder($order) :self
     {
-        if (!$this->ordersDelivery->contains($order)) {
+        if ($this->ordersDelivery) {
+            if (!$this->ordersDelivery->contains($order)) {
+                $this->ordersDelivery[] = $order;
+            }
+            /** @var \SousedskaPomoc\Entities\Order $order */
+            $order->setDeliveryAddress($this);
+        } else {
             $this->ordersDelivery[] = $order;
-
             /** @var \SousedskaPomoc\Entities\Order $order */
             $order->setDeliveryAddress($this);
         }
@@ -383,11 +394,16 @@ class Address
 
     public function removeDeliveryOrder($order): self
     {
-        if ($this->ordersDelivery->contains($order)) {
-            $this->ordersDelivery->removeElement($order);
-
+        if ($this->ordersDelivery) {
+            if ($this->ordersDelivery->contains($order)) {
+                $this->ordersDelivery->removeElement($order);
+            }
             // set the owning side to null (unless already changed)
             /** @var \SousedskaPomoc\Entities\Order $order */
+            if ($order->getDeliveryAddress() === $this) {
+                $order->setDeliveryAddress(null);
+            }
+        } else {
             if ($order->getDeliveryAddress() === $this) {
                 $order->setDeliveryAddress(null);
             }

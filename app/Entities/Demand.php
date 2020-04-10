@@ -43,6 +43,11 @@ class Demand
      */
     protected $processed;
 
+    /**
+     * @ORM\OneToOne(targetEntity="Order", inversedBy="fromDemand")
+     */
+    protected $createdOrder;
+
 
     /**
      * @return mixed
@@ -132,4 +137,26 @@ class Demand
     {
         $this->processed = $processed;
     }
+
+
+
+    /**
+     * @return mixed
+     */
+    public function getCreatedOrder()
+    {
+        return $this->createdOrder;
+    }
+
+
+
+    /**
+     * @param mixed $createdOrder
+     */
+    public function setCreatedOrder($createdOrder) : void
+    {
+        $this->createdOrder = $createdOrder;
+    }
+
+
 }
