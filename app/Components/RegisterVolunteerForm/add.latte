@@ -50,22 +50,20 @@
             jQuery.getJSON(hereMapsEndpoint + query, function (data) {
                 $("#suggestions").empty();
                 $.each(data.suggestions, function (index) {
-                    if ($(".addressInput").val().match(`[0-9]`)) {
-                        $(".locationId").val(data.suggestions[index].locationId);
-                        $("#suggestions").append(
-                            "<li><a href='#' class='suggestion' " +
-                            "data-country='" + data.suggestions[index].address.country +
-                            "' data-state='" + data.suggestions[index].address.state +
-                            "' data-county='" + data.suggestions[index].address.county +
-                            "' data-city='" + data.suggestions[index].address.city +
-                            "' data-district='" + data.suggestions[index].address.district +
-                            "' data-street='" + data.suggestions[index].address.street +
-                            "' data-houseNumber='" + data.suggestions[index].address.houseNumber +
-                            "' data-postalCode='" + data.suggestions[index].address.postalCode +
-                            "' data-label='" + data.suggestions[index].label +
-                            "'>" + data.suggestions[index].label + "</a></li>"
-                        );
-                    }
+                    $(".locationId").val(data.suggestions[index].locationId);
+                    $("#suggestions").append(
+                        "<li><a href='#' class='suggestion' " +
+                        "data-country='" + data.suggestions[index].address.country +
+                        "' data-state='" + data.suggestions[index].address.state +
+                        "' data-county='" + data.suggestions[index].address.county +
+                        "' data-city='" + data.suggestions[index].address.city +
+                        "' data-district='" + data.suggestions[index].address.district +
+                        "' data-street='" + data.suggestions[index].address.street +
+                        "' data-houseNumber='" + data.suggestions[index].address.houseNumber +
+                        "' data-postalCode='" + data.suggestions[index].address.postalCode +
+                        "' data-label='" + data.suggestions[index].label +
+                        "'>" + data.suggestions[index].label + "</a></li>"
+                    );
                 });
             });
         });
