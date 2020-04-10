@@ -340,6 +340,8 @@ class Volunteer
             } else {
                 $order->setCourier(null);
             }
+        } else {
+            $order->setCourier(null);
         }
         return $this;
     }
