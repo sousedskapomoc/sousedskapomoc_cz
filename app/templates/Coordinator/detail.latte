@@ -3,6 +3,7 @@
 <h1>{_templates.orderDetail.title}</h1>
 <div class="col-12">
 	<p><a href="javascript:history.back()" class="btn btn-primary">{_templates.orderDetail.back}</a></p>
+	<p><a n:href="Coordinator:editOrder $order->getId()" class="btn btn-primary">Upravit adresu</a></p>
 </div>
 <div class="col-12">
 	<div class="table-responsive">
@@ -15,13 +16,24 @@
 				<th>{_templates.orderDetail.status}</th>
 				<td>{$order->getStatus()|humanFriendlyStatus}</td>
 			</tr>
-			{if $order->getDeliveryAddress()}
+            <tr>
+                <th>Adresa vyzvednuti</th>
+                <td>
+                    {if $order->getPickupAddress()}
+                    <a href="https://www.google.com/maps/search/{$order->getPickupAddress()->getStreet()}"
+                       target="_blank">{$order->getPickupAddress()->getCity()}, {$order->getPickupAddress()->getStreet() ?? "Nezadano"}, {$order->getPickupAddress()->getPostalCode()}</a></td>
+                    {else}
+                        Nezadano
+                    {/if}
+            </tr>
             <tr>
 				<th>{_templates.orderDetail.address}</th>
-				<td><a href="https://www.google.com/maps/search/{$order->getDeliveryAddress()->getStreet()}"
-					   target="_blank">{$order->getDeliveryAddress()->getStreet() ?? "Nezadano"}</a></td>
+				<td>
+                    {if $order->getDeliveryAddress()}
+                    <a href="https://www.google.com/maps/search/{$order->getDeliveryAddress()->getStreet()}"
+					   target="_blank">{$order->getDeliveryAddress()->getCity()} {$order->getDeliveryAddress()->getStreet()} {$order->getDeliveryAddress()->getPostalCode()}</a></td>
+                    {/if}
 			</tr>
-            {/if}
 			<tr>
 				<th>{_templates.orderDetail.items}</th>
 				<td>{nl2br($order->getItems())|noescape}</td>
@@ -39,7 +51,7 @@
 				<td>{date("d.m.Y H:i",$order->getCreatedAt()->getTimestamp())}</td>
 			</tr>
 			<tr>
-				<th>{_templates.orderDetail.lastUpdate)}</th>
+				<th>{_templates.orderDetail.lastUpdate}</th>
 				<td>{date("d.m.Y H:i",$order->getUpdatedAt()->getTimestamp())}</td>
 			</tr>
 			{if $order->getCourier()}
@@ -65,15 +77,6 @@
 							</select>
 						</div>
 					</form>
-				</td>
-			</tr>
-			<tr n:if="$user->isInRole('admin')">
-				<th>Změna přiřazení města</th>
-				<td>
-					<form action="{link updateTown! orderId => $order->getId()}" method="post"
-						  class="form form-vertical">
-					<input type="text" name="town" value="{$order->getDeliveryAddress()->getCity()}" />
-						<input type="submit" value="Uložit" class="btn btn-sm btn-primary btn-default" />
 				</td>
 			</tr>
 		</table>

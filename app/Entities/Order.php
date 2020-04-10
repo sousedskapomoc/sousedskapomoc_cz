@@ -66,6 +66,11 @@ class Order
      */
     protected $items;
 
+    /**
+     * @ORM\OneToOne(targetEntity="Demand", mappedBy="createdOrder", cascade={"persist"})
+     */
+    protected $fromDemand;
+
 
     /**
      * @return mixed
@@ -232,4 +237,27 @@ class Order
     {
         $this->id = $id;
     }
+
+
+
+    /**
+     * @return mixed
+     */
+    public function getFromDemand()
+    {
+        return $this->fromDemand;
+    }
+
+
+
+    /**
+     * @param mixed $fromDemand
+     */
+    public function setFromDemand(Demand $fromDemand) : void
+    {
+        $this->fromDemand = $fromDemand;
+        $fromDemand->setCreatedOrder($this);
+    }
+
+
 }

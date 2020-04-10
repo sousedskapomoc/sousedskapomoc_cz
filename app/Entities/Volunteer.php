@@ -280,6 +280,8 @@ class Volunteer
     {
         if (!$this->createdOrders->contains($order)) {
             $this->createdOrders[] = $order;
+
+            $order->setOwner($this);
         }
         return $this;
     }
@@ -314,7 +316,13 @@ class Volunteer
      */
     public function addDeliveredOrder($order): self
     {
-        if (!$this->deliveredOrders->contains($order)) {
+        if ($this->deliveredOrders) {
+            if (!$this->deliveredOrders->contains($order)) {
+                $this->deliveredOrders[] = $order;
+            }
+            /** @var Order $order */
+            $order->setCourier($this);
+        } else {
             $this->deliveredOrders[] = $order;
             /** @var Order $order */
             $order->setCourier($this);

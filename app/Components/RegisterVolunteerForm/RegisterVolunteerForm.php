@@ -69,8 +69,8 @@ class RegisterVolunteerFormControl extends Control
         $form = new BootstrapForm;
 //        $form->renderMode = RenderMode::VERTICAL_MODE;
 
-        $form->addText('town', $this->translator->translate('forms.registerCoordinator.townLabel'))
-            ->setPlaceholder('Ulice včetně čísla popisného')
+        $form->addText('town', 'Zadejte mesto')
+            ->setPlaceholder('Mesto')
             ->setRequired($this->translator->translate('forms.registerCoordinator.townRequired'));
         $form->addText('personName', $this->translator->translate('forms.registerCoordinator.nameLabel'))
             ->setRequired($this->translator->translate('forms.registerCoordinator.nameRequired'));

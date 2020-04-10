@@ -3,8 +3,11 @@
 namespace SousedskaPomoc\Presenters;
 
 use Doctrine\ORM\Mapping\Embeddable;
+use SousedskaPomoc\Entities\Order;
+use SousedskaPomoc\Repository\AddressRepository;
 use SousedskaPomoc\Repository\DemandRepository;
 use SousedskaPomoc\Repository\OrderRepository;
+use SousedskaPomoc\Repository\VolunteerRepository;
 use Ublaboo\DataGrid\DataGrid;
 
 class HeadquartersPresenter extends BasePresenter
@@ -15,12 +18,26 @@ class HeadquartersPresenter extends BasePresenter
     /** @var \SousedskaPomoc\Repository\DemandRepository */
     protected $demandRepository;
 
+    /** @var \SousedskaPomoc\Repository\VolunteerRepository */
+    protected $volunteerRepository;
+
+    /** @var \SousedskaPomoc\Repository\AddressRepository */
+    protected $addressRepository;
+
     public function injectOrderRepository(OrderRepository $orderRepository) {
         $this->orderRepository = $orderRepository;
     }
 
     public function injectDemandRepository(DemandRepository $demandRepository) {
         $this->demandRepository = $demandRepository;
+    }
+
+    public function injectVolunteerRepository(VolunteerRepository $volunteerRepository) {
+        $this->volunteerRepository = $volunteerRepository;
+    }
+
+    public function injectAddressRepository(AddressRepository $addressRepository) {
+        $this->addressRepository = $addressRepository;
     }
 
     public function beforeRender()
@@ -76,7 +93,7 @@ class HeadquartersPresenter extends BasePresenter
         $grid->addColumnText('processed', 'Stav poptavky')->setFilterText();
         $grid->addColumnText('name', 'Položky obj.')->setFilterText();
         $grid->addColumnDateTime('createdAt', 'Datum přidání');
-//        $grid->addAction('approve', 'Schválit', 'approve!')->setClass("btn btn-success btn-sm");
+        $grid->addAction('approve', 'Schválit', 'approve!')->setClass("btn btn-success btn-sm");
         $grid->addAction('detail', 'Detail', 'Headquarters:demandDetail')->setClass("btn btn-primary btn-sm");
         $grid->addAction('delete', 'X', 'deleteDemand!')->setClass("btn btn-danger btn-sm");
 
@@ -137,6 +154,15 @@ class HeadquartersPresenter extends BasePresenter
 
     public function handleDeleteDemand($id)
     {
+        /** @var \SousedskaPomoc\Entities\Demand $demand */
+        $demand = $this->demandRepository->getById($id);
+        if ($demand->getProcessed() == 'declined') {
+            $this->flashMessage('Tato objednavka jiz byla zamitnuta.');
+            $this->redirect('this');
+        } elseif ($demand->getProcessed() == 'approved') {
+            $this->flashMessage('Tato objednavka jiz byla schvalena.');
+            $this->redirect('this');
+        }
         $this->demandRepository->setProcessed($id, 'declined');
         $this->flashMessage("Poptávka byla zamítnuta.");
         $this->redirect('Headquarters:demands');
@@ -151,9 +177,35 @@ class HeadquartersPresenter extends BasePresenter
 
     public function handleApprove($id)
     {
-        $this->orderManager->changeStatus($id, 'new');
-        $this->flashMessage("Objednávka byla schválena.");
-        $this->redirect('Headquarters:demands');
+        /** @var \SousedskaPomoc\Entities\Demand $demand */
+        $demand = $this->demandRepository->getById($id);
+        if ($demand->getCreatedOrder() != null) {
+            $this->flashMessage('Z tohoto pozadavku jiz byla vytvorena objednavka.');
+            $this->redirect('this');
+        }
+
+        /** @var Order $order */
+        $order = new Order();
+
+        /** @var \SousedskaPomoc\Entities\Address $deliveryAddress */
+        $deliveryAddress = $demand->getDeliveryAddress();
+        $deliveryAddress->addDeliveryOrder($order);
+
+        $order->setDeliveryPhone($demand->getPhone());
+        $order->setStatus('new');
+        $order->setItems($demand->getItems());
+        $order->setCustomerNote($demand->getName());
+        $order->setFromDemand($demand);
+
+        /** @var \SousedskaPomoc\Entities\Volunteer $user */
+        $user = $this->volunteerRepository->getById($this->user->getId());
+        $user->addCreatedOrder($order);
+
+        $this->addressRepository->create($deliveryAddress);
+        $this->volunteerRepository->update($user->getId(), $user);
+        $this->demandRepository->setProcessed($demand->getId(), 'approved');
+
+        $this->redirect('Coordinator:detail', $order->getId());
     }
 
     public function renderDemandDetail($id)
