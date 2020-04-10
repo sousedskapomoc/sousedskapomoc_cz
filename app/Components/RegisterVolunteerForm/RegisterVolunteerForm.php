@@ -166,6 +166,12 @@ class RegisterVolunteerFormControl extends Control
             case 'seamstress':
                 $this->mail->sendSeamstressMail($values->personEmail, $link);
                 break;
+            case 'medicalCoordinator':
+                $this->mail->sendMedicMail($values->personEmail, $link);
+                break;
+            case 'superuser':
+                $this->mail->sendSuperuserMail($values->personEmail, $link);
+                break;
         }
 
         try {
