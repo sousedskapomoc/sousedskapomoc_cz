@@ -108,7 +108,7 @@ final class SeamstressPresenter extends BasePresenter
         try {
             $this->addressRepository->create($pickupAddress);
             $this->flashMessage($this->translator->translate('messages.order.orderSuccess'));
-            $this->redirect("Coordinator:dashboard");
+            $this->redirect("Seamstress:dashboard");
         } catch (AuthenticationException $e) {
             $form->addError($e->getMessage());
         }
