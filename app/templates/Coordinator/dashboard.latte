@@ -38,7 +38,10 @@
                     {foreach $orders as $order}
                         <tr>
                             <td>{$order->getID()}</td>
-                            <td>{$order->getDeliveryAddress()->getCity()}</td>
+                            <td>{if $order->getDeliveryAddress()}
+                                    {$order->getDeliveryAddress()->getCity()}
+                                {/if}
+                            </td>
                             <td>{$order->getItems()}</td>
                             <td>{$order->getCustomerNote()}</td>
 							<td>{$order->getStatus()|humanFriendlyStatus}</td>
