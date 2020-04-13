@@ -1,80 +1,128 @@
 {block content}
+<div class="row justify-content-center padding-top--0">
+    <div class="col-12 col-md-8 col-lg-6">
+        <form class="form--plain form--plain__postDemand-city">
+            <fieldset>
+                <label for="postDemand-city">Město ve kterém jste</label>
+                <input type="text" name="postDemand-city" id="postDemand-city"/>
+            </fieldset>
+            <button class="btn btn--purple m-bottom">Vyhledat město</button>
+        </form>
+        {form demandForm class => "form--plain form--plain__postDemand"}
+            <fieldset>
+                <label for="postDemand-organisation">Hledám pomoc pro organizaci (více než 10lidí)
+                    <div class="switcher">
+                        <input data-target="postDemand-organisation-contact" name="postDemand-organisation"
+                               id="postDemand-organisation" type="checkbox">
+                        <span class="slider"></span>
+                    </div>
+                </label>
+            </fieldset>
+            <fieldset>
+                <label for="postDemand-otherPerson">Hledám pomoc pro někoho druhého
+                    <div class="switcher">
+                        <input data-target="postDemand-other-person-contact" name="postDemand-otherPerson"
+                               id="postDemand-otherPerson" type="checkbox">
+                        <span class="slider"></span>
+                    </div>
+                </label>
+            </fieldset>
+            <div class="form--plain__box--hideable" id="postDemand-organisation-contact">
+                <p class="form--plain__input-headline">Kontakt na vás</p>
+                <fieldset>
+                    <label for="postDemand-name-org">Jméno a příjmení</label>
+                    <input type="text" name="postDemand-name-org" id="postDemand-name-org"/>
+                </fieldset>
+                <fieldset>
+                    <label for="postDemand-phone-org">Telefon</label>
+                    <input type="text" name="postDemand-phone-org" id="postDemand-phone-org"/>
+                </fieldset>
+                <p class="form--plain__input-headline">Kontakt na organizaci</p>
+                <fieldset>
+                    <label for="postDemand-name-of-org">Název organizace</label>
+                    <input type="text" name="postDemand-name-of-org" id="postDemand-name-of-org"/>
+                </fieldset>
+                <fieldset>
+                    <label for="postDemand-address-org">Adresa doručení</label>
+                    <input type="text" name="postDemand-address-org" id="postDemand-address-org"/>
+                </fieldset>
+                <fieldset>
+                    <label for="postDemand-name-org-person">Jméno a příjmení osoby z organizace</label>
+                    <input type="text" name="postDemand-name-org-person" id="postDemand-name-org-person"/>
+                </fieldset>
+                <fieldset>
+                    <label for="postDemand-phone-org-person">Telefon osoby z organizace</label>
+                    <input type="text" name="postDemand-phone-org-person" id="postDemand-phone-org-person"/>
+                </fieldset>
+            </div>
+            <div class="form--plain__box--hideable" id="postDemand-other-person-contact">
+                <p class="form--plain__input-headline">Kontakt na vás</p>
+                <fieldset>
+                    <label for="postDemand-name-oth-person">Jméno a příjmení</label>
+                    <input type="text" name="postDemand-name-oth-person" id="postDemand-name-oth-person"/>
+                </fieldset>
+                <fieldset>
+                    <label for="postDemand-phone-org">Telefon</label>
+                    <input type="text" name="postDemand-phone-oth-person" id="postDemand-phone-oth-person"/>
+                </fieldset>
+                <p class="form--plain__input-headline">Kontakt na osobu, které chcete pomoci</p>
+                <fieldset>
+                    <label for="postDemand-address-person">Adresa doručení</label>
+                    <input type="text" name="postDemand-address-oth-person-person"
+                           id="postDemand-address-oth-person-person"/>
+                </fieldset>
+                <fieldset>
+                    <label for="postDemand-name-oth-person-person">Jméno a příjmení</label>
+                    <input type="text" name="postDemand-name-oth-person-person" id="postDemand-name-person"/>
+                </fieldset>
+                <fieldset>
+                    <label for="postDemand-phone-oth-person-person">Telefon</label>
+                    <input type="text" name="postDemand-phone-oth-person-person"
+                           id="postDemand-phone-oth-person-person"/>
+                </fieldset>
+            </div>
+            <div class="form--plain__box--hideable visible default" id="postDemand-none-contact">
+                <fieldset>
+                    <label for="postDemand-address">Adresa doručení</label>
+                    <input type="text" name="postDemand-address" id="postDemand-address"/>
+                </fieldset>
+                <fieldset>
+                    <label for="postDemand-name">Jméno a příjmení</label>
+                    <input type="text" name="postDemand-name" id="postDemand-name"/>
+                </fieldset>
+                <fieldset>
+                    <label for="postDemand-phone">Telefon</label>
+                    <input type="text" name="postDemand-phone" id="postDemand-phone"/>
+                </fieldset>
+            </div>
+            <fieldset>
+                <p class="form--plain__input-headline--small">Co je potřeba doručit?</p>
+                <div class="input-group">
+                    <input type="checkbox" name="postDemand-grocery" id="postDemand-grocery"/>
+                    <label for="postDemand-grocery">Potraviny</label>
+                    <textarea placeholder="Zde napište váš seznam potravin, které potřebujete doručit"></textarea>
+                </div>
 
-<div class="row justify-content-center">
-    <div class="col-md-12 col-lg-12">
-            {form demandForm}
-            <div class="form-group">
-                {label town}
-                {input town class => 'form-control addressInput'}
-            </div>
-            <ul id="suggestions">
-            </ul>
-            <div class="form-group">
-                <a href="#" id="townSearch" class="btn btn-purple">Vyhledat adresu</a>
-            </div>
+                <div class="input-group">
+                    <input type="checkbox" name="postDemand-medicine" id="postDemand-medicine"/>
+                    <label for="postDemand-medicine">Léky</label>
+                    <textarea placeholder="Zde napište váš seznam léků, které potřebujete doručit"></textarea>
+                </div>
 
-            <div class="hiddenForm" style="display: none">
-                <div class="form-group">
-                    {label name}
-                    {input name class => 'form-control'}
-                </div>
-                <div class="form-group">
-                    {label phone}
-                    {input phone class => 'form-control'}
-                    {input locationId class=> 'locationId'}
-                </div>
-                <div class="form-group">
-                    {label items}
-                    {input items class => 'form-control'}
-                </div>
-                <div class="form-group">
-                    {input addDemandFormSubmit}
-                </div>
-            </div>
-            {/form}
+            </fieldset>
+            <fieldset>
+                <input type="checkbox" name="postDemand-facemask" id="postDemand-facemask"/>
+                <label for="postDemand-facemask">Roušky</label>
+                <textarea class="textarea-small" placeholder="Zde napište kolik kusů roušku by jste potřebovali doručit"
+                          name="postDemand-facemask-count"></textarea>
+            </fieldset>
+            <fieldset>
+                <input type="checkbox" name="postDemand-facemask" id="postDemand-facemask"/>
+                <label for="postDemand-facemask">Jiné</label>
+                <textarea placeholder="Zde napište jak bychom vám mohli pomoci"
+                          name="postDemand-facemask-count"></textarea>
+            </fieldset>
+            <button class="btn btn-green btn-lg">Pokračovat</button>
+        {/form}
     </div>
 </div>
-
-
-<script>
-    document.addEventListener("DOMContentLoaded", function (event) {
-        $(".addressInput").on('keydown', function () {
-            var hereMapsEndpoint = "https://autocomplete.geocoder.ls.hereapi.com/6.2/suggest.json?apiKey=Kl0wK4fx38Pf63EIey6WyrmGEhS2IqaVHkuzx0IQ4-Q&country=CZE&query=";
-            var query = encodeURIComponent($(".addressInput").val());
-            jQuery.getJSON(hereMapsEndpoint + query, function (data) {
-                $("#suggestions").empty();
-                $.each(data.suggestions, function (index) {
-                    $(".locationId").val(data.suggestions[index].locationId);
-                    $("#suggestions").append(
-                        "<li><a href='#' class='suggestion' " +
-                        "data-country='" + data.suggestions[index].address.country +
-                        "' data-state='" + data.suggestions[index].address.state +
-                        "' data-county='" + data.suggestions[index].address.county +
-                        "' data-city='" + data.suggestions[index].address.city +
-                        "' data-district='" + data.suggestions[index].address.district +
-                        "' data-street='" + data.suggestions[index].address.street +
-                        "' data-houseNumber='" + data.suggestions[index].address.houseNumber +
-                        "' data-postalCode='" + data.suggestions[index].address.postalCode +
-                        "' data-label='" + data.suggestions[index].label +
-                        "' data-locationId='" + data.suggestions[index].locationId +
-                        "'>" + data.suggestions[index].label + "</a></li>"
-                    );
-                });
-            });
-        });
-        $(window).keydown(function (event) {
-            if (event.keyCode == 13) {
-                event.preventDefault();
-                return false;
-            }
-        });
-        $(document).on("click", "a.suggestion", function () {
-            const address = document.querySelector('a.suggestion');
-            console.log(address);
-            console.log(address.dataset.label);
-            $(".addressInput").val(address.dataset.label);
-            $("#suggestions").empty();
-            $(".hiddenForm").show();
-        });
-    });
-</script>
