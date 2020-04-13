@@ -1,6 +1,5 @@
 <?php
 
-
 namespace SousedskaPomoc\Entities;
 
 use Nettrine\ORM\Entity\Attributes\Id;
@@ -157,6 +156,4 @@ class Demand
     {
         $this->createdOrder = $createdOrder;
     }
-
-
 }

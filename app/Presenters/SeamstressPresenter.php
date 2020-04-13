@@ -38,11 +38,13 @@ final class SeamstressPresenter extends BasePresenter
         $this->orderManager = $orderManager;
     }
 
-    public function injectAddressRepository(AddressRepository $addressRepository) {
+    public function injectAddressRepository(AddressRepository $addressRepository)
+    {
         $this->addressRepository = $addressRepository;
     }
 
-    public function injectVolunteerRepository(VolunteerRepository $volunteerRepository) {
+    public function injectVolunteerRepository(VolunteerRepository $volunteerRepository)
+    {
         $this->volunteerRepository = $volunteerRepository;
     }
 
