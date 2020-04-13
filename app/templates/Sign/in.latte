@@ -1,14 +1,31 @@
 {block content}
-
 <div class="row justify-content-center">
-    <div class="col-md-8 col-lg-6">
-        {*
-		<p class="alert alert-danger">
-            {_templates.header.recommendation|noescape}
-        </p>
-		*}
-        {include bootstrap-form signInForm}
-		<a n:href="Homepage:lostPassword">Zapomenuté heslo</a>
+    <div class="col-12">
+        <h1>Přihlášení</h1>
     </div>
 </div>
-<br/>
+
+<div class="row justify-content-center padding-top--0">
+    <div class="col-12 col-sm-8 col-md-6">
+        {form signInForm, class => "form--plain form--plain__postDemandLogin"}
+            <fieldset>
+                <label for="postDemand-email-login">Email</label>
+                {input email}
+            </fieldset>
+            <fieldset>
+                <label for="postDemand-pass-login">Heslo</label>
+                {input password}
+            </fieldset>
+            {input send class=> "btn btn-green submitLogin"}
+            <a n:href="Homepage:lostPassword" class="form--plain__link">Zapomněl jsem heslo</a>
+        {/form}
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function (event) {
+        $(".submitLogin").on("click", function () {
+            $("form.form--plain").submit();
+        });
+    });
+    </script>
