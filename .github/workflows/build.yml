@@ -1,4 +1,4 @@
-name: 'App Build'
+name: 'Composer, code-style and tests'
 
 on:
   push:
@@ -27,6 +27,3 @@ jobs:
 
       - name: Detecting PHP Code Standards Violations
         run: composer run-script tests
-
-      - name: Detecting PHP Code Standards Violations
-        run: bin/console o:i
