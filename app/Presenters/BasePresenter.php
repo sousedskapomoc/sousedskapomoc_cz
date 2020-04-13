@@ -6,6 +6,7 @@ namespace SousedskaPomoc\Presenters;
 
 use Kdyby\Translation\Translator;
 use Nette;
+use SousedskaPomoc\Components\Suggester\ISuggesterAddressInterface;
 use SousedskaPomoc\Components\Suggester\ISuggesterTownInterface;
 use SousedskaPomoc\Model\OrderManager;
 use SousedskaPomoc\Model\UserManager;
@@ -30,6 +31,9 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
     /** @var ISuggesterTownInterface */
     protected $suggesterTown;
 
+    /** @var ISuggesterAddressInterface */
+    protected $suggesterAddress;
+
     public function injectOrderManager(OrderManager $orderManager)
     {
         $this->orderManager = $orderManager;
@@ -44,6 +48,16 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
     public function injectTownSuggester(ISuggesterTownInterface $suggesterTown)
     {
         $this->suggesterTown = $suggesterTown;
+    }
+
+    public function injectAddressSuggester(ISuggesterAddressInterface $suggesterAddress)
+    {
+        $this->suggesterAddress = $suggesterAddress;
+    }
+
+    public function createComponentSuggesterAddress()
+    {
+        return $this->suggesterAddress->create();
     }
 
     public function createComponentSuggesterTown()
