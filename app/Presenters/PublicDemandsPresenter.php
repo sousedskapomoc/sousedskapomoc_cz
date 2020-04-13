@@ -25,7 +25,14 @@ class PublicDemandsPresenter extends BasePresenter
 
     public function renderDefault()
     {
-        $this->template->demands = $this->orderRepository->getAll();
+        $townLimit = $_GET['orderList-where-help'] ?? null;
+
+        if($townLimit == null) {
+            $this->template->demands = $this->orderRepository->getAll();
+        } else {
+            $this->template->demands = $this->orderRepository->getByTown($townLimit);
+            $this->template->selectedTown = $townLimit;
+        }
     }
 
     public function renderDetail($id) {
