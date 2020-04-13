@@ -1,0 +1,69 @@
+<h2>Město nebo obec</h2>
+<form class="form form--plain">
+    <input type="text" name="suggester" class="addressInput" placeholder="po zadání výrazu uvidíte výsledky hledání" />
+    <ul id="suggestions">
+    </ul>
+</form>
+<style>
+    ul#suggestions {
+        list-style-type: ">";
+        border: solid 1px purple;
+    }
+
+    ul#suggestions li span {
+        font-style: italic;
+    }
+
+    ul#suggestions li {
+        padding: 10px;
+
+    }
+</style>
+<script>
+    document.addEventListener("DOMContentLoaded", function (event) {
+        $(".addressInput").on('keydown', function () {
+            var hereMapsEndpoint = "https://autocomplete.geocoder.ls.hereapi.com/6.2/suggest.json?apiKey=Kl0wK4fx38Pf63EIey6WyrmGEhS2IqaVHkuzx0IQ4-Q&country=CZE&limit=30&query=";
+            var query = encodeURIComponent($(".addressInput").val());
+            jQuery.getJSON(hereMapsEndpoint + query, function (data) {
+                $("#suggestions").empty();
+
+                $.each(data.suggestions, function (index) {
+                    if (data.suggestions[index].matchLevel == "city") {
+                        console.log(data.suggestions[index]);
+                        var smartLabel = data.suggestions[index].address.city + " PSČ (" + data.suggestions[index].address.postalCode + ")";
+
+                        $("#suggestions").append(
+                            "<li><a href='#' class='suggestion' " +
+                            "data-country='" + data.suggestions[index].address.country +
+                            "' data-state='" + data.suggestions[index].address.state +
+                            "' data-county='" + data.suggestions[index].address.county +
+                            "' data-city='" + data.suggestions[index].address.city +
+                            "' data-district='" + data.suggestions[index].address.district +
+                            "' data-street='" + data.suggestions[index].address.street +
+                            "' data-houseNumber='" + data.suggestions[index].address.houseNumber +
+                            "' data-postalCode='" + data.suggestions[index].address.postalCode +
+                            "' data-label='" + data.suggestions[index].label +
+                            "' data-locationId='" + data.suggestions[index].locationId +
+                            "' data-smartlabel='" + smartLabel +
+                            "'>" + smartLabel + "</a></li>"
+                        );
+                    }
+                });
+            });
+        });
+        $(window).keydown(function (event) {
+            if (event.keyCode == 13) {
+                event.preventDefault();
+                return false;
+            }
+        });
+        $(document).on("click", "a.suggestion", function () {
+            const address = document.querySelector('a.suggestion');
+            console.log(address);
+            $(".addressHereMapsId").val(address.dataset.locationid);
+            $(".addressInput").val(address.dataset.smartlabel);
+            $("#suggestions").empty();
+            $(".hiddenForm").show();
+        });
+    });
+</script>

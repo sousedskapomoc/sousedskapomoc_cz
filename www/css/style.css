@@ -13,9 +13,9 @@ p, span, h1, h2, h3, h4, h5, h6, b {
 }
 
 .logos img {
-	max-width: 150px;
-	max-height: 150px;
-	margin: 15px;
+	max-width: 80px;
+	max-height: 80px;
+	margin: 20px;
 }
 
 .padding-top--0, .row.padding-top--0 {

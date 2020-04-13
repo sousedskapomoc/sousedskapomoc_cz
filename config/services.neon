@@ -15,6 +15,7 @@ services:
 	- SousedskaPomoc\Components\IDemandFormInterface
 	- SousedskaPomoc\Components\ICreateOrderFormInterface
 	- SousedskaPomoc\Components\IEditOrderFormInterface
+	- SousedskaPomoc\Components\Suggester\ISuggesterTownInterface
 	# Repositories
 	addressRepository:
 		class: SousedskaPomoc\Repository\AddressRepository
