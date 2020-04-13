@@ -1,7 +1,4 @@
 {block content}
-<div class="row justify-content-left">
-    <a n:href="default">Zpět na seznam poptávek</a>
-</div>
 <div class="row justify-content-center">
     <div class="col-12 col-md-3 order-detail">
         <div class="order-detail__picture">
@@ -9,26 +6,28 @@
         </div>
     </div>
     <div class="col-12 col-md-8 col-lg-4 order-detail">
-        <h2 class="order-detail__title">Rouška a nákup</h2>
+        <h2 class="order-detail__title">{$demand->getCustomerNote()}</h2>
         <div class="shopping-list">
             <h5 class="order-detail__subheadline">Co je potřeba nakoupit</h5>
             <ul class="shopping-list__list order-detail__list">
-                <li>
-                    10ks vajíček </li><li>1ks chléb bílý ražný </li><li>10ks mrkev </li><li>2ks dýně hokaido </li><li>200g Salám </li><li>200g sýr Eidam </li><li>10ks piv Plzeň </li><li>0,5l ořechovice Žufánek
-                </li>
+                {$demand->getItems()|createList|noescape}
             </ul>
         </div>
+        {*
         <div class="facemasks">
             <h5 class="order-detail__subheadline">Kolik roušek</h5>
             <p class="facemasks__count">2ks rouška</p>
         </div>
+    *}
         <div class="userinfo">
             <h5 class="order-detail__subheadline">Informace o užitvateli</h5>
             <h6>Jméno a příjmení</h6>
-            <p>Rastislav Hajduk<p>
+            <p>{$demand->getOwner()->getPersonName()}<p>
             <h6>Tel. číslo</h6>
-            <p>+420 123 456 789</p>
+            <p>{$demand->getDeliveryPhone()}</p>
         </div>
         <a href="" class="btn btn-green">Napište mu přes náš chat</a>
     </div>
 </div>
+<hr />
+<a n:href="default">Zpět na seznam poptávek</a>

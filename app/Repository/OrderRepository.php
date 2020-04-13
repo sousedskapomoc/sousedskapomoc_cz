@@ -387,4 +387,16 @@ class OrderRepository extends DoctrineEntityRepository
     {
         return $this->count(['stat' => 'delivered']);
     }
+
+    public function getByTown(string $town)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('o')
+            ->from('\SousedskaPomoc\Entities\Order', 'o')
+            ->leftJoin('o.deliveryAddress', 'a')
+            ->setParameter('town', $town)
+            ->andWhere("a.city = :town");
+        $query = $qb->getQuery();
+        return $query->getResult();
+    }
 }
