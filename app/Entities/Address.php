@@ -99,7 +99,6 @@ class Address
     }
 
 
-
     /**
      * @return mixed
      */
@@ -109,15 +108,13 @@ class Address
     }
 
 
-
     /**
      * @param mixed $longtitude
      */
-    public function setLongitude($longitude) : void
+    public function setLongitude($longitude): void
     {
         $this->longitude = $longitude;
     }
-
 
 
     /**
@@ -129,15 +126,13 @@ class Address
     }
 
 
-
     /**
      * @param mixed $latitude
      */
-    public function setLatitude($latitude) : void
+    public function setLatitude($latitude): void
     {
         $this->latitude = $latitude;
     }
-
 
 
     /**
@@ -320,7 +315,7 @@ class Address
     }
 
 
-    public function addDemandOrder($demandOrder) :self
+    public function addDemandOrder($demandOrder): self
     {
         if (!$this->demandOrders->contains($demandOrder)) {
             $this->demandOrders[] = $demandOrder;
@@ -345,7 +340,7 @@ class Address
         return $this;
     }
 
-    public function addPickupOrder($order) :self
+    public function addPickupOrder($order): self
     {
         if (!$this->ordersPickup->contains($order)) {
             $this->ordersPickup[] = $order;
@@ -376,7 +371,7 @@ class Address
         return $this;
     }
 
-    public function addDeliveryOrder($order) :self
+    public function addDeliveryOrder($order): self
     {
         if ($this->ordersDelivery) {
             if (!$this->ordersDelivery->contains($order)) {
@@ -411,7 +406,7 @@ class Address
         return $this;
     }
 
-    public function addVolunteer($user) :self
+    public function addVolunteer($user): self
     {
         if (!$this->volunteers->contains($user)) {
             $this->volunteers[] = $user;
@@ -434,5 +429,10 @@ class Address
             }
         }
         return $this;
+    }
+
+    public function getCityWithPostalCode()
+    {
+        return $this->getPostalCode() . " - " . $this->getCity();
     }
 }
