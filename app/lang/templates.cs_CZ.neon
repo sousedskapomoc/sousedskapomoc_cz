@@ -16,7 +16,7 @@ header:
     registration: 'Registrace'
     logout: 'Odhlášení'
     mainTitle: 'Projekt SousedskaPomoc.cz sdružuje dobrovolníky po celé ČR a společně zajišťuje doručování léku, potravin a dalších nezbytností lidem, kteří to v aktuální situaci potřebují nejvíce.'
-    mainSubtitle: 'Jedná se především o ohrožené skupiny, jako jsou senioři, nemocní, těhotné ženy či osoby s oslabenou imunitou.'
+    mainSubtitle: 'Jedná se především o ohrožené skupiny, jak jsou senioři, nemocní, těhotné ženy či osoby s oslabenou imunitou.'
     doctors: 'Pro lékaře'
     towns: 'Pro města a obce'
 footer:
