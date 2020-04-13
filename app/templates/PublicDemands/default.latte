@@ -1,0 +1,40 @@
+{block content}
+<div class="row justify-content-center">
+    <div class="col-12">
+        <div class="flex form--plain__filter__wrapper">
+            <form class="form--plain form--plain__filter">
+                <p>Chci pomoci:</p>
+                <select class="js-select">
+                    <option>s čímkoliv</option>
+                    <option>s převozem roušek</option>
+                    <option>s doručením nákupu</option>
+                    <option>s vyzvednutím léků</option>
+                </select>
+                <input type="text" name="orderList-where-help" id="orderList-where-help" placeholder="Lokalita kde chcete pomoct">
+                <button class="btn btn--purple btn-small">Zobrazit</button>
+            </form>
+            <div class="form--plain__filter-checkbox">
+                <input type="checkbox" name="orderList-org" id="orderList-org" />
+                <label for="orderList-org">Chci pomoci i organizacím</label>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row justify-content-center padding-top--50">
+    <div class="col-12 col-lg-8 orderList">
+        <div class="orderList__item">
+            <div class="orderList__picture-wrapper">
+                <div class="picture-holder"></div>
+            </div>
+            <div class="orderList__info">
+                <h5>Rouška a nákup</h5>
+                <p class="orderList__info__name">Rastlislav Hajduk</p>
+                <a href="#"><i class="fas fa-map-marker-alt"></i>Praha 10 - Vinohrady</a>
+            </div>
+            <div class="orderList__detail">
+                <a n:href="detail id => 1">Detail žádosti</a>
+            </div>
+        </div>
+    </div>
+</div>
