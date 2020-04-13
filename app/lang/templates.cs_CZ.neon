@@ -17,6 +17,7 @@ header:
     logout: 'Odhlášení'
     mainTitle: 'Projekt SousedskaPomoc.cz sdružuje dobrovolníky po celé ČR a společně zajišťuje doručování léku, potravin a dalších nezbytností lidem, kteří to v aktuální situaci potřebují nejvíce.'
     mainSubtitle: 'Jedná se především o ohrožené skupiny, jak jsou senioři, nemocní, těhotné ženy či osoby s oslabenou imunitou.'
+    doctors: 'Pro lékaře'
     towns: 'Pro města a obce'
 footer:
     disclaimer: 'Veškeré dotazy posílejte na e-mail <a href="mailto:info@sousedskapomoc.cz" target="_blank">info@sousedskapomoc.cz</a>, vytvořil <a href="https://twitter.com/hunaczech">Lukáš Huňka</a>'
@@ -91,7 +92,7 @@ operatorDashboard:
 courierDashboard:
     title: 'Přehled kurýra'
     subtitle: 'Příjem objednávek'
-    readyToWork: 'ZAPNOUT - Jsem připraven k práci'
+    readyToWork: 'ZAPNOUT - Jsem připraven vozit objednávky'
     tooBusy: 'VYPNOUT - Už nemohu přijímat další objednávky'
     waitingOrders: 'Objednávky které čekají na přiřazení'
     noOrdersYet: 'Zatím žádné objednávky k doručení'
