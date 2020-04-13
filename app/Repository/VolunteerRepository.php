@@ -96,10 +96,10 @@ class VolunteerRepository extends DoctrineEntityRepository
             if ($user->getPassword() != null) {
                 $dbUser->setPassword($user->getPassword());
             }
-            foreach($user->getCreatedOrders() as $order) {
+            foreach ($user->getCreatedOrders() as $order) {
                 $dbUser->addCreatedOrder($order);
             }
-            foreach($user->getDeliveredOrders() as $order) {
+            foreach ($user->getDeliveredOrders() as $order) {
                 $dbUser->addDeliveredOrder($order);
             }
             $dbUser->setPersonName($user->getPersonName());

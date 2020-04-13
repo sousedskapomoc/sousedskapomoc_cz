@@ -51,16 +51,14 @@ final class CoordinatorPresenter extends BasePresenter
         $this->orderManager = $orderManager;
     }
 
-    public function injectEditOrderFormFactory(IEditOrderFormInterface $editOrderForm) {
+    public function injectEditOrderFormFactory(IEditOrderFormInterface $editOrderForm)
+    {
         $this->editOrderFormFactory = $editOrderForm;
     }
 
-    public function createComponentEditOrderForm() {
+    public function createComponentEditOrderForm()
+    {
         return $this->editOrderFormFactory->create();
-    }
-
-    public function renderEditOrder($id) {
-
     }
 
     public function renderPrintMaterial($id)

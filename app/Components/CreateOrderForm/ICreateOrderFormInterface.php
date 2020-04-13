@@ -2,7 +2,6 @@
 
 namespace SousedskaPomoc\Components;
 
-
 interface ICreateOrderFormInterface
 {
     /** @return \SousedskaPomoc\Components\CreateOrderFormControl */

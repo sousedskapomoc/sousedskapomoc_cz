@@ -24,19 +24,23 @@ class HeadquartersPresenter extends BasePresenter
     /** @var \SousedskaPomoc\Repository\AddressRepository */
     protected $addressRepository;
 
-    public function injectOrderRepository(OrderRepository $orderRepository) {
+    public function injectOrderRepository(OrderRepository $orderRepository)
+    {
         $this->orderRepository = $orderRepository;
     }
 
-    public function injectDemandRepository(DemandRepository $demandRepository) {
+    public function injectDemandRepository(DemandRepository $demandRepository)
+    {
         $this->demandRepository = $demandRepository;
     }
 
-    public function injectVolunteerRepository(VolunteerRepository $volunteerRepository) {
+    public function injectVolunteerRepository(VolunteerRepository $volunteerRepository)
+    {
         $this->volunteerRepository = $volunteerRepository;
     }
 
-    public function injectAddressRepository(AddressRepository $addressRepository) {
+    public function injectAddressRepository(AddressRepository $addressRepository)
+    {
         $this->addressRepository = $addressRepository;
     }
 

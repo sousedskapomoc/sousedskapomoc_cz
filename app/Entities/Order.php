@@ -258,6 +258,4 @@ class Order
         $this->fromDemand = $fromDemand;
         $fromDemand->setCreatedOrder($this);
     }
-
-
 }

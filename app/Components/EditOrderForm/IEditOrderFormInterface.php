@@ -2,7 +2,6 @@
 
 namespace SousedskaPomoc\Components;
 
-
 interface IEditOrderFormInterface
 {
     /** @return \SousedskaPomoc\Components\EditOrderFormControl */

@@ -57,7 +57,8 @@ final class HomepagePresenter extends BasePresenter
         $this->roleRepository = $roleRepository;
     }
 
-    public function injectDemandFormFactory(IDemandFormInterface $demandForm) {
+    public function injectDemandFormFactory(IDemandFormInterface $demandForm)
+    {
         $this->demandFormFactory = $demandForm;
     }
 
