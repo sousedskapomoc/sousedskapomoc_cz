@@ -128,6 +128,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
                 'picking' => $this->translator->translate('templates.order.statusPicking'),
                 'delivering' => $this->translator->translate('templates.order.statusDelivering'),
                 'delivered' => $this->translator->translate('templates.order.statusDelivered'),
+                'waiting' => $this->translator->translate('templates.order.statusWaiting'),
             ];
 
             return $statusList[$status] ?? $status;

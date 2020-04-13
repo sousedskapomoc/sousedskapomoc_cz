@@ -30,9 +30,11 @@
                 </div>
                 <div class="orderList__info">
                     <h5>{$demand->getCustomerNote()}</h5>
-                    <p>{$demand->getStatus()}</p>
+                    <p>{$demand->getStatus()|humanFriendlyStatus}</p>
                     <p class="orderList__info__name">{$demand->getOwner()->getPersonName()}</p>
-                    <a href="#"><i class="fas fa-map-marker-alt"></i>{dump $demand}</a>
+                    <a n:href="detail id => $demand->getId()" n:if="$demand->getPickupAddress() != null"><i
+                                class="fas fa-map-marker-alt"></i>{$demand->getPickupAddress()->getCityWithPostalCode()}
+                    </a>
                 </div>
                 <div class="orderList__detail">
                     <a n:href="detail id => $demand->getId()">Detail žádosti</a>
