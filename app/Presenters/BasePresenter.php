@@ -112,6 +112,14 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
             return $states[$state] ?? $state[0];
         });
 
+        $this->template->addFilter('createList', function ($items) {
+            $output = null;
+            foreach( explode(",",$items) as $item) {
+                $output .= "<li>$item</li>";
+            }
+            return $output;
+        });
+
         $this->template->addFilter('humanFriendlyStatus', function ($status) {
 
             $statusList = [
