@@ -1,6 +1,7 @@
 {block content}
 <div class="row justify-content-center">
     <div class="col-12">
+        <h1>Chci pomáhat ({count($demands)} příležitostí)</h1>
         <div class="flex form--plain__filter__wrapper">
             <form class="form--plain form--plain__filter">
                 <p>Chci pomoci:</p>
@@ -11,7 +12,7 @@
                     <option>s vyzvednutím léků</option>
                 </select>
                 <input type="text" name="orderList-where-help" id="orderList-where-help"
-                       placeholder="Lokalita kde chcete pomoct">
+                       placeholder="Lokalita kde chcete pomoct" {ifset $selectedTown}value="{$selectedTown}"{/ifset}>
                 <button class="btn btn--purple btn-small">Zobrazit</button>
             </form>
             <div class="form--plain__filter-checkbox">
@@ -23,23 +24,30 @@
 </div>
 <div class="row justify-content-center padding-top--50">
     <div class="col-12 col-lg-8 orderList">
-        {foreach $demands as $demand}
-            <div class="orderList__item">
-                <div class="orderList__picture-wrapper">
-                    <div class="picture-holder"></div>
+        {if !empty($demands)}
+            {foreach $demands as $demand}
+                <div class="orderList__item">
+                    <div class="orderList__picture-wrapper">
+                        <div class="picture-holder"></div>
+                    </div>
+                    <div class="orderList__info">
+                        <h5>{$demand->getCustomerNote()}</h5>
+                        <p>{$demand->getStatus()|humanFriendlyStatus}</p>
+                        <p class="orderList__info__name">{$demand->getOwner()->getPersonName()}</p>
+                        <a n:href="detail id => $demand->getId()" n:if="$demand->getPickupAddress() != null"><i
+                                    class="fas fa-map-marker-alt"></i>{$demand->getPickupAddress()->getCityWithPostalCode()}
+                        </a>
+                    </div>
+                    <div class="orderList__detail">
+                        <a n:href="detail id => $demand->getId()">Detail žádosti</a>
+                    </div>
                 </div>
-                <div class="orderList__info">
-                    <h5>{$demand->getCustomerNote()}</h5>
-                    <p>{$demand->getStatus()|humanFriendlyStatus}</p>
-                    <p class="orderList__info__name">{$demand->getOwner()->getPersonName()}</p>
-                    <a n:href="detail id => $demand->getId()" n:if="$demand->getPickupAddress() != null"><i
-                                class="fas fa-map-marker-alt"></i>{$demand->getPickupAddress()->getCityWithPostalCode()}
-                    </a>
-                </div>
-                <div class="orderList__detail">
-                    <a n:href="detail id => $demand->getId()">Detail žádosti</a>
-                </div>
-            </div>
-        {/foreach}
+            {/foreach}
+        {else}
+            <div class="notif notif--red">V tomto městě zatím nikdo poptávku nezadal.</div>
+            <p class="margin-top-50">
+                <a n:href="Homepage:postDemand" class="btn btn-purple">Zadat žádost o pomoc</a>
+            </p>
+        {/if}
     </div>
 </div>
