@@ -49,6 +49,7 @@ final class SeamstressPresenter extends BasePresenter
     }
 
 
+<<<<<<< HEAD
     public function createComponentPostOrder()
     {
         $form = new BootstrapForm;
@@ -58,6 +59,13 @@ final class SeamstressPresenter extends BasePresenter
         $form->addText('items', "Pocet rousek")
             ->setRequired('Prosim sdelte nam kolik rousek je pripraveno k vyzvednuti.');
         $form->addHidden('pickupId');
+=======
+        $form->addHidden('note')->setDefaultValue($this->translator->translate('forms.createPostOrder.veil'));
+
+        $form->addText('order_items', $this->translator->translate('templates.seamstress.itemsLabel'))
+            ->setPlaceholder( $this->translator->translate('forms.createPostOrder.tenPiecesRequirement') )
+            ->setRequired( $this->translator->translate('forms.createPostOrder.enterNumForPickUp') );
+>>>>>>> presenters translations
 
         $form->addSubmit('addOrderFormSubmit', 'Odeslat poptavku');
         $form->onSuccess[] = [$this, "processAdd"];
@@ -70,6 +78,7 @@ final class SeamstressPresenter extends BasePresenter
     {
         $values = $form->getValues();
 
+<<<<<<< HEAD
         /** @var Order $order */
         $order = new Order();
         $order->setItems($values->items);
@@ -114,6 +123,15 @@ final class SeamstressPresenter extends BasePresenter
         } catch (AuthenticationException $e) {
             $form->addError($e->getMessage());
         }
+=======
+        $values->id_volunteers = $this->user->getId();
+        $values->delivery_phone = $this->user->getIdentity()->data['personPhone'] ?? $this->translator->translate('forms.postOrder.notDefined');
+        $values->status = "new";
+
+        $result = $this->orderManager->create($values);
+        $this->flashMessage($this->translator->translate('messages.order.orderSuccess'));
+        $this->redirect("Coordinator:dashboard");
+>>>>>>> presenters translations
     }
 
 
@@ -126,7 +144,7 @@ final class SeamstressPresenter extends BasePresenter
     public function handleToggleActive($active)
     {
         $this->userManager->setOnline($this->user->getId(), $active);
-        $this->flashMessage("Změna stavu byla nastavena.");
+        $this->flashMessage( $this->translator->translate('messages.toggleActive.stateChangeSuccess'));
         $this->redirect('this');
     }
 }

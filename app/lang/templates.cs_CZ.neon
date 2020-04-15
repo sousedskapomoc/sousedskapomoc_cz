@@ -205,6 +205,7 @@ profile:
 headquarters:
 	title: 'Velín'
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 vehicleType:
@@ -216,3 +217,38 @@ vehicleType:
     motorbike: 'Motorka'
     walk: 'Chůze'
 >>>>>>> test - vehicle translation
+=======
+gridCreateUser:
+    userID: 'ID uživatele'
+    fullName: 'Jméno a příjmení'
+    eMail: 'E-mail'
+    phone: 'Telefon'
+    address: 'Město'
+    notSpecified: 'Nespecifikovano'
+    Online: 'Online' 
+gridCreateDemand:
+    id: 'ID'
+    submitter: 'Zadavatel'
+    address: 'Adresa'
+    notSpecified: 'Nespecifikovano'
+    phone: 'Telefon'
+    orderedItems: 'Položky objednávky'
+    orderStatus: 'Stav objednávky'
+    addedTime: 'Datum přidání'
+    actionConfirm: 'Schválit'
+    actionDetail: 'Detail'
+    actionDelete: 'Smazat'
+gridCreateOdrers:
+    id: 'ID'
+    owner: 'Zadavatel'
+    notSpecified: 'Nespecifikovano'
+    address: 'Adresa'
+    phone: 'Telefon'
+    itemsList: 'Položky objednávky'
+    addedTime: 'Datum přidání'
+    status: 'Status'
+    reset: 'Resetovat'
+    detail: 'Detail'
+    delete: 'Smazat'
+
+>>>>>>> presenters translations

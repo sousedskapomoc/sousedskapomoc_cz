@@ -57,9 +57,9 @@ final class SystemPresenter extends BasePresenter
     public function createComponentRegisterAddress()
     {
         $form = new BootstrapForm();
-        $form->addText("town", "Město ve kterém působím");
-        $form->addHidden("selectedTown")->setRequired("Prosím vyberte z našeptávače město ve kterém působíte.");
-        $form->addSubmit("addressSubmit", "Uložit adresu");
+        $form->addText("town", $this->translator->translate('forms.createRegisterAddr.stateChangeSuccess'));
+        $form->addHidden("selectedTown")->setRequired( $this->translator->translate('forms.createRegisterAddr.myTownHidden'));
+        $form->addSubmit("addressSubmit", $this->translator->translate('forms.createRegisterAddr.saveAddr'));
         $form->onSuccess[] = [$this, "updateAddress"];
         return $form;
     }
@@ -68,7 +68,7 @@ final class SystemPresenter extends BasePresenter
     {
         $values = $form->getValues();
         $this->userManager->updateTown($values->selectedTown, $this->user->getId());
-        $this->flashMessage("Adresa byla změněna!", 'danger');
+        $this->flashMessage($this->translator->translate('forms.addressUpdate.changeSuccessful'), 'danger');
         $this->redirect("System:profile");
     }
 

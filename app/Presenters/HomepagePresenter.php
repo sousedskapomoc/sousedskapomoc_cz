@@ -117,7 +117,27 @@ final class HomepagePresenter extends BasePresenter
 
     public function createComponentPostDemand()
     {
+<<<<<<< HEAD
         return $this->demandFormFactory->create();
+=======
+        $form = new BootstrapForm;
+        $form->addText('address', $this->translator->translate('forms.createPostDemand.currentCity' ));
+        $form->addText('deliveryAddress', $this->translator->translate('forms.createPostDemand.deliveryAddr' ));
+        $form->addText('deliveryPhone', $this->translator->translate('forms.createPostDemand.phone' ));
+        $form->addText('deliveryPerson', $this->translator->translate('forms.createPostDemand.fullName' ));
+        $form->addTextArea('orderItems', $this->translator->translate('forms.createPostDemand.orderItems' ));
+        $form->addSubmit('demandFormSubmit', $this->translator->translate('forms.createPostDemand.formSubmit' ));
+        $form->onSuccess[] = [$this, "saveDemand"];
+        return $form;
+    }
+
+    public function saveDemand(BootstrapForm $form)
+    {
+        $values = $form->getValues();
+        $this->orderManager->saveDemand($values);
+        $this->flashMessage($this->translator->translate('messages.saveDemand.save'));
+        $this->redirect('Homepage:default');
+>>>>>>> presenters translations
     }
 
     public function createComponentAddGovernmentCoordinator()
@@ -139,16 +159,16 @@ final class HomepagePresenter extends BasePresenter
             $form->setDefaults(['personEmail' => $user['personEmail'], 'id' => $user['id']]);
         }
 
-        $form->addPassword("newPass", "Nové heslo")
-            ->addRule(Form::MIN_LENGTH, 'Heslo musi byt alespon %d dlouhe', 6)
-            ->setRequired('Prosím zvolte si heslo.');
+        $form->addPassword("newPass", $this->translator->translate('forms.changePasswdForm.newPasswd') )
+            ->addRule(Form::MIN_LENGTH, $this->translator->translate('forms.changePasswdForm.mustBeAtLeastDChars'), 6)
+            ->setRequired($this->translator->translate('forms.changePasswdForm.pickNewPasswd'));
 
-        $form->addPassword("newPassAgain", "Zopakujte nové heslo")
-            ->setRequired('Passwords must be the same')
-            ->addRule(Form::MIN_LENGTH, 'Heslo musi byt alespon %d dlouhe', 6)
-            ->addRule(FORM::EQUAL, "Hesla se neshodují.", $form["newPass"]);
+        $form->addPassword("newPassAgain", $this->translator->translate('forms.changePasswdForm.newPasswdAgain'))
+            ->setRequired($this->translator->translate('forms.changePasswdForm.passwdMustMatch'))
+            ->addRule(Form::MIN_LENGTH, $this->translator->translate('forms.changePasswdForm.mustBeAtLeastDChars'), 6)
+            ->addRule(FORM::EQUAL, $this->translator->translate('forms.changePasswdForm.passwdDontMatch'), $form["newPass"]);
 
-        $form->addSubmit('submit', 'Nastavit heslo');
+        $form->addSubmit('submit', $this->translator->translate('forms.changePasswdForm.setPasswd'));
         $form->onSuccess[] = [$this, 'onSuccess'];
 
         return $form;
@@ -158,13 +178,13 @@ final class HomepagePresenter extends BasePresenter
     public function onSuccess(Form $form, $values)
     {
         if (!$this->userManager->check('personEmail', $values->personEmail)) {
-            $form->addError('Zadaný účet neexistuje.');
+            $form->addError($this->translator->translate('forms.onSuccess.accDontExist'));
         }
 
         try {
             $pass = $this->passwords->hash($values->newPass);
             $this->userManager->setPass($values->id, $pass);
-            $this->presenter->flashMessage("Heslo bylo úspěšně změněno.");
+            $this->presenter->flashMessage($this->translator->translate('messages.passwdChange.success'));
             $this->presenter->redirect("Sign:in");
         } catch (AuthenticationException $e) {
             $form->addError($e->getMessage());
@@ -200,7 +220,7 @@ final class HomepagePresenter extends BasePresenter
         try {
             $this->userManager->getUserByEmailCode($hash);
         } catch (\Exception $err) {
-            $this->flashMessage("Email code is not valid.", BasePresenter::FLASH_TYPE_ERROR);
+            $this->flashMessage( $this->translator->translate('messages.passwdChange.hashMissMatch'), BasePresenter::FLASH_TYPE_ERROR);
             $this->redirect("Page:homepage");
         }
     }
@@ -213,7 +233,7 @@ final class HomepagePresenter extends BasePresenter
         $form->addEmail('personEmail', $this->translator->translate('forms.registerCoordinator.mailLabel'))
             ->setRequired($this->translator->translate('forms.registerCoordinator.mailRequired'));
 
-        $form->addSubmit('submit', 'Zaslat nove heslo');
+        $form->addSubmit('submit', $this->translator->translate('messages.passwdChange.sendNewPasswd'));
         $form->onSuccess[] = [$this, 'onOk'];
 
         return $form;
@@ -223,7 +243,7 @@ final class HomepagePresenter extends BasePresenter
     public function onOk(Form $form, $values)
     {
         if (!$this->userManager->check('personEmail', $values->personEmail)) {
-            $form->addError('Zadaný účet neexistuje.');
+            $form->addError($this->translator->translate('forms.onOk.accDontExist'));
         }
 
         try {
@@ -232,7 +252,7 @@ final class HomepagePresenter extends BasePresenter
             $hash = $user->getHash();
             $link = $this->link('//Homepage:changePassword', $hash);
             $this->mail->sendLostPasswordMail($values->personEmail, $link);
-            $this->presenter->flashMessage("E-mail s odkazem byl úspěšně odeslán.");
+            $this->presenter->flashMessage($this->translator->translate('messages.passwdChange.emailSendSuccess') );
             $this->presenter->redirect("Sign:in");
         } catch (AuthenticationException $e) {
             $form->addError($e->getMessage());
