@@ -27,7 +27,7 @@ class PublicDemandsPresenter extends BasePresenter
     {
         $townLimit = $_GET['orderList-where-help'] ?? null;
 
-        if($townLimit == null) {
+        if ($townLimit == null) {
             $this->template->demands = $this->orderRepository->getAll();
         } else {
             $this->template->demands = $this->orderRepository->getByTown($townLimit);
@@ -35,7 +35,8 @@ class PublicDemandsPresenter extends BasePresenter
         }
     }
 
-    public function renderDetail($id) {
+    public function renderDetail($id)
+    {
         $this->template->demand = $this->orderRepository->getById($id);
     }
 }

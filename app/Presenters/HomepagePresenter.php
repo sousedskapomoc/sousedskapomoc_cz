@@ -44,18 +44,7 @@ final class HomepagePresenter extends BasePresenter
     /** @var \SousedskaPomoc\Repository\RoleRepository */
     protected $roleRepository;
 
-
-    public function beforeRender()
-    {
-        if ($this->user->isLoggedIn()) {
-            if ($this->user->isInRole('admin')) {
-                $this->redirect("System:dashboard");
-            } else {
-                $this->redirect("PublicDemands:dashboard");
-            }
-        }
-    }
-
+    
     public function injectRoleRepository(RoleRepository $roleRepository)
     {
         $this->roleRepository = $roleRepository;

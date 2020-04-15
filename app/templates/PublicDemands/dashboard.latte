@@ -2,8 +2,11 @@
 <div class="row justify-content-center">
     <div class="col-12">
         <h1>Profil | <small>{$user->getIdentity()->data['personName']}</small></h1>
-        <a n:href="Sign:card" target="_blank" class="btn btn-primary btn-purple">Stáhnout kartičku dobrovolníka</a>
-        <a n:href="Sign:uploadPhoto" class="btn btn-primary btn-dark">Nahrát novou profilovou fotku</a>
+        <p>
+            <a n:href="System:dashboard" target="_blank" class="btn btn-primary btn-danger">Administrace</a>
+            <a n:href="Sign:card" target="_blank" class="btn btn-primary btn-purple">Stáhnout kartičku dobrovolníka</a>
+            <a n:href="Sign:uploadPhoto" class="btn btn-primary btn-dark">Nahrát novou profilovou fotku</a>
+        </p>
         <h1>Přehled tvojí pomoci</h1>
         <p>Zatím jsi se k pomoci nedostal - stačí začít</p>
         <a n:href="PublicDemands:default" class="btn btn-primary btn-default">Chci pomáhat</a>

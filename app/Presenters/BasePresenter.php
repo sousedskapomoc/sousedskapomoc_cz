@@ -114,7 +114,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 
         $this->template->addFilter('createList', function ($items) {
             $output = null;
-            foreach( explode(",",$items) as $item) {
+            foreach (explode(",", $items) as $item) {
                 $output .= "<li>$item</li>";
             }
             return $output;

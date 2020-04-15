@@ -22,11 +22,11 @@ final class SignPresenter extends BasePresenter
     /** @var VolunteerRepository */
     private $volunteerRepository;
 
-    public function __construct(Forms\SignInFormFactory $signInFactory,
-                                Forms\SignUpFormFactory $signUpFactory,
-                                VolunteerRepository $volunteerRepository
-    )
-    {
+    public function __construct(
+        Forms\SignInFormFactory $signInFactory,
+        Forms\SignUpFormFactory $signUpFactory,
+        VolunteerRepository $volunteerRepository
+    ) {
         $this->signInFactory = $signInFactory;
         $this->signUpFactory = $signUpFactory;
         $this->volunteerRepository = $volunteerRepository;
@@ -60,7 +60,9 @@ final class SignPresenter extends BasePresenter
 
     public function actionOut(): void
     {
-        $this->getUser()->logout();
+        $this->getUser()->logout(true);
+        $this->flashMessage('Odhlášení proběhlo úspěšně');
+        $this->redirect('Homepage:default');
     }
 
     public function renderCard()
