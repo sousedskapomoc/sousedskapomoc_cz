@@ -1577,3 +1577,89 @@ input[type="checkbox"]:checked:after {
 		max-width: calc(100% / 12 * 10);
 	}
 }
+
+/*Hover on team images*/
+#hunka:hover {
+    background-image: url('../images/team/hunka-2.jpg');
+}
+#zima:hover {
+    background-image: url('../images/team/zima-2.jpg');
+}
+#cermak:hover {
+    background-image: url('../images/team/cermak-2.jpg');
+}
+#gavurnik:hover {
+    background-image: url('../images/team/gavurnik-2.jpg');
+}
+#houzvicek:hover {
+    background-image: url('../images/team/houzvicek-2.jpg');
+}
+#kocova:hover {
+    background-image: url('../images/team/kocova-2.jpg');
+}
+#matouskova:hover {
+    background-image: url('../images/team/matouskova-2.jpg');
+}
+#brisova:hover {
+    background-image: url('../images/team/brisova-2.jpg');
+}
+#plachy:hover {
+    background-image: url('../images/team/plachy-2.jpg');
+}
+#zejdlik:hover {
+    background-image: url('../images/team/zejdlik-2.jpg');
+}
+#wunsch:hover {
+    background-image: url('../images/team/wunsch-2.jpg');
+}
+#horackova:hover {
+    background-image: url('../images/team/horackova-2.jpg');
+}
+#thiel:hover {
+    background-image: url('../images/team/thiel-2.jpg');
+}
+#filatov:hover {
+    background-image: url('../images/team/filatov-2.jpg');
+}
+#majid:hover {
+    background-image: url('../images/team/majid-2.jpg');
+}
+#pastva:hover {
+    background-image: url('../images/team/pastva-2.jpg');
+}
+#musilova:hover {
+    background-image: url('../images/team/musilova-2.jpg');
+}
+#hrabovsky:hover {
+    background-image: url('../images/team/hrabovsky-2.jpg');
+}
+#perugini:hover {
+    background-image: url('../images/team/perugini-2.jpg');
+}
+#padourova:hover {
+    background-image: url('../images/team/padourova-2.jpg');
+}
+#lamberti:hover {
+    background-image: url('../images/team/lamberti-2.jpg');
+}
+#novackova:hover {
+    background-image: url('../images/team/novackova-2.jpg');
+}
+#obdrzalek:hover {
+    background-image: url('../images/team/obdrzalek-2.jpg');
+}
+#clupek:hover {
+    background-image: url('../images/team/clupek-2.jpg');
+}
+#moisidis:hover {
+    background-image: url('../images/team/moisidis-2.jpg');
+}
+#hanus:hover {
+    background-image: url('../images/team/hanus-2.jpg');
+}
+#strnkova:hover {
+    background-image: url('../images/team/strnkova-2.jpg');
+}
+#povejsil:hover {
+    background-image: url('../images/team/povejsil-2.jpg');
+}
