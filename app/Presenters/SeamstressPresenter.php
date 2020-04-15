@@ -53,10 +53,12 @@ final class SeamstressPresenter extends BasePresenter
     {
         $form = new BootstrapForm;
 
-        $form->addText('pickupAddress', 'Adresa vyzvednuti')
-            ->setPlaceholder('Ulice včetně čísla popisného');
-        $form->addText('items', "Pocet rousek")
-            ->setRequired('Prosim sdelte nam kolik rousek je pripraveno k vyzvednuti.');
+        $form->addText('pickupAddress', $this->translator->translate('forms.postOrder.addressPick'))
+            ->setRequired($this->translator->translate('forms.postOrder.addressRequired'))
+            ->setPlaceholder($this->translator->translate('forms.postOrder.addressPlaceholder'));
+        $form->addText('items', $this->translator->translate('templates.seamstress.itemsLabel'))
+            ->setPlaceholder( $this->translator->translate('forms.createPostOrder.tenPiecesRequirement') )
+            ->setRequired( $this->translator->translate('forms.createPostOrder.enterNumForPickUp') );
         $form->addHidden('pickupId');
 
         $form->addSubmit('addOrderFormSubmit', 'Odeslat poptavku');
@@ -126,7 +128,7 @@ final class SeamstressPresenter extends BasePresenter
     public function handleToggleActive($active)
     {
         $this->userManager->setOnline($this->user->getId(), $active);
-        $this->flashMessage("Změna stavu byla nastavena.");
+        $this->flashMessage( $this->translator->translate('messages.toggleActive.stateChangeSuccess'));
         $this->redirect('this');
     }
 }
