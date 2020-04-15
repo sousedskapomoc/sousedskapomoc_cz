@@ -48,7 +48,11 @@ final class HomepagePresenter extends BasePresenter
     public function beforeRender()
     {
         if ($this->user->isLoggedIn()) {
-            $this->redirect("System:dashboard");
+            if ($this->user->isInRole('admin')) {
+                $this->redirect("System:dashboard");
+            } else {
+                $this->redirect("PublicDemands:dashboard");
+            }
         }
     }
 

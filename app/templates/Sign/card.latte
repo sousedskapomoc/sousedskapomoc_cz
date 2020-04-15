@@ -1,0 +1,37 @@
+<html>
+<head>
+    <title>Kartička dobrovolníka {$volunteer->getPersonName()}</title>
+</head>
+<body>
+<img src="{$basePath}/images/card-id.jpg" />
+<span class="volunteerName">{$volunteer->getPersonName()}</span>
+<span class="volunteerId">SP #{$volunteer->getId()}</span>
+<span class="profile-pic">
+<img src="https://pbs.twimg.com/profile_images/834810439741616129/lzJpx7Ut_400x400.jpg" />
+    </span>
+<style>
+    span.volunteerId {
+        position: absolute;
+        top: 330px;
+        left: 800px;
+        font-size: 28px;
+    }
+    span.volunteerName {
+        position: absolute;
+        top: 330px;
+        left: 400px;
+        font-size: 28px;
+    }
+    span.profile-pic {
+        position: absolute;
+        top: 125px;
+        left: 50px;
+        overflow: hidden;
+        max-width: 300px;
+        max-height: 350px;
+    }
+</style>
+
+
+</body>
+</html>
