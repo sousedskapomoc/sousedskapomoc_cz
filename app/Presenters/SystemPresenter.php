@@ -134,7 +134,7 @@ final class SystemPresenter extends BasePresenter
 
         try {
             $this->addressRepository->create($address);
-            $this->flashMessage('Adresa byla uspesne upravena.');
+            $this->flashMessage($this->translator->translate('forms.addressUpdate.changeSuccessful'));
             $this->redirect("System:profile");
         } catch (AuthenticationException $e) {
             $form->addError($e->getMessage());
