@@ -166,7 +166,6 @@ final class HomepagePresenter extends BasePresenter
         $hash = $this->presenter->getParameter('hash');
         try {
             $this->userManager->getUserByEmailCode($hash);
-            $this->emailCode = $hash;
         } catch (\Exception $err) {
             $this->flashMessage("Email code is not valid.", BasePresenter::FLASH_TYPE_ERROR);
             $this->redirect("Page:homepage");
