@@ -36,11 +36,11 @@ final class SeamstressPresenter extends BasePresenter
             ->setRequired($this->translator->translate('forms.postOrder.addressRequired'))
             ->setPlaceholder($this->translator->translate('forms.postOrder.addressPlaceholder'));
 
-        $form->addHidden('note')->setDefaultValue('rousky');
+        $form->addHidden('note')->setDefaultValue($this->translator->translate('forms.createPostOrder.veil'));
 
         $form->addText('order_items', $this->translator->translate('templates.seamstress.itemsLabel'))
-            ->setPlaceholder('min. 10 kusů')
-            ->setRequired('Zadejte prosím počet roušek k vyzvednutí');
+            ->setPlaceholder( $this->translator->translate('forms.createPostOrder.tenPiecesRequirement') )
+            ->setRequired( $this->translator->translate('forms.createPostOrder.enterNumForPickUp') );
 
         $form->addSubmit('postOrderFormSubmit', $this->translator->translate('templates.seamstress.button'));
         $form->onSuccess[] = [$this, "postOrder"];
@@ -54,7 +54,7 @@ final class SeamstressPresenter extends BasePresenter
         $values = $form->getValues();
 
         $values->id_volunteers = $this->user->getId();
-        $values->delivery_phone = $this->user->getIdentity()->data['personPhone'] ?? 'neuveden';
+        $values->delivery_phone = $this->user->getIdentity()->data['personPhone'] ?? $this->translator->translate('forms.postOrder.notDefined');
         $values->status = "new";
 
         $result = $this->orderManager->create($values);
@@ -72,7 +72,7 @@ final class SeamstressPresenter extends BasePresenter
     public function handleToggleActive($active)
     {
         $this->userManager->setOnline($this->user->getId(), $active);
-        $this->flashMessage("Změna stavu byla nastavena.");
+        $this->flashMessage( $this->translator->translate('messages.toggleActive.stateChangeSuccess'));
         $this->redirect('this');
     }
 }

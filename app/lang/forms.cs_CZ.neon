@@ -14,6 +14,7 @@ postOrder:
     courierNote: 'Poznámka kurýra'
     buttonCourierNote: 'Přidat poznámku'
     addressPick: 'Adresa vyzvednutí'
+    notDefined: 'Neuveden'
 registerCoordinator:
     nameLabel: 'Jméno a příjmení'
     role: 'Pozice'
@@ -35,9 +36,42 @@ cars:
     bike: 'jízdní kolo'
     motorcycle: 'motocykl'
     walk: 'pěšky'
+    notSpecified: 'neuvedeno'
 changePassword:
     newPasswordLabel: 'Nové heslo'
     newPasswordRequired: 'Please fill out your new password'
     title: 'Nastavte si heslo'
 sign:
     lostPassword: 'Zapomenuté heslo'
+createPostDemand:
+    currentCity: 'Město ve kterém jste'
+    deliveryAddr: 'Adresa doručení'
+    phone: 'Telefon'
+    fullName: 'Jméno a příjmení'
+    orderItems: 'Položky objednávky'
+    formSubmit: 'Uložit poptávku'
+changePasswdForm:
+    newPasswd: 'Nové heslo'
+    mustBeAtLeastDChars: 'Heslo musi byt alespon %d dlouhe'
+    pickNewPasswd: 'Prosím zvolte si heslo.'
+    newPasswdAgain: 'Zopakujte nové heslo'
+    passwdMustMatch: 'Passwords must be the same'
+    passwdDontMatch: 'Hesla se neshodují.'
+    setNewPasswd: 'Nastavit heslo'
+    setPasswd: 'Nastavit heslo'
+onSuccess:
+    accDontExist: 'Zadaný účet neexistuje.'
+onOk:
+    accDontExist: 'Zadaný účet neexistuje.'
+createPostOrder:
+    veil: 'Roušky'
+    tenPiecesRequirement: 'min. 10 kusů'
+    enterNumForPickUp: 'Zadejte prosím počet roušek k vyzvednutí'
+toggleActive:
+    stateChangeSuccess: 'Změna stavu byla nastavena.'
+createRegisterAddr:
+    myTown: 'Město ve kterém působím'
+    myTownHidden: 'Prosím vyberte z našeptávače město ve kterém působíte.'
+    saveAddr: 'Uložit adresu'
+addressUpdate:
+    changeSuccessful: 'Adresa byla změněna!'

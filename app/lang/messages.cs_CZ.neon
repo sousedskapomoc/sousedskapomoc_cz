@@ -12,12 +12,32 @@ registration:
     fail: 'Zadaný e-mail již existuje'
 update:
     fail: 'Zadany účet neexistuje'
-couriersCount: 'Počet kurýrů'
-operatorsCount: 'Počet dispečerů'
-coordinatorsCount: 'Počet pečovatelů'
-usersWithoutAccess: 'Počet neakt. účtů'
-uniqueTowns: 'Počet unikátních měst'
-ordersCount: 'Počet objednávek'
+    couriersCount: 'Počet kurýrů'
+    operatorsCount: 'Počet dispečerů'
+    coordinatorsCount: 'Počet pečovatelů'
+    usersWithoutAccess: 'Počet neakt. účtů'
+    uniqueTowns: 'Počet unikátních měst'
+    ordersCount: 'Počet objednávek'
 status:
     disabled: 'Vypnuto'
     enabled: 'Zapnuto'
+statusChange:
+    changeSuccess: 'Změna stavu byla nastavena.'
+permission:
+    permissionDenied: 'Do této sekce nemáte mít přístup!'
+handleReset:
+    reseted: 'Objednávka byla obnovena do výchozího stavu.'
+handleDeleteDemand:
+    delete: 'Poptávka byla smazána.'
+handleDeleteOrder:
+    delete: 'Objednávka byla smazána.'
+handleApprove:
+    approve:'Objednávka byla schválena.'
+saveDemand:
+    save: 'Uložili jsme co potřebujete a pracujeme na tom ať to odbavíme'
+passwdChange:
+    success: 'Heslo bylo úspěšně změněno.'
+    hashMissMatch: 'Email code is not valid.'
+    sendNewPasswd: 'Zaslat nove heslo'
+    emailSendSuccess: 'E-mail s odkazem byl úspěšně odeslán.'
+    
