@@ -986,7 +986,6 @@ input[type="checkbox"]:checked:after {
 	line-height: 36px; 
 	font-family: Poppins, arial;
 	color: #6923CB;
-	padding-bottom: 30px;
 }
 
 .orderList__info a {
@@ -1003,7 +1002,6 @@ input[type="checkbox"]:checked:after {
 .orderList__detail {
 	align-self: flex-start;
 	flex: 1;
-	margin-top: 20px;
 	text-align: right;
 }
 
@@ -1510,6 +1508,10 @@ input[type="checkbox"]:checked:after {
 		font-size: 22px;
 		line-height: 36px;
 		font-family: Poppins, arial;
+	}
+
+	.footer p.text-normal {
+		font-weight: normal;
 	}
 
 	.footer .bigger-font {
