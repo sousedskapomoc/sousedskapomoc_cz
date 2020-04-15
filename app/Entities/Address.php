@@ -1,6 +1,5 @@
 <?php
 
-
 namespace SousedskaPomoc\Entities;
 
 use Doctrine\Common\Collections\ArrayCollection;

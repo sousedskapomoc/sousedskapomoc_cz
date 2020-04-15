@@ -86,6 +86,7 @@
                     <li><a n:href="PublicDemands:default">Kde mohu pomoc</a></li>
                     {if $user->isLoggedIn()}
 						<li><a n:href="PublicDemands:dashboard">Můj profil</a></li>
+                        <li><a n:href="Sign:out">Odhlásit se</a></li>
                     {else}
                         <li><a href="/sign/in">{_templates.header.login}</a></li>
                     {/if}
