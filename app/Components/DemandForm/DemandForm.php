@@ -6,6 +6,8 @@ use Contributte\FormsBootstrap\BootstrapForm;
 use Kdyby\Translation\Translator;
 use Nette\Application\UI\Control;
 use Nette\Security\AuthenticationException;
+use SousedskaPomoc\Components\Suggester\ISuggesterTownInterface;
+use SousedskaPomoc\Components\Suggester\Town;
 use SousedskaPomoc\Entities\Address;
 use SousedskaPomoc\Entities\Demand;
 use SousedskaPomoc\Repository\AddressRepository;
@@ -22,18 +24,26 @@ class DemandFormControl extends Control
     /** @var DemandRepository */
     protected $demandRepository;
 
-
+    /** @var ISuggesterTownInterface */
+    protected $townSuggester;
 
     public function __construct(
         Translator $translator,
         AddressRepository $addrRepository,
-        DemandRepository $demandRepository
-    ) {
+        DemandRepository $demandRepository,
+        ISuggesterTownInterface $townSuggester
+    )
+    {
         $this->translator = $translator;
         $this->addressRepository = $addrRepository;
         $this->demandRepository = $demandRepository;
+        $this->townSuggester = $townSuggester;
     }
 
+    public function createComponentTownSuggester()
+    {
+        return $this->townSuggester->create();
+    }
 
     public function createComponentDemandForm()
     {

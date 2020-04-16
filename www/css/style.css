@@ -817,11 +817,6 @@ h3 {
 	cursor: pointer;
 }
 
-.form--plain fieldset {
-	margin-bottom: 32px;
-	margin-top: 14px;
-}
-
 .form--plain .switcher {
 	position: relative;
 	height: 40px;
