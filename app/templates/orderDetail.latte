@@ -18,8 +18,8 @@
                 <th>Adresa vyzvednuti</th>
                 <td>
                     {if $order->getPickupAddress()}
-                    <a href="https://www.google.com/maps/search/{$order->getPickupAddress()->getStreet()}"
-                       target="_blank">{$order->getPickupAddress()->getCity()}, {$order->getPickupAddress()->getStreet() ?? "Nezadano"}, {$order->getPickupAddress()->getPostalCode()}</a></td>
+                    <a href="https://www.google.com/maps/search/{$order->getPickupAddress()->getFullAddress()}"
+                       target="_blank">{$order->getPickupAddress()->getFullAddress()}</a></td>
                 {else}
                 Nezadano
                 {/if}
@@ -28,8 +28,8 @@
                 <th>{_templates.orderDetail.address}</th>
                 <td>
                     {if $order->getDeliveryAddress()}
-                    <a href="https://www.google.com/maps/search/{$order->getDeliveryAddress()->getStreet()}"
-                       target="_blank">{$order->getDeliveryAddress()->getCity()} {$order->getDeliveryAddress()->getStreet()} {$order->getDeliveryAddress()->getPostalCode()}</a></td>
+                    <a href="https://www.google.com/maps/search/{$order->getDeliveryAddress()->getFullAddress()}"
+                       target="_blank">{$order->getDeliveryAddress()->getFullAddress()}</a></td>
                 {/if}
             </tr>
             <tr>

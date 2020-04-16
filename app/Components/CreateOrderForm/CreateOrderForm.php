@@ -113,6 +113,8 @@ class CreateOrderFormControl extends Control
         $pickupAddress->setCountry($addrPickup->country);
         $pickupAddress->setDistrict($addrPickup->county);
         $pickupAddress->setPostalCode($addrPickup->postalCode);
+        $pickupAddress->setStreet($addrPickup->street);
+        $pickupAddress->setHouseNumber($addrPickup->houseNumber);
         $pickupAddress->setLongitude($pickupGps->longitude);
         $pickupAddress->setLatitude($pickupGps->latitude);
         $pickupAddress->addPickupOrder($order);
@@ -127,6 +129,8 @@ class CreateOrderFormControl extends Control
         $deliveryAddress->setPostalCode($addrDelivery->postalCode);
         $deliveryAddress->setLongitude($deliveryGps->longitude);
         $deliveryAddress->setLatitude($deliveryGps->latitude);
+        $deliveryAddress->setStreet($addrDelivery->street);
+        $deliveryAddress->setHouseNumber($addrDelivery->houseNumber);
         $deliveryAddress->addDeliveryOrder($order);
 
 
