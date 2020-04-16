@@ -28,6 +28,10 @@ class Volunteer
     /**
      * @ORM\Column(type="string")
      */
+    protected $uploadPhoto;
+    /**
+     * @ORM\Column(type="string")
+     */
     protected $personEmail;
 
     /**
@@ -349,5 +353,21 @@ class Volunteer
     public function setId($id)
     {
         $this->id = $id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUploadPhoto()
+    {
+        return $this->uploadPhoto;
+    }
+
+    /**
+     * @param mixed $uploadPhoto
+     */
+    public function setUploadPhoto($uploadPhoto): void
+    {
+        $this->uploadPhoto = $uploadPhoto;
     }
 }

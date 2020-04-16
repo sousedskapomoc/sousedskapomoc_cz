@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace SousedskaPomoc\Presenters;
 
+use Nette\Http\FileUpload;
+use Nette\Utils\Image;
 use SousedskaPomoc\Forms;
 use Nette\Application\UI\Form;
 use SousedskaPomoc\Repository\VolunteerRepository;
@@ -26,7 +28,8 @@ final class SignPresenter extends BasePresenter
         Forms\SignInFormFactory $signInFactory,
         Forms\SignUpFormFactory $signUpFactory,
         VolunteerRepository $volunteerRepository
-    ) {
+    )
+    {
         $this->signInFactory = $signInFactory;
         $this->signUpFactory = $signUpFactory;
         $this->volunteerRepository = $volunteerRepository;
@@ -77,5 +80,26 @@ final class SignPresenter extends BasePresenter
         $form->addSubmit('savePhoto', 'Nahrát fotografii');
         $form->onSuccess[] = [$this, "uploadUserPhoto"];
         return $form;
+    }
+
+    public function uploadUserPhoto(Form $form)
+    {
+        $values = $form->getValues();
+
+        /** @var FileUpload $file */
+        $file = $values->userPhoto;
+
+        if ($file->isOk() && $file->isImage()) {
+            $file->move(__DIR__ . '/../../www/upload/' . $this->user->getId() . '_' . $file->getSanitizedName());
+            $image = Image::fromFile(__DIR__ . '/../../www/upload/' . $this->user->getId() . '_' . $file->getSanitizedName());
+            $image->resize(350, null);
+            $image->save(__DIR__ . '/../../www/upload/card_' . $this->user->getId() . '_' . $file->getSanitizedName());
+            $this->volunteerRepository->attachUserPhoto($this->user->getId(), $file->getSanitizedName());
+            $this->flashMessage('Profilovou fotku jsme vám nahráli.');
+            $this->redirect('PublicDemands:dashboard');
+        } else {
+            $this->flashMessage('Nahráli jste nepodporovaný typ souboru.');
+            $this->redirect('this');
+        }
     }
 }

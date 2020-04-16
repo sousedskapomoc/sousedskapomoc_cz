@@ -44,7 +44,9 @@ class PublicDemandsPresenter extends BasePresenter
             $this->template->selectedTown = $townLimit;
         }
     }
-
+    public function renderDashboard() {
+        $this->template->volunteer = $this->volunteerRepository->getById($this->user->getId());
+    }
     public function renderDetail($id)
     {
         $this->template->demand = $this->orderRepository->getById($id);
