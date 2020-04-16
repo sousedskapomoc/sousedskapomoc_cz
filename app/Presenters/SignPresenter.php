@@ -82,6 +82,10 @@ final class SignPresenter extends BasePresenter
         return $form;
     }
 
+    public function renderProfile() {
+        $this->template->volunteer = $this->volunteerRepository->getById($this->user->getId());
+    }
+
     public function uploadUserPhoto(Form $form)
     {
         $values = $form->getValues();

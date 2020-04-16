@@ -10,8 +10,8 @@
         <div class="shopping-list">
             <ul n:if="$demand->getStatus() !== 'new'">
                 <li>Stav: {$demand->getStatus()|humanFriendlyStatus}</li>
-                <li>Kurýr: {$demand->getCourier()->getPersonName()}</li>
-                <li>Telefon: {$demand->getCourier()->getPersonPhone()}</li>
+                <li n:if="!empty($demand->getCourier())">Kurýr: {$demand->getCourier()->getPersonName()}</li>
+                <li n:if="!empty($demand->getCourier())">Telefon: {$demand->getCourier()->getPersonPhone()}</li>
                 <li>Poslední aktualizace: {date("d.m.Y H:i",$demand->getUpdatedAt()->getTimestamp())}</li>
             </ul>
             <h5 class="order-detail__subheadline">Co je potřeba</h5>

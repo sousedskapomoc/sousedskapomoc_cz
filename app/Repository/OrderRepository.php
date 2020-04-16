@@ -144,7 +144,7 @@ class OrderRepository extends DoctrineEntityRepository
     {
         return $this->findBy(['stat' => 'delivered']);
     }
-    
+
     public function assignOrder($courier, $order_id)
     {
         /** @var Order $order */
@@ -299,6 +299,25 @@ class OrderRepository extends DoctrineEntityRepository
             ->leftJoin('o.deliveryAddress', 'a')
             ->setParameter('town', $town)
             ->andWhere("a.city = :town");
+        $query = $qb->getQuery();
+        return $query->getResult();
+    }
+
+    public function getAllUnprocessed()
+    {
+        return $this->findBy(['stat' => 'new']);
+    }
+
+    public function getUnprocessedByTown($town)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('o')
+            ->from('\SousedskaPomoc\Entities\Order', 'o')
+            ->leftJoin('o.deliveryAddress', 'a')
+            ->setParameter('town', $town)
+            ->setParameter('stat', 'new')
+            ->andWhere("a.city = :town")
+            ->andWhere("o.stat = :stat");
         $query = $qb->getQuery();
         return $query->getResult();
     }
