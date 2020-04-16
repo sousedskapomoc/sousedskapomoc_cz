@@ -7,7 +7,7 @@
 <span class="volunteerName" style="text-transform: uppercase">{$volunteer->getPersonName()}</span>
 <span class="volunteerId">SP #{$volunteer->getId()}</span>
 <span class="profile-pic">
-<img src="https://pbs.twimg.com/profile_images/834810439741616129/lzJpx7Ut_400x400.jpg" />
+<img src="{$basePath}/upload/card_{$volunteer->getId()}_{$volunteer->getUploadPhoto()}" />
     </span>
 <style>
     span.volunteerId {

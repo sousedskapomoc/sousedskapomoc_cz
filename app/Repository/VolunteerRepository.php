@@ -190,4 +190,14 @@ class VolunteerRepository extends DoctrineEntityRepository
     {
         return $this->findBy(['online' => 1]);
     }
+
+    public function attachUserPhoto($volunteerId, string $filePath)
+    {
+        /** @var Volunteer $volunteer */
+        $volunteer = $this->find($volunteerId);
+        $volunteer->setUploadPhoto($filePath);
+        $em = $this->getEntityManager();
+        $em->persist($volunteer);
+        $em->flush();
+    }
 }
