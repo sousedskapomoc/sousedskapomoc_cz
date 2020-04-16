@@ -158,6 +158,7 @@ tim:
     title: 'Kutil'
     callToActionButton: 'Chci být kutilem'
     description: 'Na pozici kutilů hledáme šikovné lidi, kteří umí vyrobit, poradit nebo sehnat.'
+    wannaJoin: 'Chci se stát kutilem'
 dashboard:
     title: 'Sekce pro přihlášené'
     coordinatorSection: 'Přejít do sekce pro dobré sousedy'

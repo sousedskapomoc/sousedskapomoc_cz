@@ -1,0 +1,83 @@
+{block content}
+<div class="row justify-content-center page--role-info">
+    <div class="col-12">
+        <h1 class="text-center">Role Kutila</h1>
+
+        <div class="row">
+            <div class="col-12 col-lg-6 col-xl-7">
+                <h4>Kdo je může být například kutil</h4>
+
+                <p>Co se nedá sehnat, to si musíme vyrobit – a co se rozbije, to si musíme opravit. Přesně takhle to v
+                    době nedostatku ochranných pomůcek a zavřených obchodů funguje.</p>
+                <p>Umíte něco ušít, vyrobit, opravit nebo máte zdroj materiálu? Pak hledáme právě vás.</p>
+
+                <h4>Co budete kutit</h4>
+
+                <p>Na pozici kutilů hledáme šikovné lidi, kteří umí vyrobit, poradit nebo sehnat. Tím myslíme například
+                    následující:</p>
+
+                <ul>
+                    <li>Člověk, který umí šít.</li>
+                    <li>Člověk s 3D tiskárnou.</li>
+                    <li>Člověk, který může poskytnout materiál.</li>
+                    <li>Člověk, který umí poradit s opravami přes telefon.</li>
+                    <li>Člověk, který umí pomoct v domácnosti (např. instalatér).</li>
+                </ul>
+
+                <p>Umíte něco z toho? Nebo cokoli dalšího, co považujete za užitečné? Pak se nám určitě ozvěte!</p>
+                <h4>ČISTOTA PŮL ZDRAVÍ, SPRÁVNÁ HYGIENA CELÉ</h4>
+                <p>Při kontaktu s jakoukoli osobou dodržujte, prosím, následující pravidla, která dělají sousedského
+                    dobrovolníka ohleduplným dobrovolníkem:</p>
+
+                <ol>
+                    <li>Sousedský dobrovolník je VŽDY vybaven rouškami, brýlemi a rukavicemi. Zajistí tak zdraví své i
+                        toho, komu zrovna pomáhá.
+                    </li>
+                    <li>Telefon je základ. Jedině tak se s ostatními dobrovolníky bezpečně a bez zbytečného kontaktu na
+                        všem domluví.
+                    </li>
+                    <li>3 metry – to je bezpečný odstup, který při nutném kontaktu s kýmkoli jiným nikdy neporušuje.
+                    </li>
+                </ol>
+                <p>Připraveni? Tak tři, dva, jedna… a hurá kutit!</p>
+
+            </div>
+            <div class="col-12 col-lg-6 col-xl-4 offset-xl-1 js-scroll-fix-wrapper">
+                <div class="js-scroll-fix">
+                    <h4>{_templates.tim.wannaJoin}</h4>
+                    {control registerAsSeamstress}
+                    <ul id="suggestions"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function (event) {
+
+        $("#frm-registerAsOperator-town").on('keyup', function () {
+
+            var hereMapsEndpoint = "https://autocomplete.geocoder.ls.hereapi.com/6.2/suggest.json?apiKey=Kl0wK4fx38Pf63EIey6WyrmGEhS2IqaVHkuzx0IQ4-Q&country=CZE&query=";
+            var query = encodeURIComponent(this.value);
+
+            jQuery.getJSON(hereMapsEndpoint + query, function (data) {
+                $("#suggestions").empty();
+                $.each(data.suggestions, function (index) {
+                    if (data.suggestions[index].matchLevel == "district") {
+                        $("#suggestions").append(
+                            "<li><a href='#' class='suggestion' data-town='" + data.suggestions[index].address.district + "'>" + data.suggestions[index].address.district + "</a></li>"
+                        );
+                    }
+                });
+            });
+        });
+
+        $(document).on("click", "a.suggestion", function () {
+            var address = $(this).data("town");
+
+            $("#frm-registerAsOperator-town").val(address);
+            $("#suggestions").empty();
+        });
+    });
+</script>
