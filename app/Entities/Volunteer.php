@@ -51,12 +51,12 @@ class Volunteer
     protected $password;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Role", inversedBy="users", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="Role", inversedBy="users")
      */
-    protected $role;
+    protected $roles;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Address", inversedBy="volunteer", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="Address", inversedBy="volunteer")
      */
     protected $address;
 
@@ -242,7 +242,7 @@ class Volunteer
      */
     public function setAddress($address): void
     {
-        $this->address = $address;
+        $this->address[] = $address;
     }
 
 

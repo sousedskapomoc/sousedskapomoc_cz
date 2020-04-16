@@ -63,7 +63,7 @@ class Address
     protected $latitude;
 
     /**
-     * @ORM\OneToMany(targetEntity="Volunteer", mappedBy="address", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="Volunteer", mappedBy="address")
      */
     protected $volunteers;
 
@@ -94,7 +94,6 @@ class Address
         $this->ordersPickup = new ArrayCollection();
         $this->ordersDelivery = new ArrayCollection();
         $this->stocks = new ArrayCollection();
-        $this->volunteers = new ArrayCollection();
     }
 
 
@@ -407,12 +406,9 @@ class Address
 
     public function addVolunteer($user): self
     {
-        if (!$this->volunteers->contains($user)) {
-            $this->volunteers[] = $user;
-
-            /** @var \SousedskaPomoc\Entities\Volunteer $user */
-            $user->setAddress($this);
-        }
+        $this->volunteers[] = $user;
+        /** @var \SousedskaPomoc\Entities\Volunteer $user */
+        $user->setAddress($this);
         return $this;
     }
 
