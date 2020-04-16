@@ -76,12 +76,12 @@
 	<strong>Stav:</strong> {$order->getStatus()|humanFriendlyStatus}<br/>
 	<hr/>
 	{if $order->getPickupAddress()}
-		<strong>Adresa vyzvednutí:</strong> <a href="https://www.google.com/maps/search/{$order->getPickupAddress()->getStreet() ?? 'Nezadano'}"
-											   target="_blank">{$order->getPickupAddress()->getStreet() ?? 'Nezadano'}</a><br/>
+		<strong>Adresa vyzvednutí:</strong> <a href="https://www.google.com/maps/search/{$order->getPickupAddress()->getFullAddress()}"
+											   target="_blank">{$order->getPickupAddress()->getFullAddress()}</a><br/>
 	{/if}
 {if $order->getDeliveryAddress()}
-	<strong>Adresa doručení:</strong> <a href="https://www.google.com/maps/search/{$order->getDeliveryAddress()->getStreet() ?? 'Nezadano'}"
-										 target="_blank">{$order->getDeliveryAddress()->getStreet() ?? 'Nezadano'}</a><br/>
+	<strong>Adresa doručení:</strong> <a href="https://www.google.com/maps/search/{$order->getDeliveryAddress()->getFullAddress()}"
+										 target="_blank">{$order->getDeliveryAddress()->getFullAddress()}</a><br/>
     {/if}
 	<strong>Telefon:</strong> {$order->getDeliveryPhone() ?? 'neuveden'}<br/>
 
