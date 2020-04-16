@@ -2,10 +2,8 @@
 
 namespace SousedskaPomoc\Presenters;
 
-use SousedskaPomoc\Entities\Demand;
 use SousedskaPomoc\Entities\Volunteer;
 use SousedskaPomoc\Repository\AddressRepository;
-use SousedskaPomoc\Repository\DemandRepository;
 use SousedskaPomoc\Repository\OrderRepository;
 use SousedskaPomoc\Repository\VolunteerRepository;
 
