@@ -1,6 +1,6 @@
 <h2>Město nebo obec</h2>
 <form class="form form--plain townSuggestForm" method="get">
-    <input type="text" class="addressInput" placeholder="po zadání výrazu uvidíte výsledky hledání"/>
+    <input type="text" class="addressInput" name="town" value="{$_GET['town'] ?? null}" placeholder="po zadání výrazu uvidíte výsledky hledání"/>
     <input type="hidden" name="addressHereMapsId" class="addressHereMapsId" value="0"/>
     <ul id="suggestions">
     </ul>
@@ -35,6 +35,7 @@
 
                         $("#suggestions").append(
                             "<li><a href='#' class='suggestion' " +
+                            "' data-city='" + data.suggestions[index].address.city +
                             "' data-locationId='" + data.suggestions[index].locationId +
                             "'>" + smartLabel + "</a></li>"
                         );
@@ -51,6 +52,7 @@
         $(document).on("click", "a.suggestion", function () {
             const address = document.querySelector('a.suggestion');
             console.log(address.dataset);
+            $(".addressInput").val(address.dataset.city);
             $(".addressHereMapsId").val(address.dataset.locationid);
             $("#suggestions").empty();
             $("form.townSuggestForm").submit();
