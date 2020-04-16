@@ -90,7 +90,7 @@ class HeadquartersPresenter extends BasePresenter
                 if ($item->getDeliveryAddress() != null) {
                     return $item->getDeliveryAddress()->getCity();
                 } else {
-                    return $this->translator->translate('templates.gridCreateDemand.notSpecified') ;
+                    return "Not specified";
                 }
             });
         $grid->addColumnText('phone', $this->translator->translate('templates.gridCreateDemand.phone') )->setFilterText();
@@ -158,7 +158,7 @@ class HeadquartersPresenter extends BasePresenter
     public function handleReset($id)
     {
         $this->orderManager->assignOrder(null, $id, null, 'new');
-        $this->flashMessage($this->translator->translate('messages.handleReset.reseted' ));
+        $this->flashMessage("Objednávka byla obnovena do výchozího stavu.");
         $this->redirect('Headquarters:orders');
     }
 
