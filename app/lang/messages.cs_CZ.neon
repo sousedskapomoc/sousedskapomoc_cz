@@ -28,11 +28,11 @@ permission:
 handleReset:
     reseted: 'Objednávka byla obnovena do výchozího stavu.'
 handleDeleteDemand:
-    delete: 'Poptávka byla smazána.'
+    deleted: 'Poptávka byla smazána.'
 handleDeleteOrder:
-    delete: 'Objednávka byla smazána.'
+    deleted: 'Objednávka byla smazána.'
 handleApprove:
-    approve:'Objednávka byla schválena.'
+    approved:'Objednávka byla schválena.'
 saveDemand:
     save: 'Uložili jsme co potřebujete a pracujeme na tom ať to odbavíme'
 passwdChange:
@@ -40,4 +40,4 @@ passwdChange:
     hashMissMatch: 'Email code is not valid.'
     sendNewPasswd: 'Zaslat nove heslo'
     emailSendSuccess: 'E-mail s odkazem byl úspěšně odeslán.'
-    
+

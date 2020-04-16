@@ -84,15 +84,21 @@ class HeadquartersPresenter extends BasePresenter
 
         //@TODO - add text filter into address
 <<<<<<< HEAD
+<<<<<<< HEAD
         $grid->setDataSource($this->demandRepository->getAll());
         $grid->addColumnNumber('id', 'ID')->setFilterText();
         $grid->addColumnText('deliveryAddress', 'Adresa')
 =======
+=======
+>>>>>>> 5f87f9d30aaa15e7dacdbdc31df5af63a9c850fd
         $grid->setDataSource($this->orderManager->fetchAllWebDemands());
         $grid->addColumnNumber('id', $this->translator->translate('templates.gridCreateDemand.id') )->setFilterText();
         $grid->addColumnText('id_volunteers', $this->translator->translate('templates.gridCreateDemand.submitter') );
         $grid->addColumnText('delivery_address', $this->translator->translate('templates.gridCreateDemand.address') )
+<<<<<<< HEAD
 >>>>>>> presenters translations
+=======
+>>>>>>> 5f87f9d30aaa15e7dacdbdc31df5af63a9c850fd
             ->setRenderer(function ($item) {
                 if ($item->getDeliveryAddress() != null) {
                     return $item->getDeliveryAddress()->getCity();
@@ -100,6 +106,7 @@ class HeadquartersPresenter extends BasePresenter
                     return $this->translator->translate('templates.gridCreateDemand.notSpecified') ;
                 }
             });
+<<<<<<< HEAD
 <<<<<<< HEAD
         $grid->addColumnText('phone', 'Telefon')->setFilterText();
         $grid->addColumnText('processed', 'Stav poptavky')->setFilterText();
@@ -109,6 +116,8 @@ class HeadquartersPresenter extends BasePresenter
         $grid->addAction('detail', 'Detail', 'Headquarters:demandDetail')->setClass("btn btn-primary btn-sm");
         $grid->addAction('delete', 'X', 'deleteDemand!')->setClass("btn btn-danger btn-sm");
 =======
+=======
+>>>>>>> 5f87f9d30aaa15e7dacdbdc31df5af63a9c850fd
         $grid->addColumnText('delivery_phone', $this->translator->translate('templates.gridCreateDemand.phone') )->setFilterText();
         $grid->addColumnText('order_items', $this->translator->translate('templates.gridCreateDemand.orderedItems') )->setFilterText();
         $grid->addFilterSelect('status', $this->translator->translate('templates.gridCreateDemand.orderStatus') , []);
@@ -119,7 +128,10 @@ class HeadquartersPresenter extends BasePresenter
                                      'Courier:detail')->setClass("btn btn-primary btn-sm");
         $grid->addAction('delete', $this->translator->translate('templates.gridCreateDemand.actionDelete'),
                                      'deleteDemand!')->setClass("btn btn-danger btn-sm");
+<<<<<<< HEAD
 >>>>>>> presenters translations
+=======
+>>>>>>> 5f87f9d30aaa15e7dacdbdc31df5af63a9c850fd
 
         return $grid;
     }
@@ -196,7 +208,10 @@ class HeadquartersPresenter extends BasePresenter
 =======
         $this->orderManager->remove($id);
         $this->flashMessage($this->translator->translate('messages.handleDeleteDemand.deleted' ));
+<<<<<<< HEAD
 >>>>>>> presenters translations
+=======
+>>>>>>> 5f87f9d30aaa15e7dacdbdc31df5af63a9c850fd
         $this->redirect('Headquarters:demands');
     }
 

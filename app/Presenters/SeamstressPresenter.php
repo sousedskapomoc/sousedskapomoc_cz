@@ -50,6 +50,7 @@ final class SeamstressPresenter extends BasePresenter
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     public function createComponentPostOrder()
     {
         $form = new BootstrapForm;
@@ -60,12 +61,17 @@ final class SeamstressPresenter extends BasePresenter
             ->setRequired('Prosim sdelte nam kolik rousek je pripraveno k vyzvednuti.');
         $form->addHidden('pickupId');
 =======
+=======
+>>>>>>> 5f87f9d30aaa15e7dacdbdc31df5af63a9c850fd
         $form->addHidden('note')->setDefaultValue($this->translator->translate('forms.createPostOrder.veil'));
 
         $form->addText('order_items', $this->translator->translate('templates.seamstress.itemsLabel'))
             ->setPlaceholder( $this->translator->translate('forms.createPostOrder.tenPiecesRequirement') )
             ->setRequired( $this->translator->translate('forms.createPostOrder.enterNumForPickUp') );
+<<<<<<< HEAD
 >>>>>>> presenters translations
+=======
+>>>>>>> 5f87f9d30aaa15e7dacdbdc31df5af63a9c850fd
 
         $form->addSubmit('addOrderFormSubmit', 'Odeslat poptavku');
         $form->onSuccess[] = [$this, "processAdd"];

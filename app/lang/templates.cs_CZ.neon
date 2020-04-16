@@ -206,6 +206,7 @@ headquarters:
 	title: 'Velín'
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 vehicleType:
@@ -218,6 +219,8 @@ vehicleType:
     walk: 'Chůze'
 >>>>>>> test - vehicle translation
 =======
+=======
+>>>>>>> 5f87f9d30aaa15e7dacdbdc31df5af63a9c850fd
 gridCreateUser:
     userID: 'ID uživatele'
     fullName: 'Jméno a příjmení'
@@ -251,4 +254,7 @@ gridCreateOdrers:
     detail: 'Detail'
     delete: 'Smazat'
 
+<<<<<<< HEAD
 >>>>>>> presenters translations
+=======
+>>>>>>> 5f87f9d30aaa15e7dacdbdc31df5af63a9c850fd
