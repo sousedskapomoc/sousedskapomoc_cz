@@ -1,6 +1,7 @@
 <h2>Město nebo obec</h2>
-<form class="form form--plain">
-    <input type="text" name="suggester" class="addressInput" placeholder="po zadání výrazu uvidíte výsledky hledání" />
+<form class="form form--plain townSuggestForm" method="get">
+    <input type="text" class="addressInput" name="town" value="{$_GET['town'] ?? null}" placeholder="po zadání výrazu uvidíte výsledky hledání"/>
+    <input type="hidden" name="addressHereMapsId" class="addressHereMapsId" value="0"/>
     <ul id="suggestions">
     </ul>
 </form>
@@ -34,17 +35,8 @@
 
                         $("#suggestions").append(
                             "<li><a href='#' class='suggestion' " +
-                            "data-country='" + data.suggestions[index].address.country +
-                            "' data-state='" + data.suggestions[index].address.state +
-                            "' data-county='" + data.suggestions[index].address.county +
                             "' data-city='" + data.suggestions[index].address.city +
-                            "' data-district='" + data.suggestions[index].address.district +
-                            "' data-street='" + data.suggestions[index].address.street +
-                            "' data-houseNumber='" + data.suggestions[index].address.houseNumber +
-                            "' data-postalCode='" + data.suggestions[index].address.postalCode +
-                            "' data-label='" + data.suggestions[index].label +
                             "' data-locationId='" + data.suggestions[index].locationId +
-                            "' data-smartlabel='" + smartLabel +
                             "'>" + smartLabel + "</a></li>"
                         );
                     }
@@ -59,11 +51,11 @@
         });
         $(document).on("click", "a.suggestion", function () {
             const address = document.querySelector('a.suggestion');
-            console.log(address);
+            console.log(address.dataset);
+            $(".addressInput").val(address.dataset.city);
             $(".addressHereMapsId").val(address.dataset.locationid);
-            $(".addressInput").val(address.dataset.smartlabel);
             $("#suggestions").empty();
-            $(".hiddenForm").show();
+            $("form.townSuggestForm").submit();
         });
     });
 </script>
