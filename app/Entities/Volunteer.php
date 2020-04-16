@@ -26,7 +26,7 @@ class Volunteer
     protected $personName;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $uploadPhoto;
     /**

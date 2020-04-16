@@ -38,9 +38,9 @@ class PublicDemandsPresenter extends BasePresenter
         $townLimit = $_GET['orderList-where-help'] ?? null;
 
         if ($townLimit == null) {
-            $this->template->demands = $this->orderRepository->getAll();
+            $this->template->demands = $this->orderRepository->getAllUnprocessed();
         } else {
-            $this->template->demands = $this->orderRepository->getByTown($townLimit);
+            $this->template->demands = $this->orderRepository->getUnprocessedByTown($townLimit);
             $this->template->selectedTown = $townLimit;
         }
     }
