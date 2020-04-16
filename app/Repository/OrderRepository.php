@@ -144,7 +144,7 @@ class OrderRepository extends DoctrineEntityRepository
     {
         return $this->findBy(['stat' => 'delivered']);
     }
-
+    
     public function assignOrder($courier, $order_id)
     {
         /** @var Order $order */
