@@ -2,8 +2,10 @@
 
 namespace SousedskaPomoc\Presenters;
 
+use SousedskaPomoc\Entities\Volunteer;
 use SousedskaPomoc\Repository\AddressRepository;
 use SousedskaPomoc\Repository\OrderRepository;
+use SousedskaPomoc\Repository\VolunteerRepository;
 
 class PublicDemandsPresenter extends BasePresenter
 {
@@ -13,9 +15,17 @@ class PublicDemandsPresenter extends BasePresenter
     /** @var OrderRepository */
     protected $orderRepository;
 
+    /** @var VolunteerRepository */
+    protected $volunteerRepository;
+
     public function injectOrderRepository(OrderRepository $orderRepository)
     {
         $this->orderRepository = $orderRepository;
+    }
+
+    public function injectVolunteerRepository(VolunteerRepository $volunteerRepository)
+    {
+        $this->volunteerRepository = $volunteerRepository;
     }
 
     public function injectAddressRepository(AddressRepository $addressRepository)
@@ -38,5 +48,13 @@ class PublicDemandsPresenter extends BasePresenter
     public function renderDetail($id)
     {
         $this->template->demand = $this->orderRepository->getById($id);
+    }
+
+    public function handleSelfAssign($id)
+    {
+        /** @var Volunteer $volunteer */
+        $volunteer = $this->volunteerRepository->find($this->user->getId());
+        $this->orderRepository->assignOrder($volunteer, $id);
+        $this->flashMessage("Poptávku jsme vám přiřadili můžete si pustit do její realizace");
     }
 }

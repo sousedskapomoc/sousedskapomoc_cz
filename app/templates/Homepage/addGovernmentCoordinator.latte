@@ -27,10 +27,9 @@
                 console.log(data);
                 $("#suggestions").empty();
                 $.each(data.suggestions, function (index) {
-
-                    if (data.suggestions[index].matchLevel == "district") {
+                    if (data.suggestions[index].matchLevel == "city") {
                         $("#suggestions").append(
-                            "<li><a href='#' class='suggestion' data-town-label='" + data.suggestions[index].address.district + " " + data.suggestions[index].address.postalCode + "' data-town='" + data.suggestions[index].address.city + "'>" + data.suggestions[index].address.district + " " + data.suggestions[index].address.postalCode + "</a></li>"
+                            "<li><a href='#' class='suggestion' data-town-label='" + data.suggestions[index].address.district + " " + data.suggestions[index].address.postalCode + "' data-town='" + data.suggestions[index].address.city + "'>" + data.suggestions[index].address.city + "</a></li>"
                         );
                     }
                 });

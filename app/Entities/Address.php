@@ -430,6 +430,14 @@ class Address
         return $this;
     }
 
+    public function getFullAddress()
+    {
+        return $this->getPostalCode() . " - " .
+            $this->getCity() . ", " .
+            $this->getStreet() . " " .
+            $this->getHouseNumber();
+    }
+
     public function getCityWithPostalCode()
     {
         return $this->getPostalCode() . " - " . $this->getCity();
