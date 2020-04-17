@@ -50,14 +50,19 @@ class DemandFormControl extends Control
         $form = new BootstrapForm;
 
         $form->addText('town', 'Zadejte ulici vcetne cisla popisneho')
-            ->setPlaceholder('Na Vypichu 25')
-            ->setRequired($this->translator->translate('forms.registerCoordinator.townRequired'));
-        $form->addText('name', $this->translator->translate('forms.registerCoordinator.nameLabel'))
+            ->setPlaceholder('Na Vypichu 25');
+        $form->addText('contactName', $this->translator->translate('forms.registerCoordinator.nameLabel'));
+        $form->addText('contactName', $this->translator->translate('forms.registerCoordinator.nameLabel'));
+        $form->addText('contactPhone', $this->translator->translate('forms.registerCoordinator.phoneLabel'));
+        $form->addText('deliveryName', $this->translator->translate('forms.registerCoordinator.nameLabel'))
             ->setRequired($this->translator->translate('forms.registerCoordinator.nameRequired'));
-        $form->addText('phone', $this->translator->translate('forms.registerCoordinator.phoneLabel'))
+        $form->addText('deliveryPhone', $this->translator->translate('forms.registerCoordinator.phoneLabel'))
             ->setRequired($this->translator->translate('forms.registerCoordinator.phoneRequired'));
-        $form->addTextArea('items', "Polozky objednavky")
-            ->setRequired('Prosim sdelte nam co by jste potrebovali.');
+        $form->addText('deliveryAddress', "Zadejte adresu doruceni");
+        $form->addTextArea('food', "Polozky objednavky");
+        $form->addTextArea('medicine', "Polozky objednavky");
+        $form->addTextArea('veils', "Polozky objednavky");
+        $form->addTextArea('other', "Polozky objednavky");
         $form->addHidden('locationId');
 
         $form->addSubmit('addDemandFormSubmit', 'Odeslat poptavku');
@@ -72,9 +77,15 @@ class DemandFormControl extends Control
 
         $demand = new Demand();
         $demand->setProcessed('new');
-        $demand->setName($values->name);
-        $demand->setPhone($values->phone);
-        $demand->setItems($values->items);
+        $demand->setDeliveryName($values->name);
+        $demand->setDeliveryPhone($values->phone);
+
+        $demand->setFood();
+        $demand->setVeils();
+        $demand->setMedicine();
+        $demand->setOther();
+
+
 
 
         $client = new \GuzzleHttp\Client();

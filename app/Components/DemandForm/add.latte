@@ -25,16 +25,19 @@
                 <p class="form--plain__input-headline">Kontakt na vás</p>
                 <fieldset>
                     <label for="postDemand-name-org">Jméno a příjmení</label>
-                    <input type="text" name="postDemand-name-org" id="postDemand-name-org"/>
+                    {input contactName}
+{*                    <input type="text" name="postDemand-name-org" id="postDemand-name-org"/>*}
                 </fieldset>
                 <fieldset>
                     <label for="postDemand-phone-org">Telefon</label>
-                    <input type="text" name="postDemand-phone-org" id="postDemand-phone-org"/>
+                    {input contactPhone}
+{*                    <input type="text" name="postDemand-phone-org" id="postDemand-phone-org"/>*}
                 </fieldset>
                 <p class="form--plain__input-headline">Kontakt na organizaci</p>
                 <fieldset>
                     <label for="postDemand-name-of-org">Název organizace</label>
-                    <input type="text" name="postDemand-name-of-org" id="postDemand-name-of-org"/>
+                    {input organizationName}
+{*                    <input type="text" name="postDemand-name-of-org" id="postDemand-name-of-org"/>*}
                 </fieldset>
                 <fieldset>
                     <label for="postDemand-address-org">Adresa doručení</label>
@@ -42,22 +45,26 @@
                 </fieldset>
                 <fieldset>
                     <label for="postDemand-name-org-person">Jméno a příjmení osoby z organizace</label>
-                    <input type="text" name="postDemand-name-org-person" id="postDemand-name-org-person"/>
+                    {input deliveryName}
+{*                    <input type="text" name="postDemand-name-org-person" id="postDemand-name-org-person"/>*}
                 </fieldset>
                 <fieldset>
                     <label for="postDemand-phone-org-person">Telefon osoby z organizace</label>
-                    <input type="text" name="postDemand-phone-org-person" id="postDemand-phone-org-person"/>
+                    {input deliveryPhone}
+{*                    <input type="text" name="postDemand-phone-org-person" id="postDemand-phone-org-person"/>*}
                 </fieldset>
             </div>
             <div class="form--plain__box--hideable" id="postDemand-other-person-contact">
                 <p class="form--plain__input-headline">Kontakt na vás</p>
                 <fieldset>
                     <label for="postDemand-name-oth-person">Jméno a příjmení</label>
-                    <input type="text" name="postDemand-name-oth-person" id="postDemand-name-oth-person"/>
+                    {input contactName}
+{*                    <input type="text" name="postDemand-name-oth-person" id="postDemand-name-oth-person"/>*}
                 </fieldset>
                 <fieldset>
                     <label for="postDemand-phone-org">Telefon</label>
-                    <input type="text" name="postDemand-phone-oth-person" id="postDemand-phone-oth-person"/>
+                    {input contactPhone}
+{*                    <input type="text" name="postDemand-phone-oth-person" id="postDemand-phone-oth-person"/>*}
                 </fieldset>
                 <p class="form--plain__input-headline">Kontakt na osobu, které chcete pomoci</p>
                 <fieldset>
@@ -67,10 +74,12 @@
                 </fieldset>
                 <fieldset>
                     <label for="postDemand-name-oth-person-person">Jméno a příjmení</label>
+                    {input deliveryName}
                     <input type="text" name="postDemand-name-oth-person-person" id="postDemand-name-person"/>
                 </fieldset>
                 <fieldset>
                     <label for="postDemand-phone-oth-person-person">Telefon</label>
+                    {input deliveryPhone}
                     <input type="text" name="postDemand-phone-oth-person-person"
                            id="postDemand-phone-oth-person-person"/>
                 </fieldset>
@@ -82,11 +91,13 @@
                 </fieldset>
                 <fieldset>
                     <label for="postDemand-name">Jméno a příjmení</label>
-                    <input type="text" name="postDemand-name" id="postDemand-name"/>
+                    {input deliveryName}
+{*                    <input type="text" name="postDemand-name" id="postDemand-name"/>*}
                 </fieldset>
                 <fieldset>
                     <label for="postDemand-phone">Telefon</label>
-                    <input type="text" name="postDemand-phone" id="postDemand-phone"/>
+                    {input deliveryPhone}
+{*                    <input type="text" name="postDemand-phone" id="postDemand-phone"/>*}
                 </fieldset>
             </div>
             <fieldset>
