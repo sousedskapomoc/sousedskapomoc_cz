@@ -209,7 +209,7 @@ class HeadquartersPresenter extends BasePresenter
         $this->volunteerRepository->update($user->getId(), $user);
         $this->demandRepository->setProcessed($demand->getId(), 'approved');
 
-        $this->redirect('Coordinator:detail', $order->getId());
+        $this->redirect('Coordinator:editOrder', $order->getId());
     }
 
     public function renderDemandDetail($id)
