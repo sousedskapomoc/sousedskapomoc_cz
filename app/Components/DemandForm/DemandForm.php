@@ -52,20 +52,24 @@ class DemandFormControl extends Control
         $form->addText('town', 'Zadejte ulici vcetne cisla popisneho')
             ->setPlaceholder('Na Vypichu 25');
         $form->addText('contactName', $this->translator->translate('forms.registerCoordinator.nameLabel'));
-        $form->addText('contactName', $this->translator->translate('forms.registerCoordinator.nameLabel'));
+        $form->addText('organizationName', $this->translator->translate('forms.registerCoordinator.nameLabel'));
         $form->addText('contactPhone', $this->translator->translate('forms.registerCoordinator.phoneLabel'));
         $form->addText('deliveryName', $this->translator->translate('forms.registerCoordinator.nameLabel'))
             ->setRequired($this->translator->translate('forms.registerCoordinator.nameRequired'));
         $form->addText('deliveryPhone', $this->translator->translate('forms.registerCoordinator.phoneLabel'))
             ->setRequired($this->translator->translate('forms.registerCoordinator.phoneRequired'));
         $form->addText('deliveryAddress', "Zadejte adresu doruceni");
+        $form->addHidden('deliveryId')
+        ->setRequired('Prosím zvolte adresu doručení z našeptávače.');
         $form->addTextArea('food', "Polozky objednavky");
         $form->addTextArea('medicine', "Polozky objednavky");
         $form->addTextArea('veils', "Polozky objednavky");
         $form->addTextArea('other', "Polozky objednavky");
         $form->addHidden('locationId');
+        $form->addHidden('isOrganisation')->setDefaultValue('0');
+        $form->addHidden('isContactPerson')->setDefaultValue('0');
 
-        $form->addSubmit('addDemandFormSubmit', 'Odeslat poptavku');
+        $form->addSubmit('addDemandFormSubmit', 'Pokračovat');
         $form->onSuccess[] = [$this, "processAdd"];
 
         return $form;
@@ -77,22 +81,25 @@ class DemandFormControl extends Control
 
         $demand = new Demand();
         $demand->setProcessed('new');
-        $demand->setDeliveryName($values->name);
-        $demand->setDeliveryPhone($values->phone);
+        $demand->setDeliveryName($values->deliveryName);
+        $demand->setDeliveryPhone($values->deliveryPhone);
+        $demand->setContactName($values->contactName);
+        $demand->setContactPhone($values->contactPhone);
+        $demand->setOrganizationName($values->organizationName);
+        $demand->setIsOrganization($values->isOrganisation);
+        $demand->setIsContactPerson($values->isContactPerson);
 
-        $demand->setFood();
-        $demand->setVeils();
-        $demand->setMedicine();
-        $demand->setOther();
-
-
+        $demand->setFood($values->food);
+        $demand->setVeils($values->veils);
+        $demand->setMedicine($values->medicine);
+        $demand->setOther($values->other);
 
 
         $client = new \GuzzleHttp\Client();
         /** @var \GuzzleHttp\Psr7\Response $response */
         $baseUri = "https://geocoder.ls.hereapi.com/6.2/geocode.json?locationid=";
         $apiKey = "Kl0wK4fx38Pf63EIey6WyrmGEhS2IqaVHkuzx0IQ4-Q";
-        $response = $client->get($baseUri . $values->locationId . '&jsonattributes=1&gen=9&apiKey=' . $apiKey);
+        $response = $client->get($baseUri . $values->deliveryId . '&jsonattributes=1&gen=9&apiKey=' . $apiKey);
         $content = $response->getBody()->getContents();
 
         $content = json_decode($content);
