@@ -29,9 +29,9 @@ registerCoordinator:
     carRequired: 'Potřebujeme vědět co uvezete'
 cars:
     small: 'malý osobní automobil (Škoda Citigo, VW eUP, Toyota Aygo)'
-    big: 'vetší osobní automobil (Škoda Octavia, VW Passat)'
+    big: 'větší osobní automobil (Škoda Octavia, VW Passat)'
     smallTruck: 'malý nákladní automobil (VW Caddy, Fiat Doblo)'
-    bigTruck: 'vetší nákladní automobil (Fiat Ducato, Mercedes Sprinter)'
+    bigTruck: 'větší nákladní automobil (Fiat Ducato, Mercedes Sprinter)'
     bike: 'jízdní kolo'
     motorcycle: 'motocykl'
     walk: 'pěšky'
