@@ -1,13 +1,16 @@
 {block content}
 <div class="row justify-content-center padding-top--0">
     <div class="col-12 col-md-8 col-lg-6">
-        {control townSuggester}
+{*        {control townSuggester}*}
         {form demandForm class => "form--plain form--plain__postDemand"}
+            <ul class="errors" n:if="$form->hasErrors()">
+                <li n:foreach="$form->errors as $error">{$error}</li>
+            </ul>
             <fieldset>
                 <label for="postDemand-organisation">Hledám pomoc pro organizaci (více než 10lidí)
                     <div class="switcher">
                         <input data-target="postDemand-organisation-contact" name="postDemand-organisation"
-                               id="postDemand-organisation" type="checkbox">
+                               id="postDemand-organisation" type="checkbox" onclick="changeOrganisation()">
                         <span class="slider"></span>
                     </div>
                 </label>
@@ -16,7 +19,7 @@
                 <label for="postDemand-otherPerson">Hledám pomoc pro někoho druhého
                     <div class="switcher">
                         <input data-target="postDemand-other-person-contact" name="postDemand-otherPerson"
-                               id="postDemand-otherPerson" type="checkbox">
+                               id="postDemand-otherPerson" type="checkbox" onclick="changeContactPerson()">
                         <span class="slider"></span>
                     </div>
                 </label>
@@ -25,112 +28,92 @@
                 <p class="form--plain__input-headline">Kontakt na vás</p>
                 <fieldset>
                     <label for="postDemand-name-org">Jméno a příjmení</label>
-                    {input contactName}
-{*                    <input type="text" name="postDemand-name-org" id="postDemand-name-org"/>*}
+                    {input contactName class=>"contactName"}
                 </fieldset>
                 <fieldset>
                     <label for="postDemand-phone-org">Telefon</label>
-                    {input contactPhone}
-{*                    <input type="text" name="postDemand-phone-org" id="postDemand-phone-org"/>*}
+                    {input contactPhone class=>"contactPhone"}
                 </fieldset>
                 <p class="form--plain__input-headline">Kontakt na organizaci</p>
                 <fieldset>
                     <label for="postDemand-name-of-org">Název organizace</label>
                     {input organizationName}
-{*                    <input type="text" name="postDemand-name-of-org" id="postDemand-name-of-org"/>*}
-                </fieldset>
-                <fieldset>
-                    <label for="postDemand-address-org">Adresa doručení</label>
-                    <input type="text" name="postDemand-address-org" id="postDemand-address-org"/>
                 </fieldset>
                 <fieldset>
                     <label for="postDemand-name-org-person">Jméno a příjmení osoby z organizace</label>
-                    {input deliveryName}
-{*                    <input type="text" name="postDemand-name-org-person" id="postDemand-name-org-person"/>*}
+                    {input deliveryName class=>"deliveryName"}
                 </fieldset>
                 <fieldset>
                     <label for="postDemand-phone-org-person">Telefon osoby z organizace</label>
-                    {input deliveryPhone}
-{*                    <input type="text" name="postDemand-phone-org-person" id="postDemand-phone-org-person"/>*}
+                    {input deliveryPhone class=>"deliveryPhone"}
                 </fieldset>
             </div>
             <div class="form--plain__box--hideable" id="postDemand-other-person-contact">
                 <p class="form--plain__input-headline">Kontakt na vás</p>
                 <fieldset>
                     <label for="postDemand-name-oth-person">Jméno a příjmení</label>
-                    {input contactName}
-{*                    <input type="text" name="postDemand-name-oth-person" id="postDemand-name-oth-person"/>*}
+                    {input contactName class=>"contactName"}
                 </fieldset>
                 <fieldset>
                     <label for="postDemand-phone-org">Telefon</label>
-                    {input contactPhone}
-{*                    <input type="text" name="postDemand-phone-oth-person" id="postDemand-phone-oth-person"/>*}
+                    {input contactPhone class=>"contactPhone"}
                 </fieldset>
                 <p class="form--plain__input-headline">Kontakt na osobu, které chcete pomoci</p>
                 <fieldset>
-                    <label for="postDemand-address-person">Adresa doručení</label>
-                    <input type="text" name="postDemand-address-oth-person-person"
-                           id="postDemand-address-oth-person-person"/>
-                </fieldset>
-                <fieldset>
                     <label for="postDemand-name-oth-person-person">Jméno a příjmení</label>
-                    {input deliveryName}
-                    <input type="text" name="postDemand-name-oth-person-person" id="postDemand-name-person"/>
+                    {input deliveryName class=>"deliveryName"}
                 </fieldset>
                 <fieldset>
                     <label for="postDemand-phone-oth-person-person">Telefon</label>
-                    {input deliveryPhone}
-                    <input type="text" name="postDemand-phone-oth-person-person"
-                           id="postDemand-phone-oth-person-person"/>
+                    {input deliveryPhone class=>"deliveryPhone"}
                 </fieldset>
             </div>
             <div class="form--plain__box--hideable visible default" id="postDemand-none-contact">
                 <fieldset>
-                    <label for="postDemand-address">Adresa doručení</label>
-                    <input type="text" name="postDemand-address" id="postDemand-address"/>
-                </fieldset>
-                <fieldset>
                     <label for="postDemand-name">Jméno a příjmení</label>
-                    {input deliveryName}
-{*                    <input type="text" name="postDemand-name" id="postDemand-name"/>*}
+                    {input deliveryName class=>"deliveryName"}
                 </fieldset>
                 <fieldset>
                     <label for="postDemand-phone">Telefon</label>
-                    {input deliveryPhone}
-{*                    <input type="text" name="postDemand-phone" id="postDemand-phone"/>*}
+                    {input deliveryPhone class=>"deliveryPhone"}
                 </fieldset>
             </div>
+            <fieldset>
+                <label for="postDemand-address">Adresa doručení</label>
+                {input deliveryAddress class => 'form-control deliveryAddressInput'}
+                <ul id="suggestionsDelivery">
+                </ul>
+            </fieldset>
             <fieldset>
                 <p class="form--plain__input-headline--small">Co je potřeba doručit?</p>
                 <div class="input-group">
                     <input type="checkbox" name="postDemand-grocery" id="postDemand-grocery"/>
                     <label for="postDemand-grocery">Potraviny</label>
-                    <textarea class="hidden postDemand-grocery-textarea"
-                              placeholder="Zde napište váš seznam potravin, které potřebujete doručit"></textarea>
+                    {input food class=>"hidden postDemand-grocery-textarea"}
                 </div>
 
                 <div class="input-group">
                     <input type="checkbox" name="postDemand-medicine" id="postDemand-medicine"/>
                     <label for="postDemand-medicine">Léky</label>
-                    <textarea class="hidden postDemand-medicine-textarea"
-                              placeholder="Zde napište váš seznam léků, které potřebujete doručit"></textarea>
+                    {input medicine class=>"hidden postDemand-medicine-textarea"}
                 </div>
 
             </fieldset>
             <fieldset>
                 <input type="checkbox" name="postDemand-facemask" id="postDemand-facemask"/>
                 <label for="postDemand-facemask">Roušky</label>
-                <textarea class="hidden textarea-small postDemand-facemask-textarea"
-                          placeholder="Zde napište kolik kusů roušku by jste potřebovali doručit"
-                          name="postDemand-facemask-count"></textarea>
+                {input veils class=>"hidden postDemand-facemask-textarea"}
             </fieldset>
             <fieldset>
                 <input type="checkbox" name="postDemand-other" id="postDemand-other"/>
                 <label for="postDemand-other">Jiné</label>
-                <textarea class="hidden postDemand-other-textarea" placeholder="Zde napište jak bychom vám mohli pomoci"
-                          name="postDemand-facemask-count"></textarea>
+                {input other class=>"hidden postDemand-other-textarea"}
             </fieldset>
-            <button class="btn btn-green btn-lg">Pokračovat</button>
+            {input deliveryId class=> 'deliveryId'}
+            {input isOrganisation class=> 'isOrganisation'}
+            {input isContactPerson class=> 'isContactPerson'}
+            {input addDemandFormSubmit}
+{*            <button class="btn btn-green btn-lg">Pokračovat</button>*}
         {/form}
     </div>
 </div>
@@ -140,5 +123,79 @@
             textareaClass = this.id+'-textarea';
             $("."+textareaClass).toggle();
         });
+
+        $(".deliveryAddressInput").on('input', function () {
+            var hereMapsEndpoint = "https://autocomplete.geocoder.ls.hereapi.com/6.2/suggest.json?apiKey=Kl0wK4fx38Pf63EIey6WyrmGEhS2IqaVHkuzx0IQ4-Q&country=CZE&query=";
+            var query = encodeURIComponent($(".deliveryAddressInput").val());
+            jQuery.getJSON(hereMapsEndpoint + query, function (data) {
+                $("#suggestionsDelivery").empty();
+                $.each(data.suggestions, function (index) {
+                    if (data.suggestions[index].matchLevel == "houseNumber") {
+                        $("#suggestionsDelivery").append(
+                            "<li><a href='#' class='suggestionDelivery' " +
+                            "data-country='" + data.suggestions[index].address.country +
+                            "' data-state='" + data.suggestions[index].address.state +
+                            "' data-county='" + data.suggestions[index].address.county +
+                            "' data-city='" + data.suggestions[index].address.city +
+                            "' data-district='" + data.suggestions[index].address.district +
+                            "' data-street='" + data.suggestions[index].address.street +
+                            "' data-houseNumber='" + data.suggestions[index].address.houseNumber +
+                            "' data-postalCode='" + data.suggestions[index].address.postalCode +
+                            "' data-label='" + data.suggestions[index].label +
+                            "' data-locationId='" + data.suggestions[index].locationId +
+                            "'>" + data.suggestions[index].label + "</a></li>"
+                        );
+                    }
+                });
+            });
+        });
+        $(window).keydown(function (event) {
+            if (event.keyCode == 13) {
+                event.preventDefault();
+                return false;
+            }
+        });
+        $(document).on("click", "a.suggestionDelivery", function () {
+            const address = document.querySelector('a.suggestionDelivery');
+            console.log(address);
+            console.log(address.dataset.label);
+            $(".deliveryAddressInput").val(address.dataset.label);
+            $(".deliveryId").val(address.dataset.locationid);
+            $("#suggestionsDelivery").empty();
+        });
+
+        $('.deliveryName').change(function() {
+            $('.deliveryName').val($(this).val());
+        });
+
+        $('.deliveryPhone').change(function() {
+            $('.deliveryPhone').val($(this).val());
+        });
+
+        $('.contactName').change(function() {
+            $('.contactName').val($(this).val());
+        });
+
+        $('.contactPhone').change(function() {
+            $('.contactPhone').val($(this).val());
+        });
     });
+
+    function changeOrganisation() {
+        var change = $(".isOrganisation").attr( "value" );
+        if (change == 0) {
+            $(".isOrganisation").val(1);
+        } else {
+            $(".isOrganisation").val(0);
+        }
+    }
+
+    function changeContactPerson() {
+        var change = $(".isContactPerson").attr( "value" );
+        if (change == 0) {
+            $(".isContactPerson").val(1);
+        } else {
+            $(".isContactPerson").val(0);
+        }
+    }
 </script>
