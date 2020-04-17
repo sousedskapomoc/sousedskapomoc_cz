@@ -84,6 +84,14 @@ final class CoordinatorPresenter extends BasePresenter
         return $this->orderFormFactory->create();
     }
 
+    public function editComponentEditOrder()
+    {
+        return $this->editOrderFormFactory->create();
+    }
+
+    public function renderEditOrder($id) {
+
+    }
 
     public function postOrder(BootstrapForm $form)
     {
