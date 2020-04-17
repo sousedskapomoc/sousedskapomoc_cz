@@ -88,16 +88,19 @@ class HeadquartersPresenter extends BasePresenter
         $grid->addColumnText('deliveryAddress', 'Adresa')
             ->setRenderer(function ($item) {
                 if ($item->getDeliveryAddress() != null) {
-                    return $item->getDeliveryAddress()->getCity();
+                    return $item->getDeliveryAddress()->getFullAddress();
                 } else {
                     return "Not specified";
                 }
             });
-        $grid->addColumnText('phone', 'Telefon')->setFilterText();
         $grid->addColumnText('processed', 'Stav poptavky')->setFilterText();
-        $grid->addColumnText('name', 'Položky obj.')->setFilterText();
+        $grid->addColumnText('contactName', 'Jmeno zadavatele')->setFilterText();
+        $grid->addColumnText('contactPhone', 'Telefon zadavatele')->setFilterText();
+        $grid->addColumnText('organizationName', 'Jmeno organizace')->setFilterText();
+        $grid->addColumnText('deliveryName', 'Jmeno adresata')->setFilterText();
+        $grid->addColumnText('deliveryPhone', 'Telefon adresata')->setFilterText();
         $grid->addColumnDateTime('createdAt', 'Datum přidání');
-        $grid->addAction('approve', 'Schválit', 'approve!')->setClass("btn btn-success btn-sm");
+//        $grid->addAction('approve', 'Schválit', 'approve!')->setClass("btn btn-success btn-sm");
         $grid->addAction('detail', 'Detail', 'Headquarters:demandDetail')->setClass("btn btn-primary btn-sm");
         $grid->addAction('delete', 'X', 'deleteDemand!')->setClass("btn btn-danger btn-sm");
 
