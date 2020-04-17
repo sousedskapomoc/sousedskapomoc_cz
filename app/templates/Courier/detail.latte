@@ -40,10 +40,14 @@
 				<th>{_templates.orderDetail.lastUpdate}</th>
 				<td>{$order->updatedAt}</td>
 			</tr>
-			<tr>
-				<th>{_templates.orderDetail.whoDelivers}</th>
-				<td>{$order->courier_id|fetchUser}</td>
-			</tr>
+            <tr>
+                <th>{_templates.orderDetail.whoDelivers}</th>
+                <td>{$order->courier_id|fetchUser} - {$order->courier_id|fetchPhone}</td>
+            </tr>
+            <tr>
+                <th>{_templates.orderDetail.whoAssigned}</th>
+                <td>{$order->operator_id|fetchUser} - {$order->operator_id|fetchPhone}</td>
+            </tr>
 			<tr n:if="$user->isInRole('admin')">
 				<th>Změna stavu objednávky</th>
 				<td>
