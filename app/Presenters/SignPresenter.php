@@ -28,8 +28,7 @@ final class SignPresenter extends BasePresenter
         Forms\SignInFormFactory $signInFactory,
         Forms\SignUpFormFactory $signUpFactory,
         VolunteerRepository $volunteerRepository
-    )
-    {
+    ) {
         $this->signInFactory = $signInFactory;
         $this->signUpFactory = $signUpFactory;
         $this->volunteerRepository = $volunteerRepository;
@@ -82,22 +81,24 @@ final class SignPresenter extends BasePresenter
         return $form;
     }
 
-    public function renderProfile() {
+    public function renderProfile()
+    {
         $this->template->volunteer = $this->volunteerRepository->getById($this->user->getId());
     }
 
     public function uploadUserPhoto(Form $form)
     {
         $values = $form->getValues();
+        $destinationPath = __DIR__ . '/../../www/upload/';
 
         /** @var FileUpload $file */
         $file = $values->userPhoto;
 
         if ($file->isOk() && $file->isImage()) {
-            $file->move(__DIR__ . '/../../www/upload/' . $this->user->getId() . '_' . $file->getSanitizedName());
-            $image = Image::fromFile(__DIR__ . '/../../www/upload/' . $this->user->getId() . '_' . $file->getSanitizedName());
+            $file->move($destinationPath . $this->user->getId() . '_' . $file->getSanitizedName());
+            $image = Image::fromFile($destinationPath . $this->user->getId() . '_' . $file->getSanitizedName());
             $image->resize(350, null);
-            $image->save(__DIR__ . '/../../www/upload/card_' . $this->user->getId() . '_' . $file->getSanitizedName());
+            $image->save($destinationPath . 'card_' . $this->user->getId() . '_' . $file->getSanitizedName());
             $this->volunteerRepository->attachUserPhoto($this->user->getId(), $file->getSanitizedName());
             $this->flashMessage('Profilovou fotku jsme vám nahráli.');
             $this->redirect('PublicDemands:dashboard');

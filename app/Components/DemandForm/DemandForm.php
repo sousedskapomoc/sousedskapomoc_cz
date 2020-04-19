@@ -32,8 +32,7 @@ class DemandFormControl extends Control
         AddressRepository $addrRepository,
         DemandRepository $demandRepository,
         ISuggesterTownInterface $townSuggester
-    )
-    {
+    ) {
         $this->translator = $translator;
         $this->addressRepository = $addrRepository;
         $this->demandRepository = $demandRepository;
@@ -60,7 +59,7 @@ class DemandFormControl extends Control
             ->setRequired($this->translator->translate('forms.registerCoordinator.phoneRequired'));
         $form->addText('deliveryAddress', "Zadejte adresu doruceni");
         $form->addHidden('deliveryId')
-        ->setRequired('Prosím zvolte adresu doručení z našeptávače.');
+            ->setRequired('Prosím zvolte adresu doručení z našeptávače.');
         $form->addTextArea('food', "Polozky objednavky");
         $form->addTextArea('medicine', "Polozky objednavky");
         $form->addTextArea('veils', "Polozky objednavky");
