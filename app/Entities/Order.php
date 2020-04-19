@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Class Orders
  * @ORM\Entity(repositoryClass="SousedskaPomoc\Repository\OrderRepository")
+ * @ORM\Table(name="orders")
  * @ORM\HasLifecycleCallbacks()
  */
 class Order
@@ -19,22 +20,24 @@ class Order
     use Timestampable;
 
     /**
-     * @ORM\OneToOne(targetEntity="Address", inversedBy="orderPickup")
+     * @ORM\ManyToOne(targetEntity="Address", inversedBy="ordersPickup", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true)
      */
     protected $pickupAddress;
 
     /**
-     * @ORM\OneToOne(targetEntity="Address", inversedBy="orderDelivery")
+     * @ORM\ManyToOne(targetEntity="Address", inversedBy="ordersDelivery", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true)
      */
     protected $deliveryAddress;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Volunteer", inversedBy="createdOrders")
+     * @ORM\ManyToOne(targetEntity="Volunteer", inversedBy="createdOrders", cascade={"persist"})
      */
-    protected $author;
+    protected $owner;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Volunteer", inversedBy="deliveredOrders")
+     * @ORM\ManyToOne(targetEntity="Volunteer", inversedBy="deliveredOrders", cascade={"persist"})
      */
     protected $courier;
 
@@ -54,7 +57,7 @@ class Order
     protected $courierNote;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $deliveryPhone;
 
@@ -62,6 +65,11 @@ class Order
      * @ORM\Column(type="text")
      */
     protected $items;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Demand", mappedBy="createdOrder", cascade={"persist"})
+     */
+    protected $fromDemand;
 
 
     /**
@@ -175,18 +183,18 @@ class Order
     /**
      * @return mixed
      */
-    public function getAuthor()
+    public function getOwner()
     {
-        return $this->author;
+        return $this->owner;
     }
 
 
     /**
      * @param mixed $author
      */
-    public function setAuthor($author): void
+    public function setOwner($owner): void
     {
-        $this->author = $author;
+        $this->owner = $owner;
     }
 
 
@@ -223,5 +231,31 @@ class Order
     public function setStatus($status): void
     {
         $this->stat = $status;
+    }
+
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+
+
+    /**
+     * @return mixed
+     */
+    public function getFromDemand()
+    {
+        return $this->fromDemand;
+    }
+
+
+
+    /**
+     * @param mixed $fromDemand
+     */
+    public function setFromDemand(Demand $fromDemand) : void
+    {
+        $this->fromDemand = $fromDemand;
+        $fromDemand->setCreatedOrder($this);
     }
 }

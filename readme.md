@@ -1,41 +1,34 @@
-SousedskaPomoc.cz
-===================
+# SousedskaPomoc.cz
 
 ![Composer installation, Code Style check](https://github.com/sousedskapomoc/sousedskapomoc_cz/workflows/Composer%20installation,%20Code%20Style%20check/badge.svg?branch=master)
 
-Webova stranka slouzici k organizaci dobrovolniku pro dorucovani zbozi lidem kteri si na nakup nemohou nebo nesmeji dojit.
+------
 
-Jakakoliv pomoc je vitana - cela aplikace bude uvolnena pod licenci GNU/GPL.
+## Description
 
-Veskere cinnosti spojene s provozovanim tohoto webu (at uz kuryrni prace, prace operatora, vyvojarske prace apd.) jsou provadeny BEZ NAROKU na odmenu.
+Web application with volunteer registration forms - dividing them into multiple roles - developed overnight during COVID-19 crisis and used in Czech Republic.
 
-## Instalace
+Using this application significantly helps organizing volunteers in cities and towns..
 
-Nově máme i soubory `Dockerfile` a `docker-compose.yml`, sloužící pro automatizované nasazení celé aplikace (bez DB) na jakýkoliv stroj, kde běží docker.
+This web application is built for free and open sourced to anybody out there - feel free to start a fork and start help in your country.
 
-Jak nasadit:
-1. Zkontrolujte, že máte nainstalovaný docker-compose a zkuste spustit `docker-compose --version` ([see more here](https://docs.docker.com/compose/install/))
-2. Naklonujte si tento repozitář pomocí `git clone`
-3. Pokud ji nemáte, vytvořte si proměnnou prostředí PORT pomocí export PORT=80 (nebo třeba 8080)
-4. V naklonovaném repozitáři spusťte ze složky docker příkaz `docker-compose up`
-    * Pokud byste chtěli spustit znovu a od začátku, použijte `docker-compose up --build`, případně nejprve smažte všechny docker images
-    * Pokud byste chtěli spustit celý web bez výpisu na příkazovou řádku, spusťte `docker-compose up -d`
-5. Aplikace by nyní měla běžet na vašem zařízení (nějakou dobu trvá, než composer nainstaluje všechny dependencies)
+All activities connected to this repository are and will be done for free!
 
+## Technologies used
 
-## Troubleshooting
+ - PHP 7.4
+ - MySQL 8
+ - Docker
+ - RabbitMQ
 
-### Version in docker-compose.yml is unsupported
-```
-ERROR: Version in "./docker-compose.yml" is unsupported. You might be seeing this error because you're using the wrong Compose file version. Either specify a supported version (e.g "2.2" or "3.3") and place your service definitions under the `services` key, or omit the `version` key and place your service definitions at the root of the file to use version 1.
-```
-Tato chyba nejspíše signalizuje starou verzi docker-compose, která nepodporuje aktuální verzi docker-compose souboru.
-Stačí nainstalovat novou verzi docker-compose z <https://docs.docker.com/compose/install/> (předtím možná bude nutno odinstalovat starou verzi docker-compose)
+## Development
 
+We strictly follow https://danielkummer.github.io/git-flow-cheatsheet/ for releases.
 
-### ERROR: Couldn't connect to Docker daemon
-```
-ERROR: Couldn't connect to Docker daemon at http+docker://localhost - is it running?
-```
-Docker neběží. Může být způsobeno tím, že docker běží pod rootem a docker-compose pouštíme pod svým uživatelem.
-Řešením je pustit docker pod lokálním uživatelem (případně pustit docker-compose pod rootem, nedoporučeno)
+## Deployment
+
+We are using our own pre-built Docker image which consits of nginx, php-fpm, supervisord services - our apps are built on top of that image.
+
+## How to start local development
+
+*TBD*

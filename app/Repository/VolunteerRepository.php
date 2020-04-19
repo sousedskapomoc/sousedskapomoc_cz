@@ -96,22 +96,28 @@ class VolunteerRepository extends DoctrineEntityRepository
             if ($user->getPassword() != null) {
                 $dbUser->setPassword($user->getPassword());
             }
+            foreach ($user->getCreatedOrders() as $order) {
+                $dbUser->addCreatedOrder($order);
+            }
+            foreach ($user->getDeliveredOrders() as $order) {
+                $dbUser->addDeliveredOrder($order);
+            }
             $dbUser->setPersonName($user->getPersonName());
             $dbUser->setPersonEmail($user->getPersonEmail());
             $dbUser->setPersonPhone($user->getPersonPhone());
-
-            foreach ($dbUser->getRole() as $role) {
-                $dbUser->removeRole($role);
-            }
-
-            foreach ($user->getRole() as $role) {
-                $dbUser->addRole($role);
-            }
+            $dbUser->setRole($user->getRole());
 
             $em = $this->getEntityManager();
             $em->persist($dbUser);
             $em->flush();
         }
+    }
+
+    public function save($user)
+    {
+        $em = $this->getEntityManager();
+        $em->persist($user);
+        $em->flush();
     }
 
     public function isOnline($id)
@@ -131,5 +137,67 @@ class VolunteerRepository extends DoctrineEntityRepository
             $em->persist($user);
             $em->flush();
         }
+    }
+
+    public function getTowns()
+    {
+        $em = $this->getEntityManager();
+        $query = $em->createQuery("
+        SELECT
+        COUNT(u.id), x.city
+        FROM
+        SousedskaPomoc\Entities\Volunteer u JOIN u.address x
+        GROUP BY x.city");
+        return $query->getResult();
+    }
+
+    public function fetchAllUsersInRole($role = null)
+    {
+        $em = $this->getEntityManager();
+        $query = $em->createQuery("
+        SELECT
+        u
+        FROM
+        SousedskaPomoc\Entities\Volunteer u JOIN u.role x
+        WHERE
+        x.name = '$role'");
+        return $query->getResult();
+    }
+
+    public function fetchAvailableCouriersInTown($town)
+    {
+        $em = $this->getEntityManager();
+        $query = $em->createQuery("
+        SELECT
+        u
+        FROM
+        SousedskaPomoc\Entities\Volunteer u JOIN u.address x
+        WHERE
+        x.city = '$town'
+        AND
+        u.online = 1");
+        return $query->getResult();
+    }
+
+    public function fetchPhoneNumber($courierId)
+    {
+        /** @var Volunteer $courier */
+        $courier = $this->findOneBy(['id' => $courierId]);
+        return $courier->getPersonPhone() ?? 'Nezadán';
+    }
+
+    public function findAllOnlineUsers()
+    {
+        return $this->findBy(['online' => 1]);
+    }
+
+    public function attachUserPhoto($volunteerId, string $filePath)
+    {
+        /** @var Volunteer $volunteer */
+        $volunteer = $this->find($volunteerId);
+        $volunteer->setUploadPhoto($filePath);
+        $em = $this->getEntityManager();
+        $em->persist($volunteer);
+        $em->flush();
     }
 }

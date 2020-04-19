@@ -2,12 +2,21 @@ services:
 	- SousedskaPomoc\Model\OrderManager
 	- SousedskaPomoc\Model\UserManager
 	router: SousedskaPomoc\Router\RouterFactory::createRouter
+	#Authenticator
+	authenticator: SousedskaPomoc\Components\Authenticator
 	# Forms
 	- SousedskaPomoc\Forms\FormFactory
 	- SousedskaPomoc\Forms\SignInFormFactory
 	- SousedskaPomoc\Forms\SignUpFormFactory
 	# Components
 	- SousedskaPomoc\Components\Mail
+	- SousedskaPomoc\Components\IRegisterVolunteerFormInterface
+	- SousedskaPomoc\Components\IEditVolunteerFormInterface
+	- SousedskaPomoc\Components\IDemandFormInterface
+	- SousedskaPomoc\Components\ICreateOrderFormInterface
+	- SousedskaPomoc\Components\IEditOrderFormInterface
+	- SousedskaPomoc\Components\Suggester\ISuggesterTownInterface
+	- SousedskaPomoc\Components\Suggester\ISuggesterAddressInterface
 	# Repositories
 	addressRepository:
 		class: SousedskaPomoc\Repository\AddressRepository
@@ -27,3 +36,5 @@ services:
 	volunteerRepository:
 		class: SousedskaPomoc\Repository\VolunteerRepository
 		factory: @Doctrine\ORM\EntityManagerInterface::getRepository('SousedskaPomoc\Entities\Volunteer')
+	#Commands
+	- SousedskaPomoc\Command\MigrateDbCommand

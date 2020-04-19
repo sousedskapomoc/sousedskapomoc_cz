@@ -7,19 +7,56 @@ namespace SousedskaPomoc\Presenters;
 use Contributte\FormsBootstrap\BootstrapForm;
 use Contributte\FormsBootstrap\Enums\RenderMode;
 use Nette\Forms\Form;
+use Nette\Security\AuthenticationException;
 use Nette\Security\Passwords;
+use SousedskaPomoc\Components\IEditVolunteerFormInterface;
+use SousedskaPomoc\Components\Suggester\ISuggesterTownInterface;
+use SousedskaPomoc\Entities\Address;
+use SousedskaPomoc\Entities\Demand;
+use SousedskaPomoc\Repository\AddressRepository;
+use SousedskaPomoc\Repository\VolunteerRepository;
 
 final class SystemPresenter extends BasePresenter
 {
     /** @var \Nette\Security\Passwords */
     protected $passwords;
 
+    /** @var \SousedskaPomoc\Components\IEditVolunteerFormInterface */
+    protected $editVolunteerForm;
+
+    /** @var ISuggesterTownInterface */
+    protected $townSuggester;
+
+    /** @var \SousedskaPomoc\Repository\VolunteerRepository */
+    protected $volunteerRepository;
+
+    /** @var \SousedskaPomoc\Repository\AddressRepository */
+    protected $addressRepository;
+
+    public function injectEditVolunteerForm(IEditVolunteerFormInterface $editVolunteerForm)
+    {
+        $this->editVolunteerForm = $editVolunteerForm;
+    }
 
     public function injectPasswords(Passwords $passwords)
     {
         $this->passwords = $passwords;
     }
 
+    public function injectTownSuggester(ISuggesterTownInterface $suggesterTown)
+    {
+        $this->townSuggester = $suggesterTown;
+    }
+
+    public function injectVolunteerRepository(VolunteerRepository $volunteerRepository)
+    {
+        $this->volunteerRepository = $volunteerRepository;
+    }
+
+    public function injectAddressRepository(AddressRepository $addressRepository)
+    {
+        $this->addressRepository = $addressRepository;
+    }
 
     public function beforeRender()
     {
@@ -46,138 +83,68 @@ final class SystemPresenter extends BasePresenter
         ];
     }
 
-    public function createComponentRegisterAddress()
+    public function createComponentTownSuggester()
     {
-        $form = new BootstrapForm();
-        $form->addText("town", "Město ve kterém působím");
-        $form->addHidden("selectedTown")->setRequired("Prosím vyberte z našeptávače město ve kterém působíte.");
-        $form->addSubmit("addressSubmit", "Uložit adresu");
-        $form->onSuccess[] = [$this, "updateAddress"];
-        return $form;
+        return $this->townSuggester->create();
     }
 
-    public function updateAddress(BootstrapForm $form)
+    public function renderEnterTown()
     {
-        $values = $form->getValues();
-        $this->userManager->updateTown($values->selectedTown, $this->user->getId());
-        $this->flashMessage("Adresa byla změněna!", 'danger');
-        $this->redirect("System:profile");
+        $locationId = $this->getParameter('addressHereMapsId');
+        if (isset($locationId)) {
+            $this->updateAddress($locationId);
+        }
+    }
+
+    public function updateAddress($locationId)
+    {
+        /** @var \SousedskaPomoc\Entities\Volunteer $user */
+        $user = $this->volunteerRepository->getById($this->user->getId());
+
+        $client = new \GuzzleHttp\Client();
+        /** @var \GuzzleHttp\Psr7\Response $response */
+        $baseUri = "https://geocoder.ls.hereapi.com/6.2/geocode.json?locationid=";
+        $apiKey = "Kl0wK4fx38Pf63EIey6WyrmGEhS2IqaVHkuzx0IQ4-Q";
+        $response = $client->get($baseUri . $locationId . '&jsonattributes=1&gen=9&apiKey=' . $apiKey);
+        $content = $response->getBody()->getContents();
+
+        $content = json_decode($content);
+
+        //Address information
+        $addr = $content->response->view['0']->result['0']->location->address;
+
+        //HERE maps Id
+        $locationId = $content->response->view['0']->result['0']->location->locationId;
+
+        //array with latitude and longtitude
+        $gps = $content->response->view['0']->result['0']->location->displayPosition;
+
+        /** @var Address $address */
+        $address = new Address();
+        $address->setCity($addr->city);
+        $address->setState($addr->state);
+        $address->setLocationId($locationId);
+        $address->setCountry($addr->country);
+        $address->setDistrict($addr->county);
+        $address->setPostalCode($addr->postalCode);
+        $address->setLongitude($gps->longitude);
+        $address->setLatitude($gps->latitude);
+        $address->addVolunteer($user);
+
+
+        try {
+            $this->addressRepository->create($address);
+            $this->flashMessage('Adresa byla uspesne upravena.');
+            $this->redirect("System:profile");
+        } catch (AuthenticationException $e) {
+            $form->addError($e->getMessage());
+        }
     }
 
 
     public function createComponentEditForm()
     {
-        $cars = [
-            1 => $this->translator->translate('forms.cars.small'),
-            2 => $this->translator->translate('forms.cars.big'),
-            3 => $this->translator->translate('forms.cars.smallTruck'),
-            4 => $this->translator->translate('forms.cars.bigTruck'),
-            5 => $this->translator->translate('forms.cars.bike'),
-            6 => $this->translator->translate('forms.cars.motorcycle'),
-            7 => $this->translator->translate('forms.cars.walk'),
-        ];
-
-        $userDetails = $this->userManager->getUserById($this->user->id);
-
-        $form = new BootstrapForm;
-        $form->renderMode = RenderMode::VERTICAL_MODE;
-
-        $roles = [
-            0 => $this->translator->translate('templates.courier.title'),
-            1 => $this->translator->translate('templates.operator.title'),
-            2 => $this->translator->translate('templates.seamstress.title'),
-            3 => $this->translator->translate('templates.coordinator.title'),
-        ];
-
-        $rolesDefault = [];
-        if ($this->user->isInRole('courier')) {
-            array_push($rolesDefault, 0);
-        }
-        if ($this->user->isInRole('operator')) {
-            array_push($rolesDefault, 1);
-        }
-        if ($this->user->isInRole('seamstress')) {
-            array_push($rolesDefault, 2);
-        }
-        if ($this->user->isInRole('coordinator')) {
-            array_push($rolesDefault, 3);
-        }
-
-        $form->addCheckboxList(
-            'role',
-            $this->translator->translate('forms.registerCoordinator.role'),
-            $roles
-        )
-            ->setDefaultValue($rolesDefault);
-
-        $form->addHidden('id');
-        $form->addText('personName', $this->translator->translate('forms.registerCoordinator.nameLabel'))
-            ->setRequired($this->translator->translate('forms.registerCoordinator.nameRequired'));
-        $form->addPassword("password", "Nové heslo");
-        $form->addText('personPhone', $this->translator->translate('forms.registerCoordinator.phoneLabel'))
-            ->setRequired($this->translator->translate('forms.registerCoordinator.phoneRequired'));
-        $form->addEmail('personEmail', $this->translator->translate('forms.registerCoordinator.mailLabel'))
-            ->setRequired($this->translator->translate('forms.registerCoordinator.mailRequired'));
-
-        if ($this->user->isInRole('courier')) {
-            $form->addSelect('car', $this->translator->translate('forms.registerCoordinator.carLabel'), $cars)
-                ->setRequired($this->translator->translate('forms.registerCoordinator.carRequired'))
-                ->setDefaultValue($userDetails->car);
-        }
-
-        $form->setDefaults(
-            [
-                'personName' => $userDetails->personName,
-                'personEmail' => $userDetails->personEmail,
-                'personPhone' => $userDetails->personPhone,
-                'town' => $userDetails->town,
-                'id' => $userDetails->id,
-            ]
-        );
-
-        $form->addSubmit('coordinatorEditFormSubmit', $this->translator->translate('templates.profile.button'));
-        $form->onSuccess[] = [$this, "processUpdate"];
-
-        return $form;
-    }
-
-
-    public function processUpdate(BootstrapForm $form)
-    {
-        $values = $form->getValues();
-        $finalRoles = '';
-        foreach ($values->role as $key => $role) {
-            if ($role == 0) {
-                $finalRoles = $finalRoles . 'courier';
-            }
-            if ($role == 1) {
-                $finalRoles = $finalRoles . 'operator';
-            }
-            if ($role == 2) {
-                $finalRoles = $finalRoles . 'seamstress';
-            }
-            if ($role == 3) {
-                $finalRoles = $finalRoles . 'coordinator';
-            }
-            if ($key != array_key_last($values->role)) {
-                $finalRoles = $finalRoles . ';';
-            }
-        }
-        $values->role = $finalRoles;
-        if ($values->password == null) {
-            unset($values->password);
-        } else {
-            $values->password = $this->passwords->hash($values->password);
-        }
-        $usr = $this->userManager->getUserById($values->id);
-        if ($usr->id != $values->id) {
-            $form->addError($this->translator->translate('templates.profile.fail'));
-        } else {
-            $user = $this->userManager->update($values);
-
-            $this->flashMessage($this->translator->translate('templates.profile.success'));
-            $this->redirect("profile");
-        }
+        return $this->editVolunteerForm->create();
     }
 
 

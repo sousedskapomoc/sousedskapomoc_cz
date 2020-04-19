@@ -5,12 +5,27 @@ declare(strict_types=1);
 namespace SousedskaPomoc\Presenters;
 
 use Contributte\FormsBootstrap\BootstrapForm;
+use Nette\ComponentModel\IComponent;
+use SousedskaPomoc\Components\ICreateOrderFormInterface;
+use SousedskaPomoc\Components\IEditOrderFormInterface;
 use SousedskaPomoc\Model\OrderManager;
+use SousedskaPomoc\Repository\OrderRepository;
 
 final class CoordinatorPresenter extends BasePresenter
 {
     /** @var \SousedskaPomoc\Model\OrderManager */
     protected $orderManager;
+
+    /** @var \SousedskaPomoc\Repository\OrderRepository */
+    protected $orderRepository;
+
+    /** @var \SousedskaPomoc\Components\ICreateOrderFormInterface */
+    protected $orderFormFactory;
+
+    /** @var \SousedskaPomoc\Components\IEditOrderFormInterface */
+    protected $editOrderFormFactory;
+
+    protected $orderId;
 
     public function beforeRender()
     {
@@ -21,11 +36,30 @@ final class CoordinatorPresenter extends BasePresenter
         }
     }
 
+    public function injectOrderFormFactory(ICreateOrderFormInterface $orderFormFactory)
+    {
+        $this->orderFormFactory = $orderFormFactory;
+    }
+
+    public function injectOrderRepository(OrderRepository $orderRepository)
+    {
+        $this->orderRepository = $orderRepository;
+    }
+
     public function injectOrderManager(OrderManager $orderManager)
     {
         $this->orderManager = $orderManager;
     }
 
+    public function injectEditOrderFormFactory(IEditOrderFormInterface $editOrderForm)
+    {
+        $this->editOrderFormFactory = $editOrderForm;
+    }
+
+    public function createComponentEditOrderForm()
+    {
+        return $this->editOrderFormFactory->create();
+    }
 
     public function renderPrintMaterial($id)
     {
@@ -41,34 +75,23 @@ final class CoordinatorPresenter extends BasePresenter
 
     public function renderDetail($id)
     {
-        $this->template->order = $this->orderManager->find($id);
+        $this->template->order = $this->orderRepository->getById($id);
     }
 
 
     public function createComponentPostOrder()
     {
-        $form = new BootstrapForm();
-        $form->addText('pickup_address', $this->translator->translate('forms.postOrder.pickupAddressLabel'))
-            ->setPlaceholder($this->translator->translate('forms.postOrder.pickupAddressPlaceholder'));
-        $form->addText('delivery_address', $this->translator->translate('forms.postOrder.addressLabel'))
-            ->setRequired($this->translator->translate('forms.postOrder.addressRequired'))
-            ->setPlaceholder($this->translator->translate('forms.postOrder.addressPlaceholder'));
-        $form->addText('delivery_phone', $this->translator->translate('forms.postOrder.phoneLabel'))
-            ->setPlaceholder($this->translator->translate('forms.postOrder.phonePlaceholder'));
-        $form->addText(
-            'note',
-            $this->translator->translate('forms.postOrder.noteLabel')
-        )->setPlaceholder($this->translator->translate('forms.postOrder.notePlaceholder'));
-        $form->addHidden('courier_note')
-            ->setDefaultValue('');
-        $form->addTextArea('order_items', $this->translator->translate('forms.postOrder.itemsLabel'))
-            ->setHtmlAttribute('rows', 3);
-        $form->addSubmit('postOrderFormSubmit', $this->translator->translate('forms.postOrder.button'));
-        $form->onSuccess[] = [$this, "postOrder"];
-
-        return $form;
+        return $this->orderFormFactory->create();
     }
 
+    public function editComponentEditOrder()
+    {
+        return $this->editOrderFormFactory->create();
+    }
+
+    public function renderEditOrder($id)
+    {
+    }
 
     public function postOrder(BootstrapForm $form)
     {

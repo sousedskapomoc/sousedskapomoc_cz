@@ -22,7 +22,7 @@ registerCoordinator:
     phoneRequired: 'Potřebujeme vědět váš telefon abychom vám mohli zavolat'
     mailLabel: 'E-mail'
     mailRequired: 'Potřebujeme znás váš e-mail kvůli registraci.'
-    townLabel: 'Město kde chci pomáhat'
+    townLabel: 'Ulice v jejímž okolí chci pomáhat'
     townRequired: 'Potřebujeme vědět kde budete pomáhat'
     button: 'Zaregistrovat se'
     carLabel: 'Na/v čem budu doručovat'

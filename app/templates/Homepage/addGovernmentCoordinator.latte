@@ -2,38 +2,14 @@
 
 <div class="row justify-content-center">
     <div class="col-md-8 col-lg-6">
+        <iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FSousedskapomoc.cz%2Fvideos%2F2063062140504360&width=500&show_text=false&appId=536970146994011&height=280"
+                width="500" height="280" style="border:none;overflow:hidden" scrolling="no" frameborder="0"
+                allowTransparency="true" allow="encrypted-media" allowFullScreen="true"></iframe>
+    </div>
+    <div class="col-md-8 col-lg-6">
         <h1>Pro členy bezpečnostní rady měst a obcí</h1>
         <div class="col-md-12">
-            {form addGovernmentCoordinator}
-
-            <div class="form-group">
-                {label address}
-                {input address class => 'form-control'}
-            </div>
-            <div class="form-group">
-                <a href="#" id="townSearch" class="btn btn-purple">Vyhledat město</a>
-            </div>
-            <ul id="suggestions">
-            </ul>
-
-            <div class="hiddenForm" style="display: none">
-                <div class="form-group">
-                    {label personName}
-                    {input personName class => 'form-control'}
-                </div>
-                <div class="form-group">
-                    {label personPhone}
-                    {input personPhone class => 'form-control'}
-                </div>
-                <div class="form-group">
-                    {label personEmail}
-                    {input personEmail class => 'form-control'}
-                </div>
-                <div class="form-group">
-                    {input demandFormSubmit}
-                </div>
-            </div>
-            {/form}
+            {control addGovernmentCoordinator}
         </div>
     </div>
 </div>
@@ -51,10 +27,9 @@
                 console.log(data);
                 $("#suggestions").empty();
                 $.each(data.suggestions, function (index) {
-
-                    if (data.suggestions[index].matchLevel == "district") {
+                    if (data.suggestions[index].matchLevel == "city") {
                         $("#suggestions").append(
-                            "<li><a href='#' class='suggestion' data-town-label='" + data.suggestions[index].address.district + " " + data.suggestions[index].address.postalCode + "' data-town='" + data.suggestions[index].address.city + "'>" + data.suggestions[index].address.district + " " + data.suggestions[index].address.postalCode + "</a></li>"
+                            "<li><a href='#' class='suggestion' data-town-label='" + data.suggestions[index].address.district + " " + data.suggestions[index].address.postalCode + "' data-town='" + data.suggestions[index].address.city + "'>" + data.suggestions[index].address.city + "</a></li>"
                         );
                     }
                 });

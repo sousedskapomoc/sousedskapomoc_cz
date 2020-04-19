@@ -1,0 +1,69 @@
+{layout "../appLayout.latte"}
+{block content}
+<h1>{_templates.orderDetail.title}</h1>
+<div class="col-12">
+    <p><a href="javascript:history.back()" class="btn btn-primary">Zpět na seznam požadavků</a></p>
+</div>
+<div class="col-12">
+    <div class="table-responsive">
+        <table class="table table-bordered table-condensed">
+            <tr>
+                <th>{_templates.orderDetail.id}</th>
+                <td>{$demand->getId()}</td>
+            </tr>
+            <tr>
+                <th>{_templates.orderDetail.status}</th>
+                <td>{$demand->getProcessed()}</td>
+            </tr>
+            <tr>
+                <th>Jméno zadavatele</th>
+                <td>{$demand->getContactName() ?? null}</td>
+            </tr>
+            <tr>
+                <th>Telefon zadavatele</th>
+                <td>{$demand->getContactPhone() ?? null}</td>
+            </tr>
+            <tr>
+                <th>{_templates.orderDetail.address}</th>
+                <td><a href="https://www.google.com/maps/search/{$demand->getDeliveryAddress()->getFullAddress()}"
+                       target="_blank">{$demand->getDeliveryAddress()->getFullAddress()}</a></td>
+            </tr>
+            <tr>
+                <th>Jméno organizace</th>
+                <td>{$demand->getOrganizationName() ?? null}</td>
+            </tr>
+            <tr>
+                <th>Jméno příjemce</th>
+                <td>{$demand->getDeliveryName() ?? null}</td>
+            </tr>
+            <tr>
+                <th>Telefon příjemce</th>
+                <td>{$demand->getDeliveryPhone() ?? null}</td>
+            </tr>
+            <tr>
+                <th>Jídlo</th>
+                <td>{$demand->getFood() ?? null}</td>
+            </tr>
+            <tr>
+                <th>Léky</th>
+                <td>{$demand->getMedicine() ?? null}</td>
+            </tr>
+            <tr>
+                <th>Roušky</th>
+                <td>{$demand->getVeils() ?? null}</td>
+            </tr>
+            <tr>
+                <th>Ostatní</th>
+                <td>{$demand->getOther() ?? null}</td>
+            </tr>
+            <tr>
+                <th>{_templates.orderDetail.created}</th>
+                <td>{date("d.m.Y H:i",$demand->getCreatedAt()->getTimestamp())}</td>
+            </tr>
+            <tr>
+                <th>{_templates.orderDetail.lastUpdate}</th>
+                <td>{date("d.m.Y H:i",$demand->getUpdatedAt()->getTimestamp())}</td>
+            </tr>
+        </table>
+    </div>
+</div>

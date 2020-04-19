@@ -31,24 +31,26 @@
         <tbody>
         {foreach $orders as $order}
             <tr>
-                <td>{$order->id} - {$order->status|humanFriendlyStatus}</td>
-				<td>{$order->pickup_address ?? null}</td>
-				<td>{$order->delivery_address}</td>
-                <td>{$order->order_items}</td>
+                <td>{$order->getId()} - {$order->getStatus()|humanFriendlyStatus}</td>
+				{if $order->getPickupAddress()}
+                    <td>{$order->getPickupAddress()->getStreet() ?? null}</td>
+                {/if}
+				<td>{$order->getDeliveryAddress()->getStreet()}</td>
+                <td>{$order->getItems()}</td>
                 <td>
-                    {if $order->status == 'assigned'}
-                        <a class="btn btn-sm btn-danger" n:href="changeStatus! id => $order->id, status=>'picking'">{_templates.courierDashboard.picking}</a>
-                    {elseif $order->status == 'picking'}
-                        <a class="btn btn-sm btn-warning" n:href="changeStatus! id => $order->id, status=>'delivering'">{_templates.courierDashboard.delivering}</a>
-                    {elseif $order->status == 'delivering'}
-                        <a class="btn btn-sm btn-success" n:href="changeStatus! id => $order->id, status=>'delivered'">{_templates.courierDashboard.delivered}</a>
+                    {if $order->getStatus() == 'assigned'}
+                        <a class="btn btn-sm btn-danger" n:href="changeStatus! id => $order->getId(), status=>'picking'">{_templates.courierDashboard.picking}</a>
+                    {elseif $order->getStatus() == 'picking'}
+                        <a class="btn btn-sm btn-warning" n:href="changeStatus! id => $order->getId(), status=>'delivering'">{_templates.courierDashboard.delivering}</a>
+                    {elseif $order->getStatus() == 'delivering'}
+                        <a class="btn btn-sm btn-success" n:href="changeStatus! id => $order->getId(), status=>'delivered'">{_templates.courierDashboard.delivered}</a>
                     {/if}
                 </td>
-                <td>{$order->note}</td>
-                <td>{$order->delivery_phone ?? null}</td>
+                <td>{$order->getCustomerNote()}</td>
+                <td>{$order->getDeliveryPhone() ?? null}</td>
                 <td>
-                    <a n:href="Edit id => $order->id">{_templates.courierDashboard.edit}</a>,
-                    <a n:href="Detail id => $order->id">{_templates.coordinatorDashboard.detail}</a>
+                    <a n:href="Edit id => $order->getId()">{_templates.courierDashboard.edit}</a>,
+                    <a n:href="Detail id => $order->getId()">{_templates.coordinatorDashboard.detail}</a>
                 </td>
             </tr>
         {/foreach}

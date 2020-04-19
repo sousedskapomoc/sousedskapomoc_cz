@@ -1,0 +1,16 @@
+{block content}
+<div class="row justify-content-center">
+    <div class="col-12 col-md-8 col-lg-12">
+        <h1>Profil | <small>{$volunteer->getPersonName()}</small></h1>
+        <p>
+            <a n:if="$user->isInRole('admin')" n:href="System:dashboard" target="_blank" class="btn btn-primary btn-danger">Administrace</a>
+            <a n:href="Sign:profile" class="btn btn-primary btn-dark">Můj profil</a>
+            <a n:if="$volunteer->getUploadPhoto()" n:href="Sign:card" target="_blank" class="btn btn-primary btn-purple">Stáhnout kartičku dobrovolníka</a>
+            <a n:if="$volunteer->getUploadPhoto() == null" n:href="Sign:uploadPhoto" class="btn btn-primary btn-dark">Nahrát novou profilovou fotku</a>
+
+        </p>
+        <h1>Přehled tvojí pomoci</h1>
+        <p>Zatím jsi se k pomoci nedostal - stačí začít</p>
+        <a n:href="PublicDemands:default" class="btn btn-primary btn-default">Chci pomáhat</a>
+    </div>
+</div>

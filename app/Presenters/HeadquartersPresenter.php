@@ -2,10 +2,48 @@
 
 namespace SousedskaPomoc\Presenters;
 
+use Doctrine\ORM\Mapping\Embeddable;
+use SousedskaPomoc\Entities\Order;
+use SousedskaPomoc\Repository\AddressRepository;
+use SousedskaPomoc\Repository\DemandRepository;
+use SousedskaPomoc\Repository\OrderRepository;
+use SousedskaPomoc\Repository\VolunteerRepository;
 use Ublaboo\DataGrid\DataGrid;
 
 class HeadquartersPresenter extends BasePresenter
 {
+    /** @var \SousedskaPomoc\Repository\OrderRepository */
+    protected $orderRepository;
+
+    /** @var \SousedskaPomoc\Repository\DemandRepository */
+    protected $demandRepository;
+
+    /** @var \SousedskaPomoc\Repository\VolunteerRepository */
+    protected $volunteerRepository;
+
+    /** @var \SousedskaPomoc\Repository\AddressRepository */
+    protected $addressRepository;
+
+    public function injectOrderRepository(OrderRepository $orderRepository)
+    {
+        $this->orderRepository = $orderRepository;
+    }
+
+    public function injectDemandRepository(DemandRepository $demandRepository)
+    {
+        $this->demandRepository = $demandRepository;
+    }
+
+    public function injectVolunteerRepository(VolunteerRepository $volunteerRepository)
+    {
+        $this->volunteerRepository = $volunteerRepository;
+    }
+
+    public function injectAddressRepository(AddressRepository $addressRepository)
+    {
+        $this->addressRepository = $addressRepository;
+    }
+
     public function beforeRender()
     {
         if (!$this->user->isInRole('admin')) {
@@ -19,13 +57,21 @@ class HeadquartersPresenter extends BasePresenter
     {
         $role = $this->presenter->getParameter('role');
 
+        //@TODO - add text filter into address
         $grid = new DataGrid();
         $grid->setDataSource($this->userManager->fetchAllUsersInRole($role));
         $grid->addColumnNumber('id', 'ID uživatele');
         $grid->addColumnText('personName', 'Jméno a příjmení')->setFilterText();
         $grid->addColumnText('personEmail', 'E-mail')->setFilterText();
         $grid->addColumnText('personPhone', 'Telefon')->setFilterText();
-        $grid->addColumnText('town', 'Město')->setFilterText();
+        $grid->addColumnText('address', 'Město')
+            ->setRenderer(function ($item) {
+                if ($item->getAddress() != null) {
+                    return $item->getAddress()->getCity();
+                } else {
+                    return "Not specified";
+                }
+            });
         $grid->addColumnNumber('active', 'Online')->setFilterText();
         $grid->setDefaultPerPage(100);
 
@@ -35,17 +81,27 @@ class HeadquartersPresenter extends BasePresenter
     public function createComponentDemandsDataGrid()
     {
         $grid = new DataGrid();
-        $grid->setDataSource($this->orderManager->fetchAllWebDemands());
+
+        //@TODO - add text filter into address
+        $grid->setDataSource($this->demandRepository->getAll());
         $grid->addColumnNumber('id', 'ID')->setFilterText();
-        $grid->addColumnText('id_volunteers', 'Zadavatel');
-        $grid->addColumnText('town', 'Město')->setFilterText();
-        $grid->addColumnText('delivery_address', 'Adresa')->setFilterText();
-        $grid->addColumnText('delivery_phone', 'Telefon')->setFilterText();
-        $grid->addColumnText('order_items', 'Položky obj.')->setFilterText();
-        $grid->addFilterSelect('status', 'Stav obj', []);
+        $grid->addColumnText('deliveryAddress', 'Adresa')
+            ->setRenderer(function ($item) {
+                if ($item->getDeliveryAddress() != null) {
+                    return $item->getDeliveryAddress()->getFullAddress();
+                } else {
+                    return "Not specified";
+                }
+            });
+        $grid->addColumnText('processed', 'Stav poptavky')->setFilterText();
+        $grid->addColumnText('contactName', 'Jmeno zadavatele')->setFilterText();
+        $grid->addColumnText('contactPhone', 'Telefon zadavatele')->setFilterText();
+        $grid->addColumnText('organizationName', 'Jmeno organizace')->setFilterText();
+        $grid->addColumnText('deliveryName', 'Jmeno adresata')->setFilterText();
+        $grid->addColumnText('deliveryPhone', 'Telefon adresata')->setFilterText();
         $grid->addColumnDateTime('createdAt', 'Datum přidání');
-        $grid->addAction('approve', 'Schválit', 'approve!')->setClass("btn btn-success btn-sm");
-        $grid->addAction('detail', 'Detail', 'Courier:detail')->setClass("btn btn-primary btn-sm");
+//        $grid->addAction('approve', 'Schválit', 'approve!')->setClass("btn btn-success btn-sm");
+        $grid->addAction('detail', 'Detail', 'Headquarters:demandDetail')->setClass("btn btn-primary btn-sm");
         $grid->addAction('delete', 'X', 'deleteDemand!')->setClass("btn btn-danger btn-sm");
 
         return $grid;
@@ -54,13 +110,28 @@ class HeadquartersPresenter extends BasePresenter
     public function createComponentOrdersDataGrid()
     {
         $grid = new DataGrid();
-        $grid->setDataSource($this->orderManager->findAllOrdersData());
+
+        //@TODO - add text filter into address
+        $grid->setDataSource($this->orderRepository->getAll());
         $grid->addColumnNumber('id', 'ID')->setFilterText();
-        $grid->addColumnText('id_volunteers', 'Zadavatel');
-        $grid->addColumnText('town', 'Město')->setFilterText();
-        $grid->addColumnText('delivery_address', 'Adresa')->setFilterText();
+        $grid->addColumnText('owner', 'Zadavatel')
+            ->setRenderer(function ($item) {
+                if ($item->getOwner()->getPersonName() != null) {
+                    return $item->getOwner()->getPersonName();
+                } else {
+                    return "Not specified";
+                }
+            });
+        $grid->addColumnText('delivery_address', 'Adresa')
+            ->setRenderer(function ($item) {
+                if ($item->getDeliveryAddress() != null) {
+                    return $item->getDeliveryAddress()->getCity();
+                } else {
+                    return "Not specified";
+                }
+            });
         $grid->addColumnText('delivery_phone', 'Telefon')->setFilterText();
-        $grid->addColumnText('order_items', 'Položky obj.')->setFilterText();
+        $grid->addColumnText('items', 'Položky obj.')->setFilterText();
 
         $grid->addColumnDateTime('createdAt', 'Datum přidání');
         $grid->addColumnText('status', 'Status')->setFilterText();
@@ -90,8 +161,17 @@ class HeadquartersPresenter extends BasePresenter
 
     public function handleDeleteDemand($id)
     {
-        $this->orderManager->remove($id);
-        $this->flashMessage("Poptávka byla smazána.");
+        /** @var \SousedskaPomoc\Entities\Demand $demand */
+        $demand = $this->demandRepository->getById($id);
+        if ($demand->getProcessed() == 'declined') {
+            $this->flashMessage('Tato objednavka jiz byla zamitnuta.');
+            $this->redirect('this');
+        } elseif ($demand->getProcessed() == 'approved') {
+            $this->flashMessage('Tato objednavka jiz byla schvalena.');
+            $this->redirect('this');
+        }
+        $this->demandRepository->setProcessed($id, 'declined');
+        $this->flashMessage("Poptávka byla zamítnuta.");
         $this->redirect('Headquarters:demands');
     }
 
@@ -104,8 +184,39 @@ class HeadquartersPresenter extends BasePresenter
 
     public function handleApprove($id)
     {
-        $this->orderManager->changeStatus($id, 'new');
-        $this->flashMessage("Objednávka byla schválena.");
-        $this->redirect('Headquarters:demands');
+        /** @var \SousedskaPomoc\Entities\Demand $demand */
+        $demand = $this->demandRepository->getById($id);
+        if ($demand->getCreatedOrder() != null) {
+            $this->flashMessage('Z tohoto pozadavku jiz byla vytvorena objednavka.');
+            $this->redirect('this');
+        }
+
+        /** @var Order $order */
+        $order = new Order();
+
+        /** @var \SousedskaPomoc\Entities\Address $deliveryAddress */
+        $deliveryAddress = $demand->getDeliveryAddress();
+        $deliveryAddress->addDeliveryOrder($order);
+
+        $order->setDeliveryPhone($demand->getPhone());
+        $order->setStatus('new');
+        $order->setItems($demand->getItems());
+        $order->setCustomerNote($demand->getName());
+        $order->setFromDemand($demand);
+
+        /** @var \SousedskaPomoc\Entities\Volunteer $user */
+        $user = $this->volunteerRepository->getById($this->user->getId());
+        $user->addCreatedOrder($order);
+
+        $this->addressRepository->create($deliveryAddress);
+        $this->volunteerRepository->update($user->getId(), $user);
+        $this->demandRepository->setProcessed($demand->getId(), 'approved');
+
+        $this->redirect('Coordinator:editOrder', $order->getId());
+    }
+
+    public function renderDemandDetail($id)
+    {
+        $this->template->demand = $this->demandRepository->getById($id);
     }
 }

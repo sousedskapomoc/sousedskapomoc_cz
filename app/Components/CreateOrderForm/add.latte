@@ -1,0 +1,122 @@
+{block content}
+
+<div class="row justify-content-center">
+    <div class="col-md-12 col-lg-12">
+            {form createOrderForm}
+                <div class="form-group">
+                    {label pickupAddress}
+                    {input pickupAddress class => 'form-control pickupAddressInput'}
+                    {input pickupId class=> 'pickupId'}
+                </div>
+                <ul id="suggestionsPickup">
+                </ul>
+                <div class="form-group">
+                    {label deliveryAddress}
+                    {input deliveryAddress class => 'form-control deliveryAddressInput'}
+                    {input deliveryId class=> 'deliveryId'}
+                </div>
+                <ul id="suggestionsDelivery">
+                </ul>
+                <div class="form-group">
+                    {label customerNote}
+                    {input customerNote class => 'form-control'}
+                </div>
+                <div class="form-group">
+                    {label phone}
+                    {input phone class => 'form-control'}
+                </div>
+                <div class="form-group">
+                    {label items}
+                    {input items class => 'form-control'}
+                </div>
+                <div class="form-group">
+                    {input addOrderFormSubmit}
+                </div>
+            {/form}
+    </div>
+</div>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function (event) {
+        $(".pickupAddressInput").on('input', function () {
+            var hereMapsEndpoint = "https://autocomplete.geocoder.ls.hereapi.com/6.2/suggest.json?apiKey=Kl0wK4fx38Pf63EIey6WyrmGEhS2IqaVHkuzx0IQ4-Q&country=CZE&query=";
+            var query = encodeURIComponent($(".pickupAddressInput").val());
+            jQuery.getJSON(hereMapsEndpoint + query, function (data) {
+                $("#suggestionsPickup").empty();
+                $.each(data.suggestions, function (index) {
+                    if (data.suggestions[index].matchLevel == "houseNumber") {
+                        $("#suggestionsPickup").append(
+                            "<li><a href='#' class='suggestionPickup' " +
+                            "data-country='" + data.suggestions[index].address.country +
+                            "' data-state='" + data.suggestions[index].address.state +
+                            "' data-county='" + data.suggestions[index].address.county +
+                            "' data-city='" + data.suggestions[index].address.city +
+                            "' data-district='" + data.suggestions[index].address.district +
+                            "' data-street='" + data.suggestions[index].address.street +
+                            "' data-houseNumber='" + data.suggestions[index].address.houseNumber +
+                            "' data-postalCode='" + data.suggestions[index].address.postalCode +
+                            "' data-label='" + data.suggestions[index].label +
+                            "' data-locationId='" + data.suggestions[index].locationId +
+                            "'>" + data.suggestions[index].label + "</a></li>"
+                        );
+                    }
+                });
+            });
+        });
+        $(window).keydown(function (event) {
+            if (event.keyCode == 13) {
+                event.preventDefault();
+                return false;
+            }
+        });
+        $(document).on("click", "a.suggestionPickup", function () {
+            const address = document.querySelector('a.suggestionPickup');
+            console.log(address);
+            console.log(address.dataset.label);
+            $(".pickupAddressInput").val(address.dataset.label);
+            $(".pickupId").val(address.dataset.locationid);
+            $("#suggestionsPickup").empty();
+        });
+
+        $(".deliveryAddressInput").on('input', function () {
+            var hereMapsEndpoint = "https://autocomplete.geocoder.ls.hereapi.com/6.2/suggest.json?apiKey=Kl0wK4fx38Pf63EIey6WyrmGEhS2IqaVHkuzx0IQ4-Q&country=CZE&query=";
+            var query = encodeURIComponent($(".deliveryAddressInput").val());
+            jQuery.getJSON(hereMapsEndpoint + query, function (data) {
+                $("#suggestionsDelivery").empty();
+                $.each(data.suggestions, function (index) {
+                    if (data.suggestions[index].matchLevel == "houseNumber") {
+                        $("#suggestionsDelivery").append(
+                            "<li><a href='#' class='suggestionDelivery' " +
+                            "data-country='" + data.suggestions[index].address.country +
+                            "' data-state='" + data.suggestions[index].address.state +
+                            "' data-county='" + data.suggestions[index].address.county +
+                            "' data-city='" + data.suggestions[index].address.city +
+                            "' data-district='" + data.suggestions[index].address.district +
+                            "' data-street='" + data.suggestions[index].address.street +
+                            "' data-houseNumber='" + data.suggestions[index].address.houseNumber +
+                            "' data-postalCode='" + data.suggestions[index].address.postalCode +
+                            "' data-label='" + data.suggestions[index].label +
+                            "' data-locationId='" + data.suggestions[index].locationId +
+                            "'>" + data.suggestions[index].label + "</a></li>"
+                        );
+                    }
+                });
+            });
+        });
+        $(window).keydown(function (event) {
+            if (event.keyCode == 13) {
+                event.preventDefault();
+                return false;
+            }
+        });
+        $(document).on("click", "a.suggestionDelivery", function () {
+            const address = document.querySelector('a.suggestionDelivery');
+            console.log(address);
+            console.log(address.dataset.label);
+            $(".deliveryAddressInput").val(address.dataset.label);
+            $(".deliveryId").val(address.dataset.locationid);
+            $("#suggestionsDelivery").empty();
+        });
+    });
+</script>

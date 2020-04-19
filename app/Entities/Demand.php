@@ -1,6 +1,5 @@
 <?php
 
-
 namespace SousedskaPomoc\Entities;
 
 use Nettrine\ORM\Entity\Attributes\Id;
@@ -26,22 +25,288 @@ class Demand
     /**
      * @ORM\Column(type="string")
      */
-    protected $items;
+    protected $deliveryPhone;
 
     /**
      * @ORM\Column(type="string")
      */
-    protected $phone;
+    protected $deliveryName;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $contactName;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $contactPhone;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $food;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $medicine;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $veils;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $other;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $organizationName;
 
     /**
      * @ORM\Column(type="string")
-     */
-    protected $name;
-
-    /**
-     * @ORM\Column(type="boolean")
      */
     protected $processed;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Order", inversedBy="fromDemand")
+     */
+    protected $createdOrder;
+
+    /**
+     * @ORM\Column(type="boolean",options={"default" : 0})
+     */
+    protected $isContactPerson;
+
+    /**
+     * @ORM\Column(type="boolean",options={"default" : 0})
+     */
+    protected $isOrganization;
+
+
+
+    /**
+     * @return mixed
+     */
+    public function getOrganizationName()
+    {
+        return $this->organizationName;
+    }
+
+
+
+    /**
+     * @param mixed $organizationName
+     */
+    public function setOrganizationName($organizationName) : void
+    {
+        $this->organizationName = $organizationName;
+    }
+
+
+
+    /**
+     * @return mixed
+     */
+    public function getIsContactPerson()
+    {
+        return $this->isContactPerson;
+    }
+
+
+
+    /**
+     * @param mixed $isContactPerson
+     */
+    public function setIsContactPerson($isContactPerson) : void
+    {
+        $this->isContactPerson = $isContactPerson;
+    }
+
+
+
+    /**
+     * @return mixed
+     */
+    public function getIsOrganization()
+    {
+        return $this->isOrganization;
+    }
+
+
+
+    /**
+     * @param mixed $isOrganization
+     */
+    public function setIsOrganization($isOrganization) : void
+    {
+        $this->isOrganization = $isOrganization;
+    }
+
+
+
+    /**
+     * @return mixed
+     */
+    public function getDeliveryPhone()
+    {
+        return $this->deliveryPhone;
+    }
+
+
+
+    /**
+     * @param mixed $deliveryPhone
+     */
+    public function setDeliveryPhone($deliveryPhone) : void
+    {
+        $this->deliveryPhone = $deliveryPhone;
+    }
+
+
+
+    /**
+     * @return mixed
+     */
+    public function getDeliveryName()
+    {
+        return $this->deliveryName;
+    }
+
+
+
+    /**
+     * @param mixed $deliveryName
+     */
+    public function setDeliveryName($deliveryName) : void
+    {
+        $this->deliveryName = $deliveryName;
+    }
+
+
+
+    /**
+     * @return mixed
+     */
+    public function getContactName()
+    {
+        return $this->contactName;
+    }
+
+
+
+    /**
+     * @param mixed $contactName
+     */
+    public function setContactName($contactName) : void
+    {
+        $this->contactName = $contactName;
+    }
+
+
+
+    /**
+     * @return mixed
+     */
+    public function getContactPhone()
+    {
+        return $this->contactPhone;
+    }
+
+
+
+    /**
+     * @param mixed $contactPhone
+     */
+    public function setContactPhone($contactPhone) : void
+    {
+        $this->contactPhone = $contactPhone;
+    }
+
+
+
+    /**
+     * @return mixed
+     */
+    public function getFood()
+    {
+        return $this->food;
+    }
+
+
+
+    /**
+     * @param mixed $food
+     */
+    public function setFood($food) : void
+    {
+        $this->food = $food;
+    }
+
+
+
+    /**
+     * @return mixed
+     */
+    public function getMedicine()
+    {
+        return $this->medicine;
+    }
+
+
+
+    /**
+     * @param mixed $medicine
+     */
+    public function setMedicine($medicine) : void
+    {
+        $this->medicine = $medicine;
+    }
+
+
+
+    /**
+     * @return mixed
+     */
+    public function getVeils()
+    {
+        return $this->veils;
+    }
+
+
+
+    /**
+     * @param mixed $veils
+     */
+    public function setVeils($veils) : void
+    {
+        $this->veils = $veils;
+    }
+
+
+
+    /**
+     * @return mixed
+     */
+    public function getOther()
+    {
+        return $this->other;
+    }
+
+
+
+    /**
+     * @param mixed $other
+     */
+    public function setOther($other) : void
+    {
+        $this->other = $other;
+    }
+
 
 
     /**
@@ -65,60 +330,6 @@ class Demand
     /**
      * @return mixed
      */
-    public function getItems()
-    {
-        return $this->items;
-    }
-
-
-    /**
-     * @param mixed $items
-     */
-    public function setItems($items): void
-    {
-        $this->items = $items;
-    }
-
-
-    /**
-     * @return mixed
-     */
-    public function getPhone()
-    {
-        return $this->phone;
-    }
-
-
-    /**
-     * @param mixed $phone
-     */
-    public function setPhone($phone): void
-    {
-        $this->phone = $phone;
-    }
-
-
-    /**
-     * @return mixed
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-
-    /**
-     * @param mixed $name
-     */
-    public function setName($name): void
-    {
-        $this->name = $name;
-    }
-
-
-    /**
-     * @return mixed
-     */
     public function getProcessed()
     {
         return $this->processed;
@@ -131,5 +342,25 @@ class Demand
     public function setProcessed($processed): void
     {
         $this->processed = $processed;
+    }
+
+
+
+    /**
+     * @return mixed
+     */
+    public function getCreatedOrder()
+    {
+        return $this->createdOrder;
+    }
+
+
+
+    /**
+     * @param mixed $createdOrder
+     */
+    public function setCreatedOrder($createdOrder) : void
+    {
+        $this->createdOrder = $createdOrder;
     }
 }
