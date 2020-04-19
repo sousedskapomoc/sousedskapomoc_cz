@@ -48,11 +48,13 @@ final class SystemPresenter extends BasePresenter
         $this->townSuggester = $suggesterTown;
     }
 
-    public function injectVolunteerRepository(VolunteerRepository $volunteerRepository) {
+    public function injectVolunteerRepository(VolunteerRepository $volunteerRepository)
+    {
         $this->volunteerRepository = $volunteerRepository;
     }
 
-    public function injectAddressRepository(AddressRepository $addressRepository) {
+    public function injectAddressRepository(AddressRepository $addressRepository)
+    {
         $this->addressRepository = $addressRepository;
     }
 
@@ -86,7 +88,8 @@ final class SystemPresenter extends BasePresenter
         return $this->townSuggester->create();
     }
 
-    public function renderEnterTown() {
+    public function renderEnterTown()
+    {
         $locationId = $this->getParameter('addressHereMapsId');
         if (isset($locationId)) {
             $this->updateAddress($locationId);
