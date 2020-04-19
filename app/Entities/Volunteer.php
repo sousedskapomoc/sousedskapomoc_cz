@@ -11,6 +11,8 @@ use Nettrine\ORM\Entity\Attributes\Id;
 /**
  * Class Volunteer
  * @ORM\Entity(repositoryClass="SousedskaPomoc\Repository\VolunteerRepository")
+ *
+ * @ORM\HasLifecycleCallbacks()
  */
 class Volunteer
 {
@@ -23,6 +25,10 @@ class Volunteer
      */
     protected $personName;
 
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $uploadPhoto;
     /**
      * @ORM\Column(type="string")
      */
@@ -49,12 +55,12 @@ class Volunteer
     protected $password;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Role", inversedBy="users")
+     * @ORM\ManyToOne(targetEntity="Role", inversedBy="users", cascade={"persist"})
      */
     protected $role;
 
     /**
-     * @ORM\OneToOne(targetEntity="Address", inversedBy="volunteer")
+     * @ORM\ManyToOne(targetEntity="Address", inversedBy="volunteer", cascade={"persist"})
      */
     protected $address;
 
@@ -64,12 +70,12 @@ class Volunteer
     protected $transport;
 
     /**
-     * @ORM\OneToMany(targetEntity="Order", mappedBy="author")
+     * @ORM\OneToMany(targetEntity="Order", mappedBy="owner", cascade={"persist"})
      */
     protected $createdOrders;
 
     /**
-     * @ORM\OneToMany(targetEntity="Order", mappedBy="courier")
+     * @ORM\OneToMany(targetEntity="Order", mappedBy="courier", cascade={"persist"})
      */
     protected $deliveredOrders;
 
@@ -223,7 +229,6 @@ class Volunteer
     public function setRole($role)
     {
         $this->role = $role;
-        $role->addUser($this);
     }
 
 
@@ -273,11 +278,30 @@ class Volunteer
 
 
     /**
-     * @param mixed $createdOrders
+     * @param mixed $order
      */
-    public function setCreatedOrders($createdOrders): void
+    public function addCreatedOrder($order): self
     {
-        $this->createdOrders = $createdOrders;
+        if (!$this->createdOrders->contains($order)) {
+            $this->createdOrders[] = $order;
+
+            $order->setOwner($this);
+        }
+        return $this;
+    }
+
+    public function removeCreatedOrder($order): self
+    {
+        if ($this->createdOrders) {
+            if ($this->createdOrders->contains($order)) {
+                $this->createdOrders->removeElement($order);
+                /** @var Order $order */
+                $order->setOwner(null);
+            } else {
+                $order->setOwner(null);
+            }
+        }
+        return $this;
     }
 
 
@@ -291,15 +315,59 @@ class Volunteer
 
 
     /**
-     * @param mixed $deliveredOrders
+     * @param mixed $order
+     * @return Volunteer
      */
-    public function setDeliveredOrders($deliveredOrders): void
+    public function addDeliveredOrder($order): self
     {
-        $this->deliveredOrders = $deliveredOrders;
+        if ($this->deliveredOrders) {
+            if (!$this->deliveredOrders->contains($order)) {
+                $this->deliveredOrders[] = $order;
+            }
+            /** @var Order $order */
+            $order->setCourier($this);
+        } else {
+            $this->deliveredOrders[] = $order;
+            /** @var Order $order */
+            $order->setCourier($this);
+        }
+        return $this;
+    }
+
+    public function removeDeliveredOrder($order): self
+    {
+        if ($this->deliveredOrders) {
+            if ($this->deliveredOrders->contains($order)) {
+                $this->deliveredOrders->removeElement($order);
+                /** @var Order $order */
+                $order->setCourier(null);
+            } else {
+                $order->setCourier(null);
+            }
+        } else {
+            $order->setCourier(null);
+        }
+        return $this;
     }
 
     public function setId($id)
     {
         $this->id = $id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUploadPhoto()
+    {
+        return $this->uploadPhoto;
+    }
+
+    /**
+     * @param mixed $uploadPhoto
+     */
+    public function setUploadPhoto($uploadPhoto): void
+    {
+        $this->uploadPhoto = $uploadPhoto;
     }
 }

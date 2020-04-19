@@ -33,14 +33,29 @@ class Role
         $this->users = new ArrayCollection();
     }
 
-    public function addUser(Volunteer $user)
+    public function addUsers(Volunteer $user)
     {
-        $this->users->add($user);
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+
+            /** @var \SousedskaPomoc\Entities\Volunteer $user */
+            $user->setRole($this);
+        }
+        return $this;
     }
 
-    public function removeUser(Volunteer $user)
+    public function removeUsers(Volunteer $user)
     {
-        $this->users->removeElement($user);
+        if ($this->users->contains($user)) {
+            $this->users->removeElement($user);
+
+            // set the owning side to null (unless already changed)
+            /** @var \SousedskaPomoc\Entities\Volunteer $user */
+            if ($user->getRole() === $this) {
+                $user->setRole(null);
+            }
+        }
+        return $this;
     }
 
 
@@ -68,14 +83,5 @@ class Role
     public function getUsers()
     {
         return $this->users;
-    }
-
-
-    /**
-     * @param mixed $users
-     */
-    public function setUsers($users): void
-    {
-        $this->users = $users;
     }
 }

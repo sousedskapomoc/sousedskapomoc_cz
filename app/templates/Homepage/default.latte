@@ -18,7 +18,7 @@
 			</div>
 			<div class="col-12 col-sm-6">
 				<p class="text-center">
-					<a class="btn btn-green btn-lg" href="#iWanaBeThere">Chci se zapojit</a>
+					<a class="btn btn-green btn-lg" href="#iWanaBeThere">{_templates.header.createRegistration}</a>
 				</p>
 			</div>
 
@@ -27,6 +27,7 @@
 			<div class="col-12">
 				<div class="notif">
 					<p>{_templates.homepage.notif|noescape}</p>
+					<a href="{$basePath}/pdf/sousedska-pomoc-letak.pdf" target="_blank" class="btn btn-primary btn-purple" style="color: white !important">Leták k vytištění</a>
 				</div>
 			</div>
 		</div>
@@ -77,27 +78,27 @@
 					<li>
 						<span><a n:href="registerAsCoordinator"><img src="{$basePath}/images/002-kind.svg"/></a></span>
 						<a n:href="registerAsCoordinator"><h4>{_templates.coordinator.title}</h4></a>
-						<p>stará se o hladký průběh pomoci, komunikuje s dispečerem</p>
+						<p>{_templates.coordinator.description}</p>
 					</li>
 					<li>
 						<span><a n:href="registerAsOperator"><img src="{$basePath}/images/003-call-center-agent.svg"/></a></span>
 						<a n:href="registerAsOperator"><h4>{_templates.operator.title}</h4></a>
-						<p>přiřazuje objednávky kurýrům a dohlíží na včasné doručení</p>
+						<p>{_templates.operator.description}</p>
 					</li>
 					<li>
 						<span><a n:href="registerAsCourier"><img src="{$basePath}/images/001-car.svg"/></a></span>
 						<a n:href="registerAsCourier"><h4>{_templates.courier.title}</h4></a>
-						<p>s autem, který nakupuje a doručuje potřebným</p>
+						<p>{_templates.courier.description}</p>
 					</li>
 					<li>
-						<span><a n:href="registerAsSeamstress"><img src="{$basePath}/images/004-cut.svg"/></a></span>
-						<a n:href="registerAsSeamstress"><h4>{_templates.seamstress.title}</h4></a>
-						<p>šije roušky a připravuje je k odběru</p>
+						<span><a n:href="registerAsTim"><img src="{$basePath}/images/005-tim.svg"/></a></span>
+						<a n:href="registerAsTim"><h4>{_templates.tim.title}</h4></a>
+						<p>{_templates.tim.description}</p>
 					</li>
 				</ul>
 				<p class="text-center">
 					<a class="btn btn-green btn-lg"
-					href="/homepage/want-to-join">Chci se zapojit</a>
+					href="/homepage/want-to-join" style="text-transform: uppercase">{_templates.header.createRegistration}</a>
 				</p>
 			</div>
 		</div>

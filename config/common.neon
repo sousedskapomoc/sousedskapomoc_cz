@@ -37,7 +37,7 @@ doctrine.dbal:
     connection:
         driver: pdo_mysql
 logging:
-    logDir: %appDir%/../log
+    logDir: %appDir%/../var/log
 
 sentry:
     url: http://dfc5b1fa81e94e738fa6e3ab24b623f8@sentry.vyvoj.pl/6

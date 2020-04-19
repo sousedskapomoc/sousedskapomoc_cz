@@ -13,9 +13,9 @@ p, span, h1, h2, h3, h4, h5, h6, b {
 }
 
 .logos img {
-	max-width: 150px;
-	max-height: 150px;
-	margin: 15px;
+	max-width: 80px;
+	max-height: 80px;
+	margin: 20px;
 }
 
 .padding-top--0, .row.padding-top--0 {
@@ -817,11 +817,6 @@ h3 {
 	cursor: pointer;
 }
 
-.form--plain fieldset {
-	margin-bottom: 32px;
-	margin-top: 14px;
-}
-
 .form--plain .switcher {
 	position: relative;
 	height: 40px;
@@ -986,7 +981,6 @@ input[type="checkbox"]:checked:after {
 	line-height: 36px; 
 	font-family: Poppins, arial;
 	color: #6923CB;
-	padding-bottom: 30px;
 }
 
 .orderList__info a {
@@ -1003,7 +997,6 @@ input[type="checkbox"]:checked:after {
 .orderList__detail {
 	align-self: flex-start;
 	flex: 1;
-	margin-top: 20px;
 	text-align: right;
 }
 
@@ -1510,6 +1503,10 @@ input[type="checkbox"]:checked:after {
 		font-size: 22px;
 		line-height: 36px;
 		font-family: Poppins, arial;
+	}
+
+	.footer p.text-normal {
+		font-weight: normal;
 	}
 
 	.footer .bigger-font {

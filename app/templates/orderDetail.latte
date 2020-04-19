@@ -1,0 +1,92 @@
+<h1>{_templates.orderDetail.title}</h1>
+<div class="col-12">
+    <p><a href="javascript:history.back()" class="btn btn-primary">{_templates.orderDetail.back}</a></p>
+
+</div>
+<div class="col-12">
+    <div class="table-responsive">
+        <table class="table table-bordered table-condensed">
+            <tr>
+                <th>{_templates.orderDetail.id}</th>
+                <td>{$order->getId()}</td>
+            </tr>
+            <tr>
+                <th>{_templates.orderDetail.status}</th>
+                <td>{$order->getStatus()|humanFriendlyStatus}</td>
+            </tr>
+            <tr>
+                <th>Adresa vyzvednuti</th>
+                <td>
+                    {if $order->getPickupAddress()}
+                    <a href="https://www.google.com/maps/search/{$order->getPickupAddress()->getFullAddress()}"
+                       target="_blank">{$order->getPickupAddress()->getFullAddress()}</a></td>
+                {else}
+                Nezadano
+                {/if}
+            </tr>
+            <tr>
+                <th>{_templates.orderDetail.address}</th>
+                <td>
+                    {if $order->getDeliveryAddress()}
+                    <a href="https://www.google.com/maps/search/{$order->getDeliveryAddress()->getFullAddress()}"
+                       target="_blank">{$order->getDeliveryAddress()->getFullAddress()}</a></td>
+                {/if}
+            </tr>
+            <tr>
+                <th>{_templates.orderDetail.items}</th>
+                <td>{nl2br($order->getItems())|noescape}</td>
+            </tr>
+            <tr>
+                <th>{_templates.orderDetail.note}</th>
+                <td>{$order->getCustomerNote()}</td>
+            </tr>
+            <tr>
+                <th>Telefon příjemce</th>
+                <td>{$order->getDeliveryPhone() ?? null}</td>
+            </tr>
+            <tr>
+                <th>{_templates.orderDetail.created}</th>
+                <td>{date("d.m.Y H:i",$order->getCreatedAt()->getTimestamp())}</td>
+            </tr>
+            <tr>
+                <th>{_templates.orderDetail.lastUpdate}</th>
+                <td>{date("d.m.Y H:i",$order->getUpdatedAt()->getTimestamp())}</td>
+            </tr>
+            <tr>
+                <th>{_templates.orderDetail.whoDelivers}</th>
+                <td>
+                    {if $order->getCourier()}
+                        {$order->getCourier()->getPersonName()} - {$order->getCourier()->getPersonPhone()}
+                    {else}
+                        -
+                    {/if}
+                </td>
+            </tr>
+            <tr>
+                <th>Poznamka kuryra</th>
+                <td>
+                    {$order->getCourierNote() ?? '-'}
+                </td>
+            </tr>
+            <tr n:if="$user->isInRole('admin')">
+                <th>Změna stavu objednávky</th>
+                <td>
+                    <form action="{link updateOrderStatus! orderId => $order->getId()}" method="post" onchange="this.submit();"
+                          class="form form-vertical">
+                        <div class="form-group">
+                            <label for="orderStatus"><strong>Nastavit stav:</strong></label>
+                            <select name="orderStatus" class="form-control">
+                                <option value="picking"
+                                        {if $order->getStatus() == 'picking'}selected="selected"{/if}>{_templates.order.picking}</option>
+                                <option value="delivering"
+                                        {if $order->getStatus() == 'delivering'}selected="selected"{/if}>{_templates.order.delivering}</option>
+                                <option value="delivered"
+                                        {if $order->getStatus() == 'delivered'}selected="selected"{/if}>{_templates.order.delivered}</option>
+                            </select>
+                        </div>
+                    </form>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

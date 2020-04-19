@@ -48,7 +48,7 @@
 				  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
 	<a class="navbar-brand" href="{$basePath}/">
-		<img src="https://sousedskapomoc.cz/images/SP_logo.png" alt="{_templates.header.title}" height="50"/>
+		<img src="{$basePath}/images/SP_logo.png" alt="{_templates.header.title}" height="50"/>
 	</a>
 	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
 			aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -64,17 +64,17 @@
 				<a n:href="System:dashboard" class="nav-link"><i class="fas fa-chart-line"
 																 aria-hidden="true"></i> {_templates.header.overview}</a>
 			</li>
-			<li n:if="$user->isInRole('courier')" class="nav-item">
+			<li n:if="$user->isInRole('courier') or $user->isInRole('admin')" class="nav-item">
 				<a n:href="Courier:dashboard" class="nav-link"><i class="fas fa-car"
 																  aria-hidden="true"></i> {_templates.courier.title}</a>
 			</li>
-			<li n:if="$user->isInRole('operator')" class="nav-item">
+			<li n:if="$user->isInRole('operator') or $user->isInRole('admin')" class="nav-item">
 				<a n:href="Operator:dashboard" class="nav-link"><i class="fas fa-headset"
 																   aria-hidden="true"></i> {_templates.operator.title}</a></li>
-			<li n:if="$user->isInRole('coordinator')" class="nav-item">
+			<li n:if="$user->isInRole('coordinator') or $user->isInRole('admin')" class="nav-item">
 				<a n:href="Coordinator:dashboard" class="nav-link"><i class="fas fa-user-ninja"
 																	  aria-hidden="true"></i> {_templates.coordinator.title}</a></li>
-			<li n:if="$user->isInRole('seamstress')" class="nav-item">
+			<li n:if="$user->isInRole('seamstress') or $user->isInRole('admin')" class="nav-item">
 				<a n:href="Seamstress:dashboard" class="nav-link"><i class="fas fa-cut"
 																	 aria-hidden="true"></i> {_templates.seamstress.title}</a></li>
 			<li n:if="$user->isInRole('admin')" class="nav-item">
@@ -102,14 +102,6 @@
 		</div>
 	</div>
 	{include content}
-</div>
-
-<div class="row footer">
-	<div class="col-12">
-		<p class="text-center">
-			{_templates.footer.disclaimer|noescape}
-		</p>
-	</div>
 </div>
 
 {block scripts}

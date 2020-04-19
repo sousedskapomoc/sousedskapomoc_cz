@@ -36,6 +36,15 @@ class AddressRepository extends DoctrineEntityRepository
     {
         $addr = $this->getByLocationId($address->getLocationId());
         if ($addr instanceof Address) {
+            foreach ($address->getVolunteers() as $volunteer) {
+                $addr->addVolunteer($volunteer);
+            }
+            foreach ($address->getDemandOrders() as $demand) {
+                $addr->addDemandOrder($demand);
+            }
+            $em = $this->getEntityManager();
+            $em->persist($addr);
+            $em->flush();
             return $addr;
         } else {
             $em = $this->getEntityManager();
@@ -49,7 +58,13 @@ class AddressRepository extends DoctrineEntityRepository
     {
         $dbAddress = $this->getByLocationId($locationId);
         if ($dbAddress instanceof Address) {
-            $dbAddress->addVolunteers($user);
+            $dbAddress->addVolunteer($user);
+            $em = $this->getEntityManager();
+            $em->persist($dbAddress);
+            $em->flush();
+            return true;
+        } else {
+            return false;
         }
     }
 

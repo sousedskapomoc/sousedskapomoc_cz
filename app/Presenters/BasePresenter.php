@@ -6,6 +6,8 @@ namespace SousedskaPomoc\Presenters;
 
 use Kdyby\Translation\Translator;
 use Nette;
+use SousedskaPomoc\Components\Suggester\ISuggesterAddressInterface;
+use SousedskaPomoc\Components\Suggester\ISuggesterTownInterface;
 use SousedskaPomoc\Model\OrderManager;
 use SousedskaPomoc\Model\UserManager;
 
@@ -26,6 +28,11 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
     /** @var OrderManager */
     protected $orderManager;
 
+    /** @var ISuggesterTownInterface */
+    protected $suggesterTown;
+
+    /** @var ISuggesterAddressInterface */
+    protected $suggesterAddress;
 
     public function injectOrderManager(OrderManager $orderManager)
     {
@@ -38,6 +45,25 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
         $this->userManager = $userManager;
     }
 
+    public function injectTownSuggester(ISuggesterTownInterface $suggesterTown)
+    {
+        $this->suggesterTown = $suggesterTown;
+    }
+
+    public function injectAddressSuggester(ISuggesterAddressInterface $suggesterAddress)
+    {
+        $this->suggesterAddress = $suggesterAddress;
+    }
+
+    public function createComponentSuggesterAddress()
+    {
+        return $this->suggesterAddress->create();
+    }
+
+    public function createComponentSuggesterTown()
+    {
+        return $this->suggesterTown->create();
+    }
 
     public function beforeRender()
     {
@@ -86,6 +112,14 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
             return $states[$state] ?? $state[0];
         });
 
+        $this->template->addFilter('createList', function ($items) {
+            $output = null;
+            foreach (explode(",", $items) as $item) {
+                $output .= "<li>$item</li>";
+            }
+            return $output;
+        });
+
         $this->template->addFilter('humanFriendlyStatus', function ($status) {
 
             $statusList = [
@@ -94,6 +128,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
                 'picking' => $this->translator->translate('templates.order.statusPicking'),
                 'delivering' => $this->translator->translate('templates.order.statusDelivering'),
                 'delivered' => $this->translator->translate('templates.order.statusDelivered'),
+                'waiting' => $this->translator->translate('templates.order.statusWaiting'),
             ];
 
             return $statusList[$status] ?? $status;
