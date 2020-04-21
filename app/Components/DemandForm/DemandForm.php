@@ -57,7 +57,8 @@ class DemandFormControl extends Control
             ->setRequired($this->translator->translate('forms.registerCoordinator.nameRequired'));
         $form->addText('deliveryPhone', $this->translator->translate('forms.registerCoordinator.phoneLabel'))
             ->setRequired($this->translator->translate('forms.registerCoordinator.phoneRequired'));
-        $form->addText('deliveryAddress', "Zadejte adresu doruceni");
+        $form->addText('deliveryAddress', "Zadejte adresu doruceni")
+            ->setPlaceholder("Zadejte prosím ulici a č.p.");
         $form->addHidden('deliveryId')
             ->setRequired('Prosím zvolte adresu doručení z našeptávače.');
         $form->addTextArea('food', "Polozky objednavky");
