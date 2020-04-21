@@ -4,13 +4,13 @@
         <h1>Kde mohu pomoci ({count($demands)} příležitostí)</h1>
         <div class="flex form--plain__filter__wrapper">
             <form class="form--plain form--plain__filter">
-                <p>Chci pomoci:</p>
-                <select class="js-select">
-                    <option>s čímkoliv</option>
-                    <option>s převozem roušek</option>
-                    <option>s doručením nákupu</option>
-                    <option>s vyzvednutím léků</option>
-                    <option>s ostatními věcmi</option>
+                <p for="filterByType">Chci pomoci:</p>
+                <select class="js-select" name="filterByType" id="filterByType">
+                    <option value="all">s čímkoliv</option>
+                    <option value="veils">s převozem roušek</option>
+                    <option value="food">s doručením nákupu</option>
+                    <option value="medicine">s vyzvednutím léků</option>
+                    <option value="other">s ostatními věcmi</option>
                 </select>
                 <input type="text" name="orderList-where-help" id="orderList-where-help"
                        placeholder="Lokalita kde chcete pomoct" {ifset $selectedTown}value="{$selectedTown}"{/ifset}>
@@ -32,11 +32,11 @@
                         <div class="picture-holder"></div>
                     </div>
                     <div class="orderList__info">
-                        <h5>{$demand->getCustomerNote()}</h5>
-                        <p>{$demand->getStatus()|humanFriendlyStatus}</p>
-                        <p class="orderList__info__name">{$demand->getOwner()->getPersonName()}</p>
-                        <a n:href="detail id => $demand->getId()" n:if="$demand->getPickupAddress() != null"><i
-                                    class="fas fa-map-marker-alt"></i>{$demand->getPickupAddress()->getCityWithPostalCode()}
+                        <h5>{$demand->getContactName()}</h5>
+                        <p>{$demand->getProcessed()|humanFriendlyStatus}</p>
+                        <p class="orderList__info__name">{$demand->getDeliveryName()}</p>
+                        <a n:href="detail id => $demand->getId()" n:if="$demand->getDeliveryAddress() != null"><i
+                                    class="fas fa-map-marker-alt"></i>{$demand->getDeliveryAddress()->getCityWithPostalCode()}
                         </a>
                     </div>
                     <div class="orderList__detail">
