@@ -3,14 +3,41 @@
     <div class="col-12 col-md-8 col-lg-12">
         <h1>Profil | <small>{$volunteer->getPersonName()}</small></h1>
         <p>
-            <a n:if="$user->isInRole('admin')" n:href="System:dashboard" target="_blank" class="btn btn-primary btn-danger">Administrace</a>
+            <a n:if="$user->isInRole('admin')" n:href="System:dashboard" target="_blank"
+                                                                         class="btn btn-primary btn-danger">Administrace</a>
             <a n:href="Sign:profile" class="btn btn-primary btn-dark">Můj profil</a>
-            <a n:if="$volunteer->getUploadPhoto()" n:href="Sign:card" target="_blank" class="btn btn-primary btn-purple">Stáhnout kartičku dobrovolníka</a>
-            <a n:if="$volunteer->getUploadPhoto() == null" n:href="Sign:uploadPhoto" class="btn btn-primary btn-dark">Nahrát novou profilovou fotku</a>
+            <a n:if="$volunteer->getUploadPhoto()" n:href="Sign:card" target="_blank"
+                                                                      class="btn btn-primary btn-purple">Stáhnout
+                kartičku dobrovolníka</a>
+            <a n:if="$volunteer->getUploadPhoto() == null" n:href="Sign:uploadPhoto" class="btn btn-primary btn-dark">Nahrát
+                novou profilovou fotku</a>
 
         </p>
         <h1>Přehled tvojí pomoci</h1>
-        <p>Zatím jsi se k pomoci nedostal - stačí začít</p>
-        <a n:href="PublicDemands:default" class="btn btn-primary btn-default">Chci pomáhat</a>
+        {if count($demands) > 0}
+            {foreach $demands as $demand}
+                <div class="orderList__item">
+                    <div class="orderList__picture-wrapper">
+                        <div class="picture-holder"></div>
+                    </div>
+                    <div class="orderList__info">
+                        <h5>{$demand->getCustomerNote()}</h5>
+                        <p>{$demand->getStatus()|humanFriendlyStatus}</p>
+                        <p class="orderList__info__name">{$demand->getOwner()->getPersonName()}</p>
+                        <a n:href="detail id => $demand->getId()" n:if="$demand->getPickupAddress() != null"><i
+                                    class="fas fa-map-marker-alt"></i>{$demand->getPickupAddress()->getCityWithPostalCode()}
+                        </a>
+                    </div>
+                    <div class="orderList__detail">
+                        <a n:href="detail id => $demand->getId()">Detail poptávky</a>
+                    </div>
+                </div>
+            {/foreach}
+        {else}
+            <p>Zatím jsi se k pomoci nedostal - stačí začít</p>
+        {/if}
+        <div class="col-md-12 text-center">
+            <a n:href="PublicDemands:default" class="btn btn-primary btn-default">Chci pomáhat</a>
+        </div>
     </div>
 </div>

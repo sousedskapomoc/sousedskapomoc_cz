@@ -37,6 +37,10 @@ class PublicDemandsPresenter extends BasePresenter
     {
         $townLimit = $_GET['orderList-where-help'] ?? null;
 
+        if ($this->user->isLoggedIn()) {
+            $townLimit = $this->template->town;
+        }
+
         if ($townLimit == null) {
             $this->template->demands = $this->orderRepository->getAllUnprocessed();
         } else {
@@ -48,6 +52,7 @@ class PublicDemandsPresenter extends BasePresenter
     public function renderDashboard()
     {
         $this->template->volunteer = $this->volunteerRepository->getById($this->user->getId());
+        $this->template->demands = $this->orderRepository->getByUser($this->user->getId());
     }
 
     public function renderDetail($id)

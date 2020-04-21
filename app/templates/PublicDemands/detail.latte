@@ -38,9 +38,11 @@
             <h6>Tel. číslo</h6>
             <p>{$demand->getDeliveryPhone()}</p>
         </div>
-
-        <a n:if="$demand->getStatus() == 'new'" n:href="selfAssign! id => $demand->getId()" class="btn btn-green">Vezmu si pomoc na starosti</a>
+        {if $user->isLoggedIn()}
+            <a n:if="$demand->getStatus() == 'new'" n:href="selfAssign! id => $demand->getId()" class="btn btn-green">Vezmu
+                si pomoc na starosti</a>
+        {/if}
     </div>
 </div>
-<hr />
+<hr/>
 <a n:href="default">Zpět na seznam poptávek</a>
