@@ -15,7 +15,7 @@ class OrderRepository extends DoctrineEntityRepository
 
     public function getByUser($id)
     {
-        return $this->findBy(['author' => $id]);
+        return $this->findBy(['owner' => $id]);
     }
 
 
@@ -313,7 +313,7 @@ class OrderRepository extends DoctrineEntityRepository
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('o')
             ->from('\SousedskaPomoc\Entities\Order', 'o')
-            ->leftJoin('o.deliveryAddress', 'a')
+            ->leftJoin('o.pickupAddress', 'a')
             ->setParameter('town', $town)
             ->setParameter('stat', 'new')
             ->andWhere("a.city = :town")

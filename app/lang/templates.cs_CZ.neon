@@ -16,7 +16,7 @@ header:
     registration: 'Registrace'
     logout: 'Odhlášení'
     mainTitle: 'Projekt SousedskaPomoc.cz sdružuje dobrovolníky po celé ČR a společně zajišťuje doručování léku, potravin a dalších nezbytností lidem, kteří to v aktuální situaci potřebují nejvíce.'
-    mainSubtitle: 'Jedná se především o ohrožené skupiny, jak jsou senioři, nemocní, těhotné ženy či osoby s oslabenou imunitou.'
+    mainSubtitle: 'Jedná se především o ohrožené skupiny, jako jsou senioři, nemocní, těhotné ženy či osoby s oslabenou imunitou.'
     doctors: 'Pro lékaře'
     towns: 'Pro města a obce'
 footer:
@@ -33,7 +33,7 @@ homepage:
     howToHelp: 'Co mohu udělat pro své sousedy kteří si nemohou dojít nakoupit?'
     howToHelpDescription: 'Vzhledem k nouzovému stavu na území České Republiky a pandemii <a href="http://koronavirus.mzcr.cz/" target="_blank">Koronaviru</a> jsme se rozhodli vytvořit jednoduchý web který umožní organizovat dobrovolníky kteří chtějí pomoci.'
     info: 'Veškeré činnosti spojené s provozováním tohoto webu (kurýrní práce, práce operátora, vývoj) jsou prováděny BEZ NÁROKU na odměnu.'
-    notif: '<p>Pomoc vám zajistíme, ať už jste z kteréhokoli regionu či obce České republiky.<br /></p><h2>800 88 55 99</h2><p>Volejte bezplatnou linku Sousedské pomoci!</p>'
+    notif: '<p>Pomoc vám zajistíme, ať už jste z kteréhokoli regionu či obce České republiky.<br /></p><h2><a href="tel:800885599" class="phoneNumber">800 88 55 99</a></h2><p>Volejte bezplatnou linku Sousedské pomoci!</p>'
     howItWork: 'Jak to funguje?'
     registerOnPosition: 'Registrujte se našich webových stránkách na jednu z pozic pečovatel, dispečer, kurýr nebo švadlena.'
     connectToVolunteers: 'Propojení s dobrovolníky'
