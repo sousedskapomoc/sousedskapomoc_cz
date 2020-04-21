@@ -57,6 +57,6 @@ class PublicDemandsPresenter extends BasePresenter
         /** @var Volunteer $volunteer */
         $volunteer = $this->volunteerRepository->find($this->user->getId());
         $this->orderRepository->assignOrder($volunteer, $id);
-        $this->flashMessage("Poptávku jsme vám přiřadili můžete si pustit do její realizace");
+        $this->flashMessage( $this->translator->translate('messages.handleSelfAssign.assigned') );
     }
 }

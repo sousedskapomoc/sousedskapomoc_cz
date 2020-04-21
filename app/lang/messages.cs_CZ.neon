@@ -29,10 +29,15 @@ handleReset:
     reseted: 'Objednávka byla obnovena do výchozího stavu.'
 handleDeleteDemand:
     delete: 'Poptávka byla smazána.'
+    alreadyDeclined: 'Tato poptávka již byla zamítnuta.'
 handleDeleteOrder:
+    alreadyDeclined: 'Tato objednávka jiz byla zamitnuta.'
     delete: 'Objednávka byla smazána.'
+    alreadyApproved: 'Tato objednavka jiz byla schvalena.'
 handleApprove:
-    approve:'Objednávka byla schválena.'
+    orderApproved: 'Objednávka byla schválena.'
+    alreadyCreated: 'Z tohoto pozadavku jiz byla vytvorena objednavka.'
+
 saveDemand:
     save: 'Uložili jsme co potřebujete a pracujeme na tom ať to odbavíme'
 passwdChange:
@@ -40,4 +45,16 @@ passwdChange:
     hashMissMatch: 'Email code is not valid.'
     sendNewPasswd: 'Zaslat nove heslo'
     emailSendSuccess: 'E-mail s odkazem byl úspěšně odeslán.'
-    
+handleSelfAssign:
+    assigned: 'Poptávku jsme vám přiřadili můžete si pustit do její realizace'
+actionOut:
+    logoutSuccessful: 'Odhlášení proběhlo úspěšně'
+componentUserUploadPhoto:
+    photoForUpload: 'Fotografie k nahrání'
+    uploadPhoto: 'Nahrát fotografii'
+uploadUserPhoto:
+    photoUploaded: 'Profilovou fotku jsme vám nahráli.'
+    unspportedFileType: 'Nahráli jste nepodporovaný typ souboru.'
+
+
+

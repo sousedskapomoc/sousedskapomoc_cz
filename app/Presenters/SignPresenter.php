@@ -64,7 +64,7 @@ final class SignPresenter extends BasePresenter
     public function actionOut(): void
     {
         $this->getUser()->logout(true);
-        $this->flashMessage('Odhlášení proběhlo úspěšně');
+        $this->flashMessage( $this->translator->translate('messages.actionOut.logoutSuccessful') );
         $this->redirect('Homepage:default');
     }
 
@@ -76,8 +76,8 @@ final class SignPresenter extends BasePresenter
     public function createComponentUserUploadPhoto()
     {
         $form = new Form();
-        $form->addUpload('userPhoto', 'Fotografie k nahrání')->setRequired();
-        $form->addSubmit('savePhoto', 'Nahrát fotografii');
+        $form->addUpload('userPhoto', $this->translator->translate('messages.componentUserUploadPhoto.photoForUpload') )->setRequired();
+        $form->addSubmit('savePhoto', $this->translator->translate('messages.componentUserUploadPhoto.uploadPhoto') );
         $form->onSuccess[] = [$this, "uploadUserPhoto"];
         return $form;
     }
@@ -95,10 +95,10 @@ final class SignPresenter extends BasePresenter
             $image->resize(350, null);
             $image->save(__DIR__ . '/../../www/upload/card_' . $this->user->getId() . '_' . $file->getSanitizedName());
             $this->volunteerRepository->attachUserPhoto($this->user->getId(), $file->getSanitizedName());
-            $this->flashMessage('Profilovou fotku jsme vám nahráli.');
+            $this->flashMessage( $this->translator->translate('messages.uploadUserPhoto.photoUploaded') );
             $this->redirect('PublicDemands:dashboard');
         } else {
-            $this->flashMessage('Nahráli jste nepodporovaný typ souboru.');
+            $this->flashMessage( $this->translator->translate('messages.uploadUserPhoto.unspportedFileType') );
             $this->redirect('this');
         }
     }

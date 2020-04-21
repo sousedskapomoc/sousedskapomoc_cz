@@ -19,6 +19,7 @@ header:
     mainSubtitle: 'Jedná se především o ohrožené skupiny, jak jsou senioři, nemocní, těhotné ženy či osoby s oslabenou imunitou.'
     doctors: 'Pro lékaře'
     towns: 'Pro města a obce'
+    manual: 'Manuál'
 footer:
     disclaimer: 'Veškeré dotazy posílejte na e-mail <a href="mailto:info@sousedskapomoc.cz" target="_blank">info@sousedskapomoc.cz</a>, vytvořil <a href="https://twitter.com/hunaczech">Lukáš Huňka</a>'
     thankYou: 'Děkujeme všem dobrovolníkům. Má to smysl!'
@@ -227,7 +228,7 @@ gridCreateDemand:
     actionConfirm: 'Schválit'
     actionDetail: 'Detail'
     actionDelete: 'Smazat'
-gridCreateOdrers:
+gridCreateOrders:
     id: 'ID'
     owner: 'Zadavatel'
     notSpecified: 'Nespecifikovano'

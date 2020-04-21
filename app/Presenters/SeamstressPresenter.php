@@ -57,11 +57,11 @@ final class SeamstressPresenter extends BasePresenter
             ->setRequired($this->translator->translate('forms.postOrder.addressRequired'))
             ->setPlaceholder($this->translator->translate('forms.postOrder.addressPlaceholder'));
         $form->addText('items', $this->translator->translate('templates.seamstress.itemsLabel'))
-            ->setPlaceholder( $this->translator->translate('forms.createPostOrder.tenPiecesRequirement') )
-            ->setRequired( $this->translator->translate('forms.createPostOrder.enterNumForPickUp') );
+            ->setPlaceholder( $this->translator->translate('forms.postOrder.tenPiecesRequirement') )
+            ->setRequired( $this->translator->translate('forms.postOrder.enterNumForPickUp') );
         $form->addHidden('pickupId');
 
-        $form->addSubmit('addOrderFormSubmit', 'Odeslat poptavku');
+        $form->addSubmit('addOrderFormSubmit', $this->translator->translate('forms.postOrder.sendDemand') );
         $form->onSuccess[] = [$this, "processAdd"];
 
         return $form;
