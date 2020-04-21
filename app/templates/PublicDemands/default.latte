@@ -5,12 +5,13 @@
         <div class="flex form--plain__filter__wrapper">
             <form class="form--plain form--plain__filter">
                 <p for="filterByType">Chci pomoci:</p>
-                <select class="js-select" name="filterByType" id="filterByType">
-                    <option value="all">s čímkoliv</option>
-                    <option value="veils">s převozem roušek</option>
-                    <option value="food">s doručením nákupu</option>
-                    <option value="medicine">s vyzvednutím léků</option>
-                    <option value="other">s ostatními věcmi</option>
+                <input type="hidden" name="filterByType" id="filterByType" value=""/>
+                <select class="js-select" id="select-filterByType">
+                    <option data-value="all">s čímkoliv</option>
+                    <option data-value="veils">s převozem roušek</option>
+                    <option data-value="food">s doručením nákupu</option>
+                    <option data-value="medicine">s vyzvednutím léků</option>
+                    <option data-value="other">s ostatními věcmi</option>
                 </select>
                 <input type="text" name="orderList-where-help" id="orderList-where-help"
                        placeholder="Lokalita kde chcete pomoct" {ifset $selectedTown}value="{$selectedTown}"{/ifset}>
