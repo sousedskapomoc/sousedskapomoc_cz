@@ -33,4 +33,28 @@ class DemandRepository extends DoctrineEntityRepository
         $em->persist($demand);
         $em->flush();
     }
+
+    public function getAllUnprocessed()
+    {
+        return $this->findBy(['processed' => 'new']);
+    }
+
+    public function getUnprocessedByTown($town)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('d')
+            ->from('\SousedskaPomoc\Entities\Demand', 'd')
+            ->leftJoin('d.deliveryAddress', 'a')
+            ->setParameter('town', $town)
+            ->setParameter('processed', 'new')
+            ->andWhere("a.city = :town")
+            ->andWhere("d.processed = :processed");
+        $query = $qb->getQuery();
+        return $query->getResult();
+    }
+
+    public function getByUser($id)
+    {
+        return [];
+    }
 }
