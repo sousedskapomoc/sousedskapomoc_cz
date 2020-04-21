@@ -2,6 +2,7 @@
 
 namespace SousedskaPomoc\Presenters;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping\Embeddable;
 use SousedskaPomoc\Entities\Order;
 use SousedskaPomoc\Repository\AddressRepository;
@@ -59,7 +60,7 @@ class HeadquartersPresenter extends BasePresenter
 
         //@TODO - add text filter into address
         $grid = new DataGrid();
-        $grid->setDataSource($this->userManager->fetchAllUsersInRole($role));
+        $grid->setDataSource(new ArrayCollection($this->userManager->fetchAllUsersInRole($role)));
         $grid->addColumnNumber('id', 'ID uživatele');
         $grid->addColumnText('personName', 'Jméno a příjmení')->setFilterText();
         $grid->addColumnText('personEmail', 'E-mail')->setFilterText();
@@ -83,7 +84,7 @@ class HeadquartersPresenter extends BasePresenter
         $grid = new DataGrid();
 
         //@TODO - add text filter into address
-        $grid->setDataSource($this->demandRepository->getAll());
+        $grid->setDataSource(new ArrayCollection($this->demandRepository->getAll()));
         $grid->addColumnNumber('id', 'ID')->setFilterText();
         $grid->addColumnText('deliveryAddress', 'Adresa')
             ->setRenderer(function ($item) {
@@ -112,8 +113,9 @@ class HeadquartersPresenter extends BasePresenter
         $grid = new DataGrid();
 
         //@TODO - add text filter into address
-        $grid->setDataSource($this->orderRepository->getAll());
-        $grid->addColumnNumber('id', 'ID')->setFilterText();
+        $grid->setDataSource(new ArrayCollection($this->orderRepository->getAll()));
+        $grid->addColumnNumber('id', 'ID')
+            ->setFilterText();
         $grid->addColumnText('owner', 'Zadavatel')
             ->setRenderer(function ($item) {
                 if ($item->getOwner()->getPersonName() != null) {

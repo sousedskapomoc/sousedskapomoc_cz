@@ -131,13 +131,12 @@ final class HomepagePresenter extends BasePresenter
     {
         $form = new BootstrapForm;
 
+        /** @var \SousedskaPomoc\Entities\Volunteer $user */
         $user = $this->userManager->getUserByEmailCode($this->emailCode);
-        $form->addHidden('personEmail');
-        $form->addHidden('id');
-
-        if (isset($user['id']) && isset($user['personEmail'])) {
-            $form->setDefaults(['personEmail' => $user['personEmail'], 'id' => $user['id']]);
-        }
+        $form->addHidden('personEmail')
+            ->setDefaultValue($user->getPersonEmail());
+        $form->addHidden('id')
+            ->setDefaultValue($user->getId());
 
         $form->addPassword("newPass", "Nové heslo")
             ->addRule(Form::MIN_LENGTH, 'Heslo musi byt alespon %d dlouhe', 6)
@@ -199,6 +198,7 @@ final class HomepagePresenter extends BasePresenter
         $hash = $this->presenter->getParameter('hash');
         try {
             $this->userManager->getUserByEmailCode($hash);
+            $this->emailCode = $hash;
         } catch (\Exception $err) {
             $this->flashMessage("Email code is not valid.", BasePresenter::FLASH_TYPE_ERROR);
             $this->redirect("Page:homepage");

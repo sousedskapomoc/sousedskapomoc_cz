@@ -4,6 +4,7 @@ namespace SousedskaPomoc\Presenters;
 
 use SousedskaPomoc\Entities\Volunteer;
 use SousedskaPomoc\Repository\AddressRepository;
+use SousedskaPomoc\Repository\DemandRepository;
 use SousedskaPomoc\Repository\OrderRepository;
 use SousedskaPomoc\Repository\VolunteerRepository;
 
@@ -17,6 +18,9 @@ class PublicDemandsPresenter extends BasePresenter
 
     /** @var VolunteerRepository */
     protected $volunteerRepository;
+
+    /** @var DemandRepository */
+    protected $demandRepository;
 
     public function injectOrderRepository(OrderRepository $orderRepository)
     {
@@ -33,6 +37,11 @@ class PublicDemandsPresenter extends BasePresenter
         $this->addressRepository = $addressRepository;
     }
 
+    public function injectPublicDemandsRepository(DemandRepository $demandRepository)
+    {
+        $this->demandRepository = $demandRepository;
+    }
+
     public function renderDefault()
     {
         $townLimit = $_GET['orderList-where-help'] ?? null;
@@ -42,9 +51,9 @@ class PublicDemandsPresenter extends BasePresenter
         }
 
         if ($townLimit == null) {
-            $this->template->demands = $this->orderRepository->getAllUnprocessed();
+            $this->template->demands = $this->demandRepository->getAllUnprocessed();
         } else {
-            $this->template->demands = $this->orderRepository->getUnprocessedByTown($townLimit);
+            $this->template->demands = $this->demandRepository->getUnprocessedByTown($townLimit);
             $this->template->selectedTown = $townLimit;
         }
     }
@@ -52,19 +61,19 @@ class PublicDemandsPresenter extends BasePresenter
     public function renderDashboard()
     {
         $this->template->volunteer = $this->volunteerRepository->getById($this->user->getId());
-        $this->template->demands = $this->orderRepository->getByUser($this->user->getId());
+        $this->template->demands = $this->demandRepository->getByUser($this->user->getId());
     }
 
     public function renderDetail($id)
     {
-        $this->template->demand = $this->orderRepository->getById($id);
+        $this->template->demand = $this->demandRepository->getById($id);
     }
 
     public function handleSelfAssign($id)
     {
         /** @var Volunteer $volunteer */
         $volunteer = $this->volunteerRepository->find($this->user->getId());
-        $this->orderRepository->assignOrder($volunteer, $id);
+        $this->demandRepository->assignDemand($volunteer, $id);
         $this->flashMessage("Poptávku jsme vám přiřadili můžete si pustit do její realizace");
     }
 }
