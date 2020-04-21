@@ -157,9 +157,10 @@ class OrderRepository extends DoctrineEntityRepository
             $em->flush();
         } else {
             $order->setStatus('new');
-            /** @var Volunteer $dbCourier */
             $dbCourier = $order->getCourier();
-            $dbCourier->removeDeliveredOrder($order);
+            if ($dbCourier instanceof Volunteer) {
+                $dbCourier->removeDeliveredOrder($order);
+            }
             $em = $this->getEntityManager();
             $em->persist($dbCourier);
             $em->flush();
