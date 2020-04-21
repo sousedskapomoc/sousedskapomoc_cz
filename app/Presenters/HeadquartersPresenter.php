@@ -112,13 +112,13 @@ class HeadquartersPresenter extends BasePresenter
         $grid->addColumnText('delivery_phone', $this->translator->translate('templates.gridCreateOdrers.phone' ) )->setFilterText();
         $grid->addColumnText('items', $this->translator->translate('templates.gridCreateOdrers.itemsList' ))->setFilterText();
 
-        $grid->addColumnDateTime('createdAt', $this->translator->translate('templates.gridCreateOdrers.addedTime' ));
-        $grid->addColumnText('status', $this->translator->translate('templates.gridCreateOdrers.status' ) )->setFilterText();
-        $grid->addAction('reset', $this->translator->translate('templates.gridCreateOdrers.reset' ),
+        $grid->addColumnDateTime('createdAt', $this->translator->translate('templates.gridCreateOrders.addedTime' ));
+        $grid->addColumnText('status', $this->translator->translate('templates.gridCreateOrders.status' ) )->setFilterText();
+        $grid->addAction('reset', $this->translator->translate('templates.gridCreateOrders.reset' ),
             'reset!')->setClass("btn btn-danger btn-sm");
-        $grid->addAction('detail', $this->translator->translate('templates.gridCreateOdrers.detail' ),
+        $grid->addAction('detail', $this->translator->translate('templates.gridCreateOrders.detail' ),
             'Courier:detail')->setClass("btn btn-primary btn-sm");
-        $grid->addAction('delete', $this->translator->translate('templates.gridCreateOdrers.delete' ),
+        $grid->addAction('delete', $this->translator->translate('templates.gridCreateOrders.delete' ),
             'deleteOrder!')->setClass("btn btn-danger btn-sm");
 
         return $grid;
@@ -137,7 +137,7 @@ class HeadquartersPresenter extends BasePresenter
     public function handleReset($id)
     {
         $this->orderManager->assignOrder(null, $id, null, 'new');
-        $this->flashMessage($this->translator->translate('messages.handleReset.reseted' ));
+        $this->flashMessage( $this->translator->translate('messages.handleReset.reseted') );
         $this->redirect('Headquarters:orders');
     }
 
@@ -146,10 +146,10 @@ class HeadquartersPresenter extends BasePresenter
         /** @var Demand $demand */
         $demand = $this->demandRepository->getById($id);
         if ($demand->getProcessed() == 'declined') {
-            $this->flashMessage('Tato objednavka jiz byla zamitnuta.');
+            $this->flashMessage($this->translator->translate('messages.handleDeleteOrder.alreadyDeclined'));
             $this->redirect('this');
         } elseif ($demand->getProcessed() == 'approved') {
-            $this->flashMessage('Tato objednavka jiz byla schvalena.');
+            $this->flashMessage($this->translator->translate('messages.handleDeleteOrder.alreadyApproved'));
             $this->redirect('this');
         }
         $this->demandRepository->setProcessed($id, 'declined');
@@ -169,7 +169,7 @@ class HeadquartersPresenter extends BasePresenter
         /** @var Demand $demand */
         $demand = $this->demandRepository->getById($id);
         if ($demand->getCreatedOrder() != null) {
-            $this->flashMessage('Z tohoto pozadavku jiz byla vytvorena objednavka.');
+            $this->flashMessage( $this->translator->translate('messages.handleApprove.alreadyCreated' ) );
             $this->redirect('this');
         }
 
@@ -220,7 +220,7 @@ class HeadquartersPresenter extends BasePresenter
         $this->addressRepository->create($deliveryAddress);
         $this->volunteerRepository->update($user->getId(), $user);
         $this->demandRepository->setProcessed($demand->getId(), 'approved');
-        $this->flashMessage($this->translator->translate('messages.handleApprove.approved' ));
+        $this->flashMessage($this->translator->translate('messages.handleApprove.orderApproved' ));
 
         $this->redirect('Coordinator:detail', $order->getId());
     }

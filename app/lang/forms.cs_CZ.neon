@@ -15,6 +15,10 @@ postOrder:
     buttonCourierNote: 'Přidat poznámku'
     addressPick: 'Adresa vyzvednutí'
     notDefined: 'Neuveden'
+    veil: 'Roušky'
+    tenPiecesRequirement: 'min. 10 kusů'
+    enterNumForPickUp: 'Zadejte prosím počet roušek k vyzvednutí'
+    sendDemand: 'Odeslat poptavku'
 registerCoordinator:
     nameLabel: 'Jméno a příjmení'
     role: 'Pozice'
@@ -63,10 +67,6 @@ onSuccess:
     accDontExist: 'Zadaný účet neexistuje.'
 onOk:
     accDontExist: 'Zadaný účet neexistuje.'
-createPostOrder:
-    veil: 'Roušky'
-    tenPiecesRequirement: 'min. 10 kusů'
-    enterNumForPickUp: 'Zadejte prosím počet roušek k vyzvednutí'
 toggleActive:
     stateChangeSuccess: 'Změna stavu byla nastavena.'
 createRegisterAddr:
