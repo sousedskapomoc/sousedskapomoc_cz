@@ -5,6 +5,7 @@ namespace SousedskaPomoc\Repository;
 use Doctrine\ORM\EntityRepository as DoctrineEntityRepository;
 use SousedskaPomoc\Entities\Address;
 use SousedskaPomoc\Entities\Demand;
+use SousedskaPomoc\Entities\Volunteer;
 
 class DemandRepository extends DoctrineEntityRepository
 {
@@ -56,7 +57,7 @@ class DemandRepository extends DoctrineEntityRepository
 
     public function getByUser($id)
     {
-        return [];
+        return $this->findBy(['courier' => $id]);
     }
 
     public function getAllForGrid()
@@ -86,5 +87,13 @@ class DemandRepository extends DoctrineEntityRepository
         }
 
         return $dataset;
+    }
+
+    public function assignDemand(Volunteer $volunteer, Demand $demand)
+    {
+        $demand->setCourier($volunteer);
+        $entityManager = $this->getEntityManager();
+        $entityManager->persist($demand);
+        $entityManager->flush();
     }
 }
