@@ -3,6 +3,7 @@
 namespace SousedskaPomoc\Repository;
 
 use Doctrine\ORM\EntityRepository as DoctrineEntityRepository;
+use SousedskaPomoc\Entities\Address;
 use SousedskaPomoc\Entities\Order;
 use SousedskaPomoc\Entities\Volunteer;
 
@@ -328,9 +329,10 @@ class OrderRepository extends DoctrineEntityRepository
         $dataset = [];
 
         /** @var Order $order */
-        foreach ($this->getAll() as $order) {
+        foreach ($this->findBy([], ['id' => 'DESC']) as $order) {
             if ($order->getDeliveryAddress() !== null) {
-                $city = $order->getDeliveryAddress()->getCity();
+                /** @var Address $city */
+                $city = $order->getDeliveryAddress()->getFullAddress();
             }
 
             $dataset[] = [

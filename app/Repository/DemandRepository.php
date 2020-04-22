@@ -3,6 +3,7 @@
 namespace SousedskaPomoc\Repository;
 
 use Doctrine\ORM\EntityRepository as DoctrineEntityRepository;
+use SousedskaPomoc\Entities\Address;
 use SousedskaPomoc\Entities\Demand;
 
 class DemandRepository extends DoctrineEntityRepository
@@ -65,7 +66,8 @@ class DemandRepository extends DoctrineEntityRepository
         /** @var Demand $demand */
         foreach ($this->getAll() as $demand) {
             if ($demand->getDeliveryAddress() !== null) {
-                $city = $demand->getDeliveryAddress()->getCity();
+                /** @var Address $city */
+                $city = $demand->getDeliveryAddress()->getFullAddress();
             }
 
             $dataset[] = [
