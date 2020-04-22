@@ -4,6 +4,8 @@ namespace SousedskaPomoc\Presenters;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping\Embeddable;
+use SousedskaPomoc\Entities\Address;
+use SousedskaPomoc\Entities\Demand;
 use SousedskaPomoc\Entities\Order;
 use SousedskaPomoc\Repository\AddressRepository;
 use SousedskaPomoc\Repository\DemandRepository;
@@ -13,16 +15,16 @@ use Ublaboo\DataGrid\DataGrid;
 
 class HeadquartersPresenter extends BasePresenter
 {
-    /** @var \SousedskaPomoc\Repository\OrderRepository */
+    /** @var OrderRepository */
     protected $orderRepository;
 
-    /** @var \SousedskaPomoc\Repository\DemandRepository */
+    /** @var DemandRepository */
     protected $demandRepository;
 
-    /** @var \SousedskaPomoc\Repository\VolunteerRepository */
+    /** @var VolunteerRepository */
     protected $volunteerRepository;
 
-    /** @var \SousedskaPomoc\Repository\AddressRepository */
+    /** @var AddressRepository */
     protected $addressRepository;
 
     public function injectOrderRepository(OrderRepository $orderRepository)
@@ -60,19 +62,12 @@ class HeadquartersPresenter extends BasePresenter
 
         //@TODO - add text filter into address
         $grid = new DataGrid();
-        $grid->setDataSource(new ArrayCollection($this->userManager->fetchAllUsersInRole($role)));
+        $grid->setDataSource(new ArrayCollection($this->userManager->fetchAllUsersInRoleForGrid($role)));
         $grid->addColumnNumber('id', 'ID uživatele');
         $grid->addColumnText('personName', 'Jméno a příjmení')->setFilterText();
         $grid->addColumnText('personEmail', 'E-mail')->setFilterText();
         $grid->addColumnText('personPhone', 'Telefon')->setFilterText();
-        $grid->addColumnText('address', 'Město')
-            ->setRenderer(function ($item) {
-                if ($item->getAddress() != null) {
-                    return $item->getAddress()->getCity();
-                } else {
-                    return "Not specified";
-                }
-            });
+        $grid->addColumnText('address', 'Město')->setFilterText();
         $grid->addColumnNumber('active', 'Online')->setFilterText();
         $grid->setDefaultPerPage(100);
 
@@ -84,16 +79,9 @@ class HeadquartersPresenter extends BasePresenter
         $grid = new DataGrid();
 
         //@TODO - add text filter into address
-        $grid->setDataSource(new ArrayCollection($this->demandRepository->getAll()));
+        $grid->setDataSource(new ArrayCollection($this->demandRepository->getAllForGrid()));
         $grid->addColumnNumber('id', 'ID')->setFilterText();
-        $grid->addColumnText('deliveryAddress', 'Adresa')
-            ->setRenderer(function ($item) {
-                if ($item->getDeliveryAddress() != null) {
-                    return $item->getDeliveryAddress()->getFullAddress();
-                } else {
-                    return "Not specified";
-                }
-            });
+        $grid->addColumnText('deliveryAddress', 'Adresa')->setFilterText();
         $grid->addColumnText('processed', 'Stav poptavky')->setFilterText();
         $grid->addColumnText('contactName', 'Jmeno zadavatele')->setFilterText();
         $grid->addColumnText('contactPhone', 'Telefon zadavatele')->setFilterText();
@@ -113,25 +101,12 @@ class HeadquartersPresenter extends BasePresenter
         $grid = new DataGrid();
 
         //@TODO - add text filter into address
-        $grid->setDataSource(new ArrayCollection($this->orderRepository->getAll()));
+        $grid->setDataSource(new ArrayCollection($this->orderRepository->getAllForGrid()));
         $grid->addColumnNumber('id', 'ID')
             ->setFilterText();
-        $grid->addColumnText('owner', 'Zadavatel')
-            ->setRenderer(function ($item) {
-                if ($item->getOwner()->getPersonName() != null) {
-                    return $item->getOwner()->getPersonName();
-                } else {
-                    return "Not specified";
-                }
-            });
-        $grid->addColumnText('delivery_address', 'Adresa')
-            ->setRenderer(function ($item) {
-                if ($item->getDeliveryAddress() != null) {
-                    return $item->getDeliveryAddress()->getCity();
-                } else {
-                    return "Not specified";
-                }
-            });
+        $grid->addColumnText('owner', 'Zadavatel')->setFilterText();
+        $grid->addColumnText('delivery_address', 'Adresa')->setFilterText();
+
         $grid->addColumnText('delivery_phone', 'Telefon')->setFilterText();
         $grid->addColumnText('items', 'Položky obj.')->setFilterText();
 
@@ -163,7 +138,7 @@ class HeadquartersPresenter extends BasePresenter
 
     public function handleDeleteDemand($id)
     {
-        /** @var \SousedskaPomoc\Entities\Demand $demand */
+        /** @var Demand $demand */
         $demand = $this->demandRepository->getById($id);
         if ($demand->getProcessed() == 'declined') {
             $this->flashMessage('Tato objednavka jiz byla zamitnuta.');
@@ -186,7 +161,7 @@ class HeadquartersPresenter extends BasePresenter
 
     public function handleApprove($id)
     {
-        /** @var \SousedskaPomoc\Entities\Demand $demand */
+        /** @var Demand $demand */
         $demand = $this->demandRepository->getById($id);
         if ($demand->getCreatedOrder() != null) {
             $this->flashMessage('Z tohoto pozadavku jiz byla vytvorena objednavka.');
@@ -196,7 +171,7 @@ class HeadquartersPresenter extends BasePresenter
         /** @var Order $order */
         $order = new Order();
 
-        /** @var \SousedskaPomoc\Entities\Address $deliveryAddress */
+        /** @var Address $deliveryAddress */
         $deliveryAddress = $demand->getDeliveryAddress();
         $deliveryAddress->addDeliveryOrder($order);
 

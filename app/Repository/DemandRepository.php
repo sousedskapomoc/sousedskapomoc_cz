@@ -57,4 +57,32 @@ class DemandRepository extends DoctrineEntityRepository
     {
         return [];
     }
+
+    public function getAllForGrid()
+    {
+        $dataset = [];
+
+        /** @var Demand $demand */
+        foreach ($this->getAll() as $demand) {
+            if ($demand->getDeliveryAddress() !== null) {
+                $city = $demand->getDeliveryAddress()->getCity();
+            }
+
+            $dataset[] = [
+                'id' => $demand->getId(),
+                'deliveryAddress' => $city,
+                'processed' => $demand->getProcessed(),
+                'contactName' => $demand->getContactName(),
+                'contactPhone' => $demand->getContactPhone(),
+                'organizationName' => $demand->getOrganizationName(),
+                'deliveryName' => $demand->getDeliveryName(),
+                'deliveryPhone' => $demand->getDeliveryPhone(),
+                'createdAt' => $demand->getCreatedAt()
+            ];
+
+            $city = null;
+        }
+
+        return $dataset;
+    }
 }

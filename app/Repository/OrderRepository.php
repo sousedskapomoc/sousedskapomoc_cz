@@ -322,4 +322,30 @@ class OrderRepository extends DoctrineEntityRepository
         $query = $qb->getQuery();
         return $query->getResult();
     }
+
+    public function getAllForGrid()
+    {
+        $dataset = [];
+
+        /** @var Order $order */
+        foreach ($this->getAll() as $order) {
+            if ($order->getDeliveryAddress() !== null) {
+                $city = $order->getDeliveryAddress()->getCity();
+            }
+
+            $dataset[] = [
+                'id' => $order->getId(),
+                'owner' => $order->getOwner()->getPersonName(),
+                'delivery_address' => $city,
+                'delivery_phone' => $order->getDeliveryPhone(),
+                'items' => $order->getItems(),
+                'createdAt' => $order->getCreatedAt(),
+                'status' => $order->getStatus()
+            ];
+
+            $city = null;
+        }
+
+        return $dataset;
+    }
 }
