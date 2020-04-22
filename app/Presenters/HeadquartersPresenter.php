@@ -89,7 +89,7 @@ class HeadquartersPresenter extends BasePresenter
         $grid->addColumnText('deliveryName', 'Jmeno adresata')->setFilterText();
         $grid->addColumnText('deliveryPhone', 'Telefon adresata')->setFilterText();
         $grid->addColumnDateTime('createdAt', 'Datum přidání');
-//        $grid->addAction('approve', 'Schválit', 'approve!')->setClass("btn btn-success btn-sm");
+        $grid->addAction('approve', 'Schválit', 'approve!')->setClass("btn btn-success btn-sm");
         $grid->addAction('detail', 'Detail', 'Headquarters:demandDetail')->setClass("btn btn-primary btn-sm");
         $grid->addAction('delete', 'X', 'deleteDemand!')->setClass("btn btn-danger btn-sm");
 
@@ -175,10 +175,37 @@ class HeadquartersPresenter extends BasePresenter
         $deliveryAddress = $demand->getDeliveryAddress();
         $deliveryAddress->addDeliveryOrder($order);
 
-        $order->setDeliveryPhone($demand->getPhone());
+        $order->setDeliveryPhone($demand->getDeliveryPhone());
         $order->setStatus('new');
-        $order->setItems($demand->getItems());
-        $order->setCustomerNote($demand->getName());
+
+        //Connect all items into one order
+        $finalItems = "";
+
+        if ($demand->getFood() != null) {
+            $finalItems = $finalItems . "Jidlo: " .$demand->getFood() . "\n";
+        }
+
+        if ($demand->getMedicine() != null ) {
+            $finalItems = $finalItems . "Leky: " . $demand->getMedicine() . "\n";
+        }
+
+        if ($demand->getVeils() != null ) {
+            $finalItems = $finalItems . "Rousky: " . $demand->getVeils() . "\n";
+        }
+
+        if ($demand->getOther() != null ) {
+            $finalItems = $finalItems . "Ostatni: " . $demand->getOther() . "\n";
+        }
+
+        $finalNote = "";
+        if ($demand->getIsContactPerson() || $demand->getIsOrganization()) {
+            $finalNote = "Kontaktni osoba, ktera vytvorila objednavku\n";
+            $finalNote = $finalNote . "Jmeno: " . $demand->getContactName() . "\n";
+            $finalNote = $finalNote . "Telefon: " . $demand->getContactPhone() . "\n";
+        }
+
+        $order->setItems($finalItems);
+        $order->setCustomerNote($finalNote);
         $order->setFromDemand($demand);
 
         /** @var \SousedskaPomoc\Entities\Volunteer $user */
@@ -189,7 +216,7 @@ class HeadquartersPresenter extends BasePresenter
         $this->volunteerRepository->update($user->getId(), $user);
         $this->demandRepository->setProcessed($demand->getId(), 'approved');
 
-        $this->redirect('Coordinator:editOrder', $order->getId());
+        $this->redirect('Coordinator:detail', $order->getId());
     }
 
     public function renderDemandDetail($id)
