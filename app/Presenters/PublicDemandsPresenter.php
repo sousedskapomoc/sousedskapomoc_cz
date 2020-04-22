@@ -2,6 +2,7 @@
 
 namespace SousedskaPomoc\Presenters;
 
+use SousedskaPomoc\Entities\Demand;
 use SousedskaPomoc\Entities\Volunteer;
 use SousedskaPomoc\Repository\AddressRepository;
 use SousedskaPomoc\Repository\DemandRepository;
@@ -71,9 +72,18 @@ class PublicDemandsPresenter extends BasePresenter
 
     public function handleSelfAssign($id)
     {
+        if (!$this->user->isLoggedIn()) {
+            $this->flashMessage("Abyste mohl(a) pomahát je nutné být přihlašen(á)");
+        }
+
         /** @var Volunteer $volunteer */
         $volunteer = $this->volunteerRepository->find($this->user->getId());
-        $this->demandRepository->assignDemand($volunteer, $id);
-        $this->flashMessage("Poptávku jsme vám přiřadili můžete si pustit do její realizace");
+        /** @var Demand $demand */
+        $demand = $this->demandRepository->find($id);
+
+        $this->demandRepository->assignDemand($volunteer, $demand);
+
+        $this->flashMessage("Poptávku jsme vám přiřadili můžete se pustit do její realizace");
+        $this->redirect("this");
     }
 }

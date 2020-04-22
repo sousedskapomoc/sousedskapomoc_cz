@@ -23,6 +23,11 @@ class Demand
     protected $deliveryAddress;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Volunteer", inversedBy="deliveredOrders", cascade={"persist"})
+     */
+    protected $courier;
+
+    /**
      * @ORM\Column(type="string")
      */
     protected $deliveryPhone;
@@ -88,7 +93,6 @@ class Demand
     protected $isOrganization;
 
 
-
     /**
      * @return mixed
      */
@@ -98,15 +102,13 @@ class Demand
     }
 
 
-
     /**
      * @param mixed $organizationName
      */
-    public function setOrganizationName($organizationName) : void
+    public function setOrganizationName($organizationName): void
     {
         $this->organizationName = $organizationName;
     }
-
 
 
     /**
@@ -118,15 +120,13 @@ class Demand
     }
 
 
-
     /**
      * @param mixed $isContactPerson
      */
-    public function setIsContactPerson($isContactPerson) : void
+    public function setIsContactPerson($isContactPerson): void
     {
         $this->isContactPerson = $isContactPerson;
     }
-
 
 
     /**
@@ -138,15 +138,13 @@ class Demand
     }
 
 
-
     /**
      * @param mixed $isOrganization
      */
-    public function setIsOrganization($isOrganization) : void
+    public function setIsOrganization($isOrganization): void
     {
         $this->isOrganization = $isOrganization;
     }
-
 
 
     /**
@@ -158,15 +156,13 @@ class Demand
     }
 
 
-
     /**
      * @param mixed $deliveryPhone
      */
-    public function setDeliveryPhone($deliveryPhone) : void
+    public function setDeliveryPhone($deliveryPhone): void
     {
         $this->deliveryPhone = $deliveryPhone;
     }
-
 
 
     /**
@@ -178,15 +174,13 @@ class Demand
     }
 
 
-
     /**
      * @param mixed $deliveryName
      */
-    public function setDeliveryName($deliveryName) : void
+    public function setDeliveryName($deliveryName): void
     {
         $this->deliveryName = $deliveryName;
     }
-
 
 
     /**
@@ -198,15 +192,13 @@ class Demand
     }
 
 
-
     /**
      * @param mixed $contactName
      */
-    public function setContactName($contactName) : void
+    public function setContactName($contactName): void
     {
         $this->contactName = $contactName;
     }
-
 
 
     /**
@@ -218,15 +210,13 @@ class Demand
     }
 
 
-
     /**
      * @param mixed $contactPhone
      */
-    public function setContactPhone($contactPhone) : void
+    public function setContactPhone($contactPhone): void
     {
         $this->contactPhone = $contactPhone;
     }
-
 
 
     /**
@@ -238,15 +228,13 @@ class Demand
     }
 
 
-
     /**
      * @param mixed $food
      */
-    public function setFood($food) : void
+    public function setFood($food): void
     {
         $this->food = $food;
     }
-
 
 
     /**
@@ -258,15 +246,13 @@ class Demand
     }
 
 
-
     /**
      * @param mixed $medicine
      */
-    public function setMedicine($medicine) : void
+    public function setMedicine($medicine): void
     {
         $this->medicine = $medicine;
     }
-
 
 
     /**
@@ -278,15 +264,13 @@ class Demand
     }
 
 
-
     /**
      * @param mixed $veils
      */
-    public function setVeils($veils) : void
+    public function setVeils($veils): void
     {
         $this->veils = $veils;
     }
-
 
 
     /**
@@ -298,15 +282,13 @@ class Demand
     }
 
 
-
     /**
      * @param mixed $other
      */
-    public function setOther($other) : void
+    public function setOther($other): void
     {
         $this->other = $other;
     }
-
 
 
     /**
@@ -345,7 +327,6 @@ class Demand
     }
 
 
-
     /**
      * @return mixed
      */
@@ -355,12 +336,28 @@ class Demand
     }
 
 
-
     /**
      * @param mixed $createdOrder
      */
-    public function setCreatedOrder($createdOrder) : void
+    public function setCreatedOrder($createdOrder): void
     {
         $this->createdOrder = $createdOrder;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCourier()
+    {
+        return $this->courier;
+    }
+
+
+    /**
+     * @param mixed $courier
+     */
+    public function setCourier($courier): void
+    {
+        $this->courier = $courier;
     }
 }

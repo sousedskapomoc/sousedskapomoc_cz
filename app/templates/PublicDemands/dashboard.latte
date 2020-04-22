@@ -21,11 +21,11 @@
                         <div class="picture-holder"></div>
                     </div>
                     <div class="orderList__info">
-                        <h5>{$demand->getCustomerNote()}</h5>
-                        <p>{$demand->getStatus()|humanFriendlyStatus}</p>
-                        <p class="orderList__info__name">{$demand->getOwner()->getPersonName()}</p>
-                        <a n:href="detail id => $demand->getId()" n:if="$demand->getPickupAddress() != null"><i
-                                    class="fas fa-map-marker-alt"></i>{$demand->getPickupAddress()->getCityWithPostalCode()}
+                        <h5>{$demand->getDeliveryName()}</h5>
+                        <p>{$demand->getProcessed()|humanFriendlyStatus}</p>
+                        <p class="orderList__info__name">{$demand->getCourier()->getPersonName()}</p>
+                        <a n:href="detail id => $demand->getId()" n:if="$demand->getDeliveryAddress() != null"><i
+                                    class="fas fa-map-marker-alt"></i>{$demand->getDeliveryAddress()->getCityWithPostalCode()}
                         </a>
                     </div>
                     <div class="orderList__detail">
