@@ -185,15 +185,15 @@ class HeadquartersPresenter extends BasePresenter
             $finalItems = $finalItems . "Jidlo: " .$demand->getFood() . "\n";
         }
 
-        if ($demand->getMedicine() != null ) {
+        if ($demand->getMedicine() != null) {
             $finalItems = $finalItems . "Leky: " . $demand->getMedicine() . "\n";
         }
 
-        if ($demand->getVeils() != null ) {
+        if ($demand->getVeils() != null) {
             $finalItems = $finalItems . "Rousky: " . $demand->getVeils() . "\n";
         }
 
-        if ($demand->getOther() != null ) {
+        if ($demand->getOther() != null) {
             $finalItems = $finalItems . "Ostatni: " . $demand->getOther() . "\n";
         }
 
