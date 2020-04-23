@@ -2,21 +2,22 @@
 {block content}
 <h1>{_templates.seamstress.title}</h1>
 <p>
-	<a href="https://sousedskapomoc.cz/pdf/zasady-spravne-svadleny.pdf" target="_blank"
-	   class="btn btn-info">Manuál švadleny</a>
+    <a href="https://sousedskapomoc.cz/pdf/zasady-spravne-svadleny.pdf" target="_blank"
+       class="btn btn-info">Manuál švadleny</a>
 </p>
 <hr/>
 <h2>{_templates.seamstress.subtitle} - {$userOnline|logic}</h2>
 
-<a n:href="toggleActive! active => true" class="btn btn-success" n:if="!$userOnline">{_templates.seamstress.readyToWork}</a>
+<a n:href="toggleActive! active => true"
+        class="btn btn-success" n:if="!$userOnline">{_templates.seamstress.readyToWork}</a>
 <a n:href="toggleActive! active => false" class="btn btn-danger" n:if="$userOnline">{_templates.seamstress.tooBusy}</a>
 <hr/>
 <div n:if="$userOnline">
     <h2>{_templates.seamstress.orders}</h2>
 
-	<a n:href="postOrder" class="btn btn-primary">{_templates.seamstress.makeOrder}</a>
+    <a n:href="postOrder" class="btn btn-primary">{_templates.seamstress.makeOrder}</a>
     <h4>{_templates.coordinatorDashboard.listOrders}</h4>
-    {if $orders}
+    {if count($orders) > 0}
         <table class="table table-bordered table-hover">
             <thead>
             <tr>
@@ -28,8 +29,8 @@
             {foreach $orders as $order}
                 <tr>
                     <td>{if $order->getPickupAddress()}
-                            {$order->getPickupAddress()->getCity()},
-                            {$order->getPickupAddress()->getStreet() ?? null}
+                        {$order->getPickupAddress()->getCity()},
+                        {$order->getPickupAddress()->getStreet() ?? null}
                         {/if}</td>
                     <td>{$order->getItems()}</td>
                 </tr>
