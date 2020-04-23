@@ -55,6 +55,20 @@ componentUserUploadPhoto:
 uploadUserPhoto:
     photoUploaded: 'Profilovou fotku jsme vám nahráli.'
     unspportedFileType: 'Nahráli jste nepodporovaný typ souboru.'
-
-
-
+errors:
+    oops: 'Oops ..'
+    4xx: 'Váš prohlížeč odeslal požadavek ketrý nelze zpracovat.' #'Your browser sent a request that this server could not understand or process.'
+    accessDenied: 'Přístup odepřen'
+    accessDeniedmsg: 'Nemáte oprávnění na zobrazení teto stranky. Pokud myslíte že došlo k omylu, kontaktujte prosím administratora.' # You do not have permission to view this page. Please try contact the website administrator if you believe you should be able to view this page.
+    403: 'Error 403'
+    pageNotFound: 'Stránka nenalezena'
+    pageNotFoundmsg: 'Stránka kterou hledáte nelze najít. Je možné, že adresa je špatná nebo že stranka již neexistuje. Použijte prosim naše vyhledávání.' # The page you requested could not be found. It is possible that the address is incorrect, or that the page no longer exists. Please use a search engine to find what you are looking for.
+    404: 'Error 404'
+    methodNotAllowed: 'Nepovolená metoda'
+    methodNotAllowedmsg: 'Požadovaná metoda neni pro tuto URL povolena.'
+    405: 'Error 405'
+    pageTakenOff: 'Stránka kterou hledáte byla odstraněna z webu. Omlouváme se za nepříjemnost.' #The page you requested has been taken off the site. We apologize for the inconvenience.
+    410: 'Error 410'
+    serverError: 'Error serveru'
+    serverErrormsg: 'Omlouváme se, ale došlo k interni chybě na serveru. Zkuste to prosím později.' # We're sorry! The server encountered an internal error and was unable to complete your request. Please try again later.
+    500: 'Error 500'

@@ -14,6 +14,7 @@ use SousedskaPomoc\Components\IRegisterVolunteerFormInterface;
 use SousedskaPomoc\Components\Mail;
 use SousedskaPomoc\Model\UserManager;
 use SousedskaPomoc\Repository\RoleRepository;
+use SousedskaPomoc\Components\IDemandFormInterface;
 
 final class HomepagePresenter extends BasePresenter
 {
@@ -26,7 +27,7 @@ final class HomepagePresenter extends BasePresenter
     /** @var \SousedskaPomoc\Components\Mail */
     protected $mail;
 
-    /** @var \SousedskaPomoc\Components\IDemandFormInterface */
+    /** @var IDemandFormInterface */
     protected $demandFormFactory;
 
     protected $emailCode;
