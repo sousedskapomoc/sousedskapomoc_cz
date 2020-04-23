@@ -71,7 +71,8 @@ class RegisterVolunteerFormControl extends Control
         $this->townSuggester = $townSuggester;
     }
 
-    public function createComponentTownSuggester() {
+    public function createComponentTownSuggester()
+    {
         return $this->townSuggester->create();
     }
 
@@ -87,7 +88,9 @@ class RegisterVolunteerFormControl extends Control
             ->setRequired($this->translator->translate('forms.registerCoordinator.phoneRequired'));
         $form->addEmail('personEmail', $this->translator->translate('forms.registerCoordinator.mailLabel'))
             ->setRequired($this->translator->translate('forms.registerCoordinator.mailRequired'));
-        $form->addRadioList('role','S čím můžeme pomoci:',
+        $form->addRadioList(
+            'role',
+            'S čím můžeme pomoci:',
             [
                 0 => 'Doručit nákup nebo léky',
                 1 => 'Stát se dobrým sousedem',
@@ -95,8 +98,11 @@ class RegisterVolunteerFormControl extends Control
                 3 => 'Pomáhat ostatním s doručením',
                 4 => 'Dodat materiál',
                 5 => 'Pomoci 3D tiskem'
-            ]);
-        $form->addRadioList('transport','Vyberte svůj dopravní prostředek:',
+            ]
+        );
+        $form->addRadioList(
+            'transport',
+            'Vyberte svůj dopravní prostředek:',
             [
                 1 => 'Malé auto',
                 2 => 'Velké auto',
@@ -105,11 +111,12 @@ class RegisterVolunteerFormControl extends Control
                 5 => 'Kolo',
                 6 => 'Motorka ',
                 7 => 'Chůze'
-            ])->setDefaultValue(7);
+            ]
+        )->setDefaultValue(7);
 
         if ($this->presenter->getParameter('addressHereMapsId')) {
             $form->addHidden('locationId')
-            ->setDefaultValue($this->presenter->getParameter('addressHereMapsId'));
+                ->setDefaultValue($this->presenter->getParameter('addressHereMapsId'));
         } else {
             $form->addHidden('locationId');
         }
@@ -133,7 +140,7 @@ class RegisterVolunteerFormControl extends Control
         $user->setHash(md5($values->personEmail));
 
         //Set roles
-        switch($values->role) {
+        switch ($values->role) {
             case 0:
                 $this->role = $this->roleRepository->getByName('courier');
                 break;
