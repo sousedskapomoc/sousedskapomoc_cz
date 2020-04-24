@@ -84,35 +84,9 @@ final class HomepagePresenter extends BasePresenter
         $this->connection = $connection;
     }
 
-
-    public function createComponentRegisterAsCoordinator()
+    public function createComponentWantJoin()
     {
-        /** @var \SousedskaPomoc\Entities\Role $role */
-        $role = $this->roleRepository->getByName('coordinator');
-        return $this->registerVolunteerForm->create($role);
-    }
-
-    public function createComponentRegisterAsMedicalCoordinator()
-    {
-        /** @var \SousedskaPomoc\Entities\Role $role */
-        $role = $this->roleRepository->getByName('medicalCoordinator');
-        return $this->registerVolunteerForm->create($role);
-    }
-
-
-    public function createComponentRegisterAsSeamstress()
-    {
-        /** @var \SousedskaPomoc\Entities\Role $role */
-        $role = $this->roleRepository->getByName('seamstress');
-        return $this->registerVolunteerForm->create($role);
-    }
-
-
-    public function createComponentRegisterAsOperator()
-    {
-        /** @var \SousedskaPomoc\Entities\Role $role */
-        $role = $this->roleRepository->getByName('operator');
-        return $this->registerVolunteerForm->create($role);
+        return $this->registerVolunteerForm->create();
     }
 
     public function createComponentPostDemand()
