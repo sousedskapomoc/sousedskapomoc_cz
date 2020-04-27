@@ -2,6 +2,17 @@
 <div class="row justify-content-center">
     <div class="col-12">
         <h1>Kde mohu pomoci ({count($demands)} příležitostí)</h1>
+        {ifset $selectedTown}
+            <p>
+                <a href="{$basePath}/public-demands">Zrušit filtrování na město {$selectedTown}</a>
+            </p>
+        {else}
+            <p>
+                Populární města: <a href="?orderList-where-help=Praha">Praha</a>, <a href="?orderList-where-help=Brno">Brno</a>,
+                <a href="?orderList-where-help=Liberec">Liberec</a>, <a href="?orderList-where-help=Pardubice">Pardubice</a>,
+                <a href="?orderList-where-help=Olomouc">Olomouc</a>, <a href="?orderList-where-help=Ostrava">Ostrava</a>,
+            </p>
+        {/ifset}
         <div class="flex form--plain__filter__wrapper">
             <form class="form--plain form--plain__filter">
                 <p for="filterByType">Chci pomoci:</p>
