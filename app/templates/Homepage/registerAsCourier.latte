@@ -38,32 +38,3 @@
         </div>
     </div>
 </div>
-<script>
-    document.addEventListener("DOMContentLoaded", function (event) {
-
-        $("#frm-registerAsCourier-town").on('keyup', function () {
-
-            var hereMapsEndpoint = "https://autocomplete.geocoder.ls.hereapi.com/6.2/suggest.json?apiKey=Kl0wK4fx38Pf63EIey6WyrmGEhS2IqaVHkuzx0IQ4-Q&country=CZE&query=";
-            var query = encodeURIComponent(this.value);
-
-            jQuery.getJSON(hereMapsEndpoint + query, function (data) {
-                $("#suggestions").empty();
-
-                $.each(data.suggestions, function (index) {
-                    if (data.suggestions[index].matchLevel == "city") {
-                        $("#suggestions").append(
-                            "<li><a href='#' class='suggestion' data-town='" + data.suggestions[index].address.city + "'>" + data.suggestions[index].address.city + "</a></li>"
-                        );
-                    }
-                });
-            });
-        });
-
-        $(document).on("click", "a.suggestion", function () {
-            var address = $(this).data("town");
-
-            $("#frm-registerAsCourier-town").val(address);
-            $("#suggestions").empty();
-        });
-    });
-</script>
