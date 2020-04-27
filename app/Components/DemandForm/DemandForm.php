@@ -119,12 +119,13 @@ class DemandFormControl extends Control
         $address->setState($addr->state);
         $address->setLocationId($locationId);
         $address->setCountry($addr->country);
-        $address->setDistrict($addr->county);
+        $address->setDistrict($addr->district);
         $address->setPostalCode($addr->postalCode);
+        $address->setStreet($addr->street);
+        $address->setHouseNumber($addr->houseNumber);
         $address->setLongitude($gps->longitude);
         $address->setLatitude($gps->latitude);
         $address->addDemandOrder($demand);
-
 
         try {
             $this->addressRepository->create($address);

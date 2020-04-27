@@ -69,7 +69,12 @@ final class SignPresenter extends BasePresenter
 
     public function renderCard()
     {
-        $this->template->volunteer = $this->volunteerRepository->getById($this->user->getId());
+        if ($this->user->isLoggedIn()) {
+            $this->template->volunteer = $this->volunteerRepository->getById($this->user->getId());
+        } else {
+            $this->flashMessage("Pro přístup ke kartičce se musíte přihlášit.");
+            $this->redirect("Homepage:default");
+        }
     }
 
     public function createComponentUserUploadPhoto()
