@@ -39,6 +39,12 @@ class Authenticator implements IAuthenticator
             throw new AuthenticationException('Invalid password.');
         }
 
+        $town = null;
+        if ($user->getAddress() !== null) {
+            $town = $user->getAddress()->getCity();
+        }
+
+
         return new Identity(
             $user->getId(),
             $user->getRole()->getName(),
@@ -46,7 +52,7 @@ class Authenticator implements IAuthenticator
                 'personEmail' => $user->getPersonEmail(),
                 'personPhone' => $user->getPersonPhone(),
                 'personName' => $user->getPersonName(),
-                'city' => $user->getAddress()->getCity()
+                'city' => $town
             ]
         );
     }

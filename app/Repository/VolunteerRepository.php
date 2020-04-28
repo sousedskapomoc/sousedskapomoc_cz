@@ -32,7 +32,9 @@ class VolunteerRepository extends DoctrineEntityRepository
     {
         /** @var \SousedskaPomoc\Entities\Address $address */
         $address = $this->getById($id)->getAddress();
-        return $address->getCity();
+        if ($address != null) {
+            return $address->getCity();
+        }
     }
 
     public function getByEmail($email)
