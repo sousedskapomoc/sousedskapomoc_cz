@@ -1,65 +1,32 @@
 {block content}
 <div class="row justify-content-center page--role-info">
-	<div class="col-12">
-		<h1 class="text-center">Pro lékařský personál</h1>
+    <div class="col-12">
+        <h1 class="text-center">Pro lékařský personál</h1>
 
-		<div class="row">
-			<div class="col-12 col-lg-6 col-xl-7">
-				<p>S ohledem na celospolečenský nedostatek základních ochranných pomůcek nabízíme jako SousedskáPomoc.cz
-					pomoc s jejich případnou distribucí. Obracíme se proto přímo na vás. Jako praktičtí lékaři či
-					stomatologové máte dobré povědomí o svých pacientech, kteří jsou v souvislosti s nákazou COVID-19 v
-					rizikové věkové skupině. Tyto znalosti můžete využít a pomoci nám dodat potřebným základní
-					zdravotnický materiál (roušky) či léky, aniž by museli zbytečně opouštět své domovy a vystavovat se
-					tak nebezpečí.
-				</p>
-				<p>Jelikož chápeme, že máte své práce až nad hlavu, naše prosba na vás je následující - pokud máte zájem
-					o pomoc s distribucí výše zmíněných předmětů vašim pacientům, kteří jsou nákazou nejvíc ohroženi.
-					Stačí k tomu zaregistrovat se do našeho systému jako “Lékař”. Tím se vaše ordinace může stát
-					distribučním místem, do kterého se budou dodávat nové roušky od našich švadlen.
-				</p>
-				<p>Tyto roušky mohou sloužit jednak pro vás a váš personál a jednak také k distribuci mezi vaše ohrožené
-					pacienty. S předávkou pomůcek můžete pomoci vy sami nebo je předat našim vyškoleným kurýrům.</p>
-			</div>
-			<div class="col-12 col-lg-6 col-xl-4 offset-xl-1 js-scroll-fix-wrapper">
-				<div class="js-scroll-fix">
-					<h4>Registrace lékaře</h4>
-					{control registerAsMedicalCoordinator}
-					<ul id="suggestions"></ul>
-				</div>
-			</div>
-		</div>
-	</div>
+        <div class="row">
+            <div class="col-12 col-lg-6 col-xl-7">
+                <p>S ohledem na celospolečenský nedostatek základních ochranných pomůcek nabízíme jako SousedskáPomoc.cz
+                    pomoc s jejich případnou distribucí. Obracíme se proto přímo na vás. Jako praktičtí lékaři či
+                    stomatologové máte dobré povědomí o svých pacientech, kteří jsou v souvislosti s nákazou COVID-19 v
+                    rizikové věkové skupině. Tyto znalosti můžete využít a pomoci nám dodat potřebným základní
+                    zdravotnický materiál (roušky) či léky, aniž by museli zbytečně opouštět své domovy a vystavovat se
+                    tak nebezpečí.
+                </p>
+                <p>Jelikož chápeme, že máte své práce až nad hlavu, naše prosba na vás je následující - pokud máte zájem
+                    o pomoc s distribucí výše zmíněných předmětů vašim pacientům, kteří jsou nákazou nejvíc ohroženi.
+                    Stačí k tomu zaregistrovat se do našeho systému jako “Lékař”. Tím se vaše ordinace může stát
+                    distribučním místem, do kterého se budou dodávat nové roušky od našich švadlen.
+                </p>
+                <p>Tyto roušky mohou sloužit jednak pro vás a váš personál a jednak také k distribuci mezi vaše ohrožené
+                    pacienty. S předávkou pomůcek můžete pomoci vy sami nebo je předat našim vyškoleným kurýrům.</p>
+            </div>
+            <div class="col-12 col-lg-6 col-xl-4 offset-xl-1 js-scroll-fix-wrapper">
+                <div class="js-scroll-fix">
+                    <h4>Registrace lékaře</h4>
+                    <p>Registrace pro lékaře byla dočasně pozastavena. Prosím využijte náš e-mail info@sousedskapomoc.cz
+                        pro urgentní registraci. </p>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<script>
-	document.addEventListener("DOMContentLoaded", function (event) {
-
-		$("#frm-registerAsCoordinator-town").on('keyup', function () {
-
-			var hereMapsEndpoint = "https://autocomplete.geocoder.ls.hereapi.com/6.2/suggest.json?apiKey=Kl0wK4fx38Pf63EIey6WyrmGEhS2IqaVHkuzx0IQ4-Q&country=CZE&query=";
-			var query = encodeURIComponent(this.value);
-
-			jQuery.getJSON(hereMapsEndpoint + query, function (data) {
-				$("#suggestions").empty();
-
-				$.each(data.suggestions, function (index) {
-					if (data.suggestions[index].matchLevel == "city") {
-						$("#suggestions").append(
-								"<li><a href='#' class='suggestion' data-town='" + data.suggestions[index].address.city + "'>" + data.suggestions[index].address.city + "</a></li>"
-						);
-					}
-				});
-			});
-
-
-		});
-
-		$(document).on("click", "a.suggestion", function () {
-			var address = $(this).data("town");
-
-			$("#frm-registerAsCoordinator-town").val(address);
-			$("#suggestions").empty();
-		});
-
-	});
-
-</script>

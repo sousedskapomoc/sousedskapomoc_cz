@@ -1,54 +1,18 @@
 {block content}
-
 <div class="row justify-content-center">
+    <div class="col-md-12 col-lg-12">
+        <h1>Pro města a obce</h1>
+        <p>Registrace pro města a obce byla dočasně pozastavena. Prosím využijte náš e-mail info@sousedskapomoc.cz
+            pro urgentní registraci. </p>
+    </div>
     <div class="col-md-8 col-lg-6">
         <iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FSousedskapomoc.cz%2Fvideos%2F2063062140504360&width=500&show_text=false&appId=536970146994011&height=280"
                 width="500" height="280" style="border:none;overflow:hidden" scrolling="no" frameborder="0"
                 allowTransparency="true" allow="encrypted-media" allowFullScreen="true"></iframe>
     </div>
     <div class="col-md-8 col-lg-6">
-        <h1>Pro členy bezpečnostní rady měst a obcí</h1>
-        <div class="col-md-12">
-            {control addGovernmentCoordinator}
-        </div>
+        <iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FSousedskapomoc.cz%2Fvideos%2F214755443132290&width=500&show_text=false&appId=536970146994011&height=280"
+                width="500" height="280" style="border:none;overflow:hidden" scrolling="no" frameborder="0"
+                allowTransparency="true" allow="encrypted-media" allowFullScreen="true"></iframe>
     </div>
 </div>
-
-
-<script>
-    document.addEventListener("DOMContentLoaded", function (event) {
-
-        $("#townSearch").on('click', function () {
-
-            var hereMapsEndpoint = "https://autocomplete.geocoder.ls.hereapi.com/6.2/suggest.json?apiKey=Kl0wK4fx38Pf63EIey6WyrmGEhS2IqaVHkuzx0IQ4-Q&country=CZE&query=";
-            var query = encodeURIComponent($("#frm-addGovernmentCoordinator-address").val());
-
-            jQuery.getJSON(hereMapsEndpoint + query, function (data) {
-                console.log(data);
-                $("#suggestions").empty();
-                $.each(data.suggestions, function (index) {
-                    if (data.suggestions[index].matchLevel == "city") {
-                        $("#suggestions").append(
-                            "<li><a href='#' class='suggestion' data-town-label='" + data.suggestions[index].address.district + " " + data.suggestions[index].address.postalCode + "' data-town='" + data.suggestions[index].address.city + "'>" + data.suggestions[index].address.city + "</a></li>"
-                        );
-                    }
-                });
-            });
-        });
-
-        $(window).keydown(function (event) {
-            if (event.keyCode == 13) {
-                event.preventDefault();
-                return false;
-            }
-        });
-
-        $(document).on("click", "a.suggestion", function () {
-            var address = $(this).data("town");
-
-            $("#frm-addGovernmentCoordinator-address").val(address);
-            $("#suggestions").empty();
-            $(".hiddenForm").show();
-        });
-    });
-</script>
