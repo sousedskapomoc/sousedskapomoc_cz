@@ -163,7 +163,12 @@ class RegisterVolunteerFormControl extends Control
 
 
         $user->setRole($this->role);
-        $user->setTransport($values->transport);
+
+        if ($values->tranposrt !== null) {
+            /** @var Transport $transport */
+            $transport = $this->transportRepository->find($values->transport ?? 7);
+            $user->setTransport($transport);
+        }
 
         $client = new \GuzzleHttp\Client();
         /** @var \GuzzleHttp\Psr7\Response $response */
@@ -207,6 +212,7 @@ class RegisterVolunteerFormControl extends Control
 
         $link = $this->getPresenter()->link('//Homepage:changePassword', $user->getHash());
         //@TODO-Add sending mail for medical person and for government user
+
         switch ($this->role->getName()) {
             case 'courier':
                 $this->mail->sendCourierMail($values->personEmail, $link);
