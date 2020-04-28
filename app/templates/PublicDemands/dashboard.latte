@@ -3,8 +3,6 @@
     <div class="col-12 col-md-8 col-lg-12">
         <h1>Profil | <small>{$volunteer->getPersonName()}</small></h1>
         <p>
-            <a n:if="$user->isInRole('admin')" n:href="System:dashboard" target="_blank"
-                                                                         class="btn btn-primary btn-danger">Administrace</a>
             <a n:href="Sign:profile" class="btn btn-primary btn-dark">Můj profil</a>
             <a n:if="$volunteer->getUploadPhoto()" n:href="Sign:card" target="_blank"
                                                                       class="btn btn-primary btn-purple">Stáhnout
