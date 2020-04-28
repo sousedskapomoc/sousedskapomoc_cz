@@ -38,3 +38,4 @@ services:
 		factory: @Doctrine\ORM\EntityManagerInterface::getRepository('SousedskaPomoc\Entities\Volunteer')
 	#Commands
 	- SousedskaPomoc\Command\MigrateDbCommand
+	- SousedskaPomoc\Command\AddressSyncCommand
