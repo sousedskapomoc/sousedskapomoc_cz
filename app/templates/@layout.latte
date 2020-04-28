@@ -81,11 +81,14 @@
                     </div>
                 </div>
                 <ul>
-                    <li><a n:href="Homepage:ethicalCode">Etický kodex</a></li>
-                    <li><a n:href="Homepage:aboutUs">Kdo jsme</a></li>
+                    <li><a n:if="!$user->isLoggedIn()" n:href="Homepage:ethicalCode">Etický kodex</a></li>
+                    <li><a n:if="!$user->isLoggedIn()" n:href="Homepage:aboutUs">Kdo jsme</a></li>
                     <li><a n:href="PublicDemands:default">Kde mohu pomoci</a></li>
                     {if $user->isLoggedIn()}
-						<li><a n:href="PublicDemands:dashboard">Můj profil</a></li>
+                        <li><a n:href="PublicDemands:dashboard">Můj profil</a></li>
+                        <li><a n:if="$user->isLoggedIn()" n:href="System:dashboard" style="color:purple;">Přejít do
+                                aplikace</a>
+                        </li>
                         <li><a n:href="Sign:out">Odhlásit se</a></li>
                     {else}
                         <li><a href="/sign/in">{_templates.header.login}</a></li>
