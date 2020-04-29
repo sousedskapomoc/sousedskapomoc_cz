@@ -25,7 +25,7 @@
                 <td>{nl2br($demand->getItems())|noescape}</td>
             </tr>
             <tr>
-                <th>Telefon příjemce</th>
+                <th>{_templates.orderDetail.recipientsPhone}</th>
                 <td>{$demand->getPhone() ?? null}</td>
             </tr>
             <tr>
@@ -37,7 +37,7 @@
                 <td>{date("d.m.Y H:i",$demand->getUpdatedAt()->getTimestamp())}</td>
             </tr>
             <tr>
-                <th>Adresát</th>
+                <th>{_templates.orderDetail.addressee}</th>
                 <td>{$demand->getName()}</td>
             </tr>
         </table>

@@ -1,16 +1,16 @@
 <div class="row">
 	<div class="col-md-12">
-		<h1>Velín</h1>
+		<h1>{_templates.headquarters.title}</h1>
 		<hr/>
-		<a n:href="Towns" class="btn btn-xs btn-primary">Města</a>
-		<a n:href="listUsers role => superuser" class="btn btn-warning">Členi bezp. štábu</a>
-		<a n:href="listUsers role => coordinator" class="btn btn-warning">Pečovatelé</a>
-		<a n:href="listUsers role => courier" class="btn btn-warning">Kurýři</a>
-		<a n:href="listUsers role => operator" class="btn btn-warning">Dispečeři</a>
-		<a n:href="listUsers role => seamstress" class="btn btn-warning">Švadleny</a>
-		<a n:href="listUsers role => admin" class="btn btn-warning">Administrátoři</a>
-		<a n:href="Demands" class="btn btn-xs btn-dark">Požadavky z webu</a>
-		<a n:href="Orders" class="btn btn-xs btn-dark">Objednávky</a>
+		<a n:href="Towns" class="btn btn-xs btn-primary">{_templates.headquatersMenu.cities}</a>
+		<a n:href="listUsers role => superuser" class="btn btn-warning">{_templates.headquatersMenu.cities}</a>
+		<a n:href="listUsers role => coordinator" class="btn btn-warning">{_templates.headquatersMenu.caretaker}</a>
+		<a n:href="listUsers role => courier" class="btn btn-warning">{_templates.headquatersMenu.courier}</a>
+		<a n:href="listUsers role => operator" class="btn btn-warning">{_templates.headquatersMenu.dispatch}</a>
+		<a n:href="listUsers role => seamstress" class="btn btn-warning">{_templates.headquatersMenu.seamstress}</a>
+		<a n:href="listUsers role => admin" class="btn btn-warning">{_templates.headquatersMenu.administrators}</a>
+		<a n:href="Demands" class="btn btn-xs btn-dark">{_templates.headquatersMenu.webRequests}</a>
+		<a n:href="Orders" class="btn btn-xs btn-dark">{_templates.headquatersMenu.orders}</a>
 		<hr/>
 	</div>
 </div>

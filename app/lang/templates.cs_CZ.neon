@@ -136,6 +136,8 @@ orderDetail:
     id: 'ID obj.'
     back: 'Zpět na seznam obj.'
     makeOrder: 'Vytvořit objednávku'
+    recipientsPhone: 'Telefon příjemce'
+    addressee: 'Adresát'
 printMaterial:
     title: 'SousedskaPomoc.cz'
     subtitle: 'Stal/a jsem se součástí komunitního projektu SousedskaPomoc.cz a jsem připraven/a vám pomoci'
@@ -210,6 +212,20 @@ profile:
     button: 'Uložit'
 headquarters:
 	title: 'Velín'
+headquatersMenu:
+    cities: 'Města'
+    securityStaffMember: 'Členi bezp. štábu'
+    caretaker: 'Pečovatelé'
+    courier: 'Kurýři'
+    dispatch: 'Dispečeři'
+    seamstress: 'Švadleny'
+    administrators: 'Administrátoři'
+    webRequests: 'Požadavky z webu'
+    orders: 'Objednávky'
+    ordersFromWeb: 'Objednávky z webu'
+towns:
+    registeredCount: 'Počet registrovaných'
+    city: 'Město'
 gridCreateUser:
     userID: 'ID uživatele'
     fullName: 'Jméno a příjmení'
@@ -230,6 +246,7 @@ gridCreateDemand:
     actionConfirm: 'Schválit'
     actionDetail: 'Detail'
     actionDelete: 'Smazat'
+    demandsFromWeb: 'Poptávky z webu'
 gridCreateOrders:
     id: 'ID'
     owner: 'Zadavatel'
@@ -298,6 +315,8 @@ orderList:
     infoName: 'Rastlislav Hajduk'
     address: 'Praha 10 - Vinohrady'
     orderListDetail: 'Detail žádosti'
-
+listUsers:
+    userList: 'Seznam uživatelů'
+    inRoleOf: 'v roli'
 
 
