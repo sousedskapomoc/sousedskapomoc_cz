@@ -63,7 +63,7 @@ final class SignPresenter extends BasePresenter
     public function actionOut(): void
     {
         $this->getUser()->logout(true);
-        $this->flashMessage( $this->translator->translate('messages.actionOut.logoutSuccessful') );
+        $this->flashMessage($this->translator->translate('messages.actionOut.logoutSuccessful'));
         $this->redirect('Homepage:default');
     }
 
@@ -80,8 +80,11 @@ final class SignPresenter extends BasePresenter
     public function createComponentUserUploadPhoto()
     {
         $form = new Form();
-        $form->addUpload('userPhoto', $this->translator->translate('messages.componentUserUploadPhoto.photoForUpload') )->setRequired();
-        $form->addSubmit('savePhoto', $this->translator->translate('messages.componentUserUploadPhoto.uploadPhoto') );
+        $form->addUpload(
+            'userPhoto',
+            $this->translator->translate('messages.componentUserUploadPhoto.photoForUpload')
+        )->setRequired();
+        $form->addSubmit('savePhoto', $this->translator->translate('messages.componentUserUploadPhoto.uploadPhoto'));
         $form->onSuccess[] = [$this, "uploadUserPhoto"];
         return $form;
     }
@@ -105,10 +108,10 @@ final class SignPresenter extends BasePresenter
             $image->resize(350, null);
             $image->save($destinationPath . 'card_' . $this->user->getId() . '_' . $file->getSanitizedName());
             $this->volunteerRepository->attachUserPhoto($this->user->getId(), $file->getSanitizedName());
-            $this->flashMessage( $this->translator->translate('messages.uploadUserPhoto.photoUploaded') );
+            $this->flashMessage($this->translator->translate('messages.uploadUserPhoto.photoUploaded'));
             $this->redirect('PublicDemands:dashboard');
         } else {
-            $this->flashMessage( $this->translator->translate('messages.uploadUserPhoto.unspportedFileType') );
+            $this->flashMessage($this->translator->translate('messages.uploadUserPhoto.unspportedFileType'));
             $this->redirect('this');
         }
     }

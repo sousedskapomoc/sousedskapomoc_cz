@@ -57,11 +57,11 @@ final class SeamstressPresenter extends BasePresenter
             ->setRequired($this->translator->translate('forms.postOrder.addressRequired'))
             ->setPlaceholder($this->translator->translate('forms.postOrder.addressPlaceholder'));
         $form->addText('items', $this->translator->translate('templates.seamstress.itemsLabel'))
-            ->setPlaceholder( $this->translator->translate('forms.postOrder.tenPiecesRequirement') )
-            ->setRequired( $this->translator->translate('forms.postOrder.enterNumForPickUp') );
+            ->setPlaceholder($this->translator->translate('forms.postOrder.tenPiecesRequirement'))
+            ->setRequired($this->translator->translate('forms.postOrder.enterNumForPickUp'));
         $form->addHidden('pickupId');
 
-        $form->addSubmit('addOrderFormSubmit', $this->translator->translate('forms.postOrder.sendDemand') );
+        $form->addSubmit('addOrderFormSubmit', $this->translator->translate('forms.postOrder.sendDemand'));
         $form->onSuccess[] = [$this, "processAdd"];
 
         return $form;
@@ -128,7 +128,7 @@ final class SeamstressPresenter extends BasePresenter
     public function handleToggleActive($active)
     {
         $this->userManager->setOnline($this->user->getId(), $active);
-        $this->flashMessage( $this->translator->translate('messages.toggleActive.stateChangeSuccess'));
+        $this->flashMessage($this->translator->translate('messages.toggleActive.stateChangeSuccess'));
         $this->redirect('this');
     }
 }

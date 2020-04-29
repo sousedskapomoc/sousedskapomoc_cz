@@ -105,14 +105,21 @@ final class HomepagePresenter extends BasePresenter
         $form->addHidden('id')
             ->setDefaultValue($user->getId());
 
-        $form->addPassword("newPass", $this->translator->translate('forms.changePasswdForm.newPasswd') )
+        $form->addPassword("newPass", $this->translator->translate('forms.changePasswdForm.newPasswd'))
             ->addRule(Form::MIN_LENGTH, $this->translator->translate('forms.changePasswdForm.mustBeAtLeastDChars'), 6)
             ->setRequired($this->translator->translate('forms.changePasswdForm.pickNewPasswd'));
 
         $form->addPassword("newPassAgain", $this->translator->translate('forms.changePasswdForm.newPasswdAgain'))
             ->setRequired($this->translator->translate('forms.changePasswdForm.passwdMustMatch'))
-            ->addRule(Form::MIN_LENGTH, $this->translator->translate('forms.changePasswdForm.mustBeAtLeastDChars'), 6)
-            ->addRule(FORM::EQUAL, $this->translator->translate('forms.changePasswdForm.passwdDontMatch'), $form["newPass"]);
+            ->addRule(
+                Form::MIN_LENGTH,
+                $this->translator->translate('forms.changePasswdForm.mustBeAtLeastDChars'),
+                6
+            )->addRule(
+                FORM::EQUAL,
+                $this->translator->translate('forms.changePasswdForm.passwdDontMatch'),
+                $form["newPass"]
+            );
 
         $form->addSubmit('submit', $this->translator->translate('forms.changePasswdForm.setPasswd'));
         $form->onSuccess[] = [$this, 'onSuccess'];
@@ -166,7 +173,10 @@ final class HomepagePresenter extends BasePresenter
         try {
             $this->userManager->getUserByEmailCode($hash);
         } catch (\Exception $err) {
-            $this->flashMessage( $this->translator->translate('messages.passwdChange.hashMissMatch'), BasePresenter::FLASH_TYPE_ERROR);
+            $this->flashMessage(
+                $this->translator->translate('messages.passwdChange.hashMissMatch'),
+                BasePresenter::FLASH_TYPE_ERROR
+            );
             $this->redirect("Page:homepage");
         }
     }
@@ -198,7 +208,7 @@ final class HomepagePresenter extends BasePresenter
             $hash = $user->getHash();
             $link = $this->link('//Homepage:changePassword', $hash);
             $this->mail->sendLostPasswordMail($values->personEmail, $link);
-            $this->presenter->flashMessage($this->translator->translate('messages.passwdChange.emailSendSuccess') );
+            $this->presenter->flashMessage($this->translator->translate('messages.passwdChange.emailSendSuccess'));
             $this->presenter->redirect("Sign:in");
         } catch (AuthenticationException $e) {
             $form->addError($e->getMessage());

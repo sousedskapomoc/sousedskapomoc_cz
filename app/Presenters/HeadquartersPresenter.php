@@ -63,9 +63,9 @@ class HeadquartersPresenter extends BasePresenter
         //@TODO - add text filter into address
         $grid = new DataGrid();
         $grid->setDataSource(new ArrayCollection($this->userManager->fetchAllUsersInRoleForGrid($role)));
-        $grid->addColumnNumber('id', $this->translator->translate('templates.gridCreateUser.userID') );
-        $grid->addColumnText('personName', $this->translator->translate('templates.gridCreateUser.fullName') )->setFilterText();
-        $grid->addColumnText('personEmail', $this->translator->translate('templates.gridCreateUser.eMail') )->setFilterText();
+        $grid->addColumnNumber('id', $this->translator->translate('templates.gridCreateUser.userID'));
+        $grid->addColumnText('personName', $this->translator->translate('templates.gridCreateUser.fullName'))->setFilterText();
+        $grid->addColumnText('personEmail', $this->translator->translate('templates.gridCreateUser.eMail'))->setFilterText();
         $grid->addColumnText('personPhone', $this->translator->translate('templates.gridCreateUser.phone'))->setFilterText();
         $grid->addColumnText('address', $this->translator->translate('templates.gridCreateUser.address'))->setFilterText();
         $grid->addColumnNumber('active', $this->translator->translate('templates.gridCreateUser.Online'))->setFilterText();
@@ -88,13 +88,22 @@ class HeadquartersPresenter extends BasePresenter
         $grid->addColumnText('organizationName', 'Jmeno organizace')->setFilterText();
         $grid->addColumnText('deliveryName', 'Jmeno adresata')->setFilterText();
         $grid->addColumnText('deliveryPhone', 'Telefon adresata')->setFilterText();
-        $grid->addColumnDateTime('createdAt',  $this->translator->translate('templates.gridCreateDemand.addedTime') );
-        $grid->addAction('approve', $this->translator->translate('templates.gridCreateDemand.actionConfirm'),
-            'approve!')->setClass("btn btn-success btn-sm");
-        $grid->addAction('detail', $this->translator->translate('templates.gridCreateDemand.address'),
-            'Courier:detail')->setClass("btn btn-primary btn-sm");
-        $grid->addAction('delete', $this->translator->translate('templates.gridCreateDemand.actionDelete'),
-            'deleteDemand!')->setClass("btn btn-danger btn-sm");
+        $grid->addColumnDateTime('createdAt', $this->translator->translate('templates.gridCreateDemand.addedTime'));
+        $grid->addAction(
+            'approve',
+            $this->translator->translate('templates.gridCreateDemand.actionConfirm'),
+            'approve!'
+        )->setClass("btn btn-success btn-sm");
+        $grid->addAction(
+            'detail',
+            $this->translator->translate('templates.gridCreateDemand.address'),
+            'Courier:detail'
+        )->setClass("btn btn-primary btn-sm");
+        $grid->addAction(
+            'delete',
+            $this->translator->translate('templates.gridCreateDemand.actionDelete'),
+            'deleteDemand!'
+        )->setClass("btn btn-danger btn-sm");
 
         return $grid;
     }
@@ -105,21 +114,30 @@ class HeadquartersPresenter extends BasePresenter
 
         //@TODO - add text filter into address
         $grid->setDataSource(new ArrayCollection($this->orderRepository->getAllForGrid()));
-        $grid->addColumnNumber('id',  $this->translator->translate('templates.gridCreateOdrers.id' ) )->setFilterText();
-        $grid->addColumnText('owner', $this->translator->translate('templates.gridCreateOdrers.owner' ))->setFilterText();
-        $grid->addColumnText('delivery_address', $this->translator->translate('templates.gridCreateOdrers.address' ))->setFilterText();
+        $grid->addColumnNumber('id', $this->translator->translate('templates.gridCreateOdrers.id'))->setFilterText();
+        $grid->addColumnText('owner', $this->translator->translate('templates.gridCreateOdrers.owner'))->setFilterText();
+        $grid->addColumnText('delivery_address', $this->translator->translate('templates.gridCreateOdrers.address'))->setFilterText();
 
-        $grid->addColumnText('delivery_phone', $this->translator->translate('templates.gridCreateOdrers.phone' ) )->setFilterText();
-        $grid->addColumnText('items', $this->translator->translate('templates.gridCreateOdrers.itemsList' ))->setFilterText();
+        $grid->addColumnText('delivery_phone', $this->translator->translate('templates.gridCreateOdrers.phone'))->setFilterText();
+        $grid->addColumnText('items', $this->translator->translate('templates.gridCreateOdrers.itemsList'))->setFilterText();
 
-        $grid->addColumnDateTime('createdAt', $this->translator->translate('templates.gridCreateOrders.addedTime' ));
-        $grid->addColumnText('status', $this->translator->translate('templates.gridCreateOrders.status' ) )->setFilterText();
-        $grid->addAction('reset', $this->translator->translate('templates.gridCreateOrders.reset' ),
-            'reset!')->setClass("btn btn-danger btn-sm");
-        $grid->addAction('detail', $this->translator->translate('templates.gridCreateOrders.detail' ),
-            'Courier:detail')->setClass("btn btn-primary btn-sm");
-        $grid->addAction('delete', $this->translator->translate('templates.gridCreateOrders.delete' ),
-            'deleteOrder!')->setClass("btn btn-danger btn-sm");
+        $grid->addColumnDateTime('createdAt', $this->translator->translate('templates.gridCreateOrders.addedTime'));
+        $grid->addColumnText('status', $this->translator->translate('templates.gridCreateOrders.status'))->setFilterText();
+        $grid->addAction(
+            'reset',
+            $this->translator->translate('templates.gridCreateOrders.reset'),
+            'reset!'
+        )->setClass("btn btn-danger btn-sm");
+        $grid->addAction(
+            'detail',
+            $this->translator->translate('templates.gridCreateOrders.detail'),
+            'Courier:detail'
+        )->setClass("btn btn-primary btn-sm");
+        $grid->addAction(
+            'delete',
+            $this->translator->translate('templates.gridCreateOrders.delete'),
+            'deleteOrder!'
+        )->setClass("btn btn-danger btn-sm");
 
         return $grid;
     }
@@ -137,7 +155,7 @@ class HeadquartersPresenter extends BasePresenter
     public function handleReset($id)
     {
         $this->orderManager->assignOrder(null, $id, null, 'new');
-        $this->flashMessage( $this->translator->translate('messages.handleReset.reseted') );
+        $this->flashMessage($this->translator->translate('messages.handleReset.reseted'));
         $this->redirect('Headquarters:orders');
     }
 
@@ -153,14 +171,14 @@ class HeadquartersPresenter extends BasePresenter
             $this->redirect('this');
         }
         $this->demandRepository->setProcessed($id, 'declined');
-        $this->flashMessage($this->translator->translate('messages.handleDeleteDemand.deleted' ));
+        $this->flashMessage($this->translator->translate('messages.handleDeleteDemand.deleted'));
         $this->redirect('Headquarters:demands');
     }
 
     public function handleDeleteOrder($id)
     {
         $this->orderManager->remove($id);
-        $this->flashMessage($this->translator->translate('messages.handleDeleteOrder.deleted' ));
+        $this->flashMessage($this->translator->translate('messages.handleDeleteOrder.deleted'));
         $this->redirect('Headquarters:orders');
     }
 
@@ -169,7 +187,7 @@ class HeadquartersPresenter extends BasePresenter
         /** @var Demand $demand */
         $demand = $this->demandRepository->getById($id);
         if ($demand->getCreatedOrder() != null) {
-            $this->flashMessage( $this->translator->translate('messages.handleApprove.alreadyCreated' ) );
+            $this->flashMessage($this->translator->translate('messages.handleApprove.alreadyCreated'));
             $this->redirect('this');
         }
 
@@ -187,7 +205,7 @@ class HeadquartersPresenter extends BasePresenter
         $finalItems = "";
 
         if ($demand->getFood() != null) {
-            $finalItems = $finalItems . "Jidlo: " .$demand->getFood() . "\n";
+            $finalItems = $finalItems . "Jidlo: " . $demand->getFood() . "\n";
         }
 
         if ($demand->getMedicine() != null) {
@@ -220,7 +238,7 @@ class HeadquartersPresenter extends BasePresenter
         $this->addressRepository->create($deliveryAddress);
         $this->volunteerRepository->update($user->getId(), $user);
         $this->demandRepository->setProcessed($demand->getId(), 'approved');
-        $this->flashMessage($this->translator->translate('messages.handleApprove.orderApproved' ));
+        $this->flashMessage($this->translator->translate('messages.handleApprove.orderApproved'));
 
         $this->redirect('Coordinator:detail', $order->getId());
     }

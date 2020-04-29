@@ -80,7 +80,7 @@ final class CourierPresenter extends BasePresenter
     public function handleToggleActive($active)
     {
         $this->userManager->setOnline($this->user->getId(), $active);
-        $this->flashMessage( $this->translator->translate('messages.statusChange.changeSuccess') );
+        $this->flashMessage($this->translator->translate('messages.statusChange.changeSuccess'));
         $this->redirect('this');
     }
 
@@ -88,7 +88,7 @@ final class CourierPresenter extends BasePresenter
     public function handleChangeStatus($id, $status)
     {
         $this->orderRepository->changeStatus($id, $status);
-        $this->flashMessage( $this->translator->translate('messages.statusChange.changeSuccess') );
+        $this->flashMessage($this->translator->translate('messages.statusChange.changeSuccess'));
         $this->redirect('this');
     }
 

@@ -102,7 +102,7 @@ final class CoordinatorPresenter extends BasePresenter
         $values->status = "new";
 
         $result = $this->orderManager->create($values);
-        $this->flashMessage( $this->translator->translate('messages.order.orderSuccess') );
+        $this->flashMessage($this->translator->translate('messages.order.orderSuccess'));
         $this->redirect("Coordinator:dashboard");
     }
 }
