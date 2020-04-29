@@ -219,6 +219,8 @@ final class UserManager
         foreach ($this->fetchAllUsersInRole($role) as $volunteer) {
             if ($volunteer->getAddress() !== null) {
                 $city = $volunteer->getAddress()->getCity();
+            } else {
+                $city = null;
             }
 
             $dataset[] = [
