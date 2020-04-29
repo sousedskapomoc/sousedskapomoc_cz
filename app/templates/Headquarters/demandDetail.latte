@@ -37,7 +37,7 @@
                 <td>{$demand->getDeliveryName() ?? null}</td>
             </tr>
             <tr>
-                <th>Telefon příjemce</th>
+                <th>{_templates.orderDetail.recipientsPhone}</th>
                 <td>{$demand->getDeliveryPhone() ?? null}</td>
             </tr>
             <tr>
@@ -63,6 +63,10 @@
             <tr>
                 <th>{_templates.orderDetail.lastUpdate}</th>
                 <td>{date("d.m.Y H:i",$demand->getUpdatedAt()->getTimestamp())}</td>
+            </tr>
+            <tr>
+                <th>{_templates.orderDetail.addressee}</th>
+                <td>{$demand->getName()}</td>
             </tr>
         </table>
     </div>
