@@ -30,7 +30,7 @@
 		</tr>
 		<tr n:if="$user->isInRole('courier') && $userDetails->getTransport()->getId()">
 			<td>Dopravní prostředek:</td>
-			<td>{$userDetails->getTransport()->getName()}</td>
+			<td>{$userDetails->getTransport()->getType()}</td>
 		</tr>
 	</table>
 </div>
