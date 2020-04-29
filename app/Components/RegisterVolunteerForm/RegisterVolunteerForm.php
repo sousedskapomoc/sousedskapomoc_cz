@@ -164,7 +164,7 @@ class RegisterVolunteerFormControl extends Control
 
         $user->setRole($this->role);
 
-        if ($values->tranposrt !== null) {
+        if ($values->transport !== null) {
             /** @var Transport $transport */
             $transport = $this->transportRepository->find($values->transport ?? 7);
             $user->setTransport($transport);
