@@ -57,8 +57,7 @@ class RegisterVolunteerFormControl extends Control
         Mail $mail,
         AddressRepository $addrRepository,
         ISuggesterTownInterface $townSuggester
-    )
-    {
+    ) {
         $this->volunteerRepository = $volunteerRepository;
         $this->translator = $translator;
         $this->passwords = $passwords;
