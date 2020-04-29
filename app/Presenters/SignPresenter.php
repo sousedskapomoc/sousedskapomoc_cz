@@ -88,6 +88,10 @@ final class SignPresenter extends BasePresenter
 
     public function renderProfile()
     {
+        if (!$this->user->isLoggedIn()) {
+            $this->flashMessage("Pro přístup do této sekce musíte být přihlášen(a).");
+            $this->redirect("Sign:in");
+        }
         $this->template->volunteer = $this->volunteerRepository->getById($this->user->getId());
     }
 
