@@ -83,6 +83,7 @@
                 <ul>
                     <li><a n:if="!$user->isLoggedIn()" n:href="Homepage:ethicalCode">Etický kodex</a></li>
                     <li><a n:if="!$user->isLoggedIn()" n:href="Homepage:aboutUs">Kdo jsme</a></li>
+                    <li><a n:href="Homepage:media">Pro média</a></li>
                     <li><a n:href="PublicDemands:default">Kde mohu pomoci</a></li>
                     {if $user->isLoggedIn()}
                         <li><a n:href="PublicDemands:dashboard">Můj profil</a></li>
