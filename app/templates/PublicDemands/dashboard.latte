@@ -21,7 +21,7 @@
                     <div class="orderList__info">
                         <h5>{$demand->getDeliveryName()}</h5>
                         <p>{$demand->getProcessed()|humanFriendlyStatus}</p>
-                        <p class="orderList__info__name">{$demand->getCourier()->getPersonName()}</p>
+                        <p n:if="$demand->getCourier() !== null" class="orderList__info__name">{$demand->getCourier()->getPersonName()}</p>
                         <a n:href="detail id => $demand->getId()" n:if="$demand->getDeliveryAddress() != null"><i
                                     class="fas fa-map-marker-alt"></i>{$demand->getDeliveryAddress()->getCityWithPostalCode()}
                         </a>

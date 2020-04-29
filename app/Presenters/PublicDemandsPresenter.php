@@ -57,6 +57,10 @@ class PublicDemandsPresenter extends BasePresenter
 
     public function renderDashboard()
     {
+        if (!$this->user->isLoggedIn()) {
+            $this->flashMessage("Platnost vašeho přihlášení vypršela. Prosíme přihlašte se znovu.");
+            $this->redirect("Sign:in");
+        }
         $this->template->volunteer = $this->volunteerRepository->getById($this->user->getId());
         $this->template->demands = $this->demandRepository->getByUser($this->user->getId());
     }
