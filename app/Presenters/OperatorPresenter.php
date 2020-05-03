@@ -51,7 +51,6 @@ final class OperatorPresenter extends BasePresenter
     public function handleUnassignOrder($orderId)
     {
         $this->orderManager->removeCourier($orderId);
-        $this->orderManager->removeOperator($orderId);
         $this->orderManager->updateStatus($orderId, 'new');
         $this->redirect('this');
     }
