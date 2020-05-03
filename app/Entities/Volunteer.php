@@ -89,6 +89,12 @@ class Volunteer
      */
     protected $hash;
 
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $note;
+
+
 
     public function __construct()
     {
@@ -96,6 +102,7 @@ class Volunteer
         $this->deliveredDemands = new ArrayCollection();
         $this->createdOrders = new ArrayCollection();
     }
+
 
 
     /**
@@ -107,13 +114,15 @@ class Volunteer
     }
 
 
+
     /**
      * @param mixed $hash
      */
-    public function setHash($hash): void
+    public function setHash($hash) : void
     {
         $this->hash = $hash;
     }
+
 
 
     /**
@@ -125,13 +134,15 @@ class Volunteer
     }
 
 
+
     /**
      * @param mixed $personName
      */
-    public function setPersonName($personName): void
+    public function setPersonName($personName) : void
     {
         $this->personName = $personName;
     }
+
 
 
     /**
@@ -143,13 +154,15 @@ class Volunteer
     }
 
 
+
     /**
      * @param mixed $personEmail
      */
-    public function setPersonEmail($personEmail): void
+    public function setPersonEmail($personEmail) : void
     {
         $this->personEmail = $personEmail;
     }
+
 
 
     /**
@@ -161,13 +174,15 @@ class Volunteer
     }
 
 
+
     /**
      * @param mixed $personPhone
      */
-    public function setPersonPhone($personPhone): void
+    public function setPersonPhone($personPhone) : void
     {
         $this->personPhone = $personPhone;
     }
+
 
 
     /**
@@ -179,13 +194,15 @@ class Volunteer
     }
 
 
+
     /**
      * @param mixed $active
      */
-    public function setActive($active): void
+    public function setActive($active) : void
     {
         $this->active = $active;
     }
+
 
 
     /**
@@ -197,13 +214,15 @@ class Volunteer
     }
 
 
+
     /**
      * @param mixed $online
      */
-    public function setOnline($online): void
+    public function setOnline($online) : void
     {
         $this->online = $online;
     }
+
 
 
     /**
@@ -215,13 +234,15 @@ class Volunteer
     }
 
 
+
     /**
      * @param mixed $password
      */
-    public function setPassword($password): void
+    public function setPassword($password) : void
     {
         $this->password = $password;
     }
+
 
 
     /**
@@ -232,10 +253,13 @@ class Volunteer
         return $this->role;
     }
 
+
+
     public function setRole($role)
     {
         $this->role = $role;
     }
+
 
 
     /**
@@ -247,13 +271,15 @@ class Volunteer
     }
 
 
+
     /**
      * @param mixed $address
      */
-    public function setAddress($address): void
+    public function setAddress($address) : void
     {
         $this->address = $address;
     }
+
 
 
     /**
@@ -265,13 +291,15 @@ class Volunteer
     }
 
 
+
     /**
      * @param mixed $transport
      */
-    public function setTransport($transport): void
+    public function setTransport($transport) : void
     {
         $this->transport = $transport;
     }
+
 
 
     /**
@@ -283,20 +311,24 @@ class Volunteer
     }
 
 
+
     /**
      * @param mixed $order
      */
-    public function addCreatedOrder($order): self
+    public function addCreatedOrder($order) : self
     {
         if (!$this->createdOrders->contains($order)) {
             $this->createdOrders[] = $order;
 
             $order->setOwner($this);
         }
+
         return $this;
     }
 
-    public function removeCreatedOrder($order): self
+
+
+    public function removeCreatedOrder($order) : self
     {
         if ($this->createdOrders) {
             if ($this->createdOrders->contains($order)) {
@@ -307,8 +339,10 @@ class Volunteer
                 $order->setOwner(null);
             }
         }
+
         return $this;
     }
+
 
 
     /**
@@ -320,11 +354,13 @@ class Volunteer
     }
 
 
+
     /**
      * @param mixed $order
+     *
      * @return Volunteer
      */
-    public function addDeliveredOrder($order): self
+    public function addDeliveredOrder($order) : self
     {
         if ($this->deliveredOrders) {
             if (!$this->deliveredOrders->contains($order)) {
@@ -337,10 +373,13 @@ class Volunteer
             /** @var Order $order */
             $order->setCourier($this);
         }
+
         return $this;
     }
 
-    public function removeDeliveredOrder($order): self
+
+
+    public function removeDeliveredOrder($order) : self
     {
         if ($this->deliveredOrders) {
             if ($this->deliveredOrders->contains($order)) {
@@ -353,13 +392,18 @@ class Volunteer
         } else {
             $order->setCourier(null);
         }
+
         return $this;
     }
+
+
 
     public function setId($id)
     {
         $this->id = $id;
     }
+
+
 
     /**
      * @return mixed
@@ -369,19 +413,24 @@ class Volunteer
         return $this->uploadPhoto;
     }
 
+
+
     /**
      * @param mixed $uploadPhoto
      */
-    public function setUploadPhoto($uploadPhoto): void
+    public function setUploadPhoto($uploadPhoto) : void
     {
         $this->uploadPhoto = $uploadPhoto;
     }
 
+
+
     /**
      * @param mixed $demand
+     *
      * @return Volunteer
      */
-    public function addDeliveredDemand($demand): self
+    public function addDeliveredDemand($demand) : self
     {
         if ($this->deliveredDemands) {
             if (!$this->deliveredDemands->contains($demand)) {
@@ -394,10 +443,13 @@ class Volunteer
             /** @var Demand $demand */
             $demand->setCourier($this);
         }
+
         return $this;
     }
 
-    public function removeDeliveredDemand($demand): self
+
+
+    public function removeDeliveredDemand($demand) : self
     {
         if ($this->deliveredDemands) {
             if ($this->deliveredDemands->contains($demand)) {
@@ -410,6 +462,21 @@ class Volunteer
         } else {
             $demand->setCourier(null);
         }
+
         return $this;
+    }
+
+
+
+    public function setNote($note)
+    {
+        $this->note = $note;
+    }
+
+
+
+    public function getNote()
+    {
+        return $this->note;
     }
 }

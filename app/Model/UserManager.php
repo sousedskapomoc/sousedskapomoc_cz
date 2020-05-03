@@ -229,7 +229,8 @@ final class UserManager
                 'personEmail' => $volunteer->getPersonEmail(),
                 'personPhone' => $volunteer->getPersonPhone(),
                 'address' => $city,
-                'active' => $volunteer->getActive()
+                'active' => $volunteer->getActive(),
+                'note' => $volunteer->getNote()
             ];
 
             $city = null;
