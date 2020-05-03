@@ -268,13 +268,20 @@ class OrderRepository extends DoctrineEntityRepository
 
     public function removeCourier($orderId)
     {
+        $em = $this->getEntityManager();
+
         /** @var Order $order */
         $order = $this->findOneBy(['id' => $orderId]);
+
         /** @var Volunteer $courier */
         $courier = $order->getCourier();
-        $courier->removeDeliveredOrder($order);
-        $em = $this->getEntityManager();
-        $em->persist($courier);
+        if ($courier instanceof Volunteer) {
+            $courier->removeDeliveredOrder($order);
+            $em->persist($courier);
+        } else {
+            $order->setCourier(null);
+            $em->persist($order);
+        }
         $em->flush();
     }
 
