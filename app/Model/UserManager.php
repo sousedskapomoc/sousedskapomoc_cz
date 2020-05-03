@@ -287,6 +287,7 @@ final class UserManager
                 'personPhone' => $volunteer->getPersonPhone(),
                 'address' => $city,
                 'active' => $volunteer->getActive(),
+                'note' => $volunteer->getNote()
             ];
 
             $city = null;
