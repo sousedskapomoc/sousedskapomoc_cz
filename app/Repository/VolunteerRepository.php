@@ -43,6 +43,21 @@ class VolunteerRepository extends DoctrineEntityRepository
 
 
 
+    public function updateNote($id, $note)
+    {
+
+        /** @var Volunteer $user */
+        $user = $this->getById($id);
+        $user->setNote($note);
+
+        $em = $this->getEntityManager();
+
+        $em->persist($user);
+        $em->flush();
+    }
+
+
+
     public function getByEmail($email)
     {
         return $this->findOneBy(['personEmail' => $email]);
@@ -57,6 +72,7 @@ class VolunteerRepository extends DoctrineEntityRepository
 
         $user->setPassword($password);
         $em = $this->getEntityManager();
+
         $em->persist($user);
         $em->flush();
     }
