@@ -109,7 +109,7 @@ final class SignPresenter extends BasePresenter
     public function createComponentEditVolunteerForm()
     {
         $form = $this->editVolunteerForm->create();
-        $form->onFinish[] = function() {
+        $form->onFinish[] = function () {
             $this->flashMessage($this->translator->translate('templates.profile.success'));
             $this->redirect("Sign:profile");
         };
