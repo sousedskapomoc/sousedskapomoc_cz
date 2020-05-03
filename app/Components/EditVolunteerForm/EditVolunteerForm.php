@@ -27,6 +27,7 @@ class EditVolunteerForm extends Control
     /** @var \SousedskaPomoc\Repository\RoleRepository */
     private $roleRepository;
 
+    public $onFinish;
 
     public function __construct(
         VolunteerRepository $volunteerRepository,
@@ -169,8 +170,7 @@ class EditVolunteerForm extends Control
 
             $this->volunteerRepository->update($values->id, $user);
 
-            $this->flashMessage($this->translator->translate('templates.profile.success'));
-            $this->getPresenter()->redirect("System:profile");
+            $this->onFinish($this);
         }
     }
 

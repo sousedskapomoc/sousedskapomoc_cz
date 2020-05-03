@@ -1,46 +1,34 @@
 {block content}
-<div class="row justify-content-center">
-    <div class="col-12 col-md-8 col-lg-12">
-        <h1>Můj profil</h1>
-        <form class="form--plain form--plain__wantToHelp">
-            <fieldset>
-                <label for="wantToHelp-name">Jméno a příjmení</label>
-                <input type="text" name="wantToHelpDemand-name" id="wantToHelp-name" value="{$volunteer->getPersonName()}">
-            </fieldset>
-            <fieldset>
-                <label for="wantToHelp-phone">Telefon</label>
-                <input type="text" name="wantToHelp-phone" id="wantToHelp-phone" value="{$volunteer->getPersonPhone()}">
-            </fieldset>
-            <fieldset>
-                <label for="wantToHelp-email">Email</label>
-                <input type="email" name="wantToHelp-email" id="wantToHelp-email" value="{$volunteer->getPersonEmail()}">
-            </fieldset>
-            <fieldset>
-                <label for="wantToHelp-city">Město kde chci pomáhat</label>
-                <input type="text" name="wantToHelp-city" id="wantToHelp-city" value="{$volunteer->getAddress()->getCity()}">
-            </fieldset>
-            <fieldset>
-                <p class="form--plain__input-headline--small">Čím můžete pomoci?</p>
-                <div class="input-group">
-                    <input type="checkbox" name="wantToHelp-grocery" id="wantToHelp-grocery">
-                    <label for="wantToHelp-grocery">Udělat nákup / přinést jídlo</label>
-                </div>
-                <div class="input-group">
-                    <input type="checkbox" name="wantToHelp-medicine" id="wantToHelp-medicine">
-                    <label for="wantToHelp-medicine">Zaobstarat léky</label>
-                </div>
-                <div class="input-group">
-                    <input type="checkbox" name="wantToHelp-facemask" id="wantToHelp-facemask">
-                    <label for="wantToHelp-facemask">Ušít roušky</label>
-                </div>
-                <div class="input-group">
-                    <input type="checkbox" class="js-show-target" data-target="wantToHelp-other-input"
-                           name="wantToHelp-other" id="wantToHelp-other">
-                    <label for="wantToHelp-other">Jiné</label>
-                </div>
-                <input type="text" class="hidden" name="wantToHelp-other-input" id="wantToHelp-other-input">
-            </fieldset>
-            <button class="btn btn-green btn-lg">Uložit</button>
-        </form>
-    </div>
+<div class="col-10" style="margin: auto">
+    <h1>{_templates.profile.title}</h1>
+
+    <a n:href="editProfile" class="btn btn-success">{_templates.profile.edit}</a>
+    <a n:href="enterTown" class="btn btn-primary">{_templates.profile.enterTown}</a>
+
+    <table class="table table-hover" style="margin-top: 10px;">
+        <tr>
+            <td>Role</td>
+            <td>{$userDetails->getRole()->getName()}</td>
+        </tr>
+        <tr>
+            <td>Jméno</td>
+            <td>{$userDetails->getPersonName()}</td>
+        </tr>
+        <tr>
+            <td>Email:</td>
+            <td>{$userDetails->getPersonEmail()}</td>
+        </tr>
+        <tr>
+            <td>Telefon:</td>
+            <td>{$userDetails->getPersonPhone()}</td>
+        </tr>
+        <tr>
+            <td>Město:</td>
+            <td>{$userDetails->getAddress()->getCity()}</td>
+        </tr>
+        <tr n:if="$user->isInRole('courier') && $userDetails->getTransport()->getId()">
+            <td>Dopravní prostředek:</td>
+            <td>{$userDetails->getTransport()->getType()}</td>
+        </tr>
+    </table>
 </div>

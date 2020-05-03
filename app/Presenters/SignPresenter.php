@@ -5,10 +5,15 @@ declare(strict_types=1);
 namespace SousedskaPomoc\Presenters;
 
 use Nette\Http\FileUpload;
+use Nette\Security\AuthenticationException;
 use Nette\Utils\Image;
+use SousedskaPomoc\Entities\Address;
 use SousedskaPomoc\Forms;
 use Nette\Application\UI\Form;
 use SousedskaPomoc\Repository\VolunteerRepository;
+use SousedskaPomoc\Components\IEditVolunteerFormInterface;
+use SousedskaPomoc\Components\Suggester\ISuggesterTownInterface;
+use SousedskaPomoc\Repository\AddressRepository;
 
 final class SignPresenter extends BasePresenter
 {
@@ -24,14 +29,29 @@ final class SignPresenter extends BasePresenter
     /** @var VolunteerRepository */
     private $volunteerRepository;
 
+    /** @var IEditVolunteerFormInterface */
+    private $editVolunteerForm;
+
+    /** @var ISuggesterTownInterface */
+    private $townSuggester;
+
+    /** @var AddressRepository */
+    private $addressRepository;
+
     public function __construct(
         Forms\SignInFormFactory $signInFactory,
         Forms\SignUpFormFactory $signUpFactory,
-        VolunteerRepository $volunteerRepository
+        VolunteerRepository $volunteerRepository,
+        IEditVolunteerFormInterface $editVolunteerForm,
+        ISuggesterTownInterface $townSuggester,
+        AddressRepository $addressRepository
     ) {
         $this->signInFactory = $signInFactory;
         $this->signUpFactory = $signUpFactory;
         $this->volunteerRepository = $volunteerRepository;
+        $this->editVolunteerForm = $editVolunteerForm;
+        $this->townSuggester = $townSuggester;
+        $this->addressRepository = $addressRepository;
 
         parent::__construct();
     }
@@ -86,13 +106,81 @@ final class SignPresenter extends BasePresenter
         return $form;
     }
 
+    public function createComponentEditVolunteerForm()
+    {
+        $form = $this->editVolunteerForm->create();
+        $form->onFinish[] = function() {
+            $this->flashMessage($this->translator->translate('templates.profile.success'));
+            $this->redirect("Sign:profile");
+        };
+        return $form;
+    }
+
+    public function renderEnterTown()
+    {
+        $locationId = $this->getParameter('addressHereMapsId');
+        if (isset($locationId)) {
+            $this->updateAddress($locationId);
+        }
+    }
+
+    public function updateAddress($locationId)
+    {
+        /** @var \SousedskaPomoc\Entities\Volunteer $user */
+        $user = $this->volunteerRepository->getById($this->user->getId());
+
+        $client = new \GuzzleHttp\Client();
+        /** @var \GuzzleHttp\Psr7\Response $response */
+        $baseUri = "https://geocoder.ls.hereapi.com/6.2/geocode.json?locationid=";
+        $apiKey = "Kl0wK4fx38Pf63EIey6WyrmGEhS2IqaVHkuzx0IQ4-Q";
+        $response = $client->get($baseUri . $locationId . '&jsonattributes=1&gen=9&apiKey=' . $apiKey);
+        $content = $response->getBody()->getContents();
+
+        $content = json_decode($content);
+
+        //Address information
+        $addr = $content->response->view['0']->result['0']->location->address;
+
+        //HERE maps Id
+        $locationId = $content->response->view['0']->result['0']->location->locationId;
+
+        //array with latitude and longtitude
+        $gps = $content->response->view['0']->result['0']->location->displayPosition;
+
+        /** @var Address $address */
+        $address = new Address();
+        $address->setCity($addr->city);
+        $address->setState($addr->state);
+        $address->setLocationId($locationId);
+        $address->setCountry($addr->country);
+        $address->setDistrict($addr->county);
+        $address->setPostalCode($addr->postalCode);
+        $address->setLongitude($gps->longitude);
+        $address->setLatitude($gps->latitude);
+        $address->addVolunteer($user);
+
+
+        try {
+            $this->addressRepository->create($address);
+            $this->flashMessage('Adresa byla uspesne upravena.');
+            $this->redirect("Sign:profile");
+        } catch (AuthenticationException $e) {
+            $form->addError($e->getMessage());
+        }
+    }
+
+    public function createComponentTownSuggester()
+    {
+        return $this->townSuggester->create();
+    }
+
     public function renderProfile()
     {
         if (!$this->user->isLoggedIn()) {
             $this->flashMessage("Pro přístup do této sekce musíte být přihlášen(a).");
             $this->redirect("Sign:in");
         }
-        $this->template->volunteer = $this->volunteerRepository->getById($this->user->getId());
+        $this->template->userDetails = $this->volunteerRepository->getById($this->user->getId());
     }
 
     public function uploadUserPhoto(Form $form)
