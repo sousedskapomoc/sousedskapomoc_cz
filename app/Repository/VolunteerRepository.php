@@ -93,6 +93,14 @@ class VolunteerRepository extends DoctrineEntityRepository
 
 
 
+    public function fetchCountBy($rule)
+    {
+        return $this->count($rule);
+    }
+
+
+
+
     public function getNonActiveUsers()
     {
         return $this->count(['password' => null]);
