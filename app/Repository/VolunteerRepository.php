@@ -100,6 +100,7 @@ class VolunteerRepository extends DoctrineEntityRepository
 
 
 
+
     public function getNonActiveUsers()
     {
         return $this->count(['password' => null]);
