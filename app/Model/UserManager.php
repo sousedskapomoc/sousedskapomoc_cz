@@ -6,7 +6,10 @@ namespace SousedskaPomoc\Model;
 
 use Nette;
 use Nette\Security\Passwords;
+use SousedskaPomoc\Entities\Role;
 use SousedskaPomoc\Entities\Volunteer;
+use SousedskaPomoc\Repository\AddressRepository;
+use SousedskaPomoc\Repository\RoleRepository;
 use SousedskaPomoc\Repository\VolunteerRepository;
 
 /**
@@ -14,6 +17,7 @@ use SousedskaPomoc\Repository\VolunteerRepository;
  */
 final class UserManager
 {
+
     use Nette\SmartObject;
 
     private const
@@ -24,7 +28,6 @@ final class UserManager
         COLUMN_EMAIL = 'personEmail',
         COLUMN_ROLE = 'role';
 
-
     /** @var Nette\Database\Context */
     private $database;
 
@@ -34,16 +37,28 @@ final class UserManager
     /** @var \SousedskaPomoc\Repository\VolunteerRepository */
     protected $volunteerRepository;
 
+    /** @var RoleRepository */
+    protected $roleRepository;
+
+    /** @var AddressRepository */
+    protected $addressRepository;
+
+
 
     public function __construct(
         Nette\Database\Context $database,
         Passwords $passwords,
-        VolunteerRepository $volunteerRepository
+        VolunteerRepository $volunteerRepository,
+        RoleRepository $roleRepository,
+        AddressRepository $addressRepository
     ) {
         $this->database = $database;
         $this->passwords = $passwords;
         $this->volunteerRepository = $volunteerRepository;
+        $this->roleRepository = $roleRepository;
+        $this->addressRepository = $addressRepository;
     }
+
 
 
     /**
@@ -51,7 +66,7 @@ final class UserManager
      *
      * @throws DuplicateNameException
      */
-    public function add(string $username, string $email, string $password): void
+    public function add(string $username, string $email, string $password) : void
     {
         Nette\Utils\Validators::assert($email, 'email');
         try {
@@ -66,10 +81,12 @@ final class UserManager
     }
 
 
+
     public function register(Nette\Utils\ArrayHash $values)
     {
         return $this->database->table(self::TABLE_NAME)->insert($values);
     }
+
 
 
     public function update(Nette\Utils\ArrayHash $values)
@@ -80,10 +97,12 @@ final class UserManager
     }
 
 
+
     public function setPass($id, $password)
     {
         $this->volunteerRepository->setPass($id, $password);
     }
+
 
 
     public function getUserByEmailCode($emailCode)
@@ -92,10 +111,12 @@ final class UserManager
     }
 
 
+
     public function getUserByEmail($email)
     {
         return $this->volunteerRepository->getByEmail($email);
     }
+
 
 
     public function getUserById($id)
@@ -104,10 +125,12 @@ final class UserManager
     }
 
 
+
     public function setUserCode($userId, $emailCode)
     {
         $this->setUserCode($userId, $emailCode);
     }
+
 
 
     public function check(string $field, $value)
@@ -116,10 +139,12 @@ final class UserManager
     }
 
 
+
     public function fetchAvailableCouriers()
     {
         return $this->database->table(self::TABLE_NAME)->where(['role' => 'courier'])->fetchAll();
     }
+
 
 
     public function fetchAllUsers()
@@ -128,10 +153,12 @@ final class UserManager
     }
 
 
+
     public function fetchAllUsersWithNoPass()
     {
         return $this->database->table(self::TABLE_NAME)->where(['password' => null])->fetchAll();
     }
+
 
 
     public function fetchCourierName($courierId)
@@ -146,70 +173,100 @@ final class UserManager
     }
 
 
+
     public function fetchTotalCount()
     {
         return $this->volunteerRepository->fetchTotalCount();
     }
 
 
+
+    public function fetchCountByRole($role)
+    {
+        /** @var Role $role */
+        $role = $this->roleRepository->getByName($role);
+
+        return count($role->getUsers());
+    }
+
+
+
     public function fetchCountBy($rule)
     {
-        return $this->database->table(self::TABLE_NAME)->where($rule)->count();
+        return $this->volunteerRepository->fetchCountBy($rule);
     }
+
 
 
     public function fetchUniqueTownsCount()
     {
-        $sql = "SELECT COUNT(DISTINCT(town)) AS uniqueTownsCount FROM volunteers";
-        $data = $this->database->query($sql)->fetch();
-
-        return $data['uniqueTownsCount'];
+        return $this->addressRepository->countUniqueTowns();
     }
+
+
 
     public function isOnline($userId)
     {
         return $this->volunteerRepository->isOnline($userId);
     }
 
+
+
     public function setOnline($userId, $active)
     {
         return $this->volunteerRepository->setOnline($userId, $active);
     }
+
+
 
     public function fetchAvailableCouriersInTown($town)
     {
         return $this->volunteerRepository->fetchAvailableCouriersInTown($town);
     }
 
+
+
     public function updateTown($selectedTown, $userId)
     {
         return $this->database->table(self::TABLE_NAME)->wherePrimary($userId)->update(['town' => $selectedTown]);
     }
+
+
 
     public function getTownForUser($userId)
     {
         return $this->volunteerRepository->getTownForUser($userId);
     }
 
+
+
     public function getTowns()
     {
         return $this->volunteerRepository->getTowns();
     }
+
+
 
     public function fetchAllUsersInRole($role = null)
     {
         return $this->volunteerRepository->fetchAllUsersInRole($role);
     }
 
+
+
     public function fetchPhoneNumber($courierId)
     {
         return $this->volunteerRepository->fetchPhoneNumber($courierId);
     }
 
+
+
     public function findAllOnlineUsers()
     {
         return $this->volunteerRepository->findAllOnlineUsers();
     }
+
+
 
     public function fetchAllUsersInRoleForGrid($role)
     {
@@ -229,7 +286,7 @@ final class UserManager
                 'personEmail' => $volunteer->getPersonEmail(),
                 'personPhone' => $volunteer->getPersonPhone(),
                 'address' => $city,
-                'active' => $volunteer->getActive()
+                'active' => $volunteer->getActive(),
             ];
 
             $city = null;
