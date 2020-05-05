@@ -180,6 +180,7 @@ order:
     statusDelivering: 'Kurýr doručuje'
     statusDelivered: 'Kurýr doručil'
     statusWaiting: 'Čekající'
+    reserved: 'Objednávku si již někdo vzal na starost'
 seamstress:
     wannaJoin: 'Chci se stát švadlenou'
     title: 'Švadlena'

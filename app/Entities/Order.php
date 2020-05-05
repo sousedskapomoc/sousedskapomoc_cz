@@ -42,6 +42,11 @@ class Order
     protected $courier;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Volunteer", inversedBy="coordinatedOrders", cascade={"persist"})
+     */
+    protected $coordinator;
+
+    /**
      * @ORM\Column(type="string")
      */
     protected $stat;
@@ -70,6 +75,32 @@ class Order
      * @ORM\OneToOne(targetEntity="Demand", mappedBy="createdOrder", cascade={"persist"})
      */
     protected $fromDemand;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    protected $reservedAt;
+
+
+
+    /**
+     * @return mixed
+     */
+    public function getReservedAt()
+    {
+        return $this->reservedAt;
+    }
+
+
+
+    /**
+     * @param mixed $reservedAt
+     */
+    public function setReservedAt($reservedAt) : void
+    {
+        $this->reservedAt = $reservedAt;
+    }
+
 
 
     /**
@@ -215,6 +246,22 @@ class Order
         $this->courier = $courier;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getCoordinator()
+    {
+        return $this->coordinator;
+    }
+
+
+    /**
+     * @param mixed $coordinator
+     */
+    public function setCoordinator($coordinator): void
+    {
+        $this->coordinator = $coordinator;
+    }
 
     /**
      * @return mixed

@@ -2,7 +2,9 @@
 
 namespace SousedskaPomoc\Repository;
 
+use Cassandra\Date;
 use Doctrine\ORM\EntityRepository as DoctrineEntityRepository;
+use Nette\Utils\DateTime;
 use SousedskaPomoc\Entities\Address;
 use SousedskaPomoc\Entities\Order;
 use SousedskaPomoc\Entities\Volunteer;
@@ -14,10 +16,13 @@ class OrderRepository extends DoctrineEntityRepository
         return $this->findOneBy(['id' => $id]);
     }
 
+
+
     public function getByUser($id)
     {
         return $this->findBy(['owner' => $id]);
     }
+
 
 
     public function fetchCount()
@@ -25,10 +30,14 @@ class OrderRepository extends DoctrineEntityRepository
         return $this->count([]);
     }
 
+
+
     public function getAllLive($id)
     {
         $this->findby(['courier' => $id]);
     }
+
+
 
     public function getAllInTownByStatus($town, $status)
     {
@@ -43,8 +52,11 @@ class OrderRepository extends DoctrineEntityRepository
         AND
         o.stat = '$status'
         ");
+
         return $query->getResult();
     }
+
+
 
     public function getAllLiveInTown($town)
     {
@@ -56,8 +68,11 @@ class OrderRepository extends DoctrineEntityRepository
             ->andWhere("a.city = :town")
             ->andWhere("o.stat IN ('assigned','picking','delivering')");
         $query = $qb->getQuery();
+
         return $query->getResult();
     }
+
+
 
     public function updateStatus($id, $active)
     {
@@ -73,20 +88,28 @@ class OrderRepository extends DoctrineEntityRepository
         }
     }
 
+
+
     public function findAllForUser($userId)
     {
         return $this->findBy(['owner' => $userId]);
     }
+
+
 
     public function findAllForCourier($userId)
     {
         return $this->findBy(['courier' => $userId]);
     }
 
+
+
     public function findAllNew()
     {
         return $this->findBy(['stat' => 'new']);
     }
+
+
 
     public function changeStatus($orderId, $status)
     {
@@ -102,6 +125,8 @@ class OrderRepository extends DoctrineEntityRepository
         }
     }
 
+
+
     public function updateNote($orderId, $note)
     {
         /** @var Order $order */
@@ -116,6 +141,8 @@ class OrderRepository extends DoctrineEntityRepository
         }
     }
 
+
+
     public function findAllLive()
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
@@ -123,8 +150,11 @@ class OrderRepository extends DoctrineEntityRepository
             ->from('\SousedskaPomoc\Entities\Order', 'o')
             ->Where("o.stat IN ('assigned','picking','delivering')");
         $query = $qb->getQuery();
+
         return $query->getResult();
     }
+
+
 
     public function findAllLiveByCourierByTown($town, $userId)
     {
@@ -138,13 +168,56 @@ class OrderRepository extends DoctrineEntityRepository
             ->andWhere("a.city = :town")
             ->andWhere("o.stat IN ('assigned','picking','delivering')");
         $query = $qb->getQuery();
+
         return $query->getResult();
     }
+
+
 
     public function findAllDelivered()
     {
         return $this->findBy(['stat' => 'delivered']);
     }
+
+
+
+    public function assignOrderCoordinator($order_id, Volunteer $user)
+    {
+
+        /** @var Order $order */
+        $order = $this->getById($order_id);
+
+        if (!$order instanceof Order) {
+            throw new \Exception("Order not found");
+        }
+
+        $order->setCoordinator($user);
+        $order->setReservedAt(new DateTime());
+        $em = $this->getEntityManager();
+        $em->persist($order);
+        $em->flush();
+    }
+
+
+
+    public function unassignOrderCoordinator($order_id)
+    {
+
+        /** @var Order $order */
+        $order = $this->getById($order_id);
+
+        if (!$order instanceof Order) {
+            throw new \Exception("Order not found");
+        }
+
+        $order->setCoordinator(null);
+        $order->setReservedAt(null);
+        $em = $this->getEntityManager();
+        $em->persist($order);
+        $em->flush();
+    }
+
+
 
     public function assignOrder($courier, $order_id)
     {
@@ -168,6 +241,8 @@ class OrderRepository extends DoctrineEntityRepository
         }
     }
 
+
+
     public function findAllNewInTown($town)
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
@@ -178,8 +253,29 @@ class OrderRepository extends DoctrineEntityRepository
             ->setParameter('town', $town)
             ->andWhere("a.city = :town");
         $query = $qb->getQuery();
+
         return $query->getResult();
     }
+
+
+
+    public function findAllNewInTownAvailable($town, $user)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('o')
+            ->from('\SousedskaPomoc\Entities\Order', 'o')
+            ->leftJoin('o.deliveryAddress', 'a')
+            ->where("o.stat = 'new'")
+            ->setParameter('town', $town)
+            ->andWhere("a.city = :town")
+            ->setParameter('user', $user->getId())
+            ->andWhere("o.coordinator = :user OR o.coordinator is NULL");
+        $query = $qb->getQuery();
+
+        return $query->getResult();
+    }
+
+
 
     public function findAllLiveInTown($town)
     {
@@ -191,8 +287,11 @@ class OrderRepository extends DoctrineEntityRepository
             ->setParameter('town', $town)
             ->andWhere("a.city = :town");
         $query = $qb->getQuery();
+
         return $query->getResult();
     }
+
+
 
     public function findAllDeliveredInTown($town)
     {
@@ -204,8 +303,10 @@ class OrderRepository extends DoctrineEntityRepository
             ->setParameter('town', $town)
             ->andWhere("a.city = :town");
         $query = $qb->getQuery();
+
         return $query->getResult();
     }
+
 
 
     /**
@@ -219,12 +320,14 @@ class OrderRepository extends DoctrineEntityRepository
     }
 
 
+
     public function create(Order $order)
     {
         $em = $this->getEntityManager();
         $em->persist($order);
         $em->flush();
     }
+
 
 
     public function update(Order $dbOrder, Order $tmpOrder)
@@ -242,6 +345,7 @@ class OrderRepository extends DoctrineEntityRepository
     }
 
 
+
     public function upsert(Order $order)
     {
         $localOrder = $this->getById($order->getId());
@@ -251,6 +355,8 @@ class OrderRepository extends DoctrineEntityRepository
             $this->create($order);
         }
     }
+
+
 
     public function updateCourierNote($id, $note)
     {
@@ -265,6 +371,8 @@ class OrderRepository extends DoctrineEntityRepository
             throw new \Exception('Orders not found.');
         }
     }
+
+
 
     public function removeCourier($orderId)
     {
@@ -285,6 +393,8 @@ class OrderRepository extends DoctrineEntityRepository
         $em->flush();
     }
 
+
+
     public function remove($id)
     {
         /** @var Order $order */
@@ -295,10 +405,14 @@ class OrderRepository extends DoctrineEntityRepository
         $em->flush();
     }
 
+
+
     public function fetchDeliveredCount()
     {
         return $this->count(['stat' => 'delivered']);
     }
+
+
 
     public function getByTown(string $town)
     {
@@ -309,13 +423,18 @@ class OrderRepository extends DoctrineEntityRepository
             ->setParameter('town', $town)
             ->andWhere("a.city = :town");
         $query = $qb->getQuery();
+
         return $query->getResult();
     }
+
+
 
     public function getAllUnprocessed()
     {
         return $this->findBy(['stat' => 'new']);
     }
+
+
 
     public function getUnprocessedByTown($town)
     {
@@ -328,8 +447,11 @@ class OrderRepository extends DoctrineEntityRepository
             ->andWhere("a.city = :town")
             ->andWhere("o.stat = :stat");
         $query = $qb->getQuery();
+
         return $query->getResult();
     }
+
+
 
     public function getAllForGrid()
     {
@@ -349,7 +471,53 @@ class OrderRepository extends DoctrineEntityRepository
                 'delivery_phone' => $order->getDeliveryPhone(),
                 'items' => $order->getItems(),
                 'createdAt' => $order->getCreatedAt(),
-                'status' => $order->getStatus()
+                'status' => $order->getStatus(),
+            ];
+
+            $city = null;
+        }
+
+        return $dataset;
+    }
+
+
+
+    public function getAllOldReservedForGrid()
+    {
+        $dataset = [];
+
+        /** @var Order $order */
+        foreach ($this->findBy([
+            'stat' => 'new',
+        ], ['id' => 'DESC']) as $order) {
+            if ($order->getReservedAt() == null) {
+                continue;
+            }
+
+            /** @var DateTime $date */
+            $date = $order->getReservedAt();
+            $date->modify('+30 minutes');
+            $now = new DateTime();
+            if ($now < $date) {
+                continue;
+            }
+
+            if ($order->getDeliveryAddress() !== null) {
+                /** @var Address $city */
+                $city = $order->getDeliveryAddress()->getFullAddress();
+            }
+
+            $dataset[] = [
+                'id' => $order->getId(),
+                'owner' => $order->getOwner()->getPersonName(),
+                'delivery_address' => $city,
+                'delivery_phone' => $order->getDeliveryPhone(),
+                'items' => $order->getItems(),
+                'createdAt' => $order->getCreatedAt(),
+                'reservedAt' => $order->getReservedAt(),
+                'coordinatorName' => $order->getCoordinator()->getPersonName(),
+                'coordinatorPhone' => $order->getCoordinator()->getPersonPhone(),
+                'status' => $order->getStatus(),
             ];
 
             $city = null;

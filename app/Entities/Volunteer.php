@@ -80,6 +80,11 @@ class Volunteer
     protected $deliveredOrders;
 
     /**
+     * @ORM\OneToMany(targetEntity="Order", mappedBy="coordinator", cascade={"persist"})
+     */
+    protected $coordinatedOrders;
+
+    /**
      * @ORM\OneToMany(targetEntity="Demand", mappedBy="courier", cascade={"persist"})
      */
     protected $deliveredDemands;
@@ -391,6 +396,57 @@ class Volunteer
             }
         } else {
             $order->setCourier(null);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCoordinatedOrders()
+    {
+        return $this->coordinatedOrders;
+    }
+
+
+
+    /**
+     * @param mixed $order
+     *
+     * @return Volunteer
+     */
+    public function addCoordinatedOrder($order) : self
+    {
+        if ($this->coordinatedOrders) {
+            if (!$this->coordinatedOrders->contains($order)) {
+                $this->coordinatedOrders[] = $order;
+            }
+            /** @var Order $order */
+            $order->setCoordinator($this);
+        } else {
+            $this->coordinatedOrders[] = $order;
+            /** @var Order $order */
+            $order->setCoordinator($this);
+        }
+
+        return $this;
+    }
+
+
+
+    public function removeCoordinatedOrder($order) : self
+    {
+        if ($this->coordinatedOrders) {
+            if ($this->coordinatedOrders->contains($order)) {
+                $this->coordinatedOrders->removeElement($order);
+                /** @var Order $order */
+                $order->setCoordinator(null);
+            } else {
+                $order->setCoordinator(null);
+            }
+        } else {
+            $order->setCoordinator(null);
         }
 
         return $this;
