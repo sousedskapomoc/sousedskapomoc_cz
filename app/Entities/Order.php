@@ -42,6 +42,11 @@ class Order
     protected $courier;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Volunteer", inversedBy="coordinatedOrders", cascade={"persist"})
+     */
+    protected $coordinator;
+
+    /**
      * @ORM\Column(type="string")
      */
     protected $stat;
@@ -215,6 +220,22 @@ class Order
         $this->courier = $courier;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getCoordinator()
+    {
+        return $this->coordinator;
+    }
+
+
+    /**
+     * @param mixed $coordinator
+     */
+    public function setCoordinator($coordinator): void
+    {
+        $this->coordinator = $coordinator;
+    }
 
     /**
      * @return mixed

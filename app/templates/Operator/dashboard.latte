@@ -89,7 +89,10 @@
 	<hr/>
 	<span n:if="$order->getOwner()"><strong>Pečovatel:</strong> {$order->getOwner()->getPersonName()} ({$order->getOwner()->getPersonPhone()})<br/></span>
 	<span n:if="$order->getCourier()"><strong>Kurýr:</strong> {$order->getCourier()->getPersonName()} ({$order->getCourier()->getPersonPhone()})<br/></span>
-{*	<span n:if="$order->operator_id"><strong>Operátor:</strong> {$order->get|fetchUser} ({$order->operator_id|fetchPhone})<br/></span>*}
+	<span n:if="$order->getCoordinator()"><strong>Operátor:</strong> {$order->getCoordinator()->getPersonName()} ({$order->getCoordinator()->getPersonPhone()})<br/></span>
+	<hr/>
+    <a n:if="!$order->getCoordinator()" href="{link assignCoordinator! orderId => $order->getId()}">Rezervovat</a>
+    <a n:if="$order->getCoordinator()" href="{link unassignCoordinator! orderId => $order->getId()}">Zrušit rezervaci</a>
 	<hr/>
 {/block}
 {block orderAssign}
