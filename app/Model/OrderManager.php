@@ -166,6 +166,11 @@ final class OrderManager
         return $this->orderRepository->findAllNewInTown($town);
     }
 
+    public function findAllNewInTownAvailable($town, $user)
+    {
+        return $this->orderRepository->findAllNewInTownAvailable($town, $user);
+    }
+
 
 
     public function findAllLiveInTown($town, $operatorId)

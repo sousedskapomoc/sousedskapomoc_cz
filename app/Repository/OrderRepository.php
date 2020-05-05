@@ -253,6 +253,24 @@ class OrderRepository extends DoctrineEntityRepository
         return $query->getResult();
     }
 
+    public function findAllNewInTownAvailable($town, $user)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('o')
+            ->from('\SousedskaPomoc\Entities\Order', 'o')
+            ->leftJoin('o.deliveryAddress', 'a')
+            ->where("o.stat = 'new'")
+            ->setParameter('town', $town)
+            ->andWhere("a.city = :town")
+            ->setParameter('user', $user->getId())
+            ->andWhere("o.coordinator = :user OR o.coordinator is NULL");
+        $query = $qb->getQuery();
+
+        return $query->getResult();
+    }
+
+
+
 
 
     public function findAllLiveInTown($town)
