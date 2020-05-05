@@ -2,7 +2,9 @@
 
 namespace SousedskaPomoc\Repository;
 
+use Cassandra\Date;
 use Doctrine\ORM\EntityRepository as DoctrineEntityRepository;
+use Nette\Utils\DateTime;
 use SousedskaPomoc\Entities\Address;
 use SousedskaPomoc\Entities\Order;
 use SousedskaPomoc\Entities\Volunteer;
@@ -190,6 +192,7 @@ class OrderRepository extends DoctrineEntityRepository
         }
 
         $order->setCoordinator($user);
+        $order->setReservedAt(new DateTime());
         $em = $this->getEntityManager();
         $em->persist($order);
         $em->flush();
@@ -208,6 +211,7 @@ class OrderRepository extends DoctrineEntityRepository
         }
 
         $order->setCoordinator(null);
+        $order->setReservedAt(null);
         $em = $this->getEntityManager();
         $em->persist($order);
         $em->flush();
@@ -253,6 +257,8 @@ class OrderRepository extends DoctrineEntityRepository
         return $query->getResult();
     }
 
+
+
     public function findAllNewInTownAvailable($town, $user)
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
@@ -268,8 +274,6 @@ class OrderRepository extends DoctrineEntityRepository
 
         return $query->getResult();
     }
-
-
 
 
 
@@ -467,6 +471,52 @@ class OrderRepository extends DoctrineEntityRepository
                 'delivery_phone' => $order->getDeliveryPhone(),
                 'items' => $order->getItems(),
                 'createdAt' => $order->getCreatedAt(),
+                'status' => $order->getStatus(),
+            ];
+
+            $city = null;
+        }
+
+        return $dataset;
+    }
+
+
+
+    public function getAllOldReservedForGrid()
+    {
+        $dataset = [];
+
+        /** @var Order $order */
+        foreach ($this->findBy([
+            'stat' => 'new',
+        ], ['id' => 'DESC']) as $order) {
+            if ($order->getReservedAt() == null) {
+                continue;
+            }
+
+            /** @var DateTime $date */
+            $date = $order->getReservedAt();
+            $date->modify('+30 minutes');
+            $now = new DateTime();
+            if ($now < $date) {
+                continue;
+            }
+
+            if ($order->getDeliveryAddress() !== null) {
+                /** @var Address $city */
+                $city = $order->getDeliveryAddress()->getFullAddress();
+            }
+
+            $dataset[] = [
+                'id' => $order->getId(),
+                'owner' => $order->getOwner()->getPersonName(),
+                'delivery_address' => $city,
+                'delivery_phone' => $order->getDeliveryPhone(),
+                'items' => $order->getItems(),
+                'createdAt' => $order->getCreatedAt(),
+                'reservedAt' => $order->getReservedAt(),
+                'coordinatorName' => $order->getCoordinator()->getPersonName(),
+                'coordinatorPhone' => $order->getCoordinator()->getPersonPhone(),
                 'status' => $order->getStatus(),
             ];
 

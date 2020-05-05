@@ -141,6 +141,32 @@ class HeadquartersPresenter extends BasePresenter
         return $grid;
     }
 
+    public function createComponentOrdersReservedDataGrid()
+    {
+        $grid = new DataGrid();
+
+        //@TODO - add text filter into address
+        $grid->setDataSource(new ArrayCollection($this->orderRepository->getAllOldReservedForGrid()));
+        $grid->addColumnNumber('id', 'ID')
+            ->setFilterText();
+        $grid->addColumnText('owner', 'Zadavatel')->setFilterText();
+        $grid->addColumnText('delivery_address', 'Adresa')->setFilterText();
+
+        $grid->addColumnText('delivery_phone', 'Telefon')->setFilterText();
+        $grid->addColumnText('items', 'Položky obj.')->setFilterText();
+
+        $grid->addColumnDateTime('createdAt', 'Datum přidání');
+        $grid->addColumnDateTime('reservedAt', 'Datum rezervace');
+        $grid->addColumnText('coordinatorName', 'Operátor');
+        $grid->addColumnText('coordinatorPhone', 'Operátor');
+        $grid->addColumnText('status', 'Status')->setFilterText();
+        $grid->addAction('reset', 'Resetovat', 'reset!')->setClass("btn btn-danger btn-sm");
+        $grid->addAction('detail', 'Detail', 'Courier:detail')->setClass("btn btn-primary btn-sm");
+        $grid->addAction('delete', 'X', 'deleteOrder!')->setClass("btn btn-danger btn-sm");
+
+        return $grid;
+    }
+
 
 
     public function renderListUsers($id, $role)

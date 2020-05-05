@@ -76,6 +76,32 @@ class Order
      */
     protected $fromDemand;
 
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    protected $reservedAt;
+
+
+
+    /**
+     * @return mixed
+     */
+    public function getReservedAt()
+    {
+        return $this->reservedAt;
+    }
+
+
+
+    /**
+     * @param mixed $reservedAt
+     */
+    public function setReservedAt($reservedAt) : void
+    {
+        $this->reservedAt = $reservedAt;
+    }
+
+
 
     /**
      * @return mixed

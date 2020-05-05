@@ -28,7 +28,20 @@
 							<tr n:foreach="$newOrders as $order">
 								<td>
 									{include #order, order => $order}
-									{include #orderAssign, order => $order}
+                                    {if $order->getCoordinator()}
+                                        {if $order->getCoordinator()->getId() == $user->getId()}
+                                            {include #orderAssign, order => $order}
+                                            <hr>
+                                            <a href="{link unassignCoordinator! orderId => $order->getId()}">Zrušit rezervaci</a><br/>
+                                            Rezervováno<br/>
+                                            {$order->getReservedAt()|date:'h:i j. n. Y'}
+                                        {else}
+                                            Rezervováno<br/>
+                                            {$order->getReservedAt()|date:'h:i j. n. Y'}
+                                        {/if}
+                                    {else}
+                                        <a href="{link assignCoordinator! orderId => $order->getId()}">Rezervovat</a>
+                                    {/if}
 								</td>
 							</tr>
 						</table>
@@ -91,28 +104,25 @@
 	<span n:if="$order->getCourier()"><strong>Kurýr:</strong> {$order->getCourier()->getPersonName()} ({$order->getCourier()->getPersonPhone()})<br/></span>
 	<span n:if="$order->getCoordinator()"><strong>Operátor:</strong> {$order->getCoordinator()->getPersonName()} ({$order->getCoordinator()->getPersonPhone()})<br/></span>
 	<hr/>
-    <a n:if="!$order->getCoordinator()" href="{link assignCoordinator! orderId => $order->getId()}">Rezervovat</a>
-    <a n:if="$order->getCoordinator()" href="{link unassignCoordinator! orderId => $order->getId()}">Zrušit rezervaci</a>
-	<hr/>
 {/block}
 {block orderAssign}
-	<form action="?do=assignCourier" method="POST">
-		<div class="form-row">
-			<div class="form-group">
-				<input type="hidden" name="order_id" value="{$order->getId()}"/>
-				<select name="courier_id" class="form-control">
-					{foreach $availableCouriers as $courier}
-						<option value="{$courier->getId()}">{$courier->getPersonName()} ({$courier->getPersonPhone()})
-							({$courier->getTransport()->getType()})
-						</option>
-					{/foreach}
-				</select>
-			</div>
-			<div class="form-group">
-				<button type="submit" class="btn btn-sm btn-primary">Přiradit</button>
-			</div>
-		</div>
-	</form>
+    <form action="?do=assignCourier" method="POST">
+        <div class="form-row">
+            <div class="form-group">
+                <input type="hidden" name="order_id" value="{$order->getId()}"/>
+                <select name="courier_id" class="form-control">
+                    {foreach $availableCouriers as $courier}
+                        <option value="{$courier->getId()}">{$courier->getPersonName()} ({$courier->getPersonPhone()})
+                            ({$courier->getTransport()->getType()})
+                        </option>
+                    {/foreach}
+                </select>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-sm btn-primary">Přiradit</button>
+            </div>
+        </div>
+    </form>
 {/block}
 {block orderManagement}
 	<form action="{link updateOrderStatus! orderId => $order->getId()}" method="post" onchange="this.submit();"
