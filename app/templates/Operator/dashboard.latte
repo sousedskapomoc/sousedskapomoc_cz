@@ -9,80 +9,85 @@
 				<p>
 					<a href="https://sousedskapomoc.cz/pdf/zasady-dispecer.pdf" target="_blank"
 					   class="btn btn-sm btn-info">Manuál dispečera</a>
+                    <div id='link'>
+                        <a href='javascript:reloadOff()'
+                       class="btn btn-sm btn-info">Vypnout automaticke obnovování stránky</a>
+                </div>
 				</p>
 			</div>
 		</div>
 	</div>
 	<div class="row">
 		<div class="col-12">
-			<h2>{_templates.order.title}</h2>
-			<table class="table table-striped table-hover">
-				<thead class="thead-dark">
-				<tr>
-					{_templates.order.header|noescape}
-				</tr>
-				</thead>
-				<tr>
-					<td>
-						<table class="table">
-							<tr n:foreach="$newOrders as $order">
-								<td>
-									{include #order, order => $order}
-                                    {if $order->getCoordinator()}
-                                        {if $order->getCoordinator()->getId() == $user->getId()}
-                                            {include #orderAssign, order => $order}
-                                            <hr>
-                                            <a href="{link unassignCoordinator! orderId => $order->getId()}">Zrušit rezervaci</a><br/>
-                                            Rezervováno<br/>
-                                            {$order->getReservedAt()|date:'h:i j. n. Y'}
-                                        {else}
-                                            Rezervováno<br/>
-                                            {$order->getReservedAt()|date:'h:i j. n. Y'}
-                                        {/if}
-                                    {else}
-                                        <a href="{link assignCoordinator! orderId => $order->getId()}">Rezervovat</a>
-                                    {/if}
-								</td>
-							</tr>
-						</table>
-					</td>
-					<td>
-						<table class="table">
-							<tr n:foreach="$liveOrders as $order">
-								<td>
-									{include #order, order => $order}
-									{include #orderManagement, order => $order}
-									{if $user->isInRole('admin')}
-										<a n:href="unassignOrder! orderId => $order->getId()">Vrátit do stavu nová</a>
-									{/if}
-								</td>
-							</tr>
-						</table>
-					</td>
-					<td>
-						<table class="table">
-							<tr n:foreach="$deliveredOrders as $order">
-								<td>
-									{include #order, order => $order}
-									{if $user->isInRole('admin')}
-										<a n:href="unassignOrder! orderId => $order->getId()">Vrátit do stavu nová</a>
-									{/if}
-								</td>
-							</tr>
-						</table>
-					</td>
-				</tr>
-			</table>
+            <div class="row">
+                <div class="col-12">
+                    <h2>{_templates.order.title}</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <div n:foreach="$newOrders as $order">
+                        {include #order, order => $order}
+                        {if $order->getCoordinator()}
+                            {if $order->getCoordinator()->getId() == $user->getId()}
+                                {include #orderAssign, order => $order}
+                                <hr>
+                                <a href="{link unassignCoordinator! orderId => $order->getId()}">Zrušit rezervaci</a><br/>
+                                Rezervováno<br/>
+                            {$order->getReservedAt()|date:'G:i j. n. Y'}
+                            {else}
+                                Rezervováno<br/>
+                                {$order->getReservedAt()|date:'G:i j. n. Y'}
+                            {/if}
+                        {else}
+                            <a href="{link assignCoordinator! orderId => $order->getId()}">Rezervovat</a>
+                        {/if}
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div n:foreach="$liveOrders as $order">
+                        {include #order, order => $order}
+                        {include #orderManagement, order => $order}
+                        {if $user->isInRole('admin')}
+                            <a n:href="unassignOrder! orderId => $order->getId()">Vrátit do stavu nová</a>
+                        {/if}
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div n:foreach="$deliveredOrders as $order">
+                        {include #order, order => $order}
+                        {if $user->isInRole('admin')}
+                            <a n:href="unassignOrder! orderId => $order->getId()">Vrátit do stavu nová</a>
+                        {/if}
+                    </div>
+                </div>
+            </div>
 		</div>
 	</div>
-	<script>
-		window.setInterval('refresh()', 20000); 	// Call a function every 10000 milliseconds (OR 10 seconds).
+    <script>
+        window.setInterval('refresh()', 15000); 	// Call a function every 10000 milliseconds (OR 10 seconds).
 
-		// Refresh or reload page.
-		function refresh() {
-			window.location.reload();
-		}
-	</script>
+        var reloadStatus = true;
+
+        function reloadOff() {
+            reloadStatus = false;
+            document.getElementById('link').innerHTML = "<a href='javascript:reloadOn()' class='btn btn-sm btn-info'>Zapnout automaticke obnovovani stranky</a>";
+        }
+
+        function reloadOn() {
+            reloadStatus = true;
+            document.getElementById('link').innerHTML = "<a href='javascript:reloadOff()' class='btn btn-sm btn-info'>Vypnout automaticke obnovovani stranky</a>";
+        }
+
+
+
+        // Refresh or reload page.
+        function refresh() {
+            if (reloadStatus) {
+                window.location.reload();
+            }
+        }
+    </script>
 {/block}
 {block order}
 	<h6><a n:href="Coordinator:detail id => $order->getId()" target="_blank">Pro: {$order->getCustomerNote() ?? null}</a></h6>
