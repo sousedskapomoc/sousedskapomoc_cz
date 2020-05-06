@@ -70,6 +70,18 @@ class PublicDemandsPresenter extends BasePresenter
         $this->template->demand = $this->demandRepository->getById($id);
     }
 
+    public function handleMarkDelivered($id)
+    {
+        if (!$this->user->isLoggedIn()) {
+            $this->flashMessage("Abyste mohl(a) označit jako doručené je nutné být přihlašen(á)");
+        }
+
+        $this->demandRepository->setProcessed($id, 'delivered');
+
+        $this->flashMessage("Poptávku jsme označili jako doručenou.");
+        $this->redirect("this");
+    }
+
     public function handleSelfAssign($id)
     {
         if (!$this->user->isLoggedIn()) {
