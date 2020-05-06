@@ -88,15 +88,17 @@
 {/block}
 {block order}
 	<h6><a n:href="Coordinator:detail id => $order->getId()" target="_blank">Pro: {$order->getCustomerNote() ?? null}</a></h6>
-	<strong>Stav:</strong> {$order->getStatus()|humanFriendlyStatus} -
-    {if $order->getCoordinator() && $order->getStatus() == 'new'}
-        {if $order->getCoordinator()->getId() == $user->getId()}
-            <a href="{link unassignCoordinator! orderId => $order->getId()}" class="btn btn-sm btn-danger">Zrušit rezervaci</a>
+	<strong>Stav:</strong> {$order->getStatus()|humanFriendlyStatus}
+    {if $order->getCoordinator()?->getId() === $user->getId()}
+        {if $order->getStatus() === 'new'}
+            - <a href="{link unassignCoordinator! orderId => $order->getId()}" class="btn btn-sm btn-danger">Zrušit rezervaci</a>
         {else}
             Rezervováno {$order->getReservedAt()|date:'G:i j. n. Y'}
         {/if}
     {else}
-        <a href="{link assignCoordinator! orderId => $order->getId()}" class="btn btn-sm btn-primary">Rezervovat</a>
+        {if $order->getStatus() === 'new'}
+            - <a href="{link assignCoordinator! orderId => $order->getId()}" class="btn btn-sm btn-primary">Rezervovat</a>
+        {/if}
     {/if}
 	<hr/>
 	{if $order->getPickupAddress()}
