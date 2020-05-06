@@ -34,10 +34,10 @@
                                             <hr>
                                             <a href="{link unassignCoordinator! orderId => $order->getId()}">Zrušit rezervaci</a><br/>
                                             Rezervováno<br/>
-                                            {$order->getReservedAt()|date:'h:i j. n. Y'}
+                                            {$order->getReservedAt()|date:'G:i j. n. Y'}
                                         {else}
                                             Rezervováno<br/>
-                                            {$order->getReservedAt()|date:'h:i j. n. Y'}
+                                            {$order->getReservedAt()|date:'G:i j. n. Y'}
                                         {/if}
                                     {else}
                                         <a href="{link assignCoordinator! orderId => $order->getId()}">Rezervovat</a>
