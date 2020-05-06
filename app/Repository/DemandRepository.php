@@ -92,6 +92,7 @@ class DemandRepository extends DoctrineEntityRepository
     public function assignDemand(Volunteer $volunteer, Demand $demand)
     {
         $demand->setCourier($volunteer);
+        $demand->setProcessed('delivering');
         $entityManager = $this->getEntityManager();
         $entityManager->persist($demand);
         $entityManager->flush();
