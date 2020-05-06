@@ -9,10 +9,10 @@
 				<p>
 					<a href="https://sousedskapomoc.cz/pdf/zasady-dispecer.pdf" target="_blank"
 					   class="btn btn-sm btn-info">Manuál dispečera</a>
-                    <div id='link'>
+                    <div id='link'">
                         <a href='javascript:reloadOff()'
                        class="btn btn-sm btn-info">Vypnout automaticke obnovování stránky</a>
-                </div>
+                    </div>
 				</p>
 			</div>
 		</div>
@@ -25,27 +25,24 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-4">
-                    <div n:foreach="$newOrders as $order">
+                <div class="col-5">
+                    <h4>Objednávky k přiřazení</h4>
+                </div>
+                <div class="col-5">
+                    <h4>Objednávky které se doručují</h4>
+                </div>
+                <div class="col-2">
+                    <h4>Doručené</h4>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-5">
+                    <div n:foreach="$newOrders as $order" class="orderDiv {if $iterator->counter % 2 == 1}alert alert-light{else}alert alert-secondary{/if}">
                         {include #order, order => $order}
-                        {if $order->getCoordinator()}
-                            {if $order->getCoordinator()->getId() == $user->getId()}
-                                {include #orderAssign, order => $order}
-                                <hr>
-                                <a href="{link unassignCoordinator! orderId => $order->getId()}">Zrušit rezervaci</a><br/>
-                                Rezervováno<br/>
-                            {$order->getReservedAt()|date:'G:i j. n. Y'}
-                            {else}
-                                Rezervováno<br/>
-                                {$order->getReservedAt()|date:'G:i j. n. Y'}
-                            {/if}
-                        {else}
-                            <a href="{link assignCoordinator! orderId => $order->getId()}">Rezervovat</a>
-                        {/if}
                     </div>
                 </div>
-                <div class="col-4">
-                    <div n:foreach="$liveOrders as $order">
+                <div class="col-5">
+                    <div n:foreach="$liveOrders as $order" class="orderDiv {if $iterator->counter % 2 == 1}alert alert-light{else}alert alert-secondary{/if}">
                         {include #order, order => $order}
                         {include #orderManagement, order => $order}
                         {if $user->isInRole('admin')}
@@ -53,9 +50,9 @@
                         {/if}
                     </div>
                 </div>
-                <div class="col-4">
-                    <div n:foreach="$deliveredOrders as $order">
-                        {include #order, order => $order}
+                <div class="col-2">
+                    <div n:foreach="$deliveredOrders as $order" class="orderDiv {if $iterator->counter % 2 == 1}alert alert-light{else}alert alert-secondary{/if}">
+                        {include #orderMin, order => $order}
                         {if $user->isInRole('admin')}
                             <a n:href="unassignOrder! orderId => $order->getId()">Vrátit do stavu nová</a>
                         {/if}
@@ -91,7 +88,16 @@
 {/block}
 {block order}
 	<h6><a n:href="Coordinator:detail id => $order->getId()" target="_blank">Pro: {$order->getCustomerNote() ?? null}</a></h6>
-	<strong>Stav:</strong> {$order->getStatus()|humanFriendlyStatus}<br/>
+	<strong>Stav:</strong> {$order->getStatus()|humanFriendlyStatus} -
+    {if $order->getCoordinator() && $order->getStatus() == 'new'}
+        {if $order->getCoordinator()->getId() == $user->getId()}
+            <a href="{link unassignCoordinator! orderId => $order->getId()}" class="btn btn-sm btn-danger">Zrušit rezervaci</a>
+        {else}
+            Rezervováno {$order->getReservedAt()|date:'G:i j. n. Y'}
+        {/if}
+    {else}
+        <a href="{link assignCoordinator! orderId => $order->getId()}" class="btn btn-sm btn-primary">Rezervovat</a>
+    {/if}
 	<hr/>
 	{if $order->getPickupAddress()}
 		<strong>Adresa vyzvednutí:</strong> <a href="https://www.google.com/maps/search/{$order->getPickupAddress()->getFullAddress()}"
@@ -108,7 +114,16 @@
 	<span n:if="$order->getOwner()"><strong>Pečovatel:</strong> {$order->getOwner()->getPersonName()} ({$order->getOwner()->getPersonPhone()})<br/></span>
 	<span n:if="$order->getCourier()"><strong>Kurýr:</strong> {$order->getCourier()->getPersonName()} ({$order->getCourier()->getPersonPhone()})<br/></span>
 	<span n:if="$order->getCoordinator()"><strong>Operátor:</strong> {$order->getCoordinator()->getPersonName()} ({$order->getCoordinator()->getPersonPhone()})<br/></span>
-	<hr/>
+    {if $order->getCoordinator() && $order->getStatus() == 'new'}
+        {if $order->getCoordinator()->getId() == $user->getId()}
+            <hr/>
+            {include #orderAssign, order => $order}
+        {/if}
+    {/if}
+{/block}
+{block orderMin}
+    <h6><a n:href="Coordinator:detail id => $order->getId()" target="_blank">Pro: {$order->getCustomerNote() ?? null}</a></h6>
+    <strong>Stav:</strong> {$order->getStatus()|humanFriendlyStatus}<br/>
 {/block}
 {block orderAssign}
     <form action="?do=assignCourier" method="POST">
