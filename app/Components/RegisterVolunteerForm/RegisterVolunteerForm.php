@@ -7,6 +7,7 @@ use Contributte\FormsBootstrap\Enums\RenderMode;
 use Kdyby\Translation\Translator;
 use Nette\Application\UI\Control;
 use Nette\Security\AuthenticationException;
+use SousedskaPomoc\Components\Suggester\ISuggesterTownInterface;
 use SousedskaPomoc\Entities\Address;
 use SousedskaPomoc\Entities\Volunteer;
 use SousedskaPomoc\Repository\AddressRepository;
@@ -40,6 +41,9 @@ class RegisterVolunteerFormControl extends Control
     /** @var AddressRepository */
     private $addressRepository;
 
+    /** @var ISuggesterTownInterface */
+    private $townSuggester;
+
     private $role;
 
 
@@ -48,19 +52,28 @@ class RegisterVolunteerFormControl extends Control
         Translator $translator,
         Passwords $passwords,
         TransportRepository $transport,
-        Role $role,
+        $role,
         RoleRepository $roleRepository,
         Mail $mail,
-        AddressRepository $addrRepository
+        AddressRepository $addrRepository,
+        ISuggesterTownInterface $townSuggester
     ) {
         $this->volunteerRepository = $volunteerRepository;
         $this->translator = $translator;
         $this->passwords = $passwords;
         $this->transportRepository = $transport;
-        $this->role = $role;
+        if ($role != null) {
+            $this->role = $role;
+        }
         $this->roleRepository = $roleRepository;
         $this->mail = $mail;
         $this->addressRepository = $addrRepository;
+        $this->townSuggester = $townSuggester;
+    }
+
+    public function createComponentTownSuggester()
+    {
+        return $this->townSuggester->create();
     }
 
 
@@ -69,27 +82,46 @@ class RegisterVolunteerFormControl extends Control
         $form = new BootstrapForm;
 //        $form->renderMode = RenderMode::VERTICAL_MODE;
 
-        $form->addText('town', 'Zadejte mesto')
-            ->setPlaceholder('Mesto')
-            ->setRequired($this->translator->translate('forms.registerCoordinator.townRequired'));
         $form->addText('personName', $this->translator->translate('forms.registerCoordinator.nameLabel'))
             ->setRequired($this->translator->translate('forms.registerCoordinator.nameRequired'));
         $form->addText('personPhone', $this->translator->translate('forms.registerCoordinator.phoneLabel'))
             ->setRequired($this->translator->translate('forms.registerCoordinator.phoneRequired'));
         $form->addEmail('personEmail', $this->translator->translate('forms.registerCoordinator.mailLabel'))
             ->setRequired($this->translator->translate('forms.registerCoordinator.mailRequired'));
-        $form->addHidden('locationId');
+        $form->addRadioList(
+            'role',
+            'S čím můžeme pomoci:',
+            [
+                0 => 'Doručit nákup nebo léky',
+                1 => 'Stát se dobrým sousedem',
+                2 => 'Ušít roušky',
+                3 => 'Pomáhat ostatním s doručením',
+                4 => 'Dodat materiál',
+                5 => 'Pomoci 3D tiskem'
+            ]
+        );
+        $form->addRadioList(
+            'transport',
+            'Vyberte svůj dopravní prostředek:',
+            [
+                1 => 'Malé auto',
+                2 => 'Velké auto',
+                3 => 'Malá dodávka',
+                4 => 'Velká dodávka',
+                5 => 'Kolo',
+                6 => 'Motorka ',
+                7 => 'Chůze'
+            ]
+        )->setDefaultValue(7);
 
-        if ($this->role == $this->roleRepository->getByName('courier')) {
-            $form->addSelect(
-                'car',
-                $this->translator->translate('forms.registerCoordinator.carLabel'),
-                $this->transportRepository->getAllAsArray()
-            )
-                ->setRequired($this->translator->translate('forms.registerCoordinator.carRequired'));
+        if ($this->presenter->getParameter('addressHereMapsId')) {
+            $form->addHidden('locationId')
+                ->setDefaultValue($this->presenter->getParameter('addressHereMapsId'));
+        } else {
+            $form->addHidden('locationId');
         }
 
-        $form->addSubmit('addVolunteerFormSubmit', $this->translator->translate('templates.profile.button'));
+        $form->addSubmit('addVolunteerFormSubmit', $this->translator->translate('templates.profile.send'));
         $form->onSuccess[] = [$this, "processAdd"];
 
         return $form;
@@ -106,11 +138,36 @@ class RegisterVolunteerFormControl extends Control
         $user->setPersonPhone($values->personPhone);
         $user->setPersonName($values->personName);
         $user->setHash(md5($values->personEmail));
+
+        //Set roles
+        switch ($values->role) {
+            case 0:
+                $this->role = $this->roleRepository->getByName('courier');
+                break;
+            case 1:
+                $this->role = $this->roleRepository->getByName('coordinator');
+                break;
+            case 2:
+                $this->role = $this->roleRepository->getByName('seamstress');
+                break;
+            case 3:
+                $this->role = $this->roleRepository->getByName('operator');
+                break;
+            case 4:
+                $this->role = $this->roleRepository->getByName('supplier');
+                break;
+            case 5:
+                $this->role = $this->roleRepository->getByName('printman');
+                break;
+        }
+
+
         $user->setRole($this->role);
-        if ($this->role == $this->roleRepository->getByName('courier')) {
-            $user->setTransport($this->transportRepository->getById($values->car));
-        } else {
-            $user->setTransport($this->transportRepository->getByType("Chůze"));
+
+        if ($values->transport !== null) {
+            /** @var Transport $transport */
+            $transport = $this->transportRepository->find($values->transport ?? 7);
+            $user->setTransport($transport);
         }
 
         $client = new \GuzzleHttp\Client();
@@ -150,9 +207,12 @@ class RegisterVolunteerFormControl extends Control
             $address->setLatitude($gps->latitude);
         }
 
+        $user->setAddress($address);
+
 
         $link = $this->getPresenter()->link('//Homepage:changePassword', $user->getHash());
         //@TODO-Add sending mail for medical person and for government user
+
         switch ($this->role->getName()) {
             case 'courier':
                 $this->mail->sendCourierMail($values->personEmail, $link);
@@ -175,11 +235,7 @@ class RegisterVolunteerFormControl extends Control
         }
 
         try {
-            $this->addressRepository->create($address);
-            /** @var Address $dbAddress */
-            $dbAddress = $this->addressRepository->getByLocationId($values->locationId);
-            $dbAddress->addVolunteer($user);
-            $this->addressRepository->create($dbAddress);
+            $this->volunteerRepository->register($user);
 
             $this->getPresenter()->flashMessage($this->translator->translate('messages.registration.success'));
             $this->getPresenter()->redirect("Homepage:registrationFinished");

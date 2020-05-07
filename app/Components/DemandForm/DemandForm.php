@@ -57,7 +57,8 @@ class DemandFormControl extends Control
             ->setRequired($this->translator->translate('forms.registerCoordinator.nameRequired'));
         $form->addText('deliveryPhone', $this->translator->translate('forms.registerCoordinator.phoneLabel'))
             ->setRequired($this->translator->translate('forms.registerCoordinator.phoneRequired'));
-        $form->addText('deliveryAddress', "Zadejte adresu doruceni");
+        $form->addText('deliveryAddress', "Zadejte adresu doruceni")
+            ->setPlaceholder("Zadejte prosím ulici a č.p.");
         $form->addHidden('deliveryId')
             ->setRequired('Prosím zvolte adresu doručení z našeptávače.');
         $form->addTextArea('food', "Polozky objednavky");
@@ -118,12 +119,13 @@ class DemandFormControl extends Control
         $address->setState($addr->state);
         $address->setLocationId($locationId);
         $address->setCountry($addr->country);
-        $address->setDistrict($addr->county);
+        $address->setDistrict($addr->district);
         $address->setPostalCode($addr->postalCode);
+        $address->setStreet($addr->street);
+        $address->setHouseNumber($addr->houseNumber);
         $address->setLongitude($gps->longitude);
         $address->setLatitude($gps->latitude);
         $address->addDemandOrder($demand);
-
 
         try {
             $this->addressRepository->create($address);

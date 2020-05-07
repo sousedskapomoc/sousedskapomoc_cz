@@ -2,7 +2,10 @@
 
 namespace SousedskaPomoc\Presenters;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping\Embeddable;
+use SousedskaPomoc\Entities\Address;
+use SousedskaPomoc\Entities\Demand;
 use SousedskaPomoc\Entities\Order;
 use SousedskaPomoc\Repository\AddressRepository;
 use SousedskaPomoc\Repository\DemandRepository;
@@ -12,16 +15,16 @@ use Ublaboo\DataGrid\DataGrid;
 
 class HeadquartersPresenter extends BasePresenter
 {
-    /** @var \SousedskaPomoc\Repository\OrderRepository */
+    /** @var OrderRepository */
     protected $orderRepository;
 
-    /** @var \SousedskaPomoc\Repository\DemandRepository */
+    /** @var DemandRepository */
     protected $demandRepository;
 
-    /** @var \SousedskaPomoc\Repository\VolunteerRepository */
+    /** @var VolunteerRepository */
     protected $volunteerRepository;
 
-    /** @var \SousedskaPomoc\Repository\AddressRepository */
+    /** @var AddressRepository */
     protected $addressRepository;
 
     public function injectOrderRepository(OrderRepository $orderRepository)
@@ -59,19 +62,12 @@ class HeadquartersPresenter extends BasePresenter
 
         //@TODO - add text filter into address
         $grid = new DataGrid();
-        $grid->setDataSource($this->userManager->fetchAllUsersInRole($role));
+        $grid->setDataSource(new ArrayCollection($this->userManager->fetchAllUsersInRoleForGrid($role)));
         $grid->addColumnNumber('id', 'ID uživatele');
         $grid->addColumnText('personName', 'Jméno a příjmení')->setFilterText();
         $grid->addColumnText('personEmail', 'E-mail')->setFilterText();
         $grid->addColumnText('personPhone', 'Telefon')->setFilterText();
-        $grid->addColumnText('address', 'Město')
-            ->setRenderer(function ($item) {
-                if ($item->getAddress() != null) {
-                    return $item->getAddress()->getCity();
-                } else {
-                    return "Not specified";
-                }
-            });
+        $grid->addColumnText('address', 'Město')->setFilterText();
         $grid->addColumnNumber('active', 'Online')->setFilterText();
         $grid->setDefaultPerPage(100);
 
@@ -83,16 +79,9 @@ class HeadquartersPresenter extends BasePresenter
         $grid = new DataGrid();
 
         //@TODO - add text filter into address
-        $grid->setDataSource($this->demandRepository->getAll());
+        $grid->setDataSource(new ArrayCollection($this->demandRepository->getAllForGrid()));
         $grid->addColumnNumber('id', 'ID')->setFilterText();
-        $grid->addColumnText('deliveryAddress', 'Adresa')
-            ->setRenderer(function ($item) {
-                if ($item->getDeliveryAddress() != null) {
-                    return $item->getDeliveryAddress()->getFullAddress();
-                } else {
-                    return "Not specified";
-                }
-            });
+        $grid->addColumnText('deliveryAddress', 'Adresa')->setFilterText();
         $grid->addColumnText('processed', 'Stav poptavky')->setFilterText();
         $grid->addColumnText('contactName', 'Jmeno zadavatele')->setFilterText();
         $grid->addColumnText('contactPhone', 'Telefon zadavatele')->setFilterText();
@@ -100,7 +89,7 @@ class HeadquartersPresenter extends BasePresenter
         $grid->addColumnText('deliveryName', 'Jmeno adresata')->setFilterText();
         $grid->addColumnText('deliveryPhone', 'Telefon adresata')->setFilterText();
         $grid->addColumnDateTime('createdAt', 'Datum přidání');
-//        $grid->addAction('approve', 'Schválit', 'approve!')->setClass("btn btn-success btn-sm");
+        $grid->addAction('approve', 'Schválit', 'approve!')->setClass("btn btn-success btn-sm");
         $grid->addAction('detail', 'Detail', 'Headquarters:demandDetail')->setClass("btn btn-primary btn-sm");
         $grid->addAction('delete', 'X', 'deleteDemand!')->setClass("btn btn-danger btn-sm");
 
@@ -112,24 +101,12 @@ class HeadquartersPresenter extends BasePresenter
         $grid = new DataGrid();
 
         //@TODO - add text filter into address
-        $grid->setDataSource($this->orderRepository->getAll());
-        $grid->addColumnNumber('id', 'ID')->setFilterText();
-        $grid->addColumnText('owner', 'Zadavatel')
-            ->setRenderer(function ($item) {
-                if ($item->getOwner()->getPersonName() != null) {
-                    return $item->getOwner()->getPersonName();
-                } else {
-                    return "Not specified";
-                }
-            });
-        $grid->addColumnText('delivery_address', 'Adresa')
-            ->setRenderer(function ($item) {
-                if ($item->getDeliveryAddress() != null) {
-                    return $item->getDeliveryAddress()->getCity();
-                } else {
-                    return "Not specified";
-                }
-            });
+        $grid->setDataSource(new ArrayCollection($this->orderRepository->getAllForGrid()));
+        $grid->addColumnNumber('id', 'ID')
+            ->setFilterText();
+        $grid->addColumnText('owner', 'Zadavatel')->setFilterText();
+        $grid->addColumnText('delivery_address', 'Adresa')->setFilterText();
+
         $grid->addColumnText('delivery_phone', 'Telefon')->setFilterText();
         $grid->addColumnText('items', 'Položky obj.')->setFilterText();
 
@@ -161,7 +138,7 @@ class HeadquartersPresenter extends BasePresenter
 
     public function handleDeleteDemand($id)
     {
-        /** @var \SousedskaPomoc\Entities\Demand $demand */
+        /** @var Demand $demand */
         $demand = $this->demandRepository->getById($id);
         if ($demand->getProcessed() == 'declined') {
             $this->flashMessage('Tato objednavka jiz byla zamitnuta.');
@@ -184,7 +161,7 @@ class HeadquartersPresenter extends BasePresenter
 
     public function handleApprove($id)
     {
-        /** @var \SousedskaPomoc\Entities\Demand $demand */
+        /** @var Demand $demand */
         $demand = $this->demandRepository->getById($id);
         if ($demand->getCreatedOrder() != null) {
             $this->flashMessage('Z tohoto pozadavku jiz byla vytvorena objednavka.');
@@ -194,14 +171,41 @@ class HeadquartersPresenter extends BasePresenter
         /** @var Order $order */
         $order = new Order();
 
-        /** @var \SousedskaPomoc\Entities\Address $deliveryAddress */
+        /** @var Address $deliveryAddress */
         $deliveryAddress = $demand->getDeliveryAddress();
         $deliveryAddress->addDeliveryOrder($order);
 
-        $order->setDeliveryPhone($demand->getPhone());
+        $order->setDeliveryPhone($demand->getDeliveryPhone());
         $order->setStatus('new');
-        $order->setItems($demand->getItems());
-        $order->setCustomerNote($demand->getName());
+
+        //Connect all items into one order
+        $finalItems = "";
+
+        if ($demand->getFood() != null) {
+            $finalItems = $finalItems . "Jidlo: " .$demand->getFood() . "\n";
+        }
+
+        if ($demand->getMedicine() != null) {
+            $finalItems = $finalItems . "Leky: " . $demand->getMedicine() . "\n";
+        }
+
+        if ($demand->getVeils() != null) {
+            $finalItems = $finalItems . "Rousky: " . $demand->getVeils() . "\n";
+        }
+
+        if ($demand->getOther() != null) {
+            $finalItems = $finalItems . "Ostatni: " . $demand->getOther() . "\n";
+        }
+
+        $finalNote = "";
+        if ($demand->getIsContactPerson() || $demand->getIsOrganization()) {
+            $finalNote = "Kontaktni osoba, ktera vytvorila objednavku\n";
+            $finalNote = $finalNote . "Jmeno: " . $demand->getContactName() . "\n";
+            $finalNote = $finalNote . "Telefon: " . $demand->getContactPhone() . "\n";
+        }
+
+        $order->setItems($finalItems);
+        $order->setCustomerNote($finalNote);
         $order->setFromDemand($demand);
 
         /** @var \SousedskaPomoc\Entities\Volunteer $user */
@@ -212,7 +216,7 @@ class HeadquartersPresenter extends BasePresenter
         $this->volunteerRepository->update($user->getId(), $user);
         $this->demandRepository->setProcessed($demand->getId(), 'approved');
 
-        $this->redirect('Coordinator:editOrder', $order->getId());
+        $this->redirect('Coordinator:detail', $order->getId());
     }
 
     public function renderDemandDetail($id)

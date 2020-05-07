@@ -6,14 +6,22 @@
                 <h1>{_templates.footer.partners}</h1>
             </div>
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-12 logos">
                     <a href="https://cuni.cz" target="_blank">
-                        <img src="https://cuni.cz/UK-1-version1-afoto.jpg" alt="Univerzita Karlova"/>
+                        <img src="https://cuni.cz/UK-1-version1-afoto.jpg" alt="Univerzita Karlova" style="max-height: 50px; "/>
                     </a>
-                </div>
-                <div class="col-md-6">
+
                     <img src="{$basePath}/images/partners/skrvs.jpg"
                          alt="Studentská komora Rady vysokých škol"/>
+
+                    <a href="https://www.kampushybernska.cz" target="_blank">
+                        <img src="{$basePath}/images/partners/hyb4.png" alt="Kampus Hybernská"/>
+                    </a>
+
+                    <a href="https://www.kaspenjvm.com/" target="_blank">
+                        <img src="{$basePath}/images/partners/kaspen.png"
+                             alt="Kaspen" style="max-height: 35px"/>
+                    </a>
                 </div>
             </div>
             <div class="row">
@@ -51,7 +59,10 @@
                                 alt="Káva.cz"/></a>
                     <a href="https://www.irongatehotel.com/" target="_blank"><img
                                 src="{$basePath}/images/partners/iron-gate.png" alt="Iron Gate"/></a>
-
+                    <a href="https://sevenkeys.cz" target="_blank"><img
+                                src="https://www.sevenkeys.cz/wp-content/uploads/2015/09/logo.png"/></a>
+                    <a href="https://cuip.cz" target="_blank"><img
+                                src="{$basePath}/images/partners/cuip.png"/></a>
 
                 </div>
 
@@ -67,6 +78,7 @@
                         href="https://twitter.com/sousedskapomoc" target="_blank"><i class="fab fa-twitter"></i></a>
             </p>
 
+
             <p class="bigger-font">{_templates.footer.thankYou|noescape}</p>
             <p class="text-center">{_templates.footer.questions|noescape}</p>
             <p class="text-center text-normal">
@@ -75,7 +87,10 @@
                 <a n:href="Homepage:contacts">Kontaktujte nás</a>
 
             </p>
-            <p class="text-center">
+            <p class="text-center text-normal">
+                <a href="tel:+420800885599">Zavolejte zdarma 800 88 55 99</a>
+            </p>
+            <p class="text-center" style="font-size: smaller">
                 <a n:href="Homepage:termsOfService">Podmínky užívání webu</a>
             </p>
         </div>

@@ -6,6 +6,7 @@ namespace SousedskaPomoc\Model;
 
 use Nette;
 use Nette\Security\Passwords;
+use SousedskaPomoc\Entities\Volunteer;
 use SousedskaPomoc\Repository\VolunteerRepository;
 
 /**
@@ -208,5 +209,32 @@ final class UserManager
     public function findAllOnlineUsers()
     {
         return $this->volunteerRepository->findAllOnlineUsers();
+    }
+
+    public function fetchAllUsersInRoleForGrid($role)
+    {
+        $dataset = [];
+
+        /** @var Volunteer $volunteer */
+        foreach ($this->fetchAllUsersInRole($role) as $volunteer) {
+            if ($volunteer->getAddress() !== null) {
+                $city = $volunteer->getAddress()->getCity();
+            } else {
+                $city = null;
+            }
+
+            $dataset[] = [
+                'id' => $volunteer->getId(),
+                'personName' => $volunteer->getPersonName(),
+                'personEmail' => $volunteer->getPersonEmail(),
+                'personPhone' => $volunteer->getPersonPhone(),
+                'address' => $city,
+                'active' => $volunteer->getActive()
+            ];
+
+            $city = null;
+        }
+
+        return $dataset;
     }
 }

@@ -7,5 +7,5 @@ use SousedskaPomoc\Entities\Role;
 interface IRegisterVolunteerFormInterface
 {
     /** @return RegisterVolunteerFormControl */
-    public function create(Role $role);
+    public function create($role = null);
 }

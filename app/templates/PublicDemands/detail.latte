@@ -6,23 +6,23 @@
         </div>
     </div>
     <div class="col-12 col-md-8 col-lg-4 order-detail">
-        <h2 class="order-detail__title">{$demand->getCustomerNote()}</h2>
+        <h2 class="order-detail__title">{$demand->getDeliveryName()}</h2>
         <div class="shopping-list">
-            <ul n:if="$demand->getStatus() !== 'new'">
-                <li>Stav: {$demand->getStatus()|humanFriendlyStatus}</li>
+            <ul n:if="$demand->getProcessed() !== 'new'">
+                <li>Stav: {$demand->getProcessed()|humanFriendlyStatus}</li>
                 <li n:if="!empty($demand->getCourier())">Kurýr: {$demand->getCourier()->getPersonName()}</li>
                 <li n:if="!empty($demand->getCourier())">Telefon: {$demand->getCourier()->getPersonPhone()}</li>
                 <li>Poslední aktualizace: {date("d.m.Y H:i",$demand->getUpdatedAt()->getTimestamp())}</li>
             </ul>
             <h5 class="order-detail__subheadline">Co je potřeba</h5>
             <ul class="shopping-list__list order-detail__list">
-                {$demand->getItems()|createList|noescape}
+                {$demand->getFood()|noescape}
             </ul>
         </div>
         <div class="shopping-list">
             <h5 class="order-detail__subheadline">Kde je pomoc potřeba</h5>
             <ul class="shopping-list__list order-detail__list">
-                {$demand->getPickupAddress()->getFullAddress()}
+                {$demand->getDeliveryAddress()->getFullAddress()}
             </ul>
         </div>
         {*
@@ -34,13 +34,15 @@
         <div class="userinfo">
             <h5 class="order-detail__subheadline">Kdo potřebuje pomoc</h5>
             <h6>Jméno a příjmení</h6>
-            <p>{$demand->getOwner()->getPersonName()}<p>
+            <p>{$demand->getContactName()}<p>
             <h6>Tel. číslo</h6>
-            <p>{$demand->getDeliveryPhone()}</p>
+            <p>{$demand->getContactPhone()}</p>
         </div>
-
-        <a n:if="$demand->getStatus() == 'new'" n:href="selfAssign! id => $demand->getId()" class="btn btn-green">Vezmu si pomoc na starosti</a>
+        {if $user->isLoggedIn()}
+            <a n:if="$demand->getProcessed() == 'new'" n:href="selfAssign! id => $demand->getId()" class="btn btn-green">Vezmu
+                si pomoc na starosti</a>
+        {/if}
     </div>
 </div>
-<hr />
+<hr/>
 <a n:href="default">Zpět na seznam poptávek</a>

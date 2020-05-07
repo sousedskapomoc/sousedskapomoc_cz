@@ -3,6 +3,7 @@
 namespace SousedskaPomoc\Repository;
 
 use Doctrine\ORM\EntityRepository as DoctrineEntityRepository;
+use SousedskaPomoc\Entities\Address;
 use SousedskaPomoc\Entities\Order;
 use SousedskaPomoc\Entities\Volunteer;
 
@@ -15,7 +16,7 @@ class OrderRepository extends DoctrineEntityRepository
 
     public function getByUser($id)
     {
-        return $this->findBy(['author' => $id]);
+        return $this->findBy(['owner' => $id]);
     }
 
 
@@ -157,9 +158,10 @@ class OrderRepository extends DoctrineEntityRepository
             $em->flush();
         } else {
             $order->setStatus('new');
-            /** @var Volunteer $dbCourier */
             $dbCourier = $order->getCourier();
-            $dbCourier->removeDeliveredOrder($order);
+            if ($dbCourier instanceof Volunteer) {
+                $dbCourier->removeDeliveredOrder($order);
+            }
             $em = $this->getEntityManager();
             $em->persist($dbCourier);
             $em->flush();
@@ -313,12 +315,39 @@ class OrderRepository extends DoctrineEntityRepository
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('o')
             ->from('\SousedskaPomoc\Entities\Order', 'o')
-            ->leftJoin('o.deliveryAddress', 'a')
+            ->leftJoin('o.pickupAddress', 'a')
             ->setParameter('town', $town)
             ->setParameter('stat', 'new')
             ->andWhere("a.city = :town")
             ->andWhere("o.stat = :stat");
         $query = $qb->getQuery();
         return $query->getResult();
+    }
+
+    public function getAllForGrid()
+    {
+        $dataset = [];
+
+        /** @var Order $order */
+        foreach ($this->findBy([], ['id' => 'DESC']) as $order) {
+            if ($order->getDeliveryAddress() !== null) {
+                /** @var Address $city */
+                $city = $order->getDeliveryAddress()->getFullAddress();
+            }
+
+            $dataset[] = [
+                'id' => $order->getId(),
+                'owner' => $order->getOwner()->getPersonName(),
+                'delivery_address' => $city,
+                'delivery_phone' => $order->getDeliveryPhone(),
+                'items' => $order->getItems(),
+                'createdAt' => $order->getCreatedAt(),
+                'status' => $order->getStatus()
+            ];
+
+            $city = null;
+        }
+
+        return $dataset;
     }
 }

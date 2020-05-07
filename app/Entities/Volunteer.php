@@ -80,6 +80,11 @@ class Volunteer
     protected $deliveredOrders;
 
     /**
+     * @ORM\OneToMany(targetEntity="Demand", mappedBy="courier", cascade={"persist"})
+     */
+    protected $deliveredDemands;
+
+    /**
      * @ORM\Column(type="string", nullable=false)
      */
     protected $hash;
@@ -88,6 +93,7 @@ class Volunteer
     public function __construct()
     {
         $this->deliveredOrders = new ArrayCollection();
+        $this->deliveredDemands = new ArrayCollection();
         $this->createdOrders = new ArrayCollection();
     }
 
@@ -369,5 +375,41 @@ class Volunteer
     public function setUploadPhoto($uploadPhoto): void
     {
         $this->uploadPhoto = $uploadPhoto;
+    }
+
+    /**
+     * @param mixed $demand
+     * @return Volunteer
+     */
+    public function addDeliveredDemand($demand): self
+    {
+        if ($this->deliveredDemands) {
+            if (!$this->deliveredDemands->contains($demand)) {
+                $this->deliveredDemands[] = $demand;
+            }
+            /** @var Demand $demand */
+            $demand->setCourier($this);
+        } else {
+            $this->deliveredDemands[] = $demand;
+            /** @var Demand $demand */
+            $demand->setCourier($this);
+        }
+        return $this;
+    }
+
+    public function removeDeliveredDemand($demand): self
+    {
+        if ($this->deliveredDemands) {
+            if ($this->deliveredDemands->contains($demand)) {
+                $this->deliveredDemands->removeElement($demand);
+                /** @var Demand $demand */
+                $demand->setCourier(null);
+            } else {
+                $demand->setCourier(null);
+            }
+        } else {
+            $demand->setCourier(null);
+        }
+        return $this;
     }
 }
