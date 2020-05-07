@@ -100,7 +100,6 @@ class VolunteerRepository extends DoctrineEntityRepository
 
 
 
-
     public function getNonActiveUsers()
     {
         return $this->count(['password' => null]);
@@ -235,6 +234,24 @@ class VolunteerRepository extends DoctrineEntityRepository
         x.city = '$town'
         AND
         u.online = 1");
+
+        return $query->getResult();
+    }
+
+
+
+    public function fetchNonAvailableCouriersInTown($town)
+    {
+        $em = $this->getEntityManager();
+        $query = $em->createQuery("
+        SELECT
+        u
+        FROM
+        SousedskaPomoc\Entities\Volunteer u JOIN u.address x
+        WHERE
+        x.city = '$town'
+        AND
+        u.online = 0");
 
         return $query->getResult();
     }

@@ -226,6 +226,13 @@ final class UserManager
 
 
 
+    public function fetchNonAvailableCouriersInTown($town)
+    {
+        return $this->volunteerRepository->fetchNonAvailableCouriersInTown($town);
+    }
+
+
+
     public function updateTown($selectedTown, $userId)
     {
         return $this->database->table(self::TABLE_NAME)->wherePrimary($userId)->update(['town' => $selectedTown]);
@@ -287,7 +294,7 @@ final class UserManager
                 'personPhone' => $volunteer->getPersonPhone(),
                 'address' => $city,
                 'active' => $volunteer->getActive(),
-                'note' => $volunteer->getNote()
+                'note' => $volunteer->getNote(),
             ];
 
             $city = null;

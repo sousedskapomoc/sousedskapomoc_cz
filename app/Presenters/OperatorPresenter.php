@@ -57,6 +57,14 @@ final class OperatorPresenter extends BasePresenter
 
 
 
+    public function renderCourierList()
+    {
+        $this->template->onlineCouriers = $this->userManager->fetchAvailableCouriersInTown($this->template->town);
+        $this->template->offlineCouriers = $this->userManager->fetchNonAvailableCouriersInTown($this->template->town);
+    }
+
+
+
     public function handleUpdateOrderStatus($orderId, $orderStatus)
     {
         $orderStatus = $_POST['orderStatus'] ?? $orderStatus;
