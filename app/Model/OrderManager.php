@@ -20,6 +20,7 @@ final class OrderManager
     protected $volunteerRepository;
 
 
+
     /**
      * OrderManager constructor.
      *
@@ -36,6 +37,7 @@ final class OrderManager
     }
 
 
+
     /**
      * @param $values
      *
@@ -45,6 +47,7 @@ final class OrderManager
     {
         return $this->orderRepository->create($values);
     }
+
 
 
     /**
@@ -58,10 +61,12 @@ final class OrderManager
     }
 
 
+
     public function findAllForCourier($userId)
     {
         return $this->orderRepository->findAllForCourier($userId);
     }
+
 
 
     /**
@@ -75,10 +80,12 @@ final class OrderManager
     }
 
 
+
     public function findAllNew()
     {
         return $this->orderRepository->findAllNew();
     }
+
 
 
     public function changeStatus($orderId, $status)
@@ -87,10 +94,12 @@ final class OrderManager
     }
 
 
+
     public function updateNote($orderId, $note)
     {
         $this->orderRepository->updateCourierNote($orderId, $note);
     }
+
 
 
     public function findAllLive()
@@ -98,16 +107,20 @@ final class OrderManager
         return $this->orderRepository->findAllLive();
     }
 
+
+
     public function findAllLiveByCourierByTown($town, $userId)
     {
         return $this->orderRepository->findAllLiveByCourierByTown($town, $userId);
     }
 
 
+
     public function findAllDelivered()
     {
         return $this->orderRepository->findAllDelivered();
     }
+
 
 
     public function assignOrder($courier_id, $order_id, $operator_id, $status = "assigned")
@@ -117,10 +130,28 @@ final class OrderManager
     }
 
 
+
+    public function assignOrderCoordinator($order_id, $operator_id)
+    {
+        $user = $this->volunteerRepository->getById($operator_id);
+
+        $this->orderRepository->assignOrderCoordinator($order_id, $user);
+    }
+
+
+
+    public function unassignOrderCoordinator($order_id)
+    {
+        $this->orderRepository->unassignOrderCoordinator($order_id);
+    }
+
+
+
     public function updateStatus($orderId, $orderStatus = null)
     {
         $this->orderRepository->updateStatus($orderId, $orderStatus);
     }
+
 
 
     public function fetchCount()
@@ -128,20 +159,33 @@ final class OrderManager
         return $this->orderRepository->fetchCount();
     }
 
+
+
     public function findAllNewInTown($town)
     {
         return $this->orderRepository->findAllNewInTown($town);
     }
+
+    public function findAllNewInTownAvailable($town, $user)
+    {
+        return $this->orderRepository->findAllNewInTownAvailable($town, $user);
+    }
+
+
 
     public function findAllLiveInTown($town, $operatorId)
     {
         return $this->orderRepository->findAllLiveInTown($town);
     }
 
+
+
     public function findAllDeliveredInTown($town, $operatorId)
     {
         return $this->orderRepository->findAllDeliveredInTown($town);
     }
+
+
 
     public function saveDemand($demand)
     {
@@ -149,7 +193,7 @@ final class OrderManager
             'personName' => 'poptávka z webu',
             'personPhone' => 0,
             'personEmail' => 'info@sousedskapomoc.cz',
-            'town' => $demand->address
+            'town' => $demand->address,
         ];
 
         $data = $this->database->table("volunteers")->insert($volunteerPlaceholder);
@@ -159,45 +203,62 @@ final class OrderManager
             'status' => 'waiting',
             'delivery_address' => $demand->deliveryAddress ?? 'neznámá adresa',
             'delivery_phone' => $demand->deliveryPhone,
-            'note' => "[Z WEBU] Poptávka pro: " . $demand->deliveryPerson,
+            'note' => "[Z WEBU] Poptávka pro: ".$demand->deliveryPerson,
             'order_items' => $demand->orderItems,
         ];
 
         $this->database->table("posted_orders")->insert($output);
     }
 
+
+
     public function fetchAllWebDemands()
     {
         $sql = "SELECT * FROM posted_orders WHERE status = 'waiting'";
+
         return $this->database->query($sql)->fetchAll();
     }
+
+
 
     public function findAll()
     {
         return $this->orderRepository->findAll();
     }
 
+
+
     public function removeOperator($orderId)
     {
         $sql = "UPDATE posted_orders SET operator_id = null WHERE id = $orderId";
+
         return $this->database->query($sql);
     }
+
+
 
     public function removeCourier($orderId)
     {
         return $this->orderRepository->removeCourier($orderId);
     }
 
+
+
     public function findAllOrdersData()
     {
         $sql = "SELECT * FROM dispatch_orders_by_town";
+
         return $this->database->query($sql)->fetchAll();
     }
+
+
 
     public function remove($id)
     {
         $this->orderRepository->remove($id);
     }
+
+
 
     public function updateTown($orderId, $town)
     {
@@ -207,6 +268,8 @@ final class OrderManager
             ]);
         }
     }
+
+
 
     public function fetchDeliveredCount()
     {

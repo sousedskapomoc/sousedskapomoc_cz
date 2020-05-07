@@ -5,11 +5,17 @@ declare(strict_types=1);
 namespace SousedskaPomoc\Presenters;
 
 use SousedskaPomoc\Model\OrderManager;
+use SousedskaPomoc\Repository\OrderRepository;
 
 final class OperatorPresenter extends BasePresenter
 {
     /** @var OrderManager */
     protected $orderManager;
+
+    /** @var OrderRepository */
+    protected $orderRepository;
+
+
 
     public function beforeRender()
     {
@@ -20,10 +26,20 @@ final class OperatorPresenter extends BasePresenter
         }
     }
 
+
+
     public function injectOrderManager(OrderManager $orderManager)
     {
         $this->orderManager = $orderManager;
     }
+
+
+
+    public function injectOrderRepository(OrderRepository $orderRepository)
+    {
+        $this->orderRepository = $orderRepository;
+    }
+
 
 
     public function renderDashboard()
@@ -40,6 +56,15 @@ final class OperatorPresenter extends BasePresenter
     }
 
 
+
+    public function renderCourierList()
+    {
+        $this->template->onlineCouriers = $this->userManager->fetchAvailableCouriersInTown($this->template->town);
+        $this->template->offlineCouriers = $this->userManager->fetchNonAvailableCouriersInTown($this->template->town);
+    }
+
+
+
     public function handleUpdateOrderStatus($orderId, $orderStatus)
     {
         $orderStatus = $_POST['orderStatus'] ?? $orderStatus;
@@ -48,13 +73,16 @@ final class OperatorPresenter extends BasePresenter
         $this->redirect('this');
     }
 
+
+
     public function handleUnassignOrder($orderId)
     {
         $this->orderManager->removeCourier($orderId);
-        $this->orderManager->removeOperator($orderId);
         $this->orderManager->updateStatus($orderId, 'new');
         $this->redirect('this');
     }
+
+
 
     public function handleAssignCourier()
     {
@@ -65,6 +93,26 @@ final class OperatorPresenter extends BasePresenter
         );
 
         $this->flashMessage($this->translator->translate('messages.order.givenToCourier'));
+        $this->redirect('this');
+    }
+
+
+
+    public function handleAssignCoordinator($orderId)
+    {
+        $this->orderManager->assignOrderCoordinator($orderId, $this->user->getId());
+
+        $this->flashMessage($this->translator->translate('messages.order.reserved'));
+        $this->redirect('this');
+    }
+
+
+
+    public function handleUnassignCoordinator($orderId)
+    {
+        $this->orderManager->unassignOrderCoordinator($orderId);
+
+        $this->flashMessage($this->translator->translate('messages.order.unreserved'));
         $this->redirect('this');
     }
 }

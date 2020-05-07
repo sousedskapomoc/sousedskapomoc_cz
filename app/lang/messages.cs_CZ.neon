@@ -7,6 +7,8 @@ order:
     orderSuccess: 'Vaše objednávka byla uložena.'
     givenToCourier: 'Objednávka byla přiřazena kurýrovi'
     statusChanged: 'Stav objednávky byl změněn'
+    reserved: 'Objednávka byla přidělena pod vaši správu.'
+    unreserved: 'Objednávka vám byla úspěšně odebrána.'
 registration:
     success: 'Vaše registrace proběhla úspěšně.'
     fail: 'Zadaný e-mail již existuje'

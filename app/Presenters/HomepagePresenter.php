@@ -130,7 +130,7 @@ final class HomepagePresenter extends BasePresenter
 
     public function onSuccess(Form $form, $values)
     {
-        if (!$this->userManager->check('personEmail', $values->personEmail)) {
+        if (!$this->userManager->getUserByEmail($values->personEmail)) {
             $form->addError('Zadaný účet neexistuje.');
         }
 

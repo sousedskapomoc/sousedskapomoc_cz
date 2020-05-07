@@ -33,30 +33,42 @@ final class SystemPresenter extends BasePresenter
     /** @var \SousedskaPomoc\Repository\AddressRepository */
     protected $addressRepository;
 
+
+
     public function injectEditVolunteerForm(IEditVolunteerFormInterface $editVolunteerForm)
     {
         $this->editVolunteerForm = $editVolunteerForm;
     }
+
+
 
     public function injectPasswords(Passwords $passwords)
     {
         $this->passwords = $passwords;
     }
 
+
+
     public function injectTownSuggester(ISuggesterTownInterface $suggesterTown)
     {
         $this->townSuggester = $suggesterTown;
     }
+
+
 
     public function injectVolunteerRepository(VolunteerRepository $volunteerRepository)
     {
         $this->volunteerRepository = $volunteerRepository;
     }
 
+
+
     public function injectAddressRepository(AddressRepository $addressRepository)
     {
         $this->addressRepository = $addressRepository;
     }
+
+
 
     public function beforeRender()
     {
@@ -68,14 +80,15 @@ final class SystemPresenter extends BasePresenter
     }
 
 
+
     public function renderDashboard()
     {
         $this->template->statistics = [
             'totalCount' => $this->userManager->fetchTotalCount(),
-            'couriersCount' => $this->userManager->fetchCountBy(['role' => 'courier']),
-            'operatorsCount' => $this->userManager->fetchCountBy(['role' => 'operator']),
-            'coordinatorsCount' => $this->userManager->fetchCountBy(['role' => 'coordinator']),
-            'seamstressCount' => $this->userManager->fetchCountBy(['role' => 'seamstress']),
+            'couriersCount' => $this->userManager->fetchCountByRole('courier'),
+            'operatorsCount' => $this->userManager->fetchCountByRole('operator'),
+            'coordinatorsCount' => $this->userManager->fetchCountByRole('coordinator'),
+            'seamstressCount' => $this->userManager->fetchCountByRole('seamstress'),
             'usersWithoutAccess' => $this->userManager->fetchCountBy(['password' => null]),
             'uniqueTowns' => $this->userManager->fetchUniqueTownsCount(),
             'ordersCount' => $this->orderManager->fetchCount(),
@@ -83,10 +96,14 @@ final class SystemPresenter extends BasePresenter
         ];
     }
 
+
+
     public function createComponentTownSuggester()
     {
         return $this->townSuggester->create();
     }
+
+
 
     public function renderEnterTown()
     {
@@ -95,6 +112,8 @@ final class SystemPresenter extends BasePresenter
             $this->updateAddress($locationId);
         }
     }
+
+
 
     public function updateAddress($locationId)
     {
@@ -105,7 +124,7 @@ final class SystemPresenter extends BasePresenter
         /** @var \GuzzleHttp\Psr7\Response $response */
         $baseUri = "https://geocoder.ls.hereapi.com/6.2/geocode.json?locationid=";
         $apiKey = "Kl0wK4fx38Pf63EIey6WyrmGEhS2IqaVHkuzx0IQ4-Q";
-        $response = $client->get($baseUri . $locationId . '&jsonattributes=1&gen=9&apiKey=' . $apiKey);
+        $response = $client->get($baseUri.$locationId.'&jsonattributes=1&gen=9&apiKey='.$apiKey);
         $content = $response->getBody()->getContents();
 
         $content = json_decode($content);
@@ -142,10 +161,18 @@ final class SystemPresenter extends BasePresenter
     }
 
 
+
     public function createComponentEditForm()
     {
-        return $this->editVolunteerForm->create();
+        $form = $this->editVolunteerForm->create();
+        $form->onFinish[] = function () {
+            $this->flashMessage($this->translator->translate('templates.profile.success'));
+            $this->redirect("System:profile");
+        };
+
+        return $form;
     }
+
 
 
     public function renderProfile()

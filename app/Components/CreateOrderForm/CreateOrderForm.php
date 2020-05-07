@@ -74,6 +74,7 @@ class CreateOrderFormControl extends Control
         $order->setItems($values->items);
         $order->setStatus('new');
         $order->setCourier(null);
+        $order->setCoordinator(null);
         $order->setCustomerNote($values->customerNote);
         /** @var \SousedskaPomoc\Entities\Volunteer $user */
         $user = $this->volunteerRepository->getById($this->presenter->user->getId());

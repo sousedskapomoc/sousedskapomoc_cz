@@ -13,6 +13,8 @@ class VolunteerRepository extends DoctrineEntityRepository
         return $this->findOneBy(['id' => $id]);
     }
 
+
+
     public function getCourierByTown($town)
     {
         $em = $this->getEntityManager();
@@ -24,8 +26,10 @@ class VolunteerRepository extends DoctrineEntityRepository
         WHERE
         x.city = '$town'
         ");
+
         return $query->getResult();
     }
+
 
 
     public function getTownForUser($id)
@@ -37,10 +41,29 @@ class VolunteerRepository extends DoctrineEntityRepository
         }
     }
 
+
+
+    public function updateNote($id, $note)
+    {
+
+        /** @var Volunteer $user */
+        $user = $this->getById($id);
+        $user->setNote($note);
+
+        $em = $this->getEntityManager();
+
+        $em->persist($user);
+        $em->flush();
+    }
+
+
+
     public function getByEmail($email)
     {
         return $this->findOneBy(['personEmail' => $email]);
     }
+
+
 
     public function setPass($id, $password)
     {
@@ -49,24 +72,39 @@ class VolunteerRepository extends DoctrineEntityRepository
 
         $user->setPassword($password);
         $em = $this->getEntityManager();
+
         $em->persist($user);
         $em->flush();
     }
+
+
 
     public function getUserByHash($hash)
     {
         return $this->findOneBy(['hash' => $hash]);
     }
 
+
+
     public function fetchTotalCount()
     {
         return $this->count([]);
     }
 
+
+
+    public function fetchCountBy($rule)
+    {
+        return $this->count($rule);
+    }
+
+
+
     public function getNonActiveUsers()
     {
         return $this->count(['password' => null]);
     }
+
 
 
     /**
@@ -79,6 +117,8 @@ class VolunteerRepository extends DoctrineEntityRepository
         return $this->findBy([]);
     }
 
+
+
     public function setOnline($id, $active)
     {
         /** @var Volunteer $user */
@@ -88,6 +128,7 @@ class VolunteerRepository extends DoctrineEntityRepository
         $em->persist($user);
         $em->flush();
     }
+
 
 
     public function update($id, Volunteer $user)
@@ -115,6 +156,8 @@ class VolunteerRepository extends DoctrineEntityRepository
         }
     }
 
+
+
     public function save($user)
     {
         $em = $this->getEntityManager();
@@ -122,12 +165,17 @@ class VolunteerRepository extends DoctrineEntityRepository
         $em->flush();
     }
 
+
+
     public function isOnline($id)
     {
         /** @var Volunteer $user */
         $user = $this->getById($id);
+
         return $user->getOnline();
     }
+
+
 
     public function register(Volunteer $user)
     {
@@ -141,6 +189,8 @@ class VolunteerRepository extends DoctrineEntityRepository
         }
     }
 
+
+
     public function getTowns()
     {
         $em = $this->getEntityManager();
@@ -150,8 +200,11 @@ class VolunteerRepository extends DoctrineEntityRepository
         FROM
         SousedskaPomoc\Entities\Volunteer u JOIN u.address x
         GROUP BY x.city");
+
         return $query->getResult();
     }
+
+
 
     public function fetchAllUsersInRole($role = null)
     {
@@ -163,8 +216,11 @@ class VolunteerRepository extends DoctrineEntityRepository
         SousedskaPomoc\Entities\Volunteer u JOIN u.role x
         WHERE
         x.name = '$role'");
+
         return $query->getResult();
     }
+
+
 
     public function fetchAvailableCouriersInTown($town)
     {
@@ -178,20 +234,46 @@ class VolunteerRepository extends DoctrineEntityRepository
         x.city = '$town'
         AND
         u.online = 1");
+
         return $query->getResult();
     }
+
+
+
+    public function fetchNonAvailableCouriersInTown($town)
+    {
+        $em = $this->getEntityManager();
+        $query = $em->createQuery("
+        SELECT
+        u
+        FROM
+        SousedskaPomoc\Entities\Volunteer u JOIN u.address x
+        WHERE
+        x.city = '$town'
+        AND
+        u.online = 0");
+
+        return $query->getResult();
+    }
+
+
 
     public function fetchPhoneNumber($courierId)
     {
         /** @var Volunteer $courier */
         $courier = $this->findOneBy(['id' => $courierId]);
+
         return $courier->getPersonPhone() ?? 'Nezadán';
     }
+
+
 
     public function findAllOnlineUsers()
     {
         return $this->findBy(['online' => 1]);
     }
+
+
 
     public function attachUserPhoto($volunteerId, string $filePath)
     {

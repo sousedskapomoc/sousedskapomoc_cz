@@ -25,12 +25,14 @@
                 {$demand->getDeliveryAddress()->getFullAddress()}
             </ul>
         </div>
-        {*
-        <div class="facemasks">
-            <h5 class="order-detail__subheadline">Kolik roušek</h5>
-            <p class="facemasks__count">2ks rouška</p>
-        </div>
-        *}
+
+        {if $demand->getVeils() !== null}
+            <div class="facemasks">
+                <h5 class="order-detail__subheadline">Kolik roušek</h5>
+                <p class="facemasks__count">{$demand->getVeils()}</p>
+            </div>
+        {/if}
+
         <div class="userinfo">
             <h5 class="order-detail__subheadline">Kdo potřebuje pomoc</h5>
             <h6>Jméno a příjmení</h6>
@@ -39,8 +41,11 @@
             <p>{$demand->getContactPhone()}</p>
         </div>
         {if $user->isLoggedIn()}
-            <a n:if="$demand->getProcessed() == 'new'" n:href="selfAssign! id => $demand->getId()" class="btn btn-green">Vezmu
+            <a n:if="$demand->getProcessed() == 'new'" n:href="selfAssign! id => $demand->getId()"
+                    class="btn btn-green">Vezmu
                 si pomoc na starosti</a>
+            <a n:if="$demand->getProcessed() == 'delivering'" n:href="markDelivered! id => $demand->getId()"
+                    class="btn btn-green">Doručil jsem</a>
         {/if}
     </div>
 </div>
