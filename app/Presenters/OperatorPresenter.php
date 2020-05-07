@@ -61,7 +61,6 @@ final class OperatorPresenter extends BasePresenter
     {
         $this->template->onlineCouriers = $this->userManager->fetchAvailableCouriersInTown($this->template->town);
         $this->template->offlineCouriers = $this->userManager->fetchNonAvailableCouriersInTown($this->template->town);
-
     }
 
 

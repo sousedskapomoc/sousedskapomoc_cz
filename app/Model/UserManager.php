@@ -224,6 +224,8 @@ final class UserManager
         return $this->volunteerRepository->fetchAvailableCouriersInTown($town);
     }
 
+
+
     public function fetchNonAvailableCouriersInTown($town)
     {
         return $this->volunteerRepository->fetchNonAvailableCouriersInTown($town);
@@ -292,7 +294,7 @@ final class UserManager
                 'personPhone' => $volunteer->getPersonPhone(),
                 'address' => $city,
                 'active' => $volunteer->getActive(),
-                'note' => $volunteer->getNote()
+                'note' => $volunteer->getNote(),
             ];
 
             $city = null;

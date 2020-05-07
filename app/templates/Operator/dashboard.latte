@@ -1,20 +1,22 @@
 {layout "../appLayout.latte"}
 {block content}
-	<div class="row">
-		<div class="col-12">
-			<div>
-				<h1>{_templates.operatorDashboard.title} pro město {$town}
-					<small><a n:href="System:enterTown">změnit lokalitu</a></small></h1>
-					<a href="https://sousedskapomoc.cz/pdf/zasady-dispecer.pdf" target="_blank" class="btn btn-sm btn-info" style="display: inline-block;">Manuál dispečera</a>
-                    <div id="link" style="display: inline-block;">
-                        <a href="javascript:reloadOff()" class="btn btn-sm btn-info">Vypnout automaticke obnovování stránky</a>
-                    </div>
-                    <a n:href="Operator:courierList" class="btn btn-sm btn-info">Seznam kurýrů</a>
-			</div>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-12">
+    <div class="row">
+        <div class="col-12">
+            <div>
+                <h1>{_templates.operatorDashboard.title} pro město {$town}
+                    <small><a n:href="System:enterTown">změnit lokalitu</a></small></h1>
+                <a href="https://sousedskapomoc.cz/pdf/zasady-dispecer.pdf" target="_blank" class="btn btn-sm btn-info"
+                   style="display: inline-block;">Manuál dispečera</a>
+                <div id="link" style="display: inline-block;">
+                    <a href="javascript:reloadOff()" class="btn btn-sm btn-info">Vypnout automaticke obnovování
+                        stránky</a>
+                </div>
+                <a n:href="Operator:courierList" class="btn btn-sm btn-info">Seznam kurýrů</a>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
             <div class="row">
                 <div class="col-12">
                     <h2>{_templates.order.title}</h2>
@@ -33,12 +35,14 @@
             </div>
             <div class="row">
                 <div class="col-5">
-                    <div n:foreach="$newOrders as $order" class="orderDiv {if $iterator->counter % 2 == 1}alert alert-light{else}alert alert-secondary{/if}">
+                    <div n:foreach="$newOrders as $order"
+                            class="orderDiv {if $iterator->counter % 2 == 1}alert alert-light{else}alert alert-secondary{/if}">
                         {include #order, order => $order}
                     </div>
                 </div>
                 <div class="col-5">
-                    <div n:foreach="$liveOrders as $order" class="orderDiv {if $iterator->counter % 2 == 1}alert alert-light{else}alert alert-secondary{/if}">
+                    <div n:foreach="$liveOrders as $order"
+                            class="orderDiv {if $iterator->counter % 2 == 1}alert alert-light{else}alert alert-secondary{/if}">
                         {include #order, order => $order}
                         {include #orderManagement, order => $order}
                         {if $user->isInRole('admin')}
@@ -47,7 +51,8 @@
                     </div>
                 </div>
                 <div class="col-2">
-                    <div n:foreach="$deliveredOrders as $order" class="orderDiv {if $iterator->counter % 2 == 1}alert alert-light{else}alert alert-secondary{/if}">
+                    <div n:foreach="$deliveredOrders as $order"
+                            class="orderDiv {if $iterator->counter % 2 == 1}alert alert-light{else}alert alert-secondary{/if}">
                         {include #orderMin, order => $order}
                         {if $user->isInRole('admin')}
                             <a n:href="unassignOrder! orderId => $order->getId()">Vrátit do stavu nová</a>
@@ -55,8 +60,8 @@
                     </div>
                 </div>
             </div>
-		</div>
-	</div>
+        </div>
+    </div>
     <script>
         window.setInterval('refresh()', 15000); 	// Call a function every 10000 milliseconds (OR 10 seconds).
 
@@ -73,7 +78,6 @@
         }
 
 
-
         // Refresh or reload page.
         function refresh() {
             if (reloadStatus) {
@@ -83,35 +87,40 @@
     </script>
 {/block}
 {block order}
-	<h6><a n:href="Coordinator:detail id => $order->getId()" target="_blank">Pro: {$order->getCustomerNote() ?? null}</a></h6>
-	<strong>Stav:</strong> {$order->getStatus()|humanFriendlyStatus}
+    <h6><a n:href="Coordinator:detail id => $order->getId()"
+                target="_blank">Pro: {$order->getCustomerNote() ?? null}</a></h6>
+    <strong>Stav:</strong> {$order->getStatus()|humanFriendlyStatus}
     {if $order->getCoordinator()?->getId() === $user->getId()}
         {if $order->getStatus() === 'new'}
-            - <a href="{link unassignCoordinator! orderId => $order->getId()}" class="btn btn-sm btn-danger">Zrušit rezervaci</a>
+            - <a href="{link unassignCoordinator! orderId => $order->getId()}" class="btn btn-sm btn-danger">Zrušit
+            rezervaci</a>
         {else}
             Rezervováno {$order->getReservedAt()|date:'G:i j. n. Y'}
         {/if}
     {else}
         {if $order->getStatus() === 'new'}
-            - <a href="{link assignCoordinator! orderId => $order->getId()}" class="btn btn-sm btn-primary">Rezervovat</a>
+            - <a href="{link assignCoordinator! orderId => $order->getId()}"
+                 class="btn btn-sm btn-primary">Rezervovat</a>
         {/if}
     {/if}
-	<hr/>
-	{if $order->getPickupAddress()}
-		<strong>Adresa vyzvednutí:</strong> <a href="https://www.google.com/maps/search/{$order->getPickupAddress()->getFullAddress()}"
-											   target="_blank">{$order->getPickupAddress()->getFullAddress()}</a><br/>
-	{/if}
-{if $order->getDeliveryAddress()}
-	<strong>Adresa doručení:</strong> <a href="https://www.google.com/maps/search/{$order->getDeliveryAddress()->getFullAddress()}"
-										 target="_blank">{$order->getDeliveryAddress()->getFullAddress()}</a><br/>
+    <hr/>
+    {if $order->getPickupAddress()}
+        <strong>Adresa vyzvednutí:</strong> <a
+            href="https://www.google.com/maps/search/{$order->getPickupAddress()->getFullAddress()}"
+            target="_blank">{$order->getPickupAddress()->getFullAddress()}</a><br/>
     {/if}
-	<strong>Telefon:</strong> {$order->getDeliveryPhone() ?? 'neuveden'}<br/>
+    {if $order->getDeliveryAddress()}
+        <strong>Adresa doručení:</strong> <a
+            href="https://www.google.com/maps/search/{$order->getDeliveryAddress()->getFullAddress()}"
+            target="_blank">{$order->getDeliveryAddress()->getFullAddress()}</a><br/>
+    {/if}
+    <strong>Telefon:</strong> {$order->getDeliveryPhone() ?? 'neuveden'}<br/>
 
 
-	<hr/>
-	<span n:if="$order->getOwner()"><strong>Pečovatel:</strong> {$order->getOwner()->getPersonName()} ({$order->getOwner()->getPersonPhone()})<br/></span>
-	<span n:if="$order->getCourier()"><strong>Kurýr:</strong> {$order->getCourier()->getPersonName()} ({$order->getCourier()->getPersonPhone()})<br/></span>
-	<span n:if="$order->getCoordinator()"><strong>Operátor:</strong> {$order->getCoordinator()->getPersonName()} ({$order->getCoordinator()->getPersonPhone()})<br/></span>
+    <hr/>
+    <span n:if="$order->getOwner()"><strong>Pečovatel:</strong> {$order->getOwner()->getPersonName()} ({$order->getOwner()->getPersonPhone()})<br/></span>
+    <span n:if="$order->getCourier()"><strong>Kurýr:</strong> {$order->getCourier()->getPersonName()} ({$order->getCourier()->getPersonPhone()})<br/></span>
+    <span n:if="$order->getCoordinator()"><strong>Operátor:</strong> {$order->getCoordinator()->getPersonName()} ({$order->getCoordinator()->getPersonPhone()})<br/></span>
     {if $order->getCoordinator() && $order->getStatus() == 'new'}
         {if $order->getCoordinator()->getId() == $user->getId()}
             <hr/>
@@ -120,7 +129,8 @@
     {/if}
 {/block}
 {block orderMin}
-    <h6><a n:href="Coordinator:detail id => $order->getId()" target="_blank">Pro: {$order->getCustomerNote() ?? null}</a></h6>
+    <h6><a n:href="Coordinator:detail id => $order->getId()"
+                target="_blank">Pro: {$order->getCustomerNote() ?? null}</a></h6>
     <strong>Stav:</strong> {$order->getStatus()|humanFriendlyStatus}<br/>
 {/block}
 {block orderAssign}
@@ -143,18 +153,18 @@
     </form>
 {/block}
 {block orderManagement}
-	<form action="{link updateOrderStatus! orderId => $order->getId()}" method="post" onchange="this.submit();"
-		  class="form form-vertical">
-		<div class="form-group">
-			<label for="orderStatus"><strong>Nastavit stav:</strong></label>
-			<select name="orderStatus" class="form-control">
-				<option value="picking"
-						{if $order->getStatus() == 'picking'}selected="selected"{/if}>{_templates.order.picking}</option>
-				<option value="delivering"
-						{if $order->getStatus() == 'delivering'}selected="selected"{/if}>{_templates.order.delivering}</option>
-				<option value="delivered"
-						{if $order->getStatus() == 'delivered'}selected="selected"{/if}>{_templates.order.delivered}</option>
-			</select>
-		</div>
-	</form>
+    <form action="{link updateOrderStatus! orderId => $order->getId()}" method="post" onchange="this.submit();"
+          class="form form-vertical">
+        <div class="form-group">
+            <label for="orderStatus"><strong>Nastavit stav:</strong></label>
+            <select name="orderStatus" class="form-control">
+                <option value="picking"
+                        {if $order->getStatus() == 'picking'}selected="selected"{/if}>{_templates.order.picking}</option>
+                <option value="delivering"
+                        {if $order->getStatus() == 'delivering'}selected="selected"{/if}>{_templates.order.delivering}</option>
+                <option value="delivered"
+                        {if $order->getStatus() == 'delivered'}selected="selected"{/if}>{_templates.order.delivered}</option>
+            </select>
+        </div>
+    </form>
 {/block}
