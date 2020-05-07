@@ -3,7 +3,7 @@
 {include "headquartersMenu.latte"}
 <div class="row">
 	<div class="col-md-12">
-		<h1>Seznam uživatelů <small n:ifset="$role">v roli {$role}</small></h1>
+		<h1>{_templates.listUsersL.listOfIsers}<small n:ifset="$role">{_templates.listUsersL.listOfIsers}{$role}</small></h1>
 	</div>
 	<div class="col-md-12">
 		{control usersDataGrid}

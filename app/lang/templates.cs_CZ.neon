@@ -119,6 +119,7 @@ coordinatorDashboard:
     detail: 'Detail'
     noOrdersYet: 'Zatím nebyly zadány žádné objednávky.'
     promote: 'Propagace'
+    recipientsPhone: 'Telefon příjemce'
 orderDetail:
     title: 'Detail objednávky'
     noCourier: 'Kurýr nebyl přiřazen'
@@ -133,6 +134,16 @@ orderDetail:
     id: 'ID obj.'
     back: 'Zpět na seznam obj.'
     makeOrder: 'Vytvořit objednávku'
+    contactName: 'Jméno zadavatele'
+    contactPhone: 'Telefon zadavatele'
+    nameOfOrg: 'Jméno organizace'
+    deliveryName: 'Jméno příjemce'
+    deliveryPhone: 'Telefon příjemce'
+    food: 'Jídlo'
+    medication: 'Léky'
+    faceMask: 'Roušky'
+    other: 'Ostatní'
+    backTolist: 'Zpět na seznam požadavků'
 printMaterial:
     title: 'SousedskaPomoc.cz'
     subtitle: 'Stal/a jsem se součástí komunitního projektu SousedskaPomoc.cz a jsem připraven/a vám pomoci'
@@ -209,3 +220,64 @@ profile:
     button: 'Uložit'
 headquarters:
 	title: 'Velín'
+	cities: 'Města'
+	secStaffMember: 'Členi bezp. štábu'
+	careTakers: 'Pečovatelé'
+	courier: 'Kurýři'
+	dispatch: 'Dispečeři'
+	seamstress: 'Švadleny'
+	admin: 'Administrátoři'
+	reqsFromWeb: 'Požadavky z webu'
+	orders: 'Objednávky'
+addressSuggester:
+    fullAddrSuggest: 'Našeptávač celé adresy'
+confirmNThankyou:
+    thankyou: 'Děkujeme, že jste se svěřili do rukou Sousedské&nbsp;pomoci.'
+    savedNInProcess: 'Uložili jsme si co potřebujete a náš dispečer se vám co nejdříve ozve. '
+    whileUWait: 'Zatím si můžete skrátiť čekání sdílením naší stránky, ať pomůžeme co nejvíce lidem v nouzi.'
+defautlL:
+    edit: 'Upravit'
+    postDemand: 'Přidat poptávku'
+    postDemandReg: 'Přidat poptávku - registrace'
+    wantToHelp: 'Chci pomáhat'
+    wantToHelpReg: 'Chci pomáhat - registrace'
+    done: 'Hotovo'
+    orderList: 'Seznam poptávek (HOTOVO)'
+    orderDetail: 'Detail poptávky (HOTOVO)'
+    login: 'Přihlášení (HOTOVO)'
+    confPage: 'Potvrzovací stránka (HOTOVO)'
+    components: 'Komponenty'
+    addrSuggest: 'Našeptávač adres (HOTOVO)'
+    townSuggest: 'Našeptávač města nebo obce (HOTOVO)'
+errorPages:
+    4xx:
+        Oops: 'Oops...'
+        badReq: 'Your browser sent a request that this server could not understand or process.'
+    403:
+        accessDenied: 'Access Denied'
+        badAcs: 'You do not have permission to view this page. Please try contact the web site administrator if you believe you should be able to view this page.'
+        errorNo: 'error 403'
+    404:
+        pgNotFound: 'Page Not Found'
+        couldntFind: 'The page you requested could not be found. It is possible that the address is incorrect, or that the page no longer exists. Please use a search engine to find what you are looking for.'
+        errorNo: 'error 404'
+    405:
+        mthfNotAllowed: 'Method Not Allowed'
+        reqMthNotAllwd: 'The requested method is not allowed for the URL.'
+        errorNo: 'error 405'
+    410:
+        pgNotFound: 'Page Not Found'
+        takenOffMsg: 'The page you requested has been taken off the site. We apologize for the inconvenience.'
+        errorNo: 'error 410'
+demandsL:
+    demandFromWeb: 'Poptávky z webu'
+listUsersL:
+    listOfUsers: 'Seznam uživatelů '
+    inRoleOf: 'v roli '
+ordersL:
+    ordersFromWeb: 'Objednávky z webu'
+townsL:
+    numberOfReg: 'Počet registrovaných'
+    city: 'Město'
+
+    

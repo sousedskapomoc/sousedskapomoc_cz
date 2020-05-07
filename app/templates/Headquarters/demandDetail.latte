@@ -2,7 +2,7 @@
 {block content}
 <h1>{_templates.orderDetail.title}</h1>
 <div class="col-12">
-    <p><a href="javascript:history.back()" class="btn btn-primary">Zpět na seznam požadavků</a></p>
+    <p><a href="javascript:history.back()" class="btn btn-primary">{_templates.orderDetail.backTolist}</a></p>
 </div>
 <div class="col-12">
     <div class="table-responsive">
@@ -16,11 +16,11 @@
                 <td>{$demand->getProcessed()}</td>
             </tr>
             <tr>
-                <th>Jméno zadavatele</th>
+                <th>{_templates.orderDetail.contactName}</th>
                 <td>{$demand->getContactName() ?? null}</td>
             </tr>
             <tr>
-                <th>Telefon zadavatele</th>
+                <th>{_templates.orderDetail.contactPhone}</th>
                 <td>{$demand->getContactPhone() ?? null}</td>
             </tr>
             <tr>
@@ -29,31 +29,31 @@
                        target="_blank">{$demand->getDeliveryAddress()->getFullAddress()}</a></td>
             </tr>
             <tr>
-                <th>Jméno organizace</th>
+                <th>{_templates.orderDetail.nameOfOrg}</th>
                 <td>{$demand->getOrganizationName() ?? null}</td>
             </tr>
             <tr>
-                <th>Jméno příjemce</th>
+                <th>{_templates.orderDetail.deliveryName}</th>
                 <td>{$demand->getDeliveryName() ?? null}</td>
             </tr>
             <tr>
-                <th>Telefon příjemce</th>
+                <th>{_templates.orderDetail.deliveryPhone}</th>
                 <td>{$demand->getDeliveryPhone() ?? null}</td>
             </tr>
             <tr>
-                <th>Jídlo</th>
+                <th>{_templates.orderDetail.food}</th>
                 <td>{$demand->getFood() ?? null}</td>
             </tr>
             <tr>
-                <th>Léky</th>
+                <th>{_templates.orderDetail.medication}</th>
                 <td>{$demand->getMedicine() ?? null}</td>
             </tr>
             <tr>
-                <th>Roušky</th>
+                <th>{_templates.orderDetail.faceMask}</th>
                 <td>{$demand->getVeils() ?? null}</td>
             </tr>
             <tr>
-                <th>Ostatní</th>
+                <th>{_templates.orderDetail.other}</th>
                 <td>{$demand->getOther() ?? null}</td>
             </tr>
             <tr>
