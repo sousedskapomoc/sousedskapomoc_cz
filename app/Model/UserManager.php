@@ -224,6 +224,11 @@ final class UserManager
         return $this->volunteerRepository->fetchAvailableCouriersInTown($town);
     }
 
+    public function fetchNonAvailableCouriersInTown($town)
+    {
+        return $this->volunteerRepository->fetchNonAvailableCouriersInTown($town);
+    }
+
 
 
     public function updateTown($selectedTown, $userId)

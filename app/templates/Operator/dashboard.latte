@@ -4,16 +4,12 @@
 		<div class="col-12">
 			<div>
 				<h1>{_templates.operatorDashboard.title} pro město {$town}
-					<small><a n:href="System:enterTown">změnit
-							lokalitu</a></small></h1>
-				<p>
-					<a href="https://sousedskapomoc.cz/pdf/zasady-dispecer.pdf" target="_blank"
-					   class="btn btn-sm btn-info">Manuál dispečera</a>
-                    <div id='link'">
-                        <a href='javascript:reloadOff()'
-                       class="btn btn-sm btn-info">Vypnout automaticke obnovování stránky</a>
+					<small><a n:href="System:enterTown">změnit lokalitu</a></small></h1>
+					<a href="https://sousedskapomoc.cz/pdf/zasady-dispecer.pdf" target="_blank" class="btn btn-sm btn-info" style="display: inline-block;">Manuál dispečera</a>
+                    <div id="link" style="display: inline-block;">
+                        <a href="javascript:reloadOff()" class="btn btn-sm btn-info">Vypnout automaticke obnovování stránky</a>
                     </div>
-				</p>
+                    <a n:href="Operator:courierList" class="btn btn-sm btn-info">Seznam kurýrů</a>
 			</div>
 		</div>
 	</div>

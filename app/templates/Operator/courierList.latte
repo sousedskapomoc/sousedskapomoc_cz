@@ -1,0 +1,69 @@
+{layout "../appLayout.latte"}
+{block content}
+	<div class="row">
+		<div class="col-12">
+            <div class="row">
+                <div class="col-12">
+                    <h2>Online kurýři pro město {$town}</h2>
+                    <p><a href="javascript:history.back()" class="btn btn-primary">Zpět</a></p>
+                </div>
+                <div class="col-12">
+
+                </div>
+            </div>
+            <table class="table table-hover">
+                <thead class="thead-light">
+                <tr>
+                    <th scope="col">Jméno</th>
+                    <th scope="col">Telefon</th>
+                    <th scope="col">Dopravní prostředek</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr n:foreach="$onlineCouriers as $courier">
+                        <td width="33%">
+                            {$courier->getPersonName()}
+                        </td>
+                        <td width="33%">
+                            {$courier->getPersonPhone()}
+                        </td>
+                        <td width="33%">
+                            {$courier->getTransport()->getType()}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+		</div>
+	</div>
+    <div class="row">
+        <div class="col-12">
+            <div class="row">
+                <div class="col-12">
+                    <h2>Offline kurýři pro město {$town}</h2>
+                </div>
+            </div>
+            <table class="table table-hover">
+                <thead class="thead-light">
+                <tr>
+                    <th scope="col">Jméno</th>
+                    <th scope="col">Telefon</th>
+                    <th scope="col">Dopravní prostředek</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr n:foreach="$offlineCouriers as $courier">
+                        <td width="33%">
+                            {$courier->getPersonName()}
+                        </td>
+                        <td width="33%">
+                            {$courier->getPersonPhone()}
+                        </td>
+                        <td width="33%">
+                            {$courier->getTransport()->getType()}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+{/block}

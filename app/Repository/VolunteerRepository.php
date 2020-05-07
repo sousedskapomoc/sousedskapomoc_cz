@@ -240,6 +240,23 @@ class VolunteerRepository extends DoctrineEntityRepository
     }
 
 
+    public function fetchNonAvailableCouriersInTown($town)
+    {
+        $em = $this->getEntityManager();
+        $query = $em->createQuery("
+        SELECT
+        u
+        FROM
+        SousedskaPomoc\Entities\Volunteer u JOIN u.address x
+        WHERE
+        x.city = '$town'
+        AND
+        u.online = 0");
+
+        return $query->getResult();
+    }
+
+
 
     public function fetchPhoneNumber($courierId)
     {
