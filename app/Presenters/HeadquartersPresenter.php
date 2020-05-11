@@ -160,7 +160,7 @@ class HeadquartersPresenter extends BasePresenter
         $grid->addColumnText('coordinatorName', 'Operátor');
         $grid->addColumnText('coordinatorPhone', 'Operátor');
         $grid->addColumnText('status', 'Status')->setFilterText();
-        $grid->addAction('reset', 'Resetovat', 'reset!')->setClass("btn btn-danger btn-sm");
+        $grid->addAction('reset', 'Resetovat', 'resetReservation!')->setClass("btn btn-danger btn-sm");
         $grid->addAction('detail', 'Detail', 'Courier:detail')->setClass("btn btn-primary btn-sm");
         $grid->addAction('delete', 'X', 'deleteOrder!')->setClass("btn btn-danger btn-sm");
 
@@ -226,6 +226,14 @@ class HeadquartersPresenter extends BasePresenter
         $this->orderManager->assignOrder(null, $id, null, 'new');
         $this->flashMessage("Objednávka byla obnovena do výchozího stavu.");
         $this->redirect('Headquarters:orders');
+    }
+
+
+    public function handleResetReservation($id)
+    {
+        $this->orderManager->unassignOrderCoordinator($id);
+        $this->flashMessage("Objednávka byla obnovena do výchozího stavu.");
+        $this->redirect('Headquarters:ordersReserved');
     }
 
 
