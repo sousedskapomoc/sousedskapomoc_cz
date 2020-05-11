@@ -11,7 +11,7 @@
                     <a href="javascript:reloadOff()" class="btn btn-sm btn-info">Vypnout automaticke obnovování
                         stránky</a>
                 </div>
-                <a n:href="Operator:courierList" class="btn btn-sm btn-info">Seznam kurýrů</a>
+                <a n:if="$user->isInRole('admin')" n:href="Operator:courierList" class="btn btn-sm btn-info">Seznam kurýrů</a>
             </div>
         </div>
     </div>
