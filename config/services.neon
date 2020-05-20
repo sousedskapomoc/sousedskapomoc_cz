@@ -10,6 +10,7 @@ services:
 	- SousedskaPomoc\Forms\SignUpFormFactory
 	# Components
 	- SousedskaPomoc\Components\Mail
+	- SousedskaPomoc\Components\ICreateTownEventFormInterface
 	- SousedskaPomoc\Components\IRegisterVolunteerFormInterface
 	- SousedskaPomoc\Components\IEditVolunteerFormInterface
 	- SousedskaPomoc\Components\IDemandFormInterface

@@ -1,0 +1,39 @@
+{layout "../appLayout.latte"}
+{block content}
+<h1>Správa městských eventů</h1>
+<form class="form form-vertical" method="get">
+    <div class="form-group">
+        <label for="town">Město: </label>
+        <input type="text" name="town" id="town" class="form-control" />
+    </div>
+    <div class="form-group">
+        <input type="submit" class="btn btn-xs btn-success" value="Vyhledat město" />
+    </div>
+</form>
+{if isset($_GET['town'])}
+<h2>Profil města {$_GET['town']}</h2>
+    <table class="table table-bordered table-hover">
+        <tr>
+            <th>Starosta/správce:</th>
+            <th>Honza Hrabovský (honza.hrabovsky@sousedskapomoc.cz)</th>
+        </tr>
+        <tr>
+            <th colspan="2">Pořádané akce <a n:href="EventSystem:createEvent"> + Založit akci</a></th>
+        </tr>
+        <tr>
+            <td colspan="2">--- žádné akce nebyly nalezeny</td>
+        </tr>
+        <tr>
+            <th colspan="2">Odeslané notifikace <a n:href="EventSystem:createEvent"> + Vytvořit notifikaci</a></th>
+        </tr>
+        <tr>
+            <td colspan="2">--- žádné notifikace nebyly nalezeny</td>
+        </tr>
+        <tr>
+            <th colspan="2">Mapa pomoci<br />
+                <a href="https://sousedskapomoc.cz/public-demands/?filterByType=&orderList-where-help={$_GET[town]}" target="_blank">Mapa pomoci ve vašem městě</a>
+
+            </th>
+        </tr>
+    </table>
+{/if}
