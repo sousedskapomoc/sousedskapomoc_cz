@@ -8,6 +8,7 @@ use Kdyby\Translation\Translator;
 use Nette;
 use SousedskaPomoc\Components\Suggester\ISuggesterAddressInterface;
 use SousedskaPomoc\Components\Suggester\ISuggesterTownInterface;
+use SousedskaPomoc\Entities\CallRoulette;
 use SousedskaPomoc\Model\OrderManager;
 use SousedskaPomoc\Model\UserManager;
 
@@ -87,6 +88,13 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 
         $this->template->addFilter('fetchPhone', function ($courierId) {
             return $this->userManager->fetchPhoneNumber($courierId);
+        });
+
+        $this->template->addFilter('getCallTopicName', function ($topicId) {
+            $callRoulette = new CallRoulette();
+            $topics = $callRoulette->getTopics();
+
+            return $topics[$topicId] ?? 'Neznámé';
         });
 
         $this->template->addFilter('fetchCar', function ($courierId) {
