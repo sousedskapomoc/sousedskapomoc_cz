@@ -88,6 +88,11 @@
                                                                      aria-hidden="true"></i> {_templates.headquarters.title}
                 </a>
             </li>
+            <li n:if="$user->isInRole('admin')" class="nav-item">
+                <a n:href="Headquarters:callRoulette" class="nav-link"><i class="fas fa-phone-volume"
+                                                                     aria-hidden="true"></i> {_templates.callRoulette.title}
+                </a>
+            </li>
             <li n:if="$user->isInRole('admin')" class="nav-item dropdown">
                 <a href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
                               class="nav-link dropdown-toggle"><i class="fas fa-map-signs"></i> Města</a>
