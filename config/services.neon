@@ -40,5 +40,8 @@ services:
 	callRouletteRepository:
 		class: SousedskaPomoc\Repository\CallRouletteRepository
 		factory: @Doctrine\ORM\EntityManagerInterface::getRepository('SousedskaPomoc\Entities\CallRoulette')
+	twilioWebhookRepository:
+		class: SousedskaPomoc\Repository\TwilioWebhookRepository
+		factory: @Doctrine\ORM\EntityManagerInterface::getRepository('SousedskaPomoc\Entities\TwilioWebhook')
 	#Commands
 	- SousedskaPomoc\Command\MigrateDbCommand
