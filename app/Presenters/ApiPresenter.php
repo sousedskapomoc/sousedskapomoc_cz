@@ -25,6 +25,12 @@ final class ApiPresenter extends Presenter
         );
     }
 
+    public function renderCallTopics()
+    {
+        $callRoulette = new CallRoulette();
+        $this->sendJson($callRoulette->getTopics());
+    }
+
     public function renderStartRoulette()
     {
         $callRoulette = new CallRoulette();

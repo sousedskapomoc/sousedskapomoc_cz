@@ -17,6 +17,18 @@ class CallRoulette
 
     use Timestampable;
 
+    protected $topics = [
+        1 => 'Sex',
+        2 => 'Historie / Dějiny Umění',
+        3 => 'Sport',
+        4 => 'Gastronomie, Jídlo a vaření',
+        5 => 'Zdravotní stav',
+        6 => 'COVID 19',
+        7 => 'Internet - novodobé technologie',
+        8 => 'Zahradnictví, kutilství a ostatní koníčci',
+        9 => 'Literature'
+    ];
+
     /**
      * @ORM\Column(type="string")
      */
@@ -89,5 +101,13 @@ class CallRoulette
             'updatedAt' => $this->getUpdatedAt(),
             'createdAt' => $this->getCreatedAt()
         ];
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getTopics(): array
+    {
+        return $this->topics;
     }
 }
