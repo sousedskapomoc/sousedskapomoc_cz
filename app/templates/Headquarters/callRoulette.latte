@@ -1,0 +1,40 @@
+{layout "../appLayout.latte"}
+{block content}
+<div class="row">
+    <div class="col-md-12">
+        <h2>Sousedský pokec</h2>
+        <hr />
+        <a href="{$basePath}/api/call-topics" class="btn btn-primary" target="_blank">Témata hovoru</a>
+        <hr />
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-bordered table-hover">
+            <tr>
+                <th>ID</th>
+                <th>Telefon</th>
+                <th>Zvolené téma</th>
+                <th>Datum přihlášení</th>
+                <th>Datum posledního telefonátu</th>
+            </tr>
+            <tr n:foreach="$calls as $call">
+                <td>
+                    {$call->getId()}
+                </td>
+                <td>
+                    {$call->getCallerPhone()}
+                </td>
+                <td>
+                    {$call->getTopicId()|getCallTopicName}
+                </td>
+                <td>
+                    {$call->getCreatedAt()->getTimestamp()|date:"d.m.Y H:i:m"}
+                </td>
+                <td>
+                    {$call->getUpdatedAt()->getTimestamp()|date:"d.m.Y H:i:m"}
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

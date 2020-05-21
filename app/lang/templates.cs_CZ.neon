@@ -211,3 +211,5 @@ profile:
     send: 'Pokračovat'
 headquarters:
 	title: 'Velín'
+callRoulette:
+    title: 'Sousedský pokec'
