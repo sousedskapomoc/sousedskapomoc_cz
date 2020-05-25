@@ -1,0 +1,49 @@
+{layout "../appLayout.latte"}
+{block content}
+    {include "callRouletteMenu.latte"}
+    <div class="row">
+        <div class="col-md-6 col-sm-12 col-lg-6">
+            <div class="card">
+                <div class="card-header">
+                    <h1>Detail telefonátu</h1>
+                </div>
+                <div class="card-body">
+                    <table class="table table-borderd">
+                        <tr>
+                            <th>Telefonní číslo</th>
+                            <td>{$caller->getCallerPhone()}</td>
+                        </tr>
+                        <tr>
+                            <th>Téma o které je zájem</th>
+                            <td>{$caller->getTopicId()|getCallTopicName}</td>
+                        </tr>
+                        <tr>
+                            <th>Spojeno</th>
+                            <td>{$caller->getPaired()|daisyLogic}</td>
+                        </tr>
+                        <tr>
+                            <th>Datum přihlášení</th>
+                            <td>{$caller->getCreatedAt()->getTimestamp()|date:"d.m.Y H:i:m"}</td>
+                        </tr>
+                        <tr>
+                            <th>Datum posledního telefonátu</th>
+                            <td>{$caller->getUpdatedAt()->getTimestamp()|date:"d.m.Y H:i:m"}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h2>Historie telefonátů</h2>
+                </div>
+                <div class="card-body">
+                    <p>Zatím žádné telefonáty na linku.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+{/block}

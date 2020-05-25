@@ -376,6 +376,11 @@ class HeadquartersPresenter extends BasePresenter
         $this->redirect('this');
     }
 
+    public function renderPhoneHistory($id)
+    {
+        $this->template->caller = $this->callRouletteRepository->find($id);
+    }
+
     public function renderPhoneNote($id)
     {
         $this->template->call = $this->callRouletteRepository->find($id);
