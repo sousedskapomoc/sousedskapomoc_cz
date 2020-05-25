@@ -1,15 +1,6 @@
 {layout "../appLayout.latte"}
 {block content}
-<div class="row">
-    <div class="col-md-12">
-        <h2>Sousedský pokec</h2>
-        <hr />
-        <a href="{$basePath}/api/call-topics" class="btn btn-primary" target="_blank">Témata hovoru</a>
-        <a href="{$basePath}/api/call-topics" class="btn btn-primary" target="_blank">Přehled probíhajících hovorů</a>
-        <a href="{$basePath}/api/call-topics" class="btn btn-primary" target="_blank">Vytvořit novou konferenci</a>
-        <hr />
-    </div>
-</div>
+{include "callRouletteMenu.latte"}
 <div class="row">
     <div class="col-md-12">
         <table class="table table-bordered table-hover">
@@ -42,8 +33,8 @@
                     {$call->getUpdatedAt()->getTimestamp()|date:"d.m.Y H:i:m"}
                 </td>
                 <td>
-                    <a href="#" class="btn btn-success btn-xs">Přidat poznámku</a>
-                    <a href="#" class="btn btn-primary btn-xs">Historie telefonátů</a>
+                    <a href="{link phoneNote id => $call->getId()}" class="btn btn-success btn-xs">Přidat poznámku</a>
+                    <a href="{link phoneHistory id => $call->getId()}" class="btn btn-primary btn-xs">Historie telefonátů</a>
                 </td>
             </tr>
         </table>

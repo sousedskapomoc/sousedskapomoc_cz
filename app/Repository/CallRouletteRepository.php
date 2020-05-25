@@ -25,4 +25,10 @@ class CallRouletteRepository extends DoctrineEntityRepository
 
         return $output;
     }
+
+    public function getTopics()
+    {
+        $callRoulette = new CallRoulette();
+        return $callRoulette->getTopics();
+    }
 }

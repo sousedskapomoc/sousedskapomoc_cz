@@ -45,6 +45,11 @@ class CallRoulette
     protected $paired;
 
     /**
+     * @ORM\Column(type="text")
+     */
+    protected $notes;
+
+    /**
      * @return mixed
      */
     public function getCallerPhone()
@@ -109,5 +114,21 @@ class CallRoulette
     public function getTopics(): array
     {
         return $this->topics;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNotes()
+    {
+        return $this->notes;
+    }
+
+    /**
+     * @param mixed $notes
+     */
+    public function setNotes($notes): void
+    {
+        $this->notes = $notes;
     }
 }
