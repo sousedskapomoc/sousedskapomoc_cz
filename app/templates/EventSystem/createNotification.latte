@@ -1,0 +1,15 @@
+{layout "../appLayout.latte"}
+{block content}
+<h1>Správa městských notifikací</h1>
+<form class="form form-vertical" method="get">
+    <div class="form-group">
+        <label for="town">Město: </label>
+        <input type="text" name="town" id="town" class="form-control" />
+    </div>
+    <div class="form-group">
+        <input type="submit" class="btn btn-xs btn-success" value="Vyhledat město" />
+    </div>
+</form>
+{if isset($_GET['town'])}
+    {control createTownNotification}
+{/if}
