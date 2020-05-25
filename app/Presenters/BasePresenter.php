@@ -117,7 +117,16 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
                 1 => 'Zapnuto'
             ];
 
-            return $states[$state] ?? $state[0];
+            return $states[$state] ?? $states[0];
+        });
+
+        $this->template->addFilter('daisyLogic', function ($state) {
+            $states = [
+                0 => 'Ne',
+                1 => 'Ano'
+            ];
+
+            return $states[$state] ?? $states[0];
         });
 
         $this->template->addFilter('createList', function ($items) {

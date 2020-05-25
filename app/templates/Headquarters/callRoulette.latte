@@ -5,6 +5,8 @@
         <h2>Sousedský pokec</h2>
         <hr />
         <a href="{$basePath}/api/call-topics" class="btn btn-primary" target="_blank">Témata hovoru</a>
+        <a href="{$basePath}/api/call-topics" class="btn btn-primary" target="_blank">Přehled probíhajících hovorů</a>
+        <a href="{$basePath}/api/call-topics" class="btn btn-primary" target="_blank">Vytvořit novou konferenci</a>
         <hr />
     </div>
 </div>
@@ -15,8 +17,10 @@
                 <th>ID</th>
                 <th>Telefon</th>
                 <th>Zvolené téma</th>
+                <th>Spojeno</th>
                 <th>Datum přihlášení</th>
                 <th>Datum posledního telefonátu</th>
+                <th>Akce</th>
             </tr>
             <tr n:foreach="$calls as $call">
                 <td>
@@ -29,10 +33,17 @@
                     {$call->getTopicId()|getCallTopicName}
                 </td>
                 <td>
+                    {$call->getPaired()|daisyLogic}
+                </td>
+                <td>
                     {$call->getCreatedAt()->getTimestamp()|date:"d.m.Y H:i:m"}
                 </td>
                 <td>
                     {$call->getUpdatedAt()->getTimestamp()|date:"d.m.Y H:i:m"}
+                </td>
+                <td>
+                    <a href="#" class="btn btn-success btn-xs">Přidat poznámku</a>
+                    <a href="#" class="btn btn-primary btn-xs">Historie telefonátů</a>
                 </td>
             </tr>
         </table>
