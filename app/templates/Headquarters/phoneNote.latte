@@ -1,0 +1,67 @@
+{layout "../appLayout.latte"}
+{block content}
+    {include "callRouletteMenu.latte"}
+    <div class="row">
+        <div class="col-md-6 col-sm-12 col-lg-6">
+            <div class="card">
+                <div class="card-header">
+                    <h1>Detail telefonátu</h1>
+                </div>
+                <div class="card-body">
+                    <table class="table table-borderd">
+                        <tr>
+                            <th>Telefonní číslo</th>
+                            <td>{$call->getCallerPhone()}</td>
+                        </tr>
+                        <tr>
+                            <th>Téma o které je zájem</th>
+                            <td>{$call->getTopicId()|getCallTopicName}</td>
+                        </tr>
+                        <tr>
+                            <th>Spojeno</th>
+                            <td>{$call->getPaired()|daisyLogic}</td>
+                        </tr>
+                        <tr>
+                            <th>Datum přihlášení</th>
+                            <td>{$call->getCreatedAt()->getTimestamp()|date:"d.m.Y H:i:m"}</td>
+                        </tr>
+                        <tr>
+                            <th>Datum posledního telefonátu</th>
+                            <td>{$call->getUpdatedAt()->getTimestamp()|date:"d.m.Y H:i:m"}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h2>Poznámky k telefonnímu číslu</h2>
+                </div>
+                <div class="card-body">
+                    {var $notes = json_decode($call->getNotes())}
+                    {ifset $notes}
+                        {foreach $notes as $note}
+                            <p>
+                                Zapsal: {$note->noteTaker ?? 'Uživatel byl odstraněn'} ({$note->dateTime})
+                            </p>
+                            <p>
+                                {$note->description}
+
+                            </p>
+                            <hr/>
+                        {/foreach}
+                    {else}
+                        <p>K tomuto číslu nejsou vedené žádné poznámky.</p>
+                    {/ifset}
+                    <hr/>
+                    <h3>Nová poznámka</h3>
+                    {control newNote}
+                    <hr/>
+                </div>
+            </div>
+
+        </div>
+    </div>
+{/block}

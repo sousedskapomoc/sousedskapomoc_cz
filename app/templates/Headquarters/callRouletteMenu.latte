@@ -1,0 +1,22 @@
+<div class="row">
+    <div class="col-md-12">
+        <h2>Sousedský pokec</h2>
+        <a href="{link callRoulette}"><small>Zpět na přehled</small></a>
+        <hr />
+        <a href="{link createNewConference}" class="btn btn-primary">Vytvořit novou konferenci</a>
+        <a href="{link callsInProgress}" class="btn btn-success">Přehled probíhajících hovorů</a>
+        <a href="{link callsWaiting}" class="btn btn-warning">Přehled čekajících na spojení</a>
+        <hr />
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Témata hovoru
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                {foreach $topics as $topic}
+                    <a href="#" class="dropdown-item">{$topic}</a>
+                {/foreach}
+            </div>
+        </div>
+        <hr />
+    </div>
+</div>
