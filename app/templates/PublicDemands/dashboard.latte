@@ -9,6 +9,7 @@
                 kartičku dobrovolníka</a>
             <a n:if="$volunteer->getUploadPhoto() == null" n:href="Sign:uploadPhoto" class="btn btn-primary btn-dark">Nahrát
                 novou profilovou fotku</a>
+            <a n:if="$volunteer->getUploadPhoto()" n:href="deletePhoto!" class="btn btn-primary btn-dark">Smazat fotku</a>
 
         </p>
         <h1>Přehled tvojí pomoci</h1>
