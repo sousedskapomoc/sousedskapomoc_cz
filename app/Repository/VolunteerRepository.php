@@ -4,7 +4,9 @@ namespace SousedskaPomoc\Repository;
 
 use Doctrine\ORM\EntityRepository as DoctrineEntityRepository;
 use Nette\Security\AuthenticationException;
+use Nette\Utils\FileSystem;
 use SousedskaPomoc\Entities\Volunteer;
+use Nette\Http\FileUpload;
 
 class VolunteerRepository extends DoctrineEntityRepository
 {
@@ -283,5 +285,19 @@ class VolunteerRepository extends DoctrineEntityRepository
         $em = $this->getEntityManager();
         $em->persist($volunteer);
         $em->flush();
+    }
+
+
+
+    public function deattachUserPhoto($volunteerId)
+    {
+        /** @var Volunteer $volunteer */
+        $volunteer = $this->getById($volunteerId);
+
+        /** @var FileUpload $image */
+        $image = $volunteer->getUploadPhoto();
+
+        $volunteer->setUploadPhoto(null);
+
     }
 }
