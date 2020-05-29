@@ -98,4 +98,10 @@ class PublicDemandsPresenter extends BasePresenter
         $this->flashMessage("Poptávku jsme vám přiřadili můžete se pustit do její realizace");
         $this->redirect("this");
     }
+
+    public function handleDeletePhoto() {
+        $this->volunteerRepository->deleteUserPhoto($this->user->getId());
+        $this->flashMessage("Fotku jsme úspěšně smazali.");
+        $this->redirect("this");
+    }
 }

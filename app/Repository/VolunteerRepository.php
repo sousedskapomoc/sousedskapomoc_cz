@@ -289,15 +289,17 @@ class VolunteerRepository extends DoctrineEntityRepository
 
 
 
-    public function deattachUserPhoto($volunteerId)
+    public function deleteUserPhoto($volunteerId)
     {
         /** @var Volunteer $volunteer */
         $volunteer = $this->getById($volunteerId);
 
-        /** @var FileUpload $image */
-        $image = $volunteer->getUploadPhoto();
+        FileSystem::delete('upload/' . $volunteer->getId() . '_' . $volunteer->getUploadPhoto());
+        FileSystem::delete('upload/card_' . $volunteer->getId() . '_' . $volunteer->getUploadPhoto());
 
         $volunteer->setUploadPhoto(null);
-
+        $em = $this->getEntityManager();
+        $em->persist($volunteer);
+        $em->flush();
     }
 }
