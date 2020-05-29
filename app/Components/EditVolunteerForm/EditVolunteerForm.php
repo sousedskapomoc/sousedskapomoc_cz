@@ -101,8 +101,7 @@ class EditVolunteerForm extends Control
 
         if ($this->getPresenter()->user->isInRole('courier')) {
             $form->addSelect('car', $this->translator->translate('forms.registerCoordinator.carLabel'), $cars)
-                ->setRequired($this->translator->translate('forms.registerCoordinator.carRequired'))
-                ->setDefaultValue($userDetails->getTransport());
+                ->setRequired($this->translator->translate('forms.registerCoordinator.carRequired'));
         }
 
         $form->setDefaults(
