@@ -26,9 +26,14 @@ class Volunteer
     protected $personName;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="string", nullable=true, options={"default" : NULL})
      */
     protected $uploadPhoto;
+
+    /**
+     * @ORM\Column(type="boolean", options={"default" : 0})
+     */
+    protected $photoApproved;
     /**
      * @ORM\Column(type="string")
      */
@@ -534,5 +539,13 @@ class Volunteer
     public function getNote()
     {
         return $this->note;
+    }
+
+    public function approvePhoto() {
+        $this->photoApproved = true;
+    }
+
+    public function declinePhoto() {
+        $this->photoApproved = false;
     }
 }
