@@ -15,6 +15,21 @@ class VolunteerRepository extends DoctrineEntityRepository
         return $this->findOneBy(['id' => $id]);
     }
 
+    public function getUsersForPhotoApprove()
+    {
+        $em = $this->getEntityManager();
+        $query = $em->createQuery("
+        SELECT
+        u
+        FROM
+        SousedskaPomoc\Entities\Volunteer u
+        WHERE
+        u.uploadPhoto != 'NULL'
+        ");
+
+        return $query->getResult();
+    }
+
 
 
     public function getCourierByTown($town)

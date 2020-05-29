@@ -174,6 +174,26 @@ class HeadquartersPresenter extends BasePresenter
         return $grid;
     }
 
+    public function createComponentPhotoApproveDataGrid()
+    {
+        $grid = new DataGrid();
+
+        //@TODO - add text filter into address
+        $grid->setDataSource(new ArrayCollection($this->volunteerRepository->getUsersForPhotoApprove()));
+        $grid->addColumnNumber('id', 'ID')
+            ->setFilterText();
+
+        $grid->addColumnText('personName', 'Jméno');
+        $grid->addColumnText('personEmail', 'Email');
+        $grid->addColumnText('uploadPhoto', 'Fotka')
+            ->setRenderer(function($item) {
+                return '<img src="upload/' . $item->getId() . "_" . $item->getUploadPhoto() .'">';
+            });
+        $grid->addAction('delete', 'X', 'deletePhoto!')->setClass("btn btn-danger btn-sm");
+
+        return $grid;
+    }
+
 
     public function renderListUsers($id, $role)
     {
@@ -404,4 +424,9 @@ class HeadquartersPresenter extends BasePresenter
         $values = $form->getValues();
         $this->redirect('this');
     }
+
+    public function handleDeletePhoto($id) {
+        $this->volunteerRepository->deleteUserPhoto($id);
+    }
+
 }
