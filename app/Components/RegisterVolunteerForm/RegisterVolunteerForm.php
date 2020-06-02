@@ -47,6 +47,7 @@ class RegisterVolunteerFormControl extends Control
     private $role;
 
 
+
     public function __construct(
         VolunteerRepository $volunteerRepository,
         Translator $translator,
@@ -71,10 +72,13 @@ class RegisterVolunteerFormControl extends Control
         $this->townSuggester = $townSuggester;
     }
 
+
+
     public function createComponentTownSuggester()
     {
         return $this->townSuggester->create();
     }
+
 
 
     public function createComponentRegisterVolunteerForm()
@@ -97,7 +101,7 @@ class RegisterVolunteerFormControl extends Control
                 2 => 'Ušít roušky',
                 3 => 'Pomáhat ostatním s doručením',
                 4 => 'Dodat materiál',
-                5 => 'Pomoci 3D tiskem'
+                5 => 'Pomoci 3D tiskem',
             ]
         );
         $form->addRadioList(
@@ -110,7 +114,7 @@ class RegisterVolunteerFormControl extends Control
                 4 => 'Velká dodávka',
                 5 => 'Kolo',
                 6 => 'Motorka ',
-                7 => 'Chůze'
+                7 => 'Chůze',
             ]
         )->setDefaultValue(7);
 
@@ -127,6 +131,8 @@ class RegisterVolunteerFormControl extends Control
         return $form;
     }
 
+
+
     public function processAdd(BootstrapForm $form)
     {
         $values = $form->getValues();
@@ -138,6 +144,7 @@ class RegisterVolunteerFormControl extends Control
         $user->setPersonPhone($values->personPhone);
         $user->setPersonName($values->personName);
         $user->setHash(md5($values->personEmail));
+        $user->declinePhoto();
 
         //Set roles
         switch ($values->role) {
@@ -174,7 +181,7 @@ class RegisterVolunteerFormControl extends Control
         /** @var \GuzzleHttp\Psr7\Response $response */
         $baseUri = "https://geocoder.ls.hereapi.com/6.2/geocode.json?locationid=";
         $apiKey = "Kl0wK4fx38Pf63EIey6WyrmGEhS2IqaVHkuzx0IQ4-Q";
-        $response = $client->get($baseUri . $values->locationId . '&jsonattributes=1&gen=9&apiKey=' . $apiKey);
+        $response = $client->get($baseUri.$values->locationId.'&jsonattributes=1&gen=9&apiKey='.$apiKey);
         $content = $response->getBody()->getContents();
 
         $content = json_decode($content);
@@ -244,9 +251,11 @@ class RegisterVolunteerFormControl extends Control
         }
     }
 
+
+
     public function render()
     {
-        $this->template->setFile(__DIR__ . '/add.latte');
+        $this->template->setFile(__DIR__.'/add.latte');
         $this->template->role = $this->role;
         $this->template->render();
     }
