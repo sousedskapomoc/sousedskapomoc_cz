@@ -27,6 +27,8 @@
                 <input type="text" name="orderList-where-help" id="orderList-where-help"
                        placeholder="Lokalita kde chcete pomoct" {ifset $selectedTown}value="{$selectedTown}"{/ifset}>
                 <button class="btn btn--purple btn-small">Zobrazit</button>
+
+                <a href="{plink Homepage:postDemand}" class="btn btn-small btn--purple" style="margin-left: 10px;max-height: 40px;padding: 6px 15px;margin-top: 10px;font-size: 14px;">Přidat novou poptávku</a>
             </form>
             <div class="form--plain__filter-checkbox">
                 <input type="checkbox" name="orderList-org" id="orderList-org"/>
@@ -45,7 +47,7 @@
                     </div>
                     <div class="orderList__info">
                         <h5>{$demand->getContactName()}</h5>
-                        <p>{$demand->getProcessed()|humanFriendlyStatus}</p>
+                        <p>Zadáno {$demand->getCreatedAt()->getTimestamp()|date:"d.m.Y H:i"}, aktuálně ve stavu {$demand->getProcessed()|humanFriendlyStatus}</p>
                         <p class="orderList__info__name">{$demand->getDeliveryName()}</p>
                         <a n:href="detail id => $demand->getId()" n:if="$demand->getDeliveryAddress() != null"><i
                                     class="fas fa-map-marker-alt"></i>{$demand->getDeliveryAddress()->getCityWithPostalCode()}
