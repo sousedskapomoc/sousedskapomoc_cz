@@ -548,4 +548,8 @@ class Volunteer
     public function declinePhoto() {
         $this->photoApproved = false;
     }
+
+    public function getPhotoApproved() {
+        return $this->photoApproved;
+    }
 }

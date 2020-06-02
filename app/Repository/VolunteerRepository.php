@@ -25,6 +25,8 @@ class VolunteerRepository extends DoctrineEntityRepository
         SousedskaPomoc\Entities\Volunteer u
         WHERE
         u.uploadPhoto != 'NULL'
+        AND
+        u.photoApproved = false
         ");
 
         return $query->getResult();
@@ -313,6 +315,20 @@ class VolunteerRepository extends DoctrineEntityRepository
         FileSystem::delete('upload/card_' . $volunteer->getId() . '_' . $volunteer->getUploadPhoto());
 
         $volunteer->setUploadPhoto(null);
+        $volunteer->declinePhoto();
+
+        $em = $this->getEntityManager();
+        $em->persist($volunteer);
+        $em->flush();
+    }
+
+    public function approveUserPhoto($volunteerId)
+    {
+        /** @var Volunteer $volunteer */
+        $volunteer = $this->getById($volunteerId);
+
+        $volunteer->approvePhoto();
+
         $em = $this->getEntityManager();
         $em->persist($volunteer);
         $em->flush();

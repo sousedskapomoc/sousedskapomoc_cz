@@ -180,15 +180,14 @@ class HeadquartersPresenter extends BasePresenter
 
         //@TODO - add text filter into address
         $grid->setDataSource(new ArrayCollection($this->volunteerRepository->getUsersForPhotoApprove()));
+        $grid->setTemplateFile(__DIR__ . '/../templates/Headquarters/imageRendererDatagrid.latte');
         $grid->addColumnNumber('id', 'ID')
             ->setFilterText();
 
         $grid->addColumnText('personName', 'Jméno');
         $grid->addColumnText('personEmail', 'Email');
-        $grid->addColumnText('uploadPhoto', 'Fotka')
-            ->setRenderer(function($item) {
-                return '<img src="upload/' . $item->getId() . "_" . $item->getUploadPhoto() .'">';
-            });
+        $grid->addColumnText('uploadPhoto', 'Fotka');
+        $grid->addAction('approve', '✓', 'approvePhoto!')->setClass("btn btn-success btn-sm");
         $grid->addAction('delete', 'X', 'deletePhoto!')->setClass("btn btn-danger btn-sm");
 
         return $grid;
@@ -427,6 +426,14 @@ class HeadquartersPresenter extends BasePresenter
 
     public function handleDeletePhoto($id) {
         $this->volunteerRepository->deleteUserPhoto($id);
+        $this->flashMessage("Fotka byla zamitnuta.");
+        $this->redirect('this');
+    }
+
+    public function handleApprovePhoto($id) {
+        $this->volunteerRepository->approveUserPhoto($id);
+        $this->flashMessage("Fotka byla schvalena.");
+        $this->redirect('this');
     }
 
 }
