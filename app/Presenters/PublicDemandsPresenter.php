@@ -23,25 +23,35 @@ class PublicDemandsPresenter extends BasePresenter
     /** @var DemandRepository */
     protected $demandRepository;
 
+
+
     public function injectOrderRepository(OrderRepository $orderRepository)
     {
         $this->orderRepository = $orderRepository;
     }
+
+
 
     public function injectVolunteerRepository(VolunteerRepository $volunteerRepository)
     {
         $this->volunteerRepository = $volunteerRepository;
     }
 
+
+
     public function injectAddressRepository(AddressRepository $addressRepository)
     {
         $this->addressRepository = $addressRepository;
     }
 
+
+
     public function injectPublicDemandsRepository(DemandRepository $demandRepository)
     {
         $this->demandRepository = $demandRepository;
     }
+
+
 
     public function renderDefault()
     {
@@ -55,6 +65,8 @@ class PublicDemandsPresenter extends BasePresenter
         }
     }
 
+
+
     public function renderDashboard()
     {
         if (!$this->user->isLoggedIn()) {
@@ -65,10 +77,14 @@ class PublicDemandsPresenter extends BasePresenter
         $this->template->demands = $this->demandRepository->getByUser($this->user->getId());
     }
 
+
+
     public function renderDetail($id)
     {
         $this->template->demand = $this->demandRepository->getById($id);
     }
+
+
 
     public function handleMarkDelivered($id)
     {
@@ -81,6 +97,8 @@ class PublicDemandsPresenter extends BasePresenter
         $this->flashMessage("Poptávku jsme označili jako doručenou.");
         $this->redirect("this");
     }
+
+
 
     public function handleSelfAssign($id)
     {
@@ -96,6 +114,15 @@ class PublicDemandsPresenter extends BasePresenter
         $this->demandRepository->assignDemand($volunteer, $demand);
 
         $this->flashMessage("Poptávku jsme vám přiřadili můžete se pustit do její realizace");
+        $this->redirect("this");
+    }
+
+
+
+    public function handleDeletePhoto()
+    {
+        $this->volunteerRepository->deleteUserPhoto($this->user->getId());
+        $this->flashMessage("Fotku jsme úspěšně smazali.");
         $this->redirect("this");
     }
 }

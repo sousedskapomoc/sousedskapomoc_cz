@@ -4,13 +4,32 @@ namespace SousedskaPomoc\Repository;
 
 use Doctrine\ORM\EntityRepository as DoctrineEntityRepository;
 use Nette\Security\AuthenticationException;
+use Nette\Utils\FileSystem;
 use SousedskaPomoc\Entities\Volunteer;
+use Nette\Http\FileUpload;
 
 class VolunteerRepository extends DoctrineEntityRepository
 {
     public function getById($id)
     {
         return $this->findOneBy(['id' => $id]);
+    }
+
+    public function getUsersForPhotoApprove()
+    {
+        $em = $this->getEntityManager();
+        $query = $em->createQuery("
+        SELECT
+        u
+        FROM
+        SousedskaPomoc\Entities\Volunteer u
+        WHERE
+        u.uploadPhoto != 'NULL'
+        AND
+        u.photoApproved = false
+        ");
+
+        return $query->getResult();
     }
 
 
@@ -280,6 +299,36 @@ class VolunteerRepository extends DoctrineEntityRepository
         /** @var Volunteer $volunteer */
         $volunteer = $this->find($volunteerId);
         $volunteer->setUploadPhoto($filePath);
+        $em = $this->getEntityManager();
+        $em->persist($volunteer);
+        $em->flush();
+    }
+
+
+
+    public function deleteUserPhoto($volunteerId)
+    {
+        /** @var Volunteer $volunteer */
+        $volunteer = $this->getById($volunteerId);
+
+        FileSystem::delete('upload/' . $volunteer->getId() . '_' . $volunteer->getUploadPhoto());
+        FileSystem::delete('upload/card_' . $volunteer->getId() . '_' . $volunteer->getUploadPhoto());
+
+        $volunteer->setUploadPhoto(null);
+        $volunteer->declinePhoto();
+
+        $em = $this->getEntityManager();
+        $em->persist($volunteer);
+        $em->flush();
+    }
+
+    public function approveUserPhoto($volunteerId)
+    {
+        /** @var Volunteer $volunteer */
+        $volunteer = $this->getById($volunteerId);
+
+        $volunteer->approvePhoto();
+
         $em = $this->getEntityManager();
         $em->persist($volunteer);
         $em->flush();

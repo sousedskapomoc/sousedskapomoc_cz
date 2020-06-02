@@ -1,0 +1,5 @@
+{extends $originalTemplate}
+
+{define col-uploadPhoto}
+	<a href="{$basePath}/upload/{$item->getId()}_{$item->getUploadPhoto()}" target="_blank">Odkaz na fotku</a>
+{/define}
