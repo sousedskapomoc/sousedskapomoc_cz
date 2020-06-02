@@ -406,6 +406,8 @@ class Volunteer
         return $this;
     }
 
+
+
     /**
      * @return mixed
      */
@@ -541,15 +543,24 @@ class Volunteer
         return $this->note;
     }
 
-    public function approvePhoto() {
+
+
+    public function approvePhoto()
+    {
         $this->photoApproved = true;
     }
 
-    public function declinePhoto() {
+
+
+    public function declinePhoto()
+    {
         $this->photoApproved = false;
     }
 
-    public function getPhotoApproved() {
+
+
+    public function getPhotoApproved()
+    {
         return $this->photoApproved;
     }
 }
