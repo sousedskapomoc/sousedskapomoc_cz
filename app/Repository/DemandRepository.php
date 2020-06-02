@@ -38,7 +38,7 @@ class DemandRepository extends DoctrineEntityRepository
 
     public function getAllUnprocessed()
     {
-        return $this->findBy(['processed' => 'new']);
+        return $this->findBy(['processed' => 'new'], ['id' => 'DESC']);
     }
 
     public function getUnprocessedByTown($town)
@@ -50,7 +50,8 @@ class DemandRepository extends DoctrineEntityRepository
             ->setParameter('town', $town)
             ->setParameter('processed', 'new')
             ->andWhere("a.city = :town")
-            ->andWhere("d.processed = :processed");
+            ->andWhere("d.processed = :processed")
+            ->orderBy("d.id", "DESC");
         $query = $qb->getQuery();
         return $query->getResult();
     }
