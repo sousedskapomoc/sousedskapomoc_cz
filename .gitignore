@@ -6,3 +6,5 @@ var/temp/cache/
 config/local.neon
 composer.lock
 www/upload
+www/bi
+
