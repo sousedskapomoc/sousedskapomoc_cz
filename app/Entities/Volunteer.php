@@ -31,6 +31,11 @@ class Volunteer
     protected $uploadPhoto;
 
     /**
+     * @ORM\Column(type="boolean", nullable=false, options={"default": FALSE})
+     */
+    protected $isVolunteering;
+
+    /**
      * @ORM\Column(type="boolean", options={"default" : 0})
      */
     protected $photoApproved;
@@ -562,5 +567,21 @@ class Volunteer
     public function getPhotoApproved()
     {
         return $this->photoApproved;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIsVolunteering()
+    {
+        return $this->isVolunteering;
+    }
+
+    /**
+     * @param mixed $isVolunteering
+     */
+    public function setIsVolunteering($isVolunteering): void
+    {
+        $this->isVolunteering = $isVolunteering;
     }
 }
