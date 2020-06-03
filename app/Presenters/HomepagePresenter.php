@@ -13,6 +13,7 @@ use Nette\Database\Connection;
 use SousedskaPomoc\Components\IDemandFormInterface;
 use SousedskaPomoc\Components\IRegisterVolunteerFormInterface;
 use SousedskaPomoc\Components\Mail;
+use SousedskaPomoc\Entities\Volunteer;
 use SousedskaPomoc\Model\UserManager;
 use SousedskaPomoc\Repository\RoleRepository;
 
@@ -211,5 +212,24 @@ final class HomepagePresenter extends BasePresenter
         } catch (AuthenticationException $e) {
             $form->addError($e->getMessage());
         }
+    }
+
+    public function renderChciZustatNapomocen()
+    {
+        $email = $this->getParameter('email') ?? null;
+
+        if ($email !== null) {
+            /** @var Volunteer $user */
+            $user = $this->userManager->findByHash($email);
+            if ($user !== null) {
+                $user->setIsVolunteering(true);
+                $this->userManager->store($user);
+                $this->flashMessage("Děkujeme, že pomáháte dál. Brzy se vám ozveme s dalšími novinkami.");
+            } else {
+                $this->flashMessage("Tento účet jsme u nás nenašli. Kontaktujte prosím podporu.");
+            }
+        }
+
+        $this->redirect("Homepage:default");
     }
 }

@@ -44,7 +44,6 @@ final class UserManager
     protected $addressRepository;
 
 
-
     public function __construct(
         Nette\Database\Context $database,
         Passwords $passwords,
@@ -60,13 +59,12 @@ final class UserManager
     }
 
 
-
     /**
      * Adds new user.
      *
      * @throws DuplicateNameException
      */
-    public function add(string $username, string $email, string $password) : void
+    public function add(string $username, string $email, string $password): void
     {
         Nette\Utils\Validators::assert($email, 'email');
         try {
@@ -81,12 +79,10 @@ final class UserManager
     }
 
 
-
     public function register(Nette\Utils\ArrayHash $values)
     {
         return $this->database->table(self::TABLE_NAME)->insert($values);
     }
-
 
 
     public function update(Nette\Utils\ArrayHash $values)
@@ -96,13 +92,15 @@ final class UserManager
             ->update($values);
     }
 
-
+    public function store(Volunteer $volunteer)
+    {
+        return $this->volunteerRepository->save($volunteer);
+    }
 
     public function setPass($id, $password)
     {
         $this->volunteerRepository->setPass($id, $password);
     }
-
 
 
     public function getUserByEmailCode($emailCode)
@@ -111,12 +109,10 @@ final class UserManager
     }
 
 
-
     public function getUserByEmail($email)
     {
         return $this->volunteerRepository->getByEmail($email);
     }
-
 
 
     public function getUserById($id)
@@ -125,12 +121,10 @@ final class UserManager
     }
 
 
-
     public function setUserCode($userId, $emailCode)
     {
         $this->setUserCode($userId, $emailCode);
     }
-
 
 
     public function check(string $field, $value)
@@ -139,12 +133,10 @@ final class UserManager
     }
 
 
-
     public function fetchAvailableCouriers()
     {
         return $this->database->table(self::TABLE_NAME)->where(['role' => 'courier'])->fetchAll();
     }
-
 
 
     public function fetchAllUsers()
@@ -153,12 +145,10 @@ final class UserManager
     }
 
 
-
     public function fetchAllUsersWithNoPass()
     {
         return $this->database->table(self::TABLE_NAME)->where(['password' => null])->fetchAll();
     }
-
 
 
     public function fetchCourierName($courierId)
@@ -173,12 +163,10 @@ final class UserManager
     }
 
 
-
     public function fetchTotalCount()
     {
         return $this->volunteerRepository->fetchTotalCount();
     }
-
 
 
     public function fetchCountByRole($role)
@@ -190,12 +178,10 @@ final class UserManager
     }
 
 
-
     public function fetchCountBy($rule)
     {
         return $this->volunteerRepository->fetchCountBy($rule);
     }
-
 
 
     public function fetchUniqueTownsCount()
@@ -204,12 +190,10 @@ final class UserManager
     }
 
 
-
     public function isOnline($userId)
     {
         return $this->volunteerRepository->isOnline($userId);
     }
-
 
 
     public function setOnline($userId, $active)
@@ -218,12 +202,10 @@ final class UserManager
     }
 
 
-
     public function fetchAvailableCouriersInTown($town)
     {
         return $this->volunteerRepository->fetchAvailableCouriersInTown($town);
     }
-
 
 
     public function fetchNonAvailableCouriersInTown($town)
@@ -232,12 +214,10 @@ final class UserManager
     }
 
 
-
     public function updateTown($selectedTown, $userId)
     {
         return $this->database->table(self::TABLE_NAME)->wherePrimary($userId)->update(['town' => $selectedTown]);
     }
-
 
 
     public function getTownForUser($userId)
@@ -246,12 +226,10 @@ final class UserManager
     }
 
 
-
     public function getTowns()
     {
         return $this->volunteerRepository->getTowns();
     }
-
 
 
     public function fetchAllUsersInRole($role = null)
@@ -260,19 +238,16 @@ final class UserManager
     }
 
 
-
     public function fetchPhoneNumber($courierId)
     {
         return $this->volunteerRepository->fetchPhoneNumber($courierId);
     }
 
 
-
     public function findAllOnlineUsers()
     {
         return $this->volunteerRepository->findAllOnlineUsers();
     }
-
 
 
     public function fetchAllUsersInRoleForGrid($role)
@@ -301,5 +276,14 @@ final class UserManager
         }
 
         return $dataset;
+    }
+
+    /**
+     * @param $hash
+     * @return object|null
+     */
+    public function findByHash($hash)
+    {
+        return $this->volunteerRepository->findOneBy(['hash' => $hash]);
     }
 }
