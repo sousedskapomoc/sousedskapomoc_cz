@@ -2,6 +2,7 @@
 
 namespace SousedskaPomoc\Command;
 
+use SousedskaPomoc\Connectors\ConferenceCallBot;
 use SousedskaPomoc\Entities\CallRoulette;
 use SousedskaPomoc\Entities\TwilioWebhook;
 use SousedskaPomoc\Repository\CallRouletteRepository;
@@ -18,15 +19,21 @@ class TwilioParserCommand extends Command
 
     /** @var CallRouletteRepository */
     protected $callRouletteRepository;
+    /**
+     * @var ConferenceCallBot
+     */
+    private $callBot;
 
     public function __construct(
         TwilioWebhookRepository $webhookRepository,
-        CallRouletteRepository $callRouletteRepository
+        CallRouletteRepository $callRouletteRepository,
+        ConferenceCallBot $callBot
     ) {
         parent::__construct();
 
         $this->webhookRepository = $webhookRepository;
         $this->callRouletteRepository = $callRouletteRepository;
+        $this->callBot = $callBot;
     }
 
     public function configure()
@@ -62,6 +69,12 @@ class TwilioParserCommand extends Command
             $progressBar->advance();
         }
         $progressBar->finish();
+
+        $output->writeln("Lets pair waiting callers");
+
+        $this->callBot->connectCallers(
+            $this->callRouletteRepository->findPairsForConference()
+        );
 
         return true;
     }

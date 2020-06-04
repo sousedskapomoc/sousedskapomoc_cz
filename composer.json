@@ -43,7 +43,8 @@
     "gamee/nette-rabbitmq": "^4.1",
     "kdyby/translation": "^3.0",
     "contributte/logging": "^0.4.1",
-    "sentry/sentry": "^1.0"
+    "sentry/sentry": "^1.0",
+    "twilio/sdk": "^6.6"
   },
   "require-dev": {
     "nette/tester": "^2.0"

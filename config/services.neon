@@ -8,6 +8,9 @@ services:
 	- SousedskaPomoc\Forms\FormFactory
 	- SousedskaPomoc\Forms\SignInFormFactory
 	- SousedskaPomoc\Forms\SignUpFormFactory
+	# Connectors
+	- SousedskaPomoc\Connectors\TwilioApi(%twilio.clientId% , %twilio.token%)
+	- SousedskaPomoc\Connectors\ConferenceCallBot
 	# Components
 	- SousedskaPomoc\Components\Mail
 	- SousedskaPomoc\Components\ICreateTownNotificationForm

@@ -40,9 +40,9 @@ class CallRoulette
     protected $topicId;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="boolean",options="{default: 0}")
      */
-    protected $paired;
+    protected $paired = false;
 
     /**
      * @ORM\Column(type="text")
