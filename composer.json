@@ -12,7 +12,7 @@
     "GPL-3.0"
   ],
   "require": {
-    "php": ">= 7.1",
+    "php": ">= 7.4",
     "nette/application": "^3.0",
     "nette/bootstrap": "^3.0",
     "nette/caching": "^3.0",
@@ -30,6 +30,7 @@
     "contributte/console": "^0.8.0",
     "contributte/console-extra": "^0.5.2",
     "nettrine/orm": "^0.5.0",
+    "doctrine/orm": "2.7.2.*",
     "nettrine/dbal": "^0.6.2",
     "squizlabs/php_codesniffer": "^3.5",
     "sendgrid/sendgrid": "^7.4",
