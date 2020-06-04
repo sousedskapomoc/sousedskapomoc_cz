@@ -220,7 +220,7 @@ final class HomepagePresenter extends BasePresenter
 
         if ($email !== null) {
             /** @var Volunteer $user */
-            $user = $this->userManager->findByHash($email);
+            $user = $this->userManager->findByEmail($email);
             if ($user !== null) {
                 $user->setIsVolunteering(true);
                 $this->userManager->store($user);
