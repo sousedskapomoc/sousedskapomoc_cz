@@ -46,3 +46,4 @@ services:
 		factory: @Doctrine\ORM\EntityManagerInterface::getRepository('SousedskaPomoc\Entities\TwilioWebhook')
 	#Commands
 	- SousedskaPomoc\Command\MigrateDbCommand
+	- SousedskaPomoc\Command\TwilioParserCommand

@@ -13,4 +13,9 @@ class TwilioWebhookRepository extends DoctrineEntityRepository
         $em->persist($twilioWebhook);
         $em->flush();
     }
+
+    public function findAllUnprocessed()
+    {
+        return $this->findBy(['processed' => 0]);
+    }
 }

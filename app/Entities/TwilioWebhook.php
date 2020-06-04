@@ -24,6 +24,11 @@ class TwilioWebhook
     protected $request;
 
     /**
+     * @ORM\Column(type="boolean", options="{default: false}")
+     */
+    protected $processed = false;
+
+    /**
      * @return mixed
      */
     public function getRequest()
@@ -37,5 +42,21 @@ class TwilioWebhook
     public function setRequest($request): void
     {
         $this->request = $request;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isProcessed(): bool
+    {
+        return $this->processed;
+    }
+
+    /**
+     * @param bool $processed
+     */
+    public function setProcessed(bool $processed): void
+    {
+        $this->processed = $processed;
     }
 }
