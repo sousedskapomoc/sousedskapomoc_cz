@@ -51,7 +51,7 @@ class CallRouletteRepository extends DoctrineEntityRepository
         $results = $this->findBy(['callerPhone' => $caller, 'topicId' => $topicId]);
 
         /** @var CallRoulette $callRouletteEntry */
-        foreach ($results as $callRoulleteEntry) {
+        foreach ($results as $callRouletteEntry) {
             $callRouletteEntry->setPaired(true);
             $this->store($callRouletteEntry);
         }

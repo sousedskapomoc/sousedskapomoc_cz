@@ -454,6 +454,6 @@ class HeadquartersPresenter extends BasePresenter
         );
 
         $this->flashMessage("Proběhlo manuální párování. Celkem {$callsCount} hovorů bylo sestaveno");
-        $this->redirect("this");
+        $this->redirect("Headquarters:callsWaiting");
     }
 }
