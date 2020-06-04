@@ -286,4 +286,9 @@ final class UserManager
     {
         return $this->volunteerRepository->findOneBy(['hash' => $hash]);
     }
+
+    public function findByEmail($email)
+    {
+        return $this->volunteerRepository->findOneBy(['personEmail' => $email]);
+    }
 }
