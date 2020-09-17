@@ -1582,3 +1582,13 @@ input[type="checkbox"]:checked:after {
         max-width: calc(100% / 12 * 10);
     }
 }
+
+.contact-row {
+    padding: 0px;
+    height: 100%;
+    margin: 0px;
+}
+
+.img-custom {
+    max-width: 50%;
+}
