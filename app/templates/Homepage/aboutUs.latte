@@ -12,15 +12,19 @@
     <p>Sousedskapomoc.cz funguje čistě na dobrovolnické bázi a nevykonává výdělečnou činnost. Jsme apolitická organizace
         se záštitou Univerzity Karlovy a našim hlavním cílem je vytvořit funkční systém decentralizované pomoci, který
         bude fungovat pro běžné dobrovolnické a spolkové aktivity v průběhu roku.</p>
-
-    <a href="https://instagram.com/tags/nebudmelhostejni" target="_blank">#nebudmelhostejni</a>
-
-    <h1>Pomáháme v regionech</h1>
-    <div class="col-md-1-min. text-center">
-        <iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FSousedskapomoc.cz%2Fvideos%2F214755443132290&width=725&show_text=false&appId=536970146994011&height=406"
-                width="725" height="406" style="border:none;overflow:hidden" scrolling="no" frameborder="0"
-                allowTransparency="true" allow="encrypted-media" allowFullScreen="true"></iframe>
+    <p>
+        <a href="https://instagram.com/tags/nebudmelhostejni" target="_blank">#nebudmelhostejni</a>
+    </p>
+    {*
+    <div class="row">
+        <h2 class="m-bottom">Pomáháme v regionech</h2>
+        <div class="col-md-1-min. text-center">
+            <iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FSousedskapomoc.cz%2Fvideos%2F214755443132290&width=725&show_text=false&appId=536970146994011&height=406"
+                    width="725" height="406" style="border:none;overflow:hidden" scrolling="no" frameborder="0"
+                    allowTransparency="true" allow="encrypted-media" allowFullScreen="true"></iframe>
+        </div>
     </div>
+    *}
     <h1>Z naší činnosti</h1>
     <table class="table">
         <tr>
@@ -49,26 +53,17 @@
         </div>
         <div class="col-md-5 text-right">
             <img id="hunka" src="{$basePath}/images/team/hunka-1-min.jpg" class="img-fluid rounded img-custom"
-                 onmouseover="this.src='/images/team/hunka-2-min.jpg'" onmouseout="this.src='/images/team/hunka-1-min.jpg'">
+                 onmouseover="this.src='/images/team/hunka-2-min.jpg'"
+                 onmouseout="this.src='/images/team/hunka-1-min.jpg'">
         </div>
     </div>
     <hr/>
     <div class="row contact-row">
         <div class="col-md-5 text-left">
-            <img id="gavurnik" src="{$basePath}/images/team/gavurnik-1-min.jpg" class="img-fluid rounded img-custom"
-                 onmouseover="this.src='/images/team/gavurnik-2-min.jpg'"
-                 onmouseout="this.src='/images/team/gavurnik-1-min.jpg'">
+            <img id="zima" src="{$basePath}/images/team/zima-1-min.jpg" class="img-fluid rounded img-custom"
+                 onmouseover="this.src='/images/team/zima-2-min.jpg'"
+                 onmouseout="this.src='/images/team/zima-1-min.jpg'">
         </div>
-        <div class="col-md-7" style="height: 100%;">
-            <h3 style="margin-bottom: 20px;">Michal Gavurník</h3>
-            <p style="text-align: justify;">Když něco dělám, tak do toho jdu naplno. Mám pocit, že je potřeba s
-                distribucí pomoci pohnout, proto mě většinou najdete v terénu v mém rodném Ústeckém kraji. Zajišťuji
-                spolupráci se starosty a mým cílem je rozšíření Sousedské pomoci tam, kde je nejvíce potřeba - do
-                menších měst a obcí, které jsou často systémem podpory přehlíženy.</p>
-        </div>
-    </div>
-    <hr/>
-    <div class="row contact-row">
         <div class="col-md-7" style="height: 100%;">
             <h3 style="margin-bottom: 20px;">Michal Zima</h3>
             <p style="text-align: justify;">Mám za sebou studium biologie a v současné době působím mj. na Univerzitě
@@ -77,16 +72,30 @@
                 studentů ČR a mám za sebou i několik úspěšných projektů, třeba Svobodný listopad - oslavy 30 let
                 Sametové revoluce.</p>
         </div>
+
+    </div>
+    <hr/>
+    <div class="row contact-row">
+        <div class="col-md-7" style="height: 100%;">
+            <h3 style="margin-bottom: 20px;">Michal Gavurník</h3>
+            <p style="text-align: justify;">Když něco dělám, tak do toho jdu naplno. Mám pocit, že je potřeba s
+                distribucí pomoci pohnout, proto mě většinou najdete v terénu v mém rodném Ústeckém kraji. Zajišťuji
+                spolupráci se starosty a mým cílem je rozšíření Sousedské pomoci tam, kde je nejvíce potřeba - do
+                menších měst a obcí, které jsou často systémem podpory přehlíženy.</p>
+        </div>
         <div class="col-md-5 text-right">
-            <img id="zima" src="{$basePath}/images/team/zima-1-min.jpg" class="img-fluid rounded img-custom"
-                 onmouseover="this.src='/images/team/zima-2-min.jpg'" onmouseout="this.src='/images/team/zima-1-min.jpg'">
+            <img id="gavurnik" src="{$basePath}/images/team/gavurnik-1-min.jpg" class="img-fluid rounded img-custom"
+                 onmouseover="this.src='/images/team/gavurnik-2-min.jpg'"
+                 onmouseout="this.src='/images/team/gavurnik-1-min.jpg'">
         </div>
     </div>
+
     <hr/>
     <div class="row contact-row">
         <div class="col-md-5 text-left">
             <img id="cermak" src="{$basePath}/images/team/cermak-1-min.jpg" class="img-fluid rounded img-custom"
-                 onmouseover="this.src='/images/team/cermak-2-min.jpg'" onmouseout="this.src='/images/team/cermak-1-min.jpg'">
+                 onmouseover="this.src='/images/team/cermak-2-min.jpg'"
+                 onmouseout="this.src='/images/team/cermak-1-min.jpg'">
         </div>
         <div class="col-md-7" style="height: 100%;">
             <h3 style="margin-bottom: 20px;">Pavel Čermák</h3>
@@ -114,7 +123,8 @@
     <div class="row contact-row">
         <div class="col-md-5 text-left">
             <img id="kocova" src="{$basePath}/images/team/kocova-1-min.jpg" class="img-fluid rounded img-custom"
-                 onmouseover="this.src='/images/team/kocova-2-min.jpg'" onmouseout="this.src='/images/team/kocova-1-min.jpg'">
+                 onmouseover="this.src='/images/team/kocova-2-min.jpg'"
+                 onmouseout="this.src='/images/team/kocova-1-min.jpg'">
         </div>
         <div class="col-md-7" style="height: 100%;">
             <h3 style="margin-bottom: 20px;">Karolina Kočová</h3>
@@ -142,7 +152,8 @@
     <div class="row contact-row">
         <div class="col-md-5 text-left">
             <img id="filatov" src="{$basePath}/images/team/filatov-2-min.jpg" class="img-fluid rounded img-custom"
-                 onmouseover="this.src='/images/team/filatov-1-min.jpg'" onmouseout="this.src='/images/team/filatov-2-min.jpg'">
+                 onmouseover="this.src='/images/team/filatov-1-min.jpg'"
+                 onmouseout="this.src='/images/team/filatov-2-min.jpg'">
         </div>
         <div class="col-md-7" style="height: 100%;">
             <h3 style="margin-bottom: 20px;">Mikhail Vladimirovič Filatov</h3>
@@ -162,14 +173,16 @@
         </div>
         <div class="col-md-5 text-right">
             <img id="thiel" src="{$basePath}/images/team/thiel-1-min.jpg" class="img-fluid rounded img-custom"
-                 onmouseover="this.src='/images/team/thiel-2-min.jpg'" onmouseout="this.src='/images/team/thiel-1-min.jpg'">
+                 onmouseover="this.src='/images/team/thiel-2-min.jpg'"
+                 onmouseout="this.src='/images/team/thiel-1-min.jpg'">
         </div>
     </div>
     <hr/>
     <div class="row contact-row">
         <div class="col-md-5 text-left">
             <img id="pastva" src="{$basePath}/images/team/pastva-2-min.jpg" class="img-fluid rounded img-custom"
-                 onmouseover="this.src='/images/team/pastva-1-min.jpg'" onmouseout="this.src='/images/team/pastva-2-min.jpg'">
+                 onmouseover="this.src='/images/team/pastva-1-min.jpg'"
+                 onmouseout="this.src='/images/team/pastva-2-min.jpg'">
         </div>
         <div class="col-md-7" style="height: 100%;">
             <h3 style="margin-bottom: 20px;">Daniel Pastva</h3>
@@ -254,12 +267,24 @@
     <h1>V minulosti pomáhal/a</h1>
     <div class="row contact-row">
         <div class="col-md-5 text-left">
+            <img src="https://scontent.fprg1-1.fna.fbcdn.net/v/t1.0-9/116835151_3254493427927075_3734593613805506968_o.jpg?_nc_cat=102&_nc_sid=730e14&_nc_ohc=eYmNhq5q3joAX_nsFYj&_nc_ht=scontent.fprg1-1.fna&oh=1619c9aae922e912a23c89a418fb98b4&oe=5F895E52" class="img-fluid rounded img-custom">
+        </div>
+        <div class="col-md-7" style="height: 100%;">
+            <h3 style="margin-bottom: 20px;">Tomáš Brabec</h3>
+            <p style="text-align: justify;">březen - duben 2020</p>
+            <p style="text-align: justify;">Tomáš pomohl Sousedské Pomoci v začátcích poskytnutím prostor, propojením do světa podnikatelů a mentoringem.</p>
+        </div>
+    </div>
+    <hr/>
+    <div class="row contact-row">
+        <div class="col-md-5 text-left">
             <img id="brisova" src="{$basePath}/images/team/brisova-1-min.jpg" class="img-fluid rounded img-custom"
-                 onmouseover="this.src='/images/team/brisova-2-min.jpg'" onmouseout="this.src='/images/team/brisova-1-min.jpg'">
+                 onmouseover="this.src='/images/team/brisova-2-min.jpg'"
+                 onmouseout="this.src='/images/team/brisova-1-min.jpg'">
         </div>
         <div class="col-md-7" style="height: 100%;">
             <h3 style="margin-bottom: 20px;">Jana Brišová</h3>
-            <p style="text-align: justify;">březen - duben 2020</p>
+            <p style="text-align: justify;">březen - květen 2020</p>
             <p style="text-align: justify;">Jsem energická holka, která se nebojí říct, co si myslí. Studuji
                 žurnalistiku a v Sousedské pomoci mám na starosti texty a on-line marketing. Jsem ráda, že se mohu
                 podílet na projektu, který spojuje lidi, aby si pomáhali na dobrovolnické bázi.</p>
@@ -267,46 +292,50 @@
     </div>
     <hr/>
     <div class="row contact-row">
-        <div class="col-md-7" style="height: 100%;">
-            <h3 style="margin-bottom: 20px;">Jan Plachý</h3>
-            <p style="text-align: justify;">březen - duben 2020</p>
-            <p style="text-align: justify;">Mám rád příběhy, a jsem tady proto, abych jeden pomohl vytvořit. Vždy jsem
-                se motal kolem neziskových organizací a poslední dobou jsem postrádal práci na projektech, které mají
-                přesah.</p>
+        <div class="col-md-5 text-left">
+            <img id="hanus" src="{$basePath}/images/team/hanus-1-min.jpg" class="img-fluid rounded img-custom"
+                 onmouseover="this.src='/images/team/hanus-2-min.jpg'"
+                 onmouseout="this.src='/images/team/hanus-1-min.jpg'">
         </div>
-        <div class="col-md-5 text-right">
-            <img id="plachy" src="{$basePath}/images/team/plachy-1-min.jpg" class="img-fluid rounded img-custom"
-                 onmouseover="this.src='/images/team/plachy-2-min.jpg'" onmouseout="this.src='/images/team/plachy-1-min.jpg'">
+        <div class="col-md-7" style="height: 100%;">
+            <h3 style="margin-bottom: 20px;">Milan Hanuš</h3>
+            <p style="text-align: justify;">březen - červen 2020</p>
+            <p style="text-align: justify;">Uvědomil jsem si, že v této době potřebuje pomoc spousta různých lidí napříč
+                společností, a došlo mi, že nemůžeme myslet jen sami na sebe. Z toho důvodu jsem v Sousedské pomoci k
+                ruce všem a dělám to, co je zrovna nejvíce potřeba.</p>
         </div>
     </div>
     <hr/>
     <div class="row contact-row">
         <div class="col-md-5 text-left">
-            <img id="zejdlik" src="{$basePath}/images/team/zejdlik-1-min.jpg" class="img-fluid rounded img-custom"
-                 onmouseover="this.src='/images/team/zejdlik-2-min.jpg'" onmouseout="this.src='/images/team/zejdlik-1-min.jpg'">
+            <img id="plachy" src="{$basePath}/images/team/plachy-1-min.jpg" class="img-fluid rounded img-custom"
+                 onmouseover="this.src='/images/team/plachy-2-min.jpg'"
+                 onmouseout="this.src='/images/team/plachy-1-min.jpg'">
         </div>
         <div class="col-md-7" style="height: 100%;">
-            <h3 style="margin-bottom: 20px;">Matěj Žejdlík</h3>
-            <p style="text-align: justify;">březen - duben 2020</p>
-            <p style="text-align: justify;">Kde je vůle, tam je cesta. Jsem ten, za kým se jde, když máte neřešitelný
-                problém. V Sousedské pomoci můžu naplno využít svou schopnost řešit věci efektivně a pružně, a pomáhat
-                tím lidem z celé republiky s jejich starostmi.</p>
+            <h3 style="margin-bottom: 20px;">Jan Plachý</h3>
+            <p style="text-align: justify;">březen - červen 2020</p>
+            <p style="text-align: justify;">Mám rád příběhy, a jsem tady proto, abych jeden pomohl vytvořit. Vždy jsem
+                se motal kolem neziskových organizací a poslední dobou jsem postrádal práci na projektech, které mají
+                přesah.</p>
         </div>
+
     </div>
+
     <hr/>
     <div class="row contact-row">
+        <div class="col-md-5 text-left">
+            <img id="horackova" src="{$basePath}/images/team/horackova-1-min.jpg" class="img-fluid rounded img-custom"
+                 onmouseover="this.src='/images/team/horackova-2-min.jpg'"
+                 onmouseout="this.src='/images/team/horackova-1-min.jpg'">
+        </div>
         <div class="col-md-7" style="height: 100%;">
             <h3 style="margin-bottom: 20px;">Valentýna Horáčková</h3>
-            <p style="text-align: justify;">březen - duben 2020</p>
+            <p style="text-align: justify;">březen - červen 2020</p>
             <p style="text-align: justify;">Jsem studentkou sociální práce na UK a ráda spolupracuji na projektech, ve
                 kterých vidím budoucnost. V týmu funguji jako spojka mezi starosty a dobrovolníky. Fascinuje mě energie,
                 se kterou se všichni okolo vrhli do vytváření tohoto projektu, protože za kecy se dá schovat jen do
                 chvíle, než se rozestele. </p>
-        </div>
-        <div class="col-md-5 text-right">
-            <img id="horackova" src="{$basePath}/images/team/horackova-1-min.jpg" class="img-fluid rounded img-custom"
-                 onmouseover="this.src='/images/team/horackova-2-min.jpg'"
-                 onmouseout="this.src='/images/team/horackova-1-min.jpg'">
         </div>
     </div>
     <hr/>
@@ -318,7 +347,7 @@
         </div>
         <div class="col-md-7" style="height: 100%;">
             <h3 style="margin-bottom: 20px;">Vlasta Marie Paďourová</h3>
-            <p style="text-align: justify;">březen - duben 2020</p>
+            <p style="text-align: justify;">březen - červen 2020</p>
             <p style="text-align: justify;">K projektu jsem se přidala, protože jsem chtěla načerpat zkušenosti z
                 dobrovolnického prostředí. Dělám operátorku v týmu distribuce - kontaktuji starosty a snažím se je
                 získat pro naši věc. Studuji marketing na VŠE a zajímám se o vzdělávání, umění a atletiku.</p>
@@ -326,18 +355,19 @@
     </div>
     <hr/>
     <div class="row contact-row">
+        <div class="col-md-5 text-left">
+            <img id="majid" src="{$basePath}/images/team/majid-1-min.jpg" class="img-fluid rounded img-custom"
+                 onmouseover="this.src='/images/team/majid-2-min.jpg'"
+                 onmouseout="this.src='/images/team/majid-1-min.jpg'">
+        </div>
         <div class="col-md-7" style="height: 100%;">
             <h3 style="margin-bottom: 20px;">Ester Majid</h3>
-            <p style="text-align: justify;">březen - duben 2020</p>
+            <p style="text-align: justify;">březen - červen 2020</p>
             <p style="text-align: justify;">Už delší dobu jsem se chtěla zapojit do dobrovolnických aktivit a nikdy
                 dříve to nedávalo větší smysl, než právě teď. V Sousedské pomoci pomáhám jako dispečerka a se správou
                 sociálních sítí. Snažím se, abychom pomohli co nejvíce lidem, a věřím, že Sousedská pomoc vydrží i po
                 odeznění pandemie a zůstane jako platforma, která bude spojovat lidi i mimo krizové situace. Jsem
                 vděčná, že můžu pomáhat.</p>
-        </div>
-        <div class="col-md-5 text-right">
-            <img id="majid" src="{$basePath}/images/team/majid-1-min.jpg" class="img-fluid rounded img-custom"
-                 onmouseover="this.src='/images/team/majid-2-min.jpg'" onmouseout="this.src='/images/team/majid-1-min.jpg'">
         </div>
     </div>
     <hr/>
@@ -358,6 +388,11 @@
     </div>
     <hr/>
     <div class="row contact-row">
+        <div class="col-md-5 text-left">
+            <img id="wunsch" src="{$basePath}/images/team/wunsch-1-min.jpg" class="img-fluid rounded img-custom"
+                 onmouseover="this.src='/images/team/wunsch-2-min.jpg'"
+                 onmouseout="this.src='/images/team/wunsch-1-min.jpg'">
+        </div>
         <div class="col-md-7" style="height: 100%;">
             <h3 style="margin-bottom: 20px;">Jan Wünsch</h3>
             <p style="text-align: justify;">březen - duben 2020</p>
@@ -366,16 +401,13 @@
                 dokumentaci celého projektu. Mimo to pracuji na svém projektu, který můžete vidět na <a
                         href="www.wunschphoto.com">www.wunschphoto.com</a>.</p>
         </div>
-        <div class="col-md-5 text-right">
-            <img id="wunsch" src="{$basePath}/images/team/wunsch-1-min.jpg" class="img-fluid rounded img-custom"
-                 onmouseover="this.src='/images/team/wunsch-2-min.jpg'" onmouseout="this.src='/images/team/wunsch-1-min.jpg'">
-        </div>
     </div>
     <hr/>
     <div class="row contact-row">
         <div class="col-md-5 text-left">
             <img id="clupek" src="{$basePath}/images/team/clupek-1-min.jpg" class="img-fluid rounded img-custom"
-                 onmouseover="this.src='/images/team/clupek-2-min.jpg'" onmouseout="this.src='/images/team/clupek-1-min.jpg'">
+                 onmouseover="this.src='/images/team/clupek-2-min.jpg'"
+                 onmouseout="this.src='/images/team/clupek-1-min.jpg'">
         </div>
         <div class="col-md-7" style="height: 100%;">
             <h3 style="margin-bottom: 20px;">Otakar Člupek</h3>
@@ -387,19 +419,20 @@
     </div>
     <hr/>
     <div class="row contact-row">
+        <div class="col-md-5 text-left">
+            <img id="perugini" src="{$basePath}/images/team/perugini-1-min.jpg" class="img-fluid rounded img-custom"
+                 onmouseover="this.src='/images/team/perugini-2-min.jpg'"
+                 onmouseout="this.src='/images/team/perugini-1-min.jpg'">
+        </div>
         <div class="col-md-7" style="height: 100%;">
             <h3 style="margin-bottom: 20px;">Laura Perugini</h3>
-            <p style="text-align: justify;">březen - duben 2020</p>
+            <p style="text-align: justify;">březen - červen 2020</p>
             <p style="text-align: justify;">Jsem ta, kdo dotahuje úkoly do konce. Jednou bych chtěla založit vlastní
                 organizaci zaměřenou na arteterapii pro lidi s poruchou autistického spektra. Když jsem dostala nabídku
                 přidat se do Sousedské pomoci, byla jsem vážně nadšená, protože je tady spousta skvělých lidí, od
                 kterých se můžu hodně naučit. Věřím, že když člověku něco chybí, dokáže to najít uvnitř sebe.</p>
         </div>
-        <div class="col-md-5 text-right">
-            <img id="perugini" src="{$basePath}/images/team/perugini-1-min.jpg" class="img-fluid rounded img-custom"
-                 onmouseover="this.src='/images/team/perugini-2-min.jpg'"
-                 onmouseout="this.src='/images/team/perugini-1-min.jpg'">
-        </div>
+
     </div>
     <hr/>
     <div class="row contact-row">
@@ -410,7 +443,7 @@
         </div>
         <div class="col-md-7" style="height: 100%;">
             <h3 style="margin-bottom: 20px;">Radek Povejšil</h3>
-            <p style="text-align: justify;">březen - duben 2020</p>
+            <p style="text-align: justify;">březen - červen 2020</p>
             <p style="text-align: justify;">Dělá mi radost konat dobré skutky, a to i ty nejmenší. V době krize jsem
                 hledal způsob, jak pomáhat, aniž bych se musel učit šít. Jako student žurnalistky se v Sousedské pomoci
                 podílím na tvorbě textů a také uplatňuji i zkušenosti z jiných neziskových projektů jichž jsem součástí.
@@ -419,6 +452,11 @@
     </div>
     <hr/>
     <div class="row contact-row">
+        <div class="col-md-5 text-left">
+            <img id="moisidis" src="{$basePath}/images/team/moisidis-1-min.jpg" class="img-fluid rounded img-custom"
+                 onmouseover="this.src='/images/team/moisidis-2-min.jpg'"
+                 onmouseout="this.src='/images/team/moisidis-1-min.jpg'">
+        </div>
         <div class="col-md-7" style="height: 100%;">
             <h3 style="margin-bottom: 20px;">Konstantin Filip Moisidis</h3>
             <p style="text-align: justify;">březen - duben 2020</p>
@@ -426,24 +464,19 @@
                 a proto jsem se k projektu připojil jako podpora IT týmu. Myslím, že tady budujeme nejen organizaci, ale
                 také skvělý kolektiv, o kterém bude v budoucnu ještě slyšet.</p>
         </div>
-        <div class="col-md-5 text-right">
-            <img id="moisidis" src="{$basePath}/images/team/moisidis-1-min.jpg" class="img-fluid rounded img-custom"
-                 onmouseover="this.src='/images/team/moisidis-2-min.jpg'"
-                 onmouseout="this.src='/images/team/moisidis-1-min.jpg'">
-        </div>
     </div>
     <hr/>
     <div class="row contact-row">
         <div class="col-md-5 text-left">
-            <img id="hanus" src="{$basePath}/images/team/hanus-1-min.jpg" class="img-fluid rounded img-custom"
-                 onmouseover="this.src='/images/team/hanus-2-min.jpg'" onmouseout="this.src='/images/team/hanus-1-min.jpg'">
+            <img id="zejdlik" src="{$basePath}/images/team/zejdlik-1-min.jpg" class="img-fluid rounded img-custom"
+                 onmouseover="this.src='/images/team/zejdlik-2-min.jpg'"
+                 onmouseout="this.src='/images/team/zejdlik-1-min.jpg'">
         </div>
         <div class="col-md-7" style="height: 100%;">
-            <h3 style="margin-bottom: 20px;">Milan Hanuš</h3>
+            <h3 style="margin-bottom: 20px;">Matěj Žejdlík</h3>
             <p style="text-align: justify;">březen - duben 2020</p>
-            <p style="text-align: justify;">Uvědomil jsem si, že v této době potřebuje pomoc spousta různých lidí napříč
-                společností, a došlo mi, že nemůžeme myslet jen sami na sebe. Z toho důvodu jsem v Sousedské pomoci k
-                ruce všem a dělám to, co je zrovna nejvíce potřeba.</p>
+            <p style="text-align: justify;">V Sousedské pomoci můžu naplno využít svou schopnost řešit věci efektivně a pružně, a pomáhat
+                tím lidem z celé republiky s jejich starostmi.</p>
         </div>
     </div>
 </div>
