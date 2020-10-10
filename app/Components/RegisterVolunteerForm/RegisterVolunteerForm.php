@@ -46,8 +46,6 @@ class RegisterVolunteerFormControl extends Control
 
     private $role;
 
-
-
     public function __construct(
         VolunteerRepository $volunteerRepository,
         Translator $translator,
@@ -72,14 +70,10 @@ class RegisterVolunteerFormControl extends Control
         $this->townSuggester = $townSuggester;
     }
 
-
-
     public function createComponentTownSuggester()
     {
         return $this->townSuggester->create();
     }
-
-
 
     public function createComponentRegisterVolunteerForm()
     {
@@ -131,8 +125,6 @@ class RegisterVolunteerFormControl extends Control
         return $form;
     }
 
-
-
     public function processAdd(BootstrapForm $form)
     {
         $values = $form->getValues();
@@ -144,6 +136,7 @@ class RegisterVolunteerFormControl extends Control
         $user->setPersonPhone($values->personPhone);
         $user->setPersonName($values->personName);
         $user->setHash(md5($values->personEmail));
+        $user->setIsVolunteering(true);
         $user->declinePhoto();
 
         //Set roles
@@ -168,7 +161,6 @@ class RegisterVolunteerFormControl extends Control
                 break;
         }
 
-
         $user->setRole($this->role);
 
         if ($values->transport !== null) {
@@ -181,7 +173,7 @@ class RegisterVolunteerFormControl extends Control
         /** @var \GuzzleHttp\Psr7\Response $response */
         $baseUri = "https://geocoder.ls.hereapi.com/6.2/geocode.json?locationid=";
         $apiKey = "Kl0wK4fx38Pf63EIey6WyrmGEhS2IqaVHkuzx0IQ4-Q";
-        $response = $client->get($baseUri.$values->locationId.'&jsonattributes=1&gen=9&apiKey='.$apiKey);
+        $response = $client->get($baseUri . $values->locationId . '&jsonattributes=1&gen=9&apiKey=' . $apiKey);
         $content = $response->getBody()->getContents();
 
         $content = json_decode($content);
@@ -215,7 +207,6 @@ class RegisterVolunteerFormControl extends Control
         }
 
         $user->setAddress($address);
-
 
         $link = $this->getPresenter()->link('//Homepage:changePassword', $user->getHash());
         //@TODO-Add sending mail for medical person and for government user
@@ -251,11 +242,9 @@ class RegisterVolunteerFormControl extends Control
         }
     }
 
-
-
     public function render()
     {
-        $this->template->setFile(__DIR__.'/add.latte');
+        $this->template->setFile(__DIR__ . '/add.latte');
         $this->template->role = $this->role;
         $this->template->render();
     }
