@@ -116,7 +116,7 @@ class RegisterVolunteerFormControl extends Control
             $form->addHidden('locationId')
                 ->setDefaultValue($this->presenter->getParameter('addressHereMapsId'));
         } else {
-            $form->addHidden('locationId');
+            $form->addHidden('locationId')->setRequired('Potřebujeme znát vaše město kde chcete pomáhat');
         }
 
         $form->addSubmit('addVolunteerFormSubmit', $this->translator->translate('templates.profile.send'));
