@@ -2,34 +2,40 @@
 
 <div class="row justify-content-center">
     <div class="col-md-12 col-lg-12">
-            {control townSuggester}
+        {control townSuggester}
+
+
+
             {form registerVolunteerForm}
+            <ul class="errors" n:if="$form->hasErrors()">
+                <li n:foreach="$form->errors as $error">{$error}</li>
+            </ul>
             <div class="form--plain">
-                <div class="form-group">
-                    {label personName}
+            <div class="form-group">
+                {label personName}
                     {input personName class => 'form-control'}
-                </div>
-                <div class="form-group">
-                    {label personEmail}
-                    {input personEmail class => 'form-control'}
-                </div>
-                <div class="form-group">
-                    {label personPhone}
-                    {input personPhone class => 'form-control'}
-                </div>
-                <div class="form-group">
-                    {label role}
-                    {input role}
-                </div>
-                <div class="form-group hidden" id="transport-part">
-                    {label transport}
-                    {input transport}
-                </div>
-                <div class="form-group">
-                    {input addVolunteerFormSubmit class => 'btn btn-success'}
-                </div>
             </div>
-            {/form}
+            <div class="form-group">
+                {label personEmail}
+                    {input personEmail class => 'form-control'}
+            </div>
+            <div class="form-group">
+                {label personPhone}
+                    {input personPhone class => 'form-control'}
+            </div>
+            <div class="form-group">
+                {label role}
+                    {input role}
+            </div>
+            <div class="form-group hidden" id="transport-part">
+            {label transport}
+            {input transport}
+            </div>
+            <div class="form-group">
+                {input addVolunteerFormSubmit class => 'btn btn-success'}
+            </div>
+            </div>
+        {/form}
     </div>
 </div>
 <script>
