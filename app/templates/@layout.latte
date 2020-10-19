@@ -81,11 +81,12 @@
                     </div>
                 </div>
                 <ul>
-                    <li><a href="https://nf.sousedskapomoc.cz/kariera" target="_blank">Kariéra</a></li>
-                    <li><a n:if="!$user->isLoggedIn()" n:href="Homepage:ethicalCode">Etický kodex</a></li>
-                    <li><a n:if="!$user->isLoggedIn()" n:href="Homepage:aboutUs">Kdo jsme</a></li>
-                    <li><a n:href="Homepage:media">Pro média</a></li>
-                    <li><a n:href="PublicDemands:default">Kde mohu pomoci</a></li>
+                    <li><a n:href="PublicDemands:default"><i class="fas fa-hand-holding-medical"></i> <strong>Kde mohu
+                                pomoci</strong></a></li>
+                    <li n:if="!$user->isLoggedIn()"><a n:href="Homepage:ethicalCode">Etický kodex</a></li>
+                    <li n:if="!$user->isLoggedIn()"><a n:href="Homepage:aboutUs">Kdo jsme</a></li>
+                    <li n:if="!$user->isLoggedIn()"><a n:href="Homepage:contacts">Kontakty</a></li>
+
                     {if $user->isLoggedIn()}
                         <li><a n:href="PublicDemands:dashboard">Můj profil</a></li>
                         <li><a n:if="$user->isLoggedIn()" n:href="System:dashboard" style="color:purple;">Přejít do
