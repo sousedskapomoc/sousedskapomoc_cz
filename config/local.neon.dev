@@ -7,7 +7,7 @@ database:
 	options:
 		lazy: yes
 
-dbal:
+doctrine.dbal:
     debug:
         panel: true
     connection:
