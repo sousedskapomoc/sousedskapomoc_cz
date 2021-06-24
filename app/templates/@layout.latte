@@ -42,6 +42,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-160696817-1"></script>
     <script>
+
         window.dataLayer = window.dataLayer || [];
 
         function gtag() {
@@ -62,7 +63,85 @@
     {include 'ga.latte'}
 </head>
 
-<body>
+<body onload="openModal();">
+<div class="modal fade bd-example-modal-lg" id="spModal" tabindex="-1" role="dialog" aria-labelledby="spModal"
+     aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Pomoc zasaženým obcím</h5>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row" style="padding:20px;">
+                        <p>
+                            <strong>Na místa zasažená katastrofou se nevydávejte do pokynů od oficiálních
+                                míst.</strong>
+                        </p>
+
+                        <p>
+                            Sledujte prosím oficiální kanály Policie ČR, Ministerstva Vnitra, Jihomoravského kraje a
+                            IZS.
+                        </p>
+
+
+                        <p>
+                            <a href="https://twitter.com/PolicieCZ" class="btn btn-primary btn-sm" target="_blank">
+                                Oficiální twitterový účet Policie ČR
+                            </a><br /><br />
+                            <a href="https://twitter.com/vnitro" class="btn btn-primary" target="_blank">
+                                Oficiální twitterový účet Ministerstva Vnitra
+                            </a><br /><br />
+                            <a href="https://twitter.com/Jihomoravsky_kr" class="btn btn-primary" target="_blank">
+                                Oficiální twitterový účet Jihomoravského kraje
+                            </a>
+                        </p>
+                    </div>
+                    <div class="row" style="padding: 20px;">
+                        <div class="col-6">
+                            <h4>Finanční pomoc</h4>
+                            <p>Na místě pomůže samozřejmě i vaše finanční pomoc. Využijte proto prosím již existující
+                                sbírku
+                                od Nadace Via
+                            </p>
+                            <p>
+                                Jih Moravy zasáhla katastrofa nevídaných rozměrů. Nadace Via proto spustila dárcovskou
+                                kampaň, která pomůže zasaženým obcím, lidem a komunitám, aby se s tragédií dokázali lépe
+                                vyrovnat. Vaše dary následně rozdělíme na řešení následků katastrofální bouře, která po
+                                sobě zanechala několik zcela zpustošených vesnic. #promoravu Děkujeme za Vaše dary.
+                            </p>
+                            <a href="https://www.darujme.cz/projekt/1204937?fbclid=IwAR1ZGOrHOWW5evnmpH00Li_R9XlMq3weOL9HxEqc6xs5I3s5rJuscio6Ru4"
+                               class="btn btn-purple" target="_blank">
+                                Přeji na sbírku Nadace Via
+                            </a>
+                        </div>
+                        <div class="col-6">
+                            <h4>Materiální pomoc</h4>
+                            <p>Jana Leitnerová - Radní Jihomoravského kraje pro sociální a rodinnou politiku -
+                                prostřednictvím twitteru (25.6.2021 v 0:45):</p>
+
+                            <p><em>
+                                    Děkuji za nabídky pomoci! Bude to ještě náročná noc, ale hlavně příští dny a týdny.
+                                </em></p>
+                            <p><em>
+                                    Chcete-li pomoct, směřujte nabídky na <a href="mailto:dobrovolnici@jmk.cz">dobrovolnici@jmk.cz</a>,
+                                    od rána bude i krizová
+                                    linka
+                                </em></p>
+
+                            <p>Zdroj: <a href="https://twitter.com/JanaLeitnerova/status/1408193716641222660"
+                                         target="_blank">Twitter</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a href="#" id="closeModal">Přejit na web SousedskáPomoc.cz</a>
+            </div>
+        </div>
+    </div>
+</div>
+
 <noscript>
     <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KT829TC"
             height="0" width="0" style="display:none;visibility:hidden"></iframe>
@@ -120,5 +199,14 @@
     <script src="https://nette.github.io/resources/js/3/netteForms.min.js"></script>
     <script src="{$basePath}/js/main.js"></script>
 {/block}
+<script>
+    document.addEventListener("DOMContentLoaded", function (event) {
+        $("#spModal").modal('toggle');
+        $("#closeModal").on('click', function () {
+            $("#spModal").modal('hide');
+        });
+    });
+</script>
+
 </body>
 </html>
